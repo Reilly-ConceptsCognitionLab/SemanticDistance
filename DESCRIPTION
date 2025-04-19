@@ -1,18 +1,37 @@
 Package: SemanticDistance
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Computes Pairwise Cosine Distance Between Successive Units of Language Samples
 Version: 0.1.0
-Authors@R: c(
-    person(
-      "Jane", "Doe",
-      email = "jane@example.com",
-      role = c("aut", "cre")
-    )
-  )
-Description: More about what it does (maybe more than one line).
-    Continuation lines should be indented.
-License: What license is it under?
+Authors@R: c(person("Jamie", "Reilly", email = "jamie_reilly@temple.edu", role = c("aut", "cre")),
+    person("Hannah", "Mechtanberg", role = "ctb"),
+    person("Jonathan", "Peelle", role = "ctb"),
+    person("Emily", "Myers", role = "ctb"))
+Description: This package cleans and formats any user-specified language sample and appends two metrics of semantic distance (experiential and embedding) to each specified chunk (e.g., word-to-word, ngram-to-ngram, turn-to-turn). 
+     Users have several options for how to clean their data (e.g., leave it alone, lemmatize it, retain/omit stopwords). 
+     Users also have options for how to chunk distances. Options include word-to-word distance, ngram-to-ngram, sentence-to-sentence, turn-to-turn.
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 URL: https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance
 BugReports: https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/issues
+Depends: 
+    R (>= 3.5),
+    DescTools,
+    dplyr,
+    here,
+    magrittr,
+    tidyverse,
+    stringi,
+    stringr,
+    textstem,
+    textclean,
+    tidytable,
+    tm,
+    tidyr,
+    tidyselect,
+    lsa
+Suggests: 
+    knitr,
+    rmarkdown,
+VignetteBuilder: knitr
+RoxygenNote: 7.3.2
