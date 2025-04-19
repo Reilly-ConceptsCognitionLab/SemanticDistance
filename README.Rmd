@@ -30,30 +30,30 @@ SemanticDistance operates on a dataframe that nominally has one column of text t
 4) turn-to-turn (split by talker ID) <br/>
 
 ## Installation
-
-You can install the development version of SemanticDistance from [GitHub](https://github.com/) with:
+Install the development version of SemanticDistance from [GitHub](https://github.com/) with:
 
 ``` r
 install.packages("devtools")
 devtools::install_github("Reilly-ConceptsCognitionLab/ConversationAlign")
 ```
+You will nominally need at least one column of text within a dataframe. Ideally your text should be pre-formatted so that it is split into one word per row. However, this isn't critical. If all of your data are squished into a single string, SemanticDistance will split and unlist it so that it is formatted to one word per row. We need to do this to compute word-to-word distance! SemanticDistance can also compute pairwise distance for data arrayed in columns.
 
-You will nominally need one column of text within a dataframe. Your text should be pre-formatted so that it is split into a one word per row format. However, SemanticDistance is also capable of computing   pairwise cosine distance across two columns  (e.g., dog leash).
-
-# Let's do it!
-Pre-format your language transcript. SemanticDistance works on monologues (no talker information) or dialogues (two or more speakers). First load the package. Then read your transcript into R. It doesn't matter how you label your variables. You will specify these names in the arguments to your function calls. The first critical step is to clean and format your transcript. There are three cleaning functions to choose from based on the structure of your data:  clean_monologue, clean_dialogue, clean_columns <br/>
-
-## load the package
-```{r example}
+# load package
+```{r, echo=F}
 library(SemanticDistance)
 ```
 
-## View raw data
-### monologue
-This could be a story or instructions - anything where you don't care about talker information. You should format your transcript so that there is a vector (column) of words. All other metadata will be retained. Here's a sample monologue with all sorts of junk in a column called 'mytext'. It's not split and vectorized the way it should be, but the clean_monologue function should fix it and append a unique identifier to each word while retaining empty strings that could be meaningful.
+# Step 1: Clean and prep
+SemanticDistance works on monologues (no talker information), dialogues (two or more speakers), or word pairs arrayed in columns. These functions will retain any metadata but also append identifiers that the distance functions will need later. Options for cleaning include lemmatization and omission of stopwords.<br/>
+1) Read your transcript into R. It doesn't matter how you label your variables. You will specify these names in the arguments to your function calls. <br/>
+2) Pick a cleaning function that matches the structure of your language transcript. The following code blocks illustrate these differences. <br/>
+
+## clean_monologue
+This could be a story or instructions - anything where you don't care about talker information. You should format your transcript so that there is a vector (column) of words. All other metadata will be retained. Here's a sample monologue with all sorts of junk in a column called 'word'. It's not split and vectorized the way it should be, but the clean_monologue function should fix it and append a unique identifier to each word while retaining empty strings that could be meaningful.
 ```{r}
 #raw messy transcript of a monologue with missing obs and text that needs to be split
-#head(MonologueSample1, n=25)
+data(MonologueSample1)
+head(MonologueSample1, n=10)
 ```
 
 ### clean_monologue
