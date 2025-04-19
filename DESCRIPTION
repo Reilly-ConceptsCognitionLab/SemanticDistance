@@ -3,16 +3,16 @@ Type: Package
 Title: Computes Pairwise Cosine Distance Between Successive Units of Language Samples
 Version: 0.1.0
 Authors@R: c(person("Jamie", "Reilly", email = "jamie_reilly@temple.edu", role = c("aut", "cre")),
-    person("Hannah", "Mechtanberg", role = "ctb"),
-    person("Jonathan", "Peelle", role = "ctb"),
-    person("Emily", "Myers", role = "ctb"))
+    person("Hannah", "Mechtanberg", role = "aut"),
+    person("Jonathan", "Peelle", role = "aut"),
+    person("Emily", "Myers", role = "aut"))
 Description: This package cleans and formats any user-specified language sample and appends two metrics of semantic distance (experiential and embedding) to each specified chunk (e.g., word-to-word, ngram-to-ngram, turn-to-turn). 
      Users have several options for how to clean their data (e.g., leave it alone, lemmatize it, retain/omit stopwords). 
      Users also have options for how to chunk distances. Options include word-to-word distance, ngram-to-ngram, sentence-to-sentence, turn-to-turn.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
-URL: https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance
+URL: https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance, https://reilly-conceptscognitionlab.github.io/SemanticDistance/
 BugReports: https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/issues
 Depends: 
     R (>= 3.5),

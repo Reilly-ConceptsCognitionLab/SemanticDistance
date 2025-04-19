@@ -40,6 +40,9 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
+  <a href="articles/SemanticDistance.html">Get started</a>
+</li>
+<li>
   <a href="reference/index.html">Reference</a>
 </li>
       </ul>
@@ -62,7 +65,189 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-This package cleans and formats any user-specified language sample and appends two metrics of semantic distance (experiential and embedding) to each specified chunk (e.g., word-to-word, ngram-to-ngram, turn-to-turn). Users have several options for how to clean their data (e.g., leave it alone, lemmatize it, retain/omit stopwords). Users also have options for how to chunk distances. Options include word-to-word distance, ngram-to-ngram, sentence-to-sentence, turn-to-turn.
+<div class="section level1">
+<div class="page-header"><h1 id="semanticdistance">SemanticDistance<a class="anchor" aria-label="anchor" href="#semanticdistance"></a>
+</h1></div>
+<p><img src="reference/figures/header4readme.png" alt="semantic relations between cat, dog, leash" width="40%"></p>
+<!-- badges: start -->
+
+<p>SemanticDistance cleans and formats text then computes pairwise metrics of cosine semantic distance between different adjacent chunks (e.g., ngrams, words, turns) within language samples. We offer two different semantic distance metrics, experiential and embedding. Experiential semantic distance reflects cosine (normalized from 0) between two vectors spanning 15 meaningful semantic dimensions (e.g., color, sound, valence). Embedding-based semantic distances are derived by contrasting each word’s corresponding semantic vector spanning 300 hyperparameters as trained on the GLOVE word embedding model. The SemamticDistance package contains lookup databases with semantic vectors spanning &gt;70k English words. <br></p>
+<p>SemanticDistance operates on a dataframe that nominally has one column of text that has been split into a one word-per-row format. However, SemanticDistance can also produce distance values for words arrayed in two columns. Users have numerous ‘chunking’ options for rolling distance comparisons in either monologues (no speaker information) or dialogues (speakers identifed as in conversation transcripts). Chunk options include: <br> 1) word-to-word <br> 2) ngram-to-ngram <br> 3) ngram-to-word (rolling) <br> 4) turn-to-turn (split by talker ID) <br></p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>You can install the development version of SemanticDistance from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"Reilly-ConceptsCognitionLab/ConversationAlign"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="give-it-a-whirl">Give it a whirl<a class="anchor" aria-label="anchor" href="#give-it-a-whirl"></a>
+</h2>
+<p>You will nominally need one column of text within a dataframe. Your text should be pre-formatted so that it is split into a one word per row format. However, SemanticDistance is also capable of computing pairwise cosine distance across two columns (e.g., dog leash).</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance" class="external-link">SemanticDistance</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: DescTools</span></span>
+<span><span class="co">#&gt; Loading required package: dplyr</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     filter, lag</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
+<span><span class="co">#&gt; Loading required package: here</span></span>
+<span><span class="co">#&gt; here() starts at /Users/Jamie/Library/CloudStorage/OneDrive-TempleUniversity/Reilly_RData/SemanticDistance</span></span>
+<span><span class="co">#&gt; Loading required package: magrittr</span></span>
+<span><span class="co">#&gt; Loading required package: tidyverse</span></span>
+<span><span class="co">#&gt; ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──</span></span>
+<span><span class="co">#&gt; ✔ forcats   1.0.0     ✔ readr     2.1.5</span></span>
+<span><span class="co">#&gt; ✔ ggplot2   3.5.2     ✔ stringr   1.5.1</span></span>
+<span><span class="co">#&gt; ✔ lubridate 1.9.4     ✔ tibble    3.2.1</span></span>
+<span><span class="co">#&gt; ✔ purrr     1.0.4     ✔ tidyr     1.3.1</span></span>
+<span><span class="co">#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
+<span><span class="co">#&gt; ✖ tidyr::extract()   masks magrittr::extract()</span></span>
+<span><span class="co">#&gt; ✖ dplyr::filter()    masks stats::filter()</span></span>
+<span><span class="co">#&gt; ✖ dplyr::lag()       masks stats::lag()</span></span>
+<span><span class="co">#&gt; ✖ purrr::set_names() masks magrittr::set_names()</span></span>
+<span><span class="co">#&gt; ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</span></span>
+<span><span class="co">#&gt; Loading required package: stringi</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Loading required package: textstem</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Loading required package: koRpus.lang.en</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Loading required package: koRpus</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Loading required package: sylly</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; For information on available language packages for 'koRpus', run</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   available.koRpus.lang()</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; and see ?install.koRpus.lang()</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'koRpus'</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:readr':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     tokenize</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Loading required package: textclean</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Loading required package: tidytable</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Warning: tidytable was loaded after dplyr.</span></span>
+<span><span class="co">#&gt; This can lead to most dplyr functions being overwritten by tidytable functions.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Warning: tidytable was loaded after tidyr.</span></span>
+<span><span class="co">#&gt; This can lead to most tidyr functions being overwritten by tidytable functions.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'tidytable'</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:purrr':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     map, map_chr, map_dbl, map_df, map_dfc, map_dfr, map_int, map_lgl,</span></span>
+<span><span class="co">#&gt;     map_vec, map2, map2_chr, map2_dbl, map2_df, map2_dfc, map2_dfr,</span></span>
+<span><span class="co">#&gt;     map2_int, map2_lgl, map2_vec, pmap, pmap_chr, pmap_dbl, pmap_df,</span></span>
+<span><span class="co">#&gt;     pmap_dfc, pmap_dfr, pmap_int, pmap_lgl, pmap_vec, walk</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:tidyr':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     complete, crossing, drop_na, expand, expand_grid, extract, fill,</span></span>
+<span><span class="co">#&gt;     nest, nesting, pivot_longer, pivot_wider, replace_na, separate,</span></span>
+<span><span class="co">#&gt;     separate_longer_delim, separate_rows, separate_wider_delim,</span></span>
+<span><span class="co">#&gt;     separate_wider_regex, tribble, uncount, unite, unnest,</span></span>
+<span><span class="co">#&gt;     unnest_longer, unnest_wider</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:tibble':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     enframe, tribble</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:magrittr':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     extract</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:dplyr':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     across, add_count, add_tally, anti_join, arrange, between,</span></span>
+<span><span class="co">#&gt;     bind_cols, bind_rows, c_across, case_match, case_when, coalesce,</span></span>
+<span><span class="co">#&gt;     consecutive_id, count, cross_join, cume_dist, cur_column, cur_data,</span></span>
+<span><span class="co">#&gt;     cur_group_id, cur_group_rows, dense_rank, desc, distinct, filter,</span></span>
+<span><span class="co">#&gt;     first, full_join, group_by, group_cols, group_split, group_vars,</span></span>
+<span><span class="co">#&gt;     if_all, if_any, if_else, inner_join, is_grouped_df, lag, last,</span></span>
+<span><span class="co">#&gt;     lead, left_join, min_rank, mutate, n, n_distinct, na_if, nest_by,</span></span>
+<span><span class="co">#&gt;     nest_join, nth, percent_rank, pick, pull, recode, reframe,</span></span>
+<span><span class="co">#&gt;     relocate, rename, rename_with, right_join, row_number, rowwise,</span></span>
+<span><span class="co">#&gt;     select, semi_join, slice, slice_head, slice_max, slice_min,</span></span>
+<span><span class="co">#&gt;     slice_sample, slice_tail, summarise, summarize, tally, top_n,</span></span>
+<span><span class="co">#&gt;     transmute, tribble, ungroup</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:DescTools':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     %like%</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     dt, filter, lag</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     %in%</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Loading required package: tm</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Loading required package: NLP</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'NLP'</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:ggplot2':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     annotate</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'tm'</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:koRpus':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     readTagged</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Loading required package: tidyselect</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Loading required package: lsa</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Loading required package: SnowballC</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'lsa'</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:koRpus':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     query</span></span>
+<span><span class="co">## basic example code</span></span></code></pre></div>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -94,11 +279,18 @@ This package cleans and formats any user-specified language sample and appends t
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Jamie Reilly <br><small class="roles"> Author, maintainer </small>  </li>
-<li><a href="authors.html">More about authors...</a></li>
+<li>Hannah Mechtanberg <br><small class="roles"> Author </small>  </li>
+<li>Jonathan Peelle <br><small class="roles"> Author </small>  </li>
+<li>Emily Myers <br><small class="roles"> Author </small>  </li>
 </ul>
 </div>
 
-
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+</ul>
+</div>
 
   </div>
 </div>
@@ -106,7 +298,7 @@ This package cleans and formats any user-specified language sample and appends t
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Jamie Reilly.</p>
+<p>Developed by Jamie Reilly, Hannah Mechtanberg, Jonathan Peelle, Emily Myers.</p>
 </div>
 
 <div class="pkgdown">

@@ -18,7 +18,6 @@
 #' @importFrom stringr str_squish
 #' @importFrom tm stripWhitespace
 #' @importFrom textstem lemmatize_strings
-#' @importFrom stringr str_split_1
 #' @importFrom stringr str_split
 #' @importFrom stringi stri_remove_empty
 #' @importFrom tidyr separate_rows

@@ -3,6 +3,8 @@
 
 # SemanticDistance
 
+<img src="man/figures/header4readme.png" alt="semantic relations between cat, dog, leash" width="40%" />
+
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/actions/workflows/R-CMD-check.yaml)

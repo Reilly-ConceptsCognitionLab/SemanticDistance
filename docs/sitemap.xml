@@ -1,8 +1,11 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>/404.html</loc></url>
 <url><loc>/LICENSE.html</loc></url>
+<url><loc>/articles/SemanticDistance.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
 <url><loc>/authors.html</loc></url>
 <url><loc>/index.html</loc></url>
+<url><loc>/reference/clean_dialogue.html</loc></url>
 <url><loc>/reference/clean_dyad.html</loc></url>
 <url><loc>/reference/clean_monologue.html</loc></url>
 <url><loc>/reference/hello.html</loc></url>
