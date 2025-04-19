@@ -57,194 +57,200 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of SemanticDistance from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p>Install the development version of SemanticDistance from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"Reilly-ConceptsCognitionLab/ConversationAlign"</span><span class="op">)</span></span></code></pre></div>
-<p>You will nominally need one column of text within a dataframe. Your text should be pre-formatted so that it is split into a one word per row format. However, SemanticDistance is also capable of computing pairwise cosine distance across two columns (e.g., dog leash).</p>
+<p>You will nominally need at least one column of text within a dataframe. Ideally your text should be pre-formatted so that it is split into one word per row. However, this isn’t critical. If all of your data are squished into a single string, SemanticDistance will split and unlist it so that it is formatted to one word per row. We need to do this to compute word-to-word distance! SemanticDistance can also compute pairwise distance for data arrayed in columns.</p>
 </div>
 </div>
 <div class="section level1">
-<h1 id="lets-do-it">Let’s do it!<a class="anchor" aria-label="anchor" href="#lets-do-it"></a>
+<h1 id="load-package">load package<a class="anchor" aria-label="anchor" href="#load-package"></a>
 </h1>
-<p>Pre-format your language transcript. SemanticDistance works on monologues (no talker information) or dialogues (two or more speakers). First load the package. Then read your transcript into R. It doesn’t matter how you label your variables. You will specify these names in the arguments to your function calls. The first critical step is to clean and format your transcript. There are three cleaning functions to choose from based on the structure of your data: clean_monologue, clean_dialogue, clean_columns <br></p>
-<div class="section level2">
-<h2 id="load-the-package">load the package<a class="anchor" aria-label="anchor" href="#load-the-package"></a>
-</h2>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance" class="external-link">SemanticDistance</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Loading required package: DescTools</span></span>
-<span><span class="co">#&gt; Loading required package: dplyr</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     filter, lag</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
-<span><span class="co">#&gt; Loading required package: here</span></span>
-<span><span class="co">#&gt; here() starts at /Users/Jamie/Library/CloudStorage/OneDrive-TempleUniversity/Reilly_RData/SemanticDistance</span></span>
-<span><span class="co">#&gt; Loading required package: magrittr</span></span>
-<span><span class="co">#&gt; Loading required package: tidyverse</span></span>
-<span><span class="co">#&gt; ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──</span></span>
-<span><span class="co">#&gt; ✔ forcats   1.0.0     ✔ readr     2.1.5</span></span>
-<span><span class="co">#&gt; ✔ ggplot2   3.5.2     ✔ stringr   1.5.1</span></span>
-<span><span class="co">#&gt; ✔ lubridate 1.9.4     ✔ tibble    3.2.1</span></span>
-<span><span class="co">#&gt; ✔ purrr     1.0.4     ✔ tidyr     1.3.1</span></span>
-<span><span class="co">#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
-<span><span class="co">#&gt; ✖ tidyr::extract()   masks magrittr::extract()</span></span>
-<span><span class="co">#&gt; ✖ dplyr::filter()    masks stats::filter()</span></span>
-<span><span class="co">#&gt; ✖ dplyr::lag()       masks stats::lag()</span></span>
-<span><span class="co">#&gt; ✖ purrr::set_names() masks magrittr::set_names()</span></span>
-<span><span class="co">#&gt; ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</span></span>
-<span><span class="co">#&gt; Loading required package: stringi</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Loading required package: textstem</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Loading required package: koRpus.lang.en</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Loading required package: koRpus</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Loading required package: sylly</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; For information on available language packages for 'koRpus', run</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   available.koRpus.lang()</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; and see ?install.koRpus.lang()</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'koRpus'</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; The following object is masked from 'package:readr':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     tokenize</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Loading required package: textclean</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Loading required package: tidytable</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Warning: tidytable was loaded after dplyr.</span></span>
-<span><span class="co">#&gt; This can lead to most dplyr functions being overwritten by tidytable functions.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Warning: tidytable was loaded after tidyr.</span></span>
-<span><span class="co">#&gt; This can lead to most tidyr functions being overwritten by tidytable functions.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'tidytable'</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:purrr':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     map, map_chr, map_dbl, map_df, map_dfc, map_dfr, map_int, map_lgl,</span></span>
-<span><span class="co">#&gt;     map_vec, map2, map2_chr, map2_dbl, map2_df, map2_dfc, map2_dfr,</span></span>
-<span><span class="co">#&gt;     map2_int, map2_lgl, map2_vec, pmap, pmap_chr, pmap_dbl, pmap_df,</span></span>
-<span><span class="co">#&gt;     pmap_dfc, pmap_dfr, pmap_int, pmap_lgl, pmap_vec, walk</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:tidyr':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     complete, crossing, drop_na, expand, expand_grid, extract, fill,</span></span>
-<span><span class="co">#&gt;     nest, nesting, pivot_longer, pivot_wider, replace_na, separate,</span></span>
-<span><span class="co">#&gt;     separate_longer_delim, separate_rows, separate_wider_delim,</span></span>
-<span><span class="co">#&gt;     separate_wider_regex, tribble, uncount, unite, unnest,</span></span>
-<span><span class="co">#&gt;     unnest_longer, unnest_wider</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:tibble':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     enframe, tribble</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; The following object is masked from 'package:magrittr':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     extract</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:dplyr':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     across, add_count, add_tally, anti_join, arrange, between,</span></span>
-<span><span class="co">#&gt;     bind_cols, bind_rows, c_across, case_match, case_when, coalesce,</span></span>
-<span><span class="co">#&gt;     consecutive_id, count, cross_join, cume_dist, cur_column, cur_data,</span></span>
-<span><span class="co">#&gt;     cur_group_id, cur_group_rows, dense_rank, desc, distinct, filter,</span></span>
-<span><span class="co">#&gt;     first, full_join, group_by, group_cols, group_split, group_vars,</span></span>
-<span><span class="co">#&gt;     if_all, if_any, if_else, inner_join, is_grouped_df, lag, last,</span></span>
-<span><span class="co">#&gt;     lead, left_join, min_rank, mutate, n, n_distinct, na_if, nest_by,</span></span>
-<span><span class="co">#&gt;     nest_join, nth, percent_rank, pick, pull, recode, reframe,</span></span>
-<span><span class="co">#&gt;     relocate, rename, rename_with, right_join, row_number, rowwise,</span></span>
-<span><span class="co">#&gt;     select, semi_join, slice, slice_head, slice_max, slice_min,</span></span>
-<span><span class="co">#&gt;     slice_sample, slice_tail, summarise, summarize, tally, top_n,</span></span>
-<span><span class="co">#&gt;     transmute, tribble, ungroup</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; The following object is masked from 'package:DescTools':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     %like%</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     dt, filter, lag</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; The following object is masked from 'package:base':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     %in%</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Loading required package: tm</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Loading required package: NLP</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'NLP'</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; The following object is masked from 'package:ggplot2':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     annotate</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'tm'</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; The following object is masked from 'package:koRpus':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     readTagged</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Loading required package: tidyselect</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Loading required package: lsa</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Loading required package: SnowballC</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'lsa'</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; The following object is masked from 'package:koRpus':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     query</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co">#&gt; Loading required package: DescTools</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#&gt; Loading required package: dplyr</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt;     filter, lag</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt; Loading required package: here</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt; here() starts at /Users/Jamie/Library/CloudStorage/OneDrive-TempleUniversity/Reilly_RData/SemanticDistance</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt; Loading required package: magrittr</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt; Loading required package: tidyverse</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt; ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt; ✔ forcats   1.0.0     ✔ readr     2.1.5</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="co">#&gt; ✔ ggplot2   3.5.2     ✔ stringr   1.5.1</span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co">#&gt; ✔ lubridate 1.9.4     ✔ tibble    3.2.1</span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="co">#&gt; ✔ purrr     1.0.4     ✔ tidyr     1.3.1</span></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="co">#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a><span class="co">#&gt; ✖ tidyr::extract()   masks magrittr::extract()</span></span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a><span class="co">#&gt; ✖ dplyr::filter()    masks stats::filter()</span></span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a><span class="co">#&gt; ✖ dplyr::lag()       masks stats::lag()</span></span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a><span class="co">#&gt; ✖ purrr::set_names() masks magrittr::set_names()</span></span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a><span class="co">#&gt; ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</span></span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a><span class="co">#&gt; Loading required package: stringi</span></span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a><span class="co">#&gt; Loading required package: textstem</span></span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a><span class="co">#&gt; Loading required package: koRpus.lang.en</span></span>
+<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a><span class="co">#&gt; Loading required package: koRpus</span></span>
+<span id="cb2-33"><a href="#cb2-33" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-34"><a href="#cb2-34" tabindex="-1"></a><span class="co">#&gt; Loading required package: sylly</span></span>
+<span id="cb2-35"><a href="#cb2-35" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-36"><a href="#cb2-36" tabindex="-1"></a><span class="co">#&gt; For information on available language packages for 'koRpus', run</span></span>
+<span id="cb2-37"><a href="#cb2-37" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-38"><a href="#cb2-38" tabindex="-1"></a><span class="co">#&gt;   available.koRpus.lang()</span></span>
+<span id="cb2-39"><a href="#cb2-39" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-40"><a href="#cb2-40" tabindex="-1"></a><span class="co">#&gt; and see ?install.koRpus.lang()</span></span>
+<span id="cb2-41"><a href="#cb2-41" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-42"><a href="#cb2-42" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-43"><a href="#cb2-43" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-44"><a href="#cb2-44" tabindex="-1"></a><span class="co">#&gt; Attaching package: 'koRpus'</span></span>
+<span id="cb2-45"><a href="#cb2-45" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-46"><a href="#cb2-46" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-47"><a href="#cb2-47" tabindex="-1"></a><span class="co">#&gt; The following object is masked from 'package:readr':</span></span>
+<span id="cb2-48"><a href="#cb2-48" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-49"><a href="#cb2-49" tabindex="-1"></a><span class="co">#&gt;     tokenize</span></span>
+<span id="cb2-50"><a href="#cb2-50" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-51"><a href="#cb2-51" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-52"><a href="#cb2-52" tabindex="-1"></a><span class="co">#&gt; Loading required package: textclean</span></span>
+<span id="cb2-53"><a href="#cb2-53" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-54"><a href="#cb2-54" tabindex="-1"></a><span class="co">#&gt; Loading required package: tidytable</span></span>
+<span id="cb2-55"><a href="#cb2-55" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-56"><a href="#cb2-56" tabindex="-1"></a><span class="co">#&gt; Warning: tidytable was loaded after dplyr.</span></span>
+<span id="cb2-57"><a href="#cb2-57" tabindex="-1"></a><span class="co">#&gt; This can lead to most dplyr functions being overwritten by tidytable functions.</span></span>
+<span id="cb2-58"><a href="#cb2-58" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-59"><a href="#cb2-59" tabindex="-1"></a><span class="co">#&gt; Warning: tidytable was loaded after tidyr.</span></span>
+<span id="cb2-60"><a href="#cb2-60" tabindex="-1"></a><span class="co">#&gt; This can lead to most tidyr functions being overwritten by tidytable functions.</span></span>
+<span id="cb2-61"><a href="#cb2-61" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-62"><a href="#cb2-62" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-63"><a href="#cb2-63" tabindex="-1"></a><span class="co">#&gt; Attaching package: 'tidytable'</span></span>
+<span id="cb2-64"><a href="#cb2-64" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-65"><a href="#cb2-65" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-66"><a href="#cb2-66" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from 'package:purrr':</span></span>
+<span id="cb2-67"><a href="#cb2-67" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-68"><a href="#cb2-68" tabindex="-1"></a><span class="co">#&gt;     map, map_chr, map_dbl, map_df, map_dfc, map_dfr, map_int, map_lgl,</span></span>
+<span id="cb2-69"><a href="#cb2-69" tabindex="-1"></a><span class="co">#&gt;     map_vec, map2, map2_chr, map2_dbl, map2_df, map2_dfc, map2_dfr,</span></span>
+<span id="cb2-70"><a href="#cb2-70" tabindex="-1"></a><span class="co">#&gt;     map2_int, map2_lgl, map2_vec, pmap, pmap_chr, pmap_dbl, pmap_df,</span></span>
+<span id="cb2-71"><a href="#cb2-71" tabindex="-1"></a><span class="co">#&gt;     pmap_dfc, pmap_dfr, pmap_int, pmap_lgl, pmap_vec, walk</span></span>
+<span id="cb2-72"><a href="#cb2-72" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-73"><a href="#cb2-73" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-74"><a href="#cb2-74" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from 'package:tidyr':</span></span>
+<span id="cb2-75"><a href="#cb2-75" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-76"><a href="#cb2-76" tabindex="-1"></a><span class="co">#&gt;     complete, crossing, drop_na, expand, expand_grid, extract, fill,</span></span>
+<span id="cb2-77"><a href="#cb2-77" tabindex="-1"></a><span class="co">#&gt;     nest, nesting, pivot_longer, pivot_wider, replace_na, separate,</span></span>
+<span id="cb2-78"><a href="#cb2-78" tabindex="-1"></a><span class="co">#&gt;     separate_longer_delim, separate_rows, separate_wider_delim,</span></span>
+<span id="cb2-79"><a href="#cb2-79" tabindex="-1"></a><span class="co">#&gt;     separate_wider_regex, tribble, uncount, unite, unnest,</span></span>
+<span id="cb2-80"><a href="#cb2-80" tabindex="-1"></a><span class="co">#&gt;     unnest_longer, unnest_wider</span></span>
+<span id="cb2-81"><a href="#cb2-81" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-82"><a href="#cb2-82" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-83"><a href="#cb2-83" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from 'package:tibble':</span></span>
+<span id="cb2-84"><a href="#cb2-84" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-85"><a href="#cb2-85" tabindex="-1"></a><span class="co">#&gt;     enframe, tribble</span></span>
+<span id="cb2-86"><a href="#cb2-86" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-87"><a href="#cb2-87" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-88"><a href="#cb2-88" tabindex="-1"></a><span class="co">#&gt; The following object is masked from 'package:magrittr':</span></span>
+<span id="cb2-89"><a href="#cb2-89" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-90"><a href="#cb2-90" tabindex="-1"></a><span class="co">#&gt;     extract</span></span>
+<span id="cb2-91"><a href="#cb2-91" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-92"><a href="#cb2-92" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-93"><a href="#cb2-93" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from 'package:dplyr':</span></span>
+<span id="cb2-94"><a href="#cb2-94" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-95"><a href="#cb2-95" tabindex="-1"></a><span class="co">#&gt;     across, add_count, add_tally, anti_join, arrange, between,</span></span>
+<span id="cb2-96"><a href="#cb2-96" tabindex="-1"></a><span class="co">#&gt;     bind_cols, bind_rows, c_across, case_match, case_when, coalesce,</span></span>
+<span id="cb2-97"><a href="#cb2-97" tabindex="-1"></a><span class="co">#&gt;     consecutive_id, count, cross_join, cume_dist, cur_column, cur_data,</span></span>
+<span id="cb2-98"><a href="#cb2-98" tabindex="-1"></a><span class="co">#&gt;     cur_group_id, cur_group_rows, dense_rank, desc, distinct, filter,</span></span>
+<span id="cb2-99"><a href="#cb2-99" tabindex="-1"></a><span class="co">#&gt;     first, full_join, group_by, group_cols, group_split, group_vars,</span></span>
+<span id="cb2-100"><a href="#cb2-100" tabindex="-1"></a><span class="co">#&gt;     if_all, if_any, if_else, inner_join, is_grouped_df, lag, last,</span></span>
+<span id="cb2-101"><a href="#cb2-101" tabindex="-1"></a><span class="co">#&gt;     lead, left_join, min_rank, mutate, n, n_distinct, na_if, nest_by,</span></span>
+<span id="cb2-102"><a href="#cb2-102" tabindex="-1"></a><span class="co">#&gt;     nest_join, nth, percent_rank, pick, pull, recode, reframe,</span></span>
+<span id="cb2-103"><a href="#cb2-103" tabindex="-1"></a><span class="co">#&gt;     relocate, rename, rename_with, right_join, row_number, rowwise,</span></span>
+<span id="cb2-104"><a href="#cb2-104" tabindex="-1"></a><span class="co">#&gt;     select, semi_join, slice, slice_head, slice_max, slice_min,</span></span>
+<span id="cb2-105"><a href="#cb2-105" tabindex="-1"></a><span class="co">#&gt;     slice_sample, slice_tail, summarise, summarize, tally, top_n,</span></span>
+<span id="cb2-106"><a href="#cb2-106" tabindex="-1"></a><span class="co">#&gt;     transmute, tribble, ungroup</span></span>
+<span id="cb2-107"><a href="#cb2-107" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-108"><a href="#cb2-108" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-109"><a href="#cb2-109" tabindex="-1"></a><span class="co">#&gt; The following object is masked from 'package:DescTools':</span></span>
+<span id="cb2-110"><a href="#cb2-110" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-111"><a href="#cb2-111" tabindex="-1"></a><span class="co">#&gt;     %like%</span></span>
+<span id="cb2-112"><a href="#cb2-112" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-113"><a href="#cb2-113" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-114"><a href="#cb2-114" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span id="cb2-115"><a href="#cb2-115" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-116"><a href="#cb2-116" tabindex="-1"></a><span class="co">#&gt;     dt, filter, lag</span></span>
+<span id="cb2-117"><a href="#cb2-117" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-118"><a href="#cb2-118" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-119"><a href="#cb2-119" tabindex="-1"></a><span class="co">#&gt; The following object is masked from 'package:base':</span></span>
+<span id="cb2-120"><a href="#cb2-120" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-121"><a href="#cb2-121" tabindex="-1"></a><span class="co">#&gt;     %in%</span></span>
+<span id="cb2-122"><a href="#cb2-122" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-123"><a href="#cb2-123" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-124"><a href="#cb2-124" tabindex="-1"></a><span class="co">#&gt; Loading required package: tm</span></span>
+<span id="cb2-125"><a href="#cb2-125" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-126"><a href="#cb2-126" tabindex="-1"></a><span class="co">#&gt; Loading required package: NLP</span></span>
+<span id="cb2-127"><a href="#cb2-127" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-128"><a href="#cb2-128" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-129"><a href="#cb2-129" tabindex="-1"></a><span class="co">#&gt; Attaching package: 'NLP'</span></span>
+<span id="cb2-130"><a href="#cb2-130" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-131"><a href="#cb2-131" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-132"><a href="#cb2-132" tabindex="-1"></a><span class="co">#&gt; The following object is masked from 'package:ggplot2':</span></span>
+<span id="cb2-133"><a href="#cb2-133" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-134"><a href="#cb2-134" tabindex="-1"></a><span class="co">#&gt;     annotate</span></span>
+<span id="cb2-135"><a href="#cb2-135" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-136"><a href="#cb2-136" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-137"><a href="#cb2-137" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-138"><a href="#cb2-138" tabindex="-1"></a><span class="co">#&gt; Attaching package: 'tm'</span></span>
+<span id="cb2-139"><a href="#cb2-139" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-140"><a href="#cb2-140" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-141"><a href="#cb2-141" tabindex="-1"></a><span class="co">#&gt; The following object is masked from 'package:koRpus':</span></span>
+<span id="cb2-142"><a href="#cb2-142" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-143"><a href="#cb2-143" tabindex="-1"></a><span class="co">#&gt;     readTagged</span></span>
+<span id="cb2-144"><a href="#cb2-144" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-145"><a href="#cb2-145" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-146"><a href="#cb2-146" tabindex="-1"></a><span class="co">#&gt; Loading required package: tidyselect</span></span>
+<span id="cb2-147"><a href="#cb2-147" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-148"><a href="#cb2-148" tabindex="-1"></a><span class="co">#&gt; Loading required package: lsa</span></span>
+<span id="cb2-149"><a href="#cb2-149" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-150"><a href="#cb2-150" tabindex="-1"></a><span class="co">#&gt; Loading required package: SnowballC</span></span>
+<span id="cb2-151"><a href="#cb2-151" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-152"><a href="#cb2-152" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-153"><a href="#cb2-153" tabindex="-1"></a><span class="co">#&gt; Attaching package: 'lsa'</span></span>
+<span id="cb2-154"><a href="#cb2-154" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-155"><a href="#cb2-155" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-156"><a href="#cb2-156" tabindex="-1"></a><span class="co">#&gt; The following object is masked from 'package:koRpus':</span></span>
+<span id="cb2-157"><a href="#cb2-157" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-158"><a href="#cb2-158" tabindex="-1"></a><span class="co">#&gt;     query</span></span></code></pre></div>
 </div>
+<div class="section level1">
+<h1 id="step-1-clean-and-prep">Step 1: Clean and prep<a class="anchor" aria-label="anchor" href="#step-1-clean-and-prep"></a>
+</h1>
+<p>SemanticDistance works on monologues (no talker information), dialogues (two or more speakers), or word pairs arrayed in columns. These functions will retain any metadata but also append identifiers that the distance functions will need later. Options for cleaning include lemmatization and omission of stopwords.<br> 1) Read your transcript into R. It doesn’t matter how you label your variables. You will specify these names in the arguments to your function calls. <br> 2) Pick a cleaning function that matches the structure of your language transcript. The following code blocks illustrate these differences. <br></p>
 <div class="section level2">
-<h2 id="view-raw-data">View raw data<a class="anchor" aria-label="anchor" href="#view-raw-data"></a>
+<h2 id="clean_monologue">clean_monologue<a class="anchor" aria-label="anchor" href="#clean_monologue"></a>
 </h2>
-<div class="section level3">
-<h3 id="monologue">monologue<a class="anchor" aria-label="anchor" href="#monologue"></a>
-</h3>
-<p>This could be a story or instructions - anything where you don’t care about talker information. You should format your transcript so that there is a vector (column) of words. All other metadata will be retained. Here’s a sample monologue with all sorts of junk in a column called ‘mytext’. It’s not split and vectorized the way it should be, but the clean_monologue function should fix it and append a unique identifier to each word while retaining empty strings that could be meaningful.</p>
+<p>This could be a story or instructions - anything where you don’t care about talker information. You should format your transcript so that there is a vector (column) of words. All other metadata will be retained. Here’s a sample monologue with all sorts of junk in a column called ‘word’. It’s not split and vectorized the way it should be, but the clean_monologue function should fix it and append a unique identifier to each word while retaining empty strings that could be meaningful.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#raw messy transcript of a monologue with missing obs and text that needs to be split</span></span>
-<span><span class="co">#head(MonologueSample1, n=25)</span></span></code></pre></div>
-</div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">MonologueSample1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MonologueSample1</span>, n<span class="op">=</span><span class="fl">10</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                 word</span></span>
+<span><span class="co">#&gt; 1   The dog is blue.</span></span>
+<span><span class="co">#&gt; 2                Dog</span></span>
+<span><span class="co">#&gt; 3                Dog</span></span>
+<span><span class="co">#&gt; 4               Some</span></span>
+<span><span class="co">#&gt; 5  My name is Frank.</span></span>
+<span><span class="co">#&gt; 6                Dog</span></span>
+<span><span class="co">#&gt; 7     John's a jerk!</span></span>
+<span><span class="co">#&gt; 8              Storm</span></span>
+<span><span class="co">#&gt; 9                Dog</span></span>
+<span><span class="co">#&gt; 10               Dog</span></span></code></pre></div>
 <div class="section level3">
-<h3 id="clean_monologue">clean_monologue<a class="anchor" aria-label="anchor" href="#clean_monologue"></a>
+<h3 id="clean_monologue-1">clean_monologue<a class="anchor" aria-label="anchor" href="#clean_monologue-1"></a>
 </h3>
 <p>Appends a unique numeric identifier to each row. Then splits all the elenents of each row into separate rows. Defaults are to omit stopwords and lemmatize. Note: if you want to lemmatize and omit stopwords you don’t need to do anything or specify the arguments. You do, however, need to tell the package your dataframe name and the column name (in quotes) you want to run your operation on,</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
