@@ -41,12 +41,23 @@ install.packages("devtools")
 devtools::install_github("Reilly-ConceptsCognitionLab/ConversationAlign")
 ```
 
-## Give it a whirl
-
 You will nominally need one column of text within a dataframe. Your text
 should be pre-formatted so that it is split into a one word per row
 format. However, SemanticDistance is also capable of computing pairwise
 cosine distance across two columns (e.g., dog leash).
+
+# Let’s do it!
+
+Pre-format your language transcript. SemanticDistance works on
+monologues (no talker information) or dialogues (two or more speakers).
+First load the package. Then read your transcript into R. It doesn’t
+matter how you label your variables. You will specify these names in the
+arguments to your function calls. The first critical step is to clean
+and format your transcript. There are three cleaning functions to choose
+from based on the structure of your data: clean_monologue,
+clean_dialogue, clean_columns <br/>
+
+## load the package
 
 ``` r
 library(SemanticDistance)
@@ -208,5 +219,40 @@ library(SemanticDistance)
 #> The following object is masked from 'package:koRpus':
 #> 
 #>     query
-## basic example code
+```
+
+## View raw data
+
+### monologue
+
+This could be a story or instructions - anything where you don’t care
+about talker information. You should format your transcript so that
+there is a vector (column) of words. All other metadata will be
+retained. Here’s a sample monologue with all sorts of junk in a column
+called ‘mytext’. It’s not split and vectorized the way it should be, but
+the clean_monologue function should fix it and append a unique
+identifier to each word while retaining empty strings that could be
+meaningful.
+
+``` r
+#raw messy transcript of a monologue with missing obs and text that needs to be split
+#head(MonologueSample1, n=25)
+```
+
+### clean_monologue
+
+Appends a unique numeric identifier to each row. Then splits all the
+elenents of each row into separate rows. Defaults are to omit stopwords
+and lemmatize. Note: if you want to lemmatize and omit stopwords you
+don’t need to do anything or specify the arguments. You do, however,
+need to tell the package your dataframe name and the column name (in
+quotes) you want to run your operation on,
+
+``` r
+#arguments: df, wordcol, omit_stops=TRUE, lemmatize = TRUE
+#df=dataframe name 
+#wordcol = quoted column name where your text data live
+#omit_stops - omit stopwords default is TRUE
+#lemnatize - lemmatizes strings default is TRUE
+#my_clean_dat <- clean_monologue(MonologueSample1, 'word', omit_stops=T, lemmatize=T)
 ```
