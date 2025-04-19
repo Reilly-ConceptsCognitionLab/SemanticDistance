@@ -16,40 +16,33 @@ knitr::opts_chunk$set(
 # SemanticDistance
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of SemanticDistance is to ...
+SemanticDistance cleans and formats text then computes pairwise metrics of cosine semantic distance between different adjacent chunks (e.g., ngrams, words, turns) within language samples. We offer two different semantic distance metrics, experiential and embedding. Experiential semantic distance reflects cosine (normalized from 0) between two vectors spanning 15 meaningful semantic dimensions (e.g., color, sound, valence). Embedding-based semantic distances are derived by contrasting each word's corresponding semantic vector spanning 300 hyperparameters as trained on the GLOVE word embedding model. The SemamticDistance package contains lookup databases with semantic vectors spanning >70k English words. <br/>
+
+SemanticDistance operates on a dataframe that nominally has one column of text that has been split into a one word-per-row format. However, SemanticDistance can also produce distance values for words arrayed in two columns. Users have numerous 'chunking' options for rolling distance comparisons in either monologues (no speaker information) or dialogues (speakers identifed as in conversation transcripts). Chunk options include: <br/>
+1) word-to-word <br/>
+2) ngram-to-ngram <br/>
+3) ngram-to-word (rolling) <br/>
+4) turn-to-turn (split by talker ID) <br/>
+
+
+
 
 ## Installation
 
 You can install the development version of SemanticDistance from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("pak")
-pak::pak("Reilly-ConceptsCognitionLab/SemanticDistance")
+install.packages("devtools")
+devtools::install_github("Reilly-ConceptsCognitionLab/ConversationAlign")
 ```
 
-## Example
-
-This is a basic example which shows you how to solve a common problem:
+## Give it a whirl
+You will nominally need one column of text within a dataframe. Your text should be pre-formatted so that it is split into a one word per row format. However, SemanticDistance is also capable of computing   pairwise cosine distance across two columns  (e.g., dog leash).
 
 ```{r example}
 library(SemanticDistance)
 ## basic example code
 ```
-
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
-```{r cars}
-summary(cars)
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
