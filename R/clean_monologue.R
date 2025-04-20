@@ -3,23 +3,16 @@
 #' Cleans and formats text. User specifies the dataframe and column name where target text is stored as arguments to the function. Default option is to lemmatize strings. Function splits and unlists text so that the output is in a one-row-per-word format marked by a unique numeric identifier (i.e., 'id_orig')
 #'
 #' @name clean_monologue
-#' @param dat a dataframe with at least one target column of string data
+#' @param df a dataframe with at least one target column of string data
 #' @param wordcol quoted column name storing the strings that will be cleaned and split
 #' @param omit_stops option for omitting stopwords default is TRUE
 #' @param lemmatize option for lemmatizing strings default is TRUE
-#' @return a dataframe one-word-per-row format with 'id_orig' and 'word_clean' vars appended
+#' @return a dataframe
 #' @importFrom magrittr %>%
-#' @importFrom dplyr select
-#' @importFrom dplyr filter
-#' @importFrom dplyr group_by
-#' @importFrom dplyr ungroup
 #' @importFrom textclean replace_contraction
 #' @importFrom tm removeWords
-#' @importFrom stringr str_squish
 #' @importFrom tm stripWhitespace
 #' @importFrom textstem lemmatize_strings
-#' @importFrom stringr str_split
-#' @importFrom stringi stri_remove_empty
 #' @importFrom tidyr separate_rows
 #' @export clean_monologue
 

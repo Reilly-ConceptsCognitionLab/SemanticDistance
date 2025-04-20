@@ -3,25 +3,16 @@
 #' Cleans a transcript where there are two or more talkers. User specifies the dataframe and column name where target text is stored as arguments to the function. Default option is to lemmatize strings. Function splits and unlists text so that the output is in a one-row-per-word format marked by a unique numeric identifier (i.e., 'id_orig')
 #'
 #' @name clean_dialogue
-#' @param dat a dataframe with at least one target column of string data
+#' @param df a dataframe with at least one target column of string data
 #' @param wordcol quoted column name storing the strings that will be cleaned and split
 #' @param whotalks quoted column name with speaker/talker identities will be factorized
 #' @param omit_stops T/F user wishes to remove stopwords (default is TRUE)
 #' @param lemmatize T/F user wishes to lemmatize each string (default is TRUE)
-#' @return a dataframe one-word-per-row format with 'id_orig', 'word_clean', 'talker' vars appended
+#' @return a dataframe
 #' @importFrom magrittr %>%
-#' @importFrom dplyr select
-#' @importFrom dplyr filter
-#' @importFrom dplyr group_by
-#' @importFrom dplyr ungroup
 #' @importFrom textclean replace_contraction
 #' @importFrom tm removeWords
-#' @importFrom stringr str_squish
-#' @importFrom tm stripWhitespace
 #' @importFrom textstem lemmatize_strings
-#' @importFrom stringr str_split_1
-#' @importFrom stringr str_split
-#' @importFrom stringi stri_remove_empty
 #' @importFrom tidyr separate_rows
 #' @export clean_dialogue
 

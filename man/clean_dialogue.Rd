@@ -7,6 +7,8 @@
 clean_dialogue(df, wordcol, whotalks, omit_stops = TRUE, lemmatize = TRUE)
 }
 \arguments{
+\item{df}{a dataframe with at least one target column of string data}
+
 \item{wordcol}{quoted column name storing the strings that will be cleaned and split}
 
 \item{whotalks}{quoted column name with speaker/talker identities will be factorized}
@@ -14,11 +16,9 @@ clean_dialogue(df, wordcol, whotalks, omit_stops = TRUE, lemmatize = TRUE)
 \item{omit_stops}{T/F user wishes to remove stopwords (default is TRUE)}
 
 \item{lemmatize}{T/F user wishes to lemmatize each string (default is TRUE)}
-
-\item{dat}{a dataframe with at least one target column of string data}
 }
 \value{
-a dataframe one-word-per-row format with 'id_orig', 'word_clean', 'talker' vars appended
+a dataframe
 }
 \description{
 Cleans a transcript where there are two or more talkers. User specifies the dataframe and column name where target text is stored as arguments to the function. Default option is to lemmatize strings. Function splits and unlists text so that the output is in a one-row-per-word format marked by a unique numeric identifier (i.e., 'id_orig')
