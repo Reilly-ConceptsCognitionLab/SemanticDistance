@@ -75,9 +75,12 @@
 </h1>
 <p>SemanticDistance works on monologues (no talker information), dialogues (two or more speakers), or word pairs arrayed in columns. These functions will retain any metadata but also append identifiers that the distance functions will need later. Options for cleaning include lemmatization and omission of stopwords.<br> 1) Read your transcript into R. It doesn’t matter how you label your variables. You will specify these names in the arguments to your function calls. <br> 2) Pick a cleaning function that matches the structure of your language transcript. The following code blocks illustrate these differences. <br></p>
 <div class="section level2">
-<h2 id="prep-monologue-no-talker-info">Prep Monologue (no talker info)<a class="anchor" aria-label="anchor" href="#prep-monologue-no-talker-info"></a>
+<h2 id="prep-a-monologue-no-talker-info">Prep a Monologue (no talker info)<a class="anchor" aria-label="anchor" href="#prep-a-monologue-no-talker-info"></a>
 </h2>
-<p>This could be a story or instructions - anything where you don’t care about talker information. You should format your transcript so that there is a vector (column) of words. All other metadata will be retained. <br> Here’s a sample monologue with all sorts of junk in a column called ‘word’. The ‘clean_monologue’ function should split and append a unique identifier to each word while retaining empty strings that could be meaningful. Defaults are to omit stopwords and lemmatize.</p>
+<div class="section level3">
+<h3 id="view-a-messy-monologue">View a messy monologue<a class="anchor" aria-label="anchor" href="#view-a-messy-monologue"></a>
+</h3>
+<p>This could be a story or instructions - anything where you don’t care about talker information. You should format your transcript so that there is a vector (column) of words. All other metadata will be retained. Here’s a sample monologue with all sorts of junk in a column called ‘word’. The ‘clean_monologue’ function should split and append a unique identifier to each word while retaining empty strings that could be meaningful. Defaults are to omit stopwords and lemmatize.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#raw messy transcript of a monologue with missing obs and text that needs to be split</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">MonologueSample1</span><span class="op">)</span></span>
@@ -90,9 +93,9 @@
 <span><span class="co">#&gt; 5 My name is Frank.</span></span>
 <span><span class="co">#&gt; 6               Dog</span></span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="clean_monologue">clean_monologue<a class="anchor" aria-label="anchor" href="#clean_monologue"></a>
-</h2>
+<div class="section level3">
+<h3 id="clean_monologue">clean_monologue<a class="anchor" aria-label="anchor" href="#clean_monologue"></a>
+</h3>
 <p>Here’s what you need to specify in the function cal: df, wordcol, omit_stops=TRUE, lemmatize = TRUE df=dataframe name, wordcol = quoted column name where your target text lives, omit_stops - omit stopwords default is TRUE, lemnatize - lemmatizes strings default is TRUE.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_clean_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_monologue.html">clean_monologue</a></span><span class="op">(</span><span class="va">MonologueSample1</span>, <span class="st">'word'</span>, omit_stops<span class="op">=</span><span class="cn">T</span>, lemmatize<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
@@ -112,9 +115,12 @@
 <span><span class="co">#&gt; 10 Dog               6       "dog"</span></span></code></pre></div>
 </div>
 </div>
-<div class="section level1">
-<h1 id="prep-dialogue-egconversation-transcripts">Prep dialogue (e.g.,conversation transcripts)<a class="anchor" aria-label="anchor" href="#prep-dialogue-egconversation-transcripts"></a>
-</h1>
+<div class="section level2">
+<h2 id="prep-a-dialogue-egconversation-transcripts">Prep a Dialogue (e.g.,conversation transcripts)<a class="anchor" aria-label="anchor" href="#prep-a-dialogue-egconversation-transcripts"></a>
+</h2>
+<div class="section level3">
+<h3 id="view-a-messy-sample-dialogue">View a messy sample dialogue<a class="anchor" aria-label="anchor" href="#view-a-messy-sample-dialogue"></a>
+</h3>
 <p>This could be a conversation transcript or any language sample where you care about talker/interlocutor information (e.g., computing semantic distance across turns in a conversation).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"DialogueSample1"</span><span class="op">)</span></span>
@@ -126,10 +132,11 @@
 <span><span class="co">#&gt; 4 pop goes the weasel    Mary</span></span>
 <span><span class="co">#&gt; 5              Pigeon    Mary</span></span>
 <span><span class="co">#&gt; 6             Dolphin    Mary</span></span></code></pre></div>
-<div class="section level2">
-<h2 id="clean_dialogue">clean_dialogue<a class="anchor" aria-label="anchor" href="#clean_dialogue"></a>
-</h2>
-<p>Here’s what you need to specify in the function call…<br> 1) df = dataframe <br> 2) wordcol = column name (quoted) containing the text you want cleaned <br> 3) whotalks = column name (quoted) containing the talker ID (will convert to factor) <br> 4) omit_stops = option for omitting stopwords, default is TRUE <br> 5) lemmatize = option for lemmatizing strings, default is TRUE <br></p>
+</div>
+<div class="section level3">
+<h3 id="clean_dialogue">clean_dialogue<a class="anchor" aria-label="anchor" href="#clean_dialogue"></a>
+</h3>
+<p>Here’s what you need to specify in the function call…<br> df = dataframe, wordcol = column name (quoted) containing the text you want cleaned, whotalks = column name (quoted) containing the talker ID (will convert to factor), omit_stops = option for omitting stopwords, default is TRUE, lemmatize = option for lemmatizing strings, default is TRUE <br></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dyad</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_dialogue.html">clean_dialogue</a></span><span class="op">(</span><span class="va">DialogueSample1</span>, <span class="st">"word"</span>, <span class="st">"speaker"</span>, omit_stops<span class="op">=</span><span class="cn">T</span>, lemmatize<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dyad</span>, n<span class="op">=</span><span class="fl">6</span><span class="op">)</span></span>
@@ -144,12 +151,13 @@
 <span><span class="co">#&gt; 6 pop goes the weasel Mary    4       Mary   go                  1</span></span></code></pre></div>
 </div>
 </div>
-<div class="section level1">
-<h1 id="prep-dataframe-arrayed-in-columns">Prep dataframe arrayed in columns<a class="anchor" aria-label="anchor" href="#prep-dataframe-arrayed-in-columns"></a>
-</h1>
+<div class="section level2">
+<h2 id="prep-data-arrayed-in-two-columns">Prep Data Arrayed in Two Columns<a class="anchor" aria-label="anchor" href="#prep-data-arrayed-in-two-columns"></a>
+</h2>
 <p>SemanticDistance also computes pairwise distance for data arrayed in columns.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Add ColumnSample usethis</span></span></code></pre></div>
+</div>
 <div class="section level2">
 <h2 id="clean_columns">clean_columns<a class="anchor" aria-label="anchor" href="#clean_columns"></a>
 </h2>
@@ -167,9 +175,13 @@
 </div>
 </div>
 <div class="section level1">
-<h1 id="semantic-distance-options">Semantic Distance Options<a class="anchor" aria-label="anchor" href="#semantic-distance-options"></a>
+<h1 id="steo-2-compute-semantic-distance">Steo 2: Compute Semantic Distance<a class="anchor" aria-label="anchor" href="#steo-2-compute-semantic-distance"></a>
 </h1>
 <p>Users have several options for chunking pairwise semantic distance comparisons. SemanticDistance contains two embedded lookup databases, each with coverage of &gt;60k English words. One metric ‘CosDist_SD15’ reflects pairwise cosine distance between semantic vectors spanning 15 dimensions (e.g., color, sound, etc). Another metric (CosDist_Glo) reflects cosine distance between the 300-dimension embedding vectors tagged to each word (or averaged across the words within an ngram or turn).</p>
+<div class="section level2">
+<h2 id="option-1-rolling-ngram-to-word">Option 1: rolling ngram-to-word<a class="anchor" aria-label="anchor" href="#option-1-rolling-ngram-to-word"></a>
+</h2>
+</div>
 </div>
 
   </main><aside class="col-md-3"><div class="links">
