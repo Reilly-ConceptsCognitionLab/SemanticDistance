@@ -54,15 +54,15 @@
 
 <p>SemanticDistance cleans and formats your target text (embedded in a dataframe). The package then computes pairwise metrics of cosine semantic distance between different adjacent chunks (e.g., ngrams, words, turns). The program appends two different semantic distance metrics, experiential and embedding. Experiential semantic distance reflects cosine (normalized from 0) between two vectors spanning 15 meaningful semantic dimensions (e.g., color, sound, valence). Embedding-based semantic distances are derived by contrasting each word’s corresponding semantic vector spanning 300 hyperparameters as trained on the GLOVE word embedding model. The SemamticDistance package contains lookup databases with semantic vectors spanning &gt;70k English words. <br></p>
 <p>SemanticDistance operates on a dataframe that nominally has one column of text that has been split into a one word-per-row format. The package can also produce distance values for words arrayed in two columns. Users have numerous ‘chunking’ options for rolling distance comparisons in either monologues (no speaker information) or dialogues (speakers identifed as in conversation transcripts). Chunk options include: <br> 1) word-to-word <br> 2) ngram-to-ngram <br> 3) ngram-to-word (rolling) <br> 4) turn-to-turn (split by talker ID) <br></p>
-<div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
-</h2>
+</div>
+<div class="section level1">
+<h1 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h1>
 <p>Install the development version of SemanticDistance from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"Reilly-ConceptsCognitionLab/ConversationAlign"</span><span class="op">)</span></span></code></pre></div>
 <p>You will nominally need at least one column of text within a dataframe. Ideally your text should be pre-formatted so that it is split into one word per row. However, this isn’t critical. If all of your data are squished into a single string, SemanticDistance will split and unlist it so that it is formatted to one word per row. We need to do this to compute word-to-word distance! SemanticDistance can also compute pairwise distance for data arrayed in columns.</p>
-</div>
 </div>
 <div class="section level1">
 <h1 id="load-package">Load Package<a class="anchor" aria-label="anchor" href="#load-package"></a>
@@ -75,12 +75,9 @@
 </h1>
 <p>SemanticDistance works on monologues (no talker information), dialogues (two or more speakers), or word pairs arrayed in columns. These functions will retain any metadata but also append identifiers that the distance functions will need later. Options for cleaning include lemmatization and omission of stopwords.<br> 1) Read your transcript into R. It doesn’t matter how you label your variables. You will specify these names in the arguments to your function calls. <br> 2) Pick a cleaning function that matches the structure of your language transcript. The following code blocks illustrate these differences. <br></p>
 <div class="section level2">
-<h2 id="prep-a-monologue-no-talker-info">Prep a Monologue (no talker info)<a class="anchor" aria-label="anchor" href="#prep-a-monologue-no-talker-info"></a>
+<h2 id="monologues">Monologues<a class="anchor" aria-label="anchor" href="#monologues"></a>
 </h2>
-<div class="section level3">
-<h3 id="view-a-messy-monologue">View a messy monologue<a class="anchor" aria-label="anchor" href="#view-a-messy-monologue"></a>
-</h3>
-<p>This could be a story or instructions - anything where you don’t care about talker information. You should format your transcript so that there is a vector (column) of words. All other metadata will be retained. Here’s a sample monologue with all sorts of junk in a column called ‘word’. The ‘clean_monologue’ function should split and append a unique identifier to each word while retaining empty strings that could be meaningful. Defaults are to omit stopwords and lemmatize.</p>
+<p>This could be a story etc - anything where you don’t care about talker information. You should format your transcript so that there is a vector (column) of words. All other metadata will be retained. Here’s a sample monologue with all sorts of junk in a column called ‘word’. The ‘clean_monologue’ function should split and append a unique identifier to each word while retaining empty strings that could be meaningful. Defaults are to omit stopwords and lemmatize.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#raw messy transcript of a monologue with missing obs and text that needs to be split</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">MonologueSample1</span><span class="op">)</span></span>
@@ -92,7 +89,6 @@
 <span><span class="co">#&gt; 4              Some</span></span>
 <span><span class="co">#&gt; 5 My name is Frank.</span></span>
 <span><span class="co">#&gt; 6               Dog</span></span></code></pre></div>
-</div>
 <div class="section level3">
 <h3 id="clean_monologue">clean_monologue<a class="anchor" aria-label="anchor" href="#clean_monologue"></a>
 </h3>
@@ -116,11 +112,8 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="prep-a-dialogue-egconversation-transcripts">Prep a Dialogue (e.g.,conversation transcripts)<a class="anchor" aria-label="anchor" href="#prep-a-dialogue-egconversation-transcripts"></a>
+<h2 id="dialogues">Dialogues<a class="anchor" aria-label="anchor" href="#dialogues"></a>
 </h2>
-<div class="section level3">
-<h3 id="view-a-messy-sample-dialogue">View a messy sample dialogue<a class="anchor" aria-label="anchor" href="#view-a-messy-sample-dialogue"></a>
-</h3>
 <p>This could be a conversation transcript or any language sample where you care about talker/interlocutor information (e.g., computing semantic distance across turns in a conversation).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"DialogueSample1"</span><span class="op">)</span></span>
@@ -132,7 +125,6 @@
 <span><span class="co">#&gt; 4 pop goes the weasel    Mary</span></span>
 <span><span class="co">#&gt; 5              Pigeon    Mary</span></span>
 <span><span class="co">#&gt; 6             Dolphin    Mary</span></span></code></pre></div>
-</div>
 <div class="section level3">
 <h3 id="clean_dialogue">clean_dialogue<a class="anchor" aria-label="anchor" href="#clean_dialogue"></a>
 </h3>
@@ -152,16 +144,10 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="prep-data-arrayed-in-two-columns">Prep Data Arrayed in Two Columns<a class="anchor" aria-label="anchor" href="#prep-data-arrayed-in-two-columns"></a>
+<h2 id="word-pairs-arrayed-in-columns">Word Pairs Arrayed in Columns<a class="anchor" aria-label="anchor" href="#word-pairs-arrayed-in-columns"></a>
 </h2>
 <p>SemanticDistance also computes pairwise distance for data arrayed in columns.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#Add ColumnSample usethis</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="clean_columns">clean_columns<a class="anchor" aria-label="anchor" href="#clean_columns"></a>
-</h2>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"ColumnSample"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ColumnSample</span>, n<span class="op">=</span><span class="fl">6</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    word1     word2</span></span>
@@ -171,18 +157,26 @@
 <span><span class="co">#&gt; 4 lizard    lizard</span></span>
 <span><span class="co">#&gt; 5   bird      bird</span></span>
 <span><span class="co">#&gt; 6  shark     shark</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="clean_columns">clean_columns<a class="anchor" aria-label="anchor" href="#clean_columns"></a>
+</h3>
 <p><br><br></p>
 </div>
 </div>
+</div>
 <div class="section level1">
-<h1 id="steo-2-compute-semantic-distance">Steo 2: Compute Semantic Distance<a class="anchor" aria-label="anchor" href="#steo-2-compute-semantic-distance"></a>
+<h1 id="step-2-compute-semantic-distance">Step 2: Compute Semantic Distance<a class="anchor" aria-label="anchor" href="#step-2-compute-semantic-distance"></a>
 </h1>
 <p>Users have several options for chunking pairwise semantic distance comparisons. SemanticDistance contains two embedded lookup databases, each with coverage of &gt;60k English words. One metric ‘CosDist_SD15’ reflects pairwise cosine distance between semantic vectors spanning 15 dimensions (e.g., color, sound, etc). Another metric (CosDist_Glo) reflects cosine distance between the 300-dimension embedding vectors tagged to each word (or averaged across the words within an ngram or turn).</p>
 <div class="section level2">
-<h2 id="option-1-rolling-ngram-to-word">Option 1: rolling ngram-to-word<a class="anchor" aria-label="anchor" href="#option-1-rolling-ngram-to-word"></a>
+<h2 id="option-1-rolling-ngram-to-word">Option 1: Rolling ngram-to-word<a class="anchor" aria-label="anchor" href="#option-1-rolling-ngram-to-word"></a>
 </h2>
-<p>Users specify an ngram window size. This window rolls successively over your language sample to compute a semantic distance value for each new word relative to the n-words (ngram size) before it. This model of compouting distance is illustrated in the figure. The larger your specified ngram size the more smoothed the semantic vector will be over your language sample.</p>
-<p><img src="reference/figures/RollingNgramIllustrate.png" alt="illustrates how rolling ngrams work on a vector of words by moving a window and contrasting each chunk to each new word" width="60%"></p>
+<p>Users specify an ngram window size. This window rolls successively over your language sample to compute a semantic distance value for each new word relative to the n-words (ngram size) before it. This model of compouting distance is illustrated in the figure. The larger your specified ngram size the more smoothed the semantic vector will be over your language sample. <br><br></p>
+<p><img src="reference/figures/RollingNgramIllustrate.png" alt="illustrates how rolling ngrams work on a vector of words by moving a window and contrasting each chunk to each new word" width="50%"></p>
+<div class="section level3">
+<h3 id="dist_roll_monologue">dist_roll_monologue<a class="anchor" aria-label="anchor" href="#dist_roll_monologue"></a>
+</h3>
+</div>
 </div>
 </div>
 
