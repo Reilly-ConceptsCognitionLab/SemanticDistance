@@ -52,8 +52,8 @@
 <p><img src="reference/figures/header4readme.png" alt="semantic relations between cat, dog, leash" width="40%"></p>
 <!-- badges: start -->
 
-<p>SemanticDistance cleans and formats text then computes pairwise metrics of cosine semantic distance between different adjacent chunks (e.g., ngrams, words, turns) within language samples. We offer two different semantic distance metrics, experiential and embedding. Experiential semantic distance reflects cosine (normalized from 0) between two vectors spanning 15 meaningful semantic dimensions (e.g., color, sound, valence). Embedding-based semantic distances are derived by contrasting each word’s corresponding semantic vector spanning 300 hyperparameters as trained on the GLOVE word embedding model. The SemamticDistance package contains lookup databases with semantic vectors spanning &gt;70k English words. <br></p>
-<p>SemanticDistance operates on a dataframe that nominally has one column of text that has been split into a one word-per-row format. However, SemanticDistance can also produce distance values for words arrayed in two columns. Users have numerous ‘chunking’ options for rolling distance comparisons in either monologues (no speaker information) or dialogues (speakers identifed as in conversation transcripts). Chunk options include: <br> 1) word-to-word <br> 2) ngram-to-ngram <br> 3) ngram-to-word (rolling) <br> 4) turn-to-turn (split by talker ID) <br></p>
+<p>SemanticDistance cleans and formats your target text (embedded in a dataframe). The package then computes pairwise metrics of cosine semantic distance between different adjacent chunks (e.g., ngrams, words, turns). The program appends two different semantic distance metrics, experiential and embedding. Experiential semantic distance reflects cosine (normalized from 0) between two vectors spanning 15 meaningful semantic dimensions (e.g., color, sound, valence). Embedding-based semantic distances are derived by contrasting each word’s corresponding semantic vector spanning 300 hyperparameters as trained on the GLOVE word embedding model. The SemamticDistance package contains lookup databases with semantic vectors spanning &gt;70k English words. <br></p>
+<p>SemanticDistance operates on a dataframe that nominally has one column of text that has been split into a one word-per-row format. The package can also produce distance values for words arrayed in two columns. Users have numerous ‘chunking’ options for rolling distance comparisons in either monologues (no speaker information) or dialogues (speakers identifed as in conversation transcripts). Chunk options include: <br> 1) word-to-word <br> 2) ngram-to-ngram <br> 3) ngram-to-word (rolling) <br> 4) turn-to-turn (split by talker ID) <br></p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -65,203 +65,111 @@
 </div>
 </div>
 <div class="section level1">
-<h1 id="load-package">load package<a class="anchor" aria-label="anchor" href="#load-package"></a>
+<h1 id="load-package">Load Package<a class="anchor" aria-label="anchor" href="#load-package"></a>
 </h1>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co">#&gt; Loading required package: DescTools</span></span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#&gt; Loading required package: dplyr</span></span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt;     filter, lag</span></span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt; Loading required package: here</span></span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt; here() starts at /Users/Jamie/Library/CloudStorage/OneDrive-TempleUniversity/Reilly_RData/SemanticDistance</span></span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt; Loading required package: magrittr</span></span>
-<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt; Loading required package: tidyverse</span></span>
-<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt; ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──</span></span>
-<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt; ✔ forcats   1.0.0     ✔ readr     2.1.5</span></span>
-<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="co">#&gt; ✔ ggplot2   3.5.2     ✔ stringr   1.5.1</span></span>
-<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co">#&gt; ✔ lubridate 1.9.4     ✔ tibble    3.2.1</span></span>
-<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="co">#&gt; ✔ purrr     1.0.4     ✔ tidyr     1.3.1</span></span>
-<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="co">#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
-<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a><span class="co">#&gt; ✖ tidyr::extract()   masks magrittr::extract()</span></span>
-<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a><span class="co">#&gt; ✖ dplyr::filter()    masks stats::filter()</span></span>
-<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a><span class="co">#&gt; ✖ dplyr::lag()       masks stats::lag()</span></span>
-<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a><span class="co">#&gt; ✖ purrr::set_names() masks magrittr::set_names()</span></span>
-<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a><span class="co">#&gt; ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</span></span>
-<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a><span class="co">#&gt; Loading required package: stringi</span></span>
-<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a><span class="co">#&gt; Loading required package: textstem</span></span>
-<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a><span class="co">#&gt; Loading required package: koRpus.lang.en</span></span>
-<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a><span class="co">#&gt; Loading required package: koRpus</span></span>
-<span id="cb2-33"><a href="#cb2-33" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-34"><a href="#cb2-34" tabindex="-1"></a><span class="co">#&gt; Loading required package: sylly</span></span>
-<span id="cb2-35"><a href="#cb2-35" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-36"><a href="#cb2-36" tabindex="-1"></a><span class="co">#&gt; For information on available language packages for 'koRpus', run</span></span>
-<span id="cb2-37"><a href="#cb2-37" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-38"><a href="#cb2-38" tabindex="-1"></a><span class="co">#&gt;   available.koRpus.lang()</span></span>
-<span id="cb2-39"><a href="#cb2-39" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-40"><a href="#cb2-40" tabindex="-1"></a><span class="co">#&gt; and see ?install.koRpus.lang()</span></span>
-<span id="cb2-41"><a href="#cb2-41" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-42"><a href="#cb2-42" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-43"><a href="#cb2-43" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-44"><a href="#cb2-44" tabindex="-1"></a><span class="co">#&gt; Attaching package: 'koRpus'</span></span>
-<span id="cb2-45"><a href="#cb2-45" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-46"><a href="#cb2-46" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-47"><a href="#cb2-47" tabindex="-1"></a><span class="co">#&gt; The following object is masked from 'package:readr':</span></span>
-<span id="cb2-48"><a href="#cb2-48" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-49"><a href="#cb2-49" tabindex="-1"></a><span class="co">#&gt;     tokenize</span></span>
-<span id="cb2-50"><a href="#cb2-50" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-51"><a href="#cb2-51" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-52"><a href="#cb2-52" tabindex="-1"></a><span class="co">#&gt; Loading required package: textclean</span></span>
-<span id="cb2-53"><a href="#cb2-53" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-54"><a href="#cb2-54" tabindex="-1"></a><span class="co">#&gt; Loading required package: tidytable</span></span>
-<span id="cb2-55"><a href="#cb2-55" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-56"><a href="#cb2-56" tabindex="-1"></a><span class="co">#&gt; Warning: tidytable was loaded after dplyr.</span></span>
-<span id="cb2-57"><a href="#cb2-57" tabindex="-1"></a><span class="co">#&gt; This can lead to most dplyr functions being overwritten by tidytable functions.</span></span>
-<span id="cb2-58"><a href="#cb2-58" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-59"><a href="#cb2-59" tabindex="-1"></a><span class="co">#&gt; Warning: tidytable was loaded after tidyr.</span></span>
-<span id="cb2-60"><a href="#cb2-60" tabindex="-1"></a><span class="co">#&gt; This can lead to most tidyr functions being overwritten by tidytable functions.</span></span>
-<span id="cb2-61"><a href="#cb2-61" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-62"><a href="#cb2-62" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-63"><a href="#cb2-63" tabindex="-1"></a><span class="co">#&gt; Attaching package: 'tidytable'</span></span>
-<span id="cb2-64"><a href="#cb2-64" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-65"><a href="#cb2-65" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-66"><a href="#cb2-66" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from 'package:purrr':</span></span>
-<span id="cb2-67"><a href="#cb2-67" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-68"><a href="#cb2-68" tabindex="-1"></a><span class="co">#&gt;     map, map_chr, map_dbl, map_df, map_dfc, map_dfr, map_int, map_lgl,</span></span>
-<span id="cb2-69"><a href="#cb2-69" tabindex="-1"></a><span class="co">#&gt;     map_vec, map2, map2_chr, map2_dbl, map2_df, map2_dfc, map2_dfr,</span></span>
-<span id="cb2-70"><a href="#cb2-70" tabindex="-1"></a><span class="co">#&gt;     map2_int, map2_lgl, map2_vec, pmap, pmap_chr, pmap_dbl, pmap_df,</span></span>
-<span id="cb2-71"><a href="#cb2-71" tabindex="-1"></a><span class="co">#&gt;     pmap_dfc, pmap_dfr, pmap_int, pmap_lgl, pmap_vec, walk</span></span>
-<span id="cb2-72"><a href="#cb2-72" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-73"><a href="#cb2-73" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-74"><a href="#cb2-74" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from 'package:tidyr':</span></span>
-<span id="cb2-75"><a href="#cb2-75" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-76"><a href="#cb2-76" tabindex="-1"></a><span class="co">#&gt;     complete, crossing, drop_na, expand, expand_grid, extract, fill,</span></span>
-<span id="cb2-77"><a href="#cb2-77" tabindex="-1"></a><span class="co">#&gt;     nest, nesting, pivot_longer, pivot_wider, replace_na, separate,</span></span>
-<span id="cb2-78"><a href="#cb2-78" tabindex="-1"></a><span class="co">#&gt;     separate_longer_delim, separate_rows, separate_wider_delim,</span></span>
-<span id="cb2-79"><a href="#cb2-79" tabindex="-1"></a><span class="co">#&gt;     separate_wider_regex, tribble, uncount, unite, unnest,</span></span>
-<span id="cb2-80"><a href="#cb2-80" tabindex="-1"></a><span class="co">#&gt;     unnest_longer, unnest_wider</span></span>
-<span id="cb2-81"><a href="#cb2-81" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-82"><a href="#cb2-82" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-83"><a href="#cb2-83" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from 'package:tibble':</span></span>
-<span id="cb2-84"><a href="#cb2-84" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-85"><a href="#cb2-85" tabindex="-1"></a><span class="co">#&gt;     enframe, tribble</span></span>
-<span id="cb2-86"><a href="#cb2-86" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-87"><a href="#cb2-87" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-88"><a href="#cb2-88" tabindex="-1"></a><span class="co">#&gt; The following object is masked from 'package:magrittr':</span></span>
-<span id="cb2-89"><a href="#cb2-89" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-90"><a href="#cb2-90" tabindex="-1"></a><span class="co">#&gt;     extract</span></span>
-<span id="cb2-91"><a href="#cb2-91" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-92"><a href="#cb2-92" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-93"><a href="#cb2-93" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from 'package:dplyr':</span></span>
-<span id="cb2-94"><a href="#cb2-94" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-95"><a href="#cb2-95" tabindex="-1"></a><span class="co">#&gt;     across, add_count, add_tally, anti_join, arrange, between,</span></span>
-<span id="cb2-96"><a href="#cb2-96" tabindex="-1"></a><span class="co">#&gt;     bind_cols, bind_rows, c_across, case_match, case_when, coalesce,</span></span>
-<span id="cb2-97"><a href="#cb2-97" tabindex="-1"></a><span class="co">#&gt;     consecutive_id, count, cross_join, cume_dist, cur_column, cur_data,</span></span>
-<span id="cb2-98"><a href="#cb2-98" tabindex="-1"></a><span class="co">#&gt;     cur_group_id, cur_group_rows, dense_rank, desc, distinct, filter,</span></span>
-<span id="cb2-99"><a href="#cb2-99" tabindex="-1"></a><span class="co">#&gt;     first, full_join, group_by, group_cols, group_split, group_vars,</span></span>
-<span id="cb2-100"><a href="#cb2-100" tabindex="-1"></a><span class="co">#&gt;     if_all, if_any, if_else, inner_join, is_grouped_df, lag, last,</span></span>
-<span id="cb2-101"><a href="#cb2-101" tabindex="-1"></a><span class="co">#&gt;     lead, left_join, min_rank, mutate, n, n_distinct, na_if, nest_by,</span></span>
-<span id="cb2-102"><a href="#cb2-102" tabindex="-1"></a><span class="co">#&gt;     nest_join, nth, percent_rank, pick, pull, recode, reframe,</span></span>
-<span id="cb2-103"><a href="#cb2-103" tabindex="-1"></a><span class="co">#&gt;     relocate, rename, rename_with, right_join, row_number, rowwise,</span></span>
-<span id="cb2-104"><a href="#cb2-104" tabindex="-1"></a><span class="co">#&gt;     select, semi_join, slice, slice_head, slice_max, slice_min,</span></span>
-<span id="cb2-105"><a href="#cb2-105" tabindex="-1"></a><span class="co">#&gt;     slice_sample, slice_tail, summarise, summarize, tally, top_n,</span></span>
-<span id="cb2-106"><a href="#cb2-106" tabindex="-1"></a><span class="co">#&gt;     transmute, tribble, ungroup</span></span>
-<span id="cb2-107"><a href="#cb2-107" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-108"><a href="#cb2-108" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-109"><a href="#cb2-109" tabindex="-1"></a><span class="co">#&gt; The following object is masked from 'package:DescTools':</span></span>
-<span id="cb2-110"><a href="#cb2-110" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-111"><a href="#cb2-111" tabindex="-1"></a><span class="co">#&gt;     %like%</span></span>
-<span id="cb2-112"><a href="#cb2-112" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-113"><a href="#cb2-113" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-114"><a href="#cb2-114" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
-<span id="cb2-115"><a href="#cb2-115" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-116"><a href="#cb2-116" tabindex="-1"></a><span class="co">#&gt;     dt, filter, lag</span></span>
-<span id="cb2-117"><a href="#cb2-117" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-118"><a href="#cb2-118" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-119"><a href="#cb2-119" tabindex="-1"></a><span class="co">#&gt; The following object is masked from 'package:base':</span></span>
-<span id="cb2-120"><a href="#cb2-120" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-121"><a href="#cb2-121" tabindex="-1"></a><span class="co">#&gt;     %in%</span></span>
-<span id="cb2-122"><a href="#cb2-122" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-123"><a href="#cb2-123" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-124"><a href="#cb2-124" tabindex="-1"></a><span class="co">#&gt; Loading required package: tm</span></span>
-<span id="cb2-125"><a href="#cb2-125" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-126"><a href="#cb2-126" tabindex="-1"></a><span class="co">#&gt; Loading required package: NLP</span></span>
-<span id="cb2-127"><a href="#cb2-127" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-128"><a href="#cb2-128" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-129"><a href="#cb2-129" tabindex="-1"></a><span class="co">#&gt; Attaching package: 'NLP'</span></span>
-<span id="cb2-130"><a href="#cb2-130" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-131"><a href="#cb2-131" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-132"><a href="#cb2-132" tabindex="-1"></a><span class="co">#&gt; The following object is masked from 'package:ggplot2':</span></span>
-<span id="cb2-133"><a href="#cb2-133" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-134"><a href="#cb2-134" tabindex="-1"></a><span class="co">#&gt;     annotate</span></span>
-<span id="cb2-135"><a href="#cb2-135" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-136"><a href="#cb2-136" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-137"><a href="#cb2-137" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-138"><a href="#cb2-138" tabindex="-1"></a><span class="co">#&gt; Attaching package: 'tm'</span></span>
-<span id="cb2-139"><a href="#cb2-139" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-140"><a href="#cb2-140" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-141"><a href="#cb2-141" tabindex="-1"></a><span class="co">#&gt; The following object is masked from 'package:koRpus':</span></span>
-<span id="cb2-142"><a href="#cb2-142" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-143"><a href="#cb2-143" tabindex="-1"></a><span class="co">#&gt;     readTagged</span></span>
-<span id="cb2-144"><a href="#cb2-144" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-145"><a href="#cb2-145" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-146"><a href="#cb2-146" tabindex="-1"></a><span class="co">#&gt; Loading required package: tidyselect</span></span>
-<span id="cb2-147"><a href="#cb2-147" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-148"><a href="#cb2-148" tabindex="-1"></a><span class="co">#&gt; Loading required package: lsa</span></span>
-<span id="cb2-149"><a href="#cb2-149" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-150"><a href="#cb2-150" tabindex="-1"></a><span class="co">#&gt; Loading required package: SnowballC</span></span>
-<span id="cb2-151"><a href="#cb2-151" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-152"><a href="#cb2-152" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-153"><a href="#cb2-153" tabindex="-1"></a><span class="co">#&gt; Attaching package: 'lsa'</span></span>
-<span id="cb2-154"><a href="#cb2-154" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-155"><a href="#cb2-155" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-156"><a href="#cb2-156" tabindex="-1"></a><span class="co">#&gt; The following object is masked from 'package:koRpus':</span></span>
-<span id="cb2-157"><a href="#cb2-157" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-158"><a href="#cb2-158" tabindex="-1"></a><span class="co">#&gt;     query</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance" class="external-link">SemanticDistance</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level1">
-<h1 id="step-1-clean-and-prep">Step 1: Clean and prep<a class="anchor" aria-label="anchor" href="#step-1-clean-and-prep"></a>
+<h1 id="step-1-clean-and-prep">Step 1: Clean and Prep<a class="anchor" aria-label="anchor" href="#step-1-clean-and-prep"></a>
 </h1>
 <p>SemanticDistance works on monologues (no talker information), dialogues (two or more speakers), or word pairs arrayed in columns. These functions will retain any metadata but also append identifiers that the distance functions will need later. Options for cleaning include lemmatization and omission of stopwords.<br> 1) Read your transcript into R. It doesn’t matter how you label your variables. You will specify these names in the arguments to your function calls. <br> 2) Pick a cleaning function that matches the structure of your language transcript. The following code blocks illustrate these differences. <br></p>
 <div class="section level2">
-<h2 id="clean_monologue">clean_monologue<a class="anchor" aria-label="anchor" href="#clean_monologue"></a>
+<h2 id="prep-monologue-no-talker-info">Prep Monologue (no talker info)<a class="anchor" aria-label="anchor" href="#prep-monologue-no-talker-info"></a>
 </h2>
-<p>This could be a story or instructions - anything where you don’t care about talker information. You should format your transcript so that there is a vector (column) of words. All other metadata will be retained. Here’s a sample monologue with all sorts of junk in a column called ‘word’. It’s not split and vectorized the way it should be, but the clean_monologue function should fix it and append a unique identifier to each word while retaining empty strings that could be meaningful.</p>
+<p>This could be a story or instructions - anything where you don’t care about talker information. You should format your transcript so that there is a vector (column) of words. All other metadata will be retained. <br> Here’s a sample monologue with all sorts of junk in a column called ‘word’. The ‘clean_monologue’ function should split and append a unique identifier to each word while retaining empty strings that could be meaningful. Defaults are to omit stopwords and lemmatize.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#raw messy transcript of a monologue with missing obs and text that needs to be split</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">MonologueSample1</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MonologueSample1</span>, n<span class="op">=</span><span class="fl">10</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                 word</span></span>
-<span><span class="co">#&gt; 1   The dog is blue.</span></span>
-<span><span class="co">#&gt; 2                Dog</span></span>
-<span><span class="co">#&gt; 3                Dog</span></span>
-<span><span class="co">#&gt; 4               Some</span></span>
-<span><span class="co">#&gt; 5  My name is Frank.</span></span>
-<span><span class="co">#&gt; 6                Dog</span></span>
-<span><span class="co">#&gt; 7     John's a jerk!</span></span>
-<span><span class="co">#&gt; 8              Storm</span></span>
-<span><span class="co">#&gt; 9                Dog</span></span>
-<span><span class="co">#&gt; 10               Dog</span></span></code></pre></div>
-<div class="section level3">
-<h3 id="clean_monologue-1">clean_monologue<a class="anchor" aria-label="anchor" href="#clean_monologue-1"></a>
-</h3>
-<p>Appends a unique numeric identifier to each row. Then splits all the elenents of each row into separate rows. Defaults are to omit stopwords and lemmatize. Note: if you want to lemmatize and omit stopwords you don’t need to do anything or specify the arguments. You do, however, need to tell the package your dataframe name and the column name (in quotes) you want to run your operation on,</p>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MonologueSample1</span>, n<span class="op">=</span><span class="fl">6</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                word</span></span>
+<span><span class="co">#&gt; 1  The dog is blue.</span></span>
+<span><span class="co">#&gt; 2               Dog</span></span>
+<span><span class="co">#&gt; 3               Dog</span></span>
+<span><span class="co">#&gt; 4              Some</span></span>
+<span><span class="co">#&gt; 5 My name is Frank.</span></span>
+<span><span class="co">#&gt; 6               Dog</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="clean_monologue">clean_monologue<a class="anchor" aria-label="anchor" href="#clean_monologue"></a>
+</h2>
+<p>Here’s what you need to specify in the function cal: df, wordcol, omit_stops=TRUE, lemmatize = TRUE df=dataframe name, wordcol = quoted column name where your target text lives, omit_stops - omit stopwords default is TRUE, lemnatize - lemmatizes strings default is TRUE.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#arguments: df, wordcol, omit_stops=TRUE, lemmatize = TRUE</span></span>
-<span><span class="co">#df=dataframe name </span></span>
-<span><span class="co">#wordcol = quoted column name where your text data live</span></span>
-<span><span class="co">#omit_stops - omit stopwords default is TRUE</span></span>
-<span><span class="co">#lemnatize - lemmatizes strings default is TRUE</span></span>
-<span><span class="co">#my_clean_dat &lt;- clean_monologue(MonologueSample1, 'word', omit_stops=T, lemmatize=T)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">my_clean_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_monologue.html">clean_monologue</a></span><span class="op">(</span><span class="va">MonologueSample1</span>, <span class="st">'word'</span>, omit_stops<span class="op">=</span><span class="cn">T</span>, lemmatize<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">my_clean_dat</span>, n<span class="op">=</span><span class="fl">10</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 10 × 3</span></span>
+<span><span class="co">#&gt;    word              id_orig word_clean</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;             &lt;fct&gt;   &lt;chr&gt;     </span></span>
+<span><span class="co">#&gt;  1 The dog is blue.  1       ""        </span></span>
+<span><span class="co">#&gt;  2 The dog is blue.  1       "dog"     </span></span>
+<span><span class="co">#&gt;  3 The dog is blue.  1       "blue"    </span></span>
+<span><span class="co">#&gt;  4 Dog               2       "dog"     </span></span>
+<span><span class="co">#&gt;  5 Dog               3       "dog"     </span></span>
+<span><span class="co">#&gt;  6 Some              4       ""        </span></span>
+<span><span class="co">#&gt;  7 My name is Frank. 5       ""        </span></span>
+<span><span class="co">#&gt;  8 My name is Frank. 5       "name"    </span></span>
+<span><span class="co">#&gt;  9 My name is Frank. 5       "frank"   </span></span>
+<span><span class="co">#&gt; 10 Dog               6       "dog"</span></span></code></pre></div>
 </div>
 </div>
+<div class="section level1">
+<h1 id="prep-dialogue-egconversation-transcripts">Prep dialogue (e.g.,conversation transcripts)<a class="anchor" aria-label="anchor" href="#prep-dialogue-egconversation-transcripts"></a>
+</h1>
+<p>This could be a conversation transcript or any language sample where you care about talker/interlocutor information (e.g., computing semantic distance across turns in a conversation).</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"DialogueSample1"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">DialogueSample1</span>, n<span class="op">=</span><span class="fl">6</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                  word speaker</span></span>
+<span><span class="co">#&gt; 1            Hi Peter    Mary</span></span>
+<span><span class="co">#&gt; 2    Donkeys are gray    Mary</span></span>
+<span><span class="co">#&gt; 3             Leopard    Mary</span></span>
+<span><span class="co">#&gt; 4 pop goes the weasel    Mary</span></span>
+<span><span class="co">#&gt; 5              Pigeon    Mary</span></span>
+<span><span class="co">#&gt; 6             Dolphin    Mary</span></span></code></pre></div>
+<div class="section level2">
+<h2 id="clean_dialogue">clean_dialogue<a class="anchor" aria-label="anchor" href="#clean_dialogue"></a>
+</h2>
+<p>Here’s what you need to specify in the function call…<br> 1) df = dataframe <br> 2) wordcol = column name (quoted) containing the text you want cleaned <br> 3) whotalks = column name (quoted) containing the talker ID (will convert to factor) <br> 4) omit_stops = option for omitting stopwords, default is TRUE <br> 5) lemmatize = option for lemmatizing strings, default is TRUE <br></p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dyad</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_dialogue.html">clean_dialogue</a></span><span class="op">(</span><span class="va">DialogueSample1</span>, <span class="st">"word"</span>, <span class="st">"speaker"</span>, omit_stops<span class="op">=</span><span class="cn">T</span>, lemmatize<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dyad</span>, n<span class="op">=</span><span class="fl">6</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 6</span></span>
+<span><span class="co">#&gt;   word                speaker ID_Orig talker word_clean turn_count</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;               &lt;chr&gt;   &lt;fct&gt;   &lt;fct&gt;  &lt;chr&gt;           &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 Hi Peter            Mary    1       Mary   peter               1</span></span>
+<span><span class="co">#&gt; 2 Donkeys are gray    Mary    2       Mary   donkey              1</span></span>
+<span><span class="co">#&gt; 3 Donkeys are gray    Mary    2       Mary   gray                1</span></span>
+<span><span class="co">#&gt; 4 Leopard             Mary    3       Mary   leopard             1</span></span>
+<span><span class="co">#&gt; 5 pop goes the weasel Mary    4       Mary   pop                 1</span></span>
+<span><span class="co">#&gt; 6 pop goes the weasel Mary    4       Mary   go                  1</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level1">
+<h1 id="prep-dataframe-arrayed-in-columns">Prep dataframe arrayed in columns<a class="anchor" aria-label="anchor" href="#prep-dataframe-arrayed-in-columns"></a>
+</h1>
+<p>SemanticDistance also computes pairwise distance for data arrayed in columns.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#Add ColumnSample usethis</span></span></code></pre></div>
+<div class="section level2">
+<h2 id="clean_columns">clean_columns<a class="anchor" aria-label="anchor" href="#clean_columns"></a>
+</h2>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"ColumnSample"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ColumnSample</span>, n<span class="op">=</span><span class="fl">6</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    word1     word2</span></span>
+<span><span class="co">#&gt; 1    Dog   trumpet</span></span>
+<span><span class="co">#&gt; 2   cat     banana</span></span>
+<span><span class="co">#&gt; 3    rat astronaut</span></span>
+<span><span class="co">#&gt; 4 lizard    lizard</span></span>
+<span><span class="co">#&gt; 5   bird      bird</span></span>
+<span><span class="co">#&gt; 6  shark     shark</span></span></code></pre></div>
+<p><br><br></p>
+</div>
+</div>
+<div class="section level1">
+<h1 id="semantic-distance-options">Semantic Distance Options<a class="anchor" aria-label="anchor" href="#semantic-distance-options"></a>
+</h1>
+<p>Users have several options for chunking pairwise semantic distance comparisons. SemanticDistance contains two embedded lookup databases, each with coverage of &gt;60k English words. One metric ‘CosDist_SD15’ reflects pairwise cosine distance between semantic vectors spanning 15 dimensions (e.g., color, sound, etc). Another metric (CosDist_Glo) reflects cosine distance between the 300-dimension embedding vectors tagged to each word (or averaged across the words within an ngram or turn).</p>
 </div>
 
   </main><aside class="col-md-3"><div class="links">
@@ -292,7 +200,7 @@
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Jamie Reilly <br><small class="roles"> Author, maintainer </small>  </li>
-<li>Hannah Mechtanberg <br><small class="roles"> Author </small>  </li>
+<li>Hannah Mechtenberg <br><small class="roles"> Author </small>  </li>
 <li>Jonathan Peelle <br><small class="roles"> Author </small>  </li>
 <li>Emily Myers <br><small class="roles"> Author </small>  </li>
 </ul>
@@ -310,7 +218,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Jamie Reilly, Hannah Mechtanberg, Jonathan Peelle, Emily Myers.</p>
+  <p>Developed by Jamie Reilly, Hannah Mechtenberg, Jonathan Peelle, Emily Myers.</p>
 </div>
 
 <div class="pkgdown-footer-right">
