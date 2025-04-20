@@ -32,7 +32,7 @@ identifed as in conversation transcripts). Chunk options include:
 <br/> 1) word-to-word <br/> 2) ngram-to-ngram <br/> 3) ngram-to-word
 (rolling) <br/> 4) turn-to-turn (split by talker ID) <br/>
 
-## Installation
+# Installation
 
 Install the development version of SemanticDistance from
 [GitHub](https://github.com/) with:
@@ -69,17 +69,15 @@ cleaning function that matches the structure of your language
 transcript. The following code blocks illustrate these differences.
 <br/>
 
-## Prep a Monologue (no talker info)
+## Monologues
 
-### View a messy monologue
-
-This could be a story or instructions - anything where you don’t care
-about talker information. You should format your transcript so that
-there is a vector (column) of words. All other metadata will be
-retained. Here’s a sample monologue with all sorts of junk in a column
-called ‘word’. The ‘clean_monologue’ function should split and append a
-unique identifier to each word while retaining empty strings that could
-be meaningful. Defaults are to omit stopwords and lemmatize.
+This could be a story etc - anything where you don’t care about talker
+information. You should format your transcript so that there is a vector
+(column) of words. All other metadata will be retained. Here’s a sample
+monologue with all sorts of junk in a column called ‘word’. The
+‘clean_monologue’ function should split and append a unique identifier
+to each word while retaining empty strings that could be meaningful.
+Defaults are to omit stopwords and lemmatize.
 
 ``` r
 #raw messy transcript of a monologue with missing obs and text that needs to be split
@@ -119,9 +117,7 @@ head(my_clean_dat, n=10)
 #> 10 Dog               6       "dog"
 ```
 
-## Prep a Dialogue (e.g.,conversation transcripts)
-
-### View a messy sample dialogue
+## Dialogues
 
 This could be a conversation transcript or any language sample where you
 care about talker/interlocutor information (e.g., computing semantic
@@ -162,16 +158,10 @@ head(dyad, n=6)
 #> 6 pop goes the weasel Mary    4       Mary   go                  1
 ```
 
-## Prep Data Arrayed in Two Columns
+## Word Pairs Arrayed in Columns
 
 SemanticDistance also computes pairwise distance for data arrayed in
 columns.
-
-``` r
-#Add ColumnSample usethis
-```
-
-## clean_columns
 
 ``` r
 data("ColumnSample")
@@ -185,9 +175,11 @@ head(ColumnSample, n=6)
 #> 6  shark     shark
 ```
 
+### clean_columns
+
 <br/> <br/>
 
-# Steo 2: Compute Semantic Distance
+# Step 2: Compute Semantic Distance
 
 Users have several options for chunking pairwise semantic distance
 comparisons. SemanticDistance contains two embedded lookup databases,
@@ -198,13 +190,15 @@ reflects cosine distance between the 300-dimension embedding vectors
 tagged to each word (or averaged across the words within an ngram or
 turn).
 
-## Option 1: rolling ngram-to-word
+## Option 1: Rolling ngram-to-word
 
 Users specify an ngram window size. This window rolls successively over
 your language sample to compute a semantic distance value for each new
 word relative to the n-words (ngram size) before it. This model of
 compouting distance is illustrated in the figure. The larger your
 specified ngram size the more smoothed the semantic vector will be over
-your language sample.
+your language sample. <br/> <br/>
 
-<img src="man/figures/RollingNgramIllustrate.png" alt="illustrates how rolling ngrams work on a vector of words by moving a window and contrasting each chunk to each new word" width="60%" />
+<img src="man/figures/RollingNgramIllustrate.png" alt="illustrates how rolling ngrams work on a vector of words by moving a window and contrasting each chunk to each new word" width="50%" />
+
+### dist_roll_monologue
