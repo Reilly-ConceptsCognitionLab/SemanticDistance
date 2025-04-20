@@ -199,3 +199,12 @@ tagged to each word (or averaged across the words within an ngram or
 turn).
 
 ## Option 1: rolling ngram-to-word
+
+Users specify an ngram window size. This window rolls successively over
+your language sample to compute a semantic distance value for each new
+word relative to the n-words (ngram size) before it. This model of
+compouting distance is illustrated in the figure. The larger your
+specified ngram size the more smoothed the semantic vector will be over
+your language sample.
+
+<img src="man/figures/RollingNgramIllustrate.png" alt="illustrates how rolling ngrams work on a vector of words by moving a window and contrasting each chunk to each new word" width="60%" />
