@@ -181,6 +181,8 @@
 <div class="section level2">
 <h2 id="option-1-rolling-ngram-to-word">Option 1: rolling ngram-to-word<a class="anchor" aria-label="anchor" href="#option-1-rolling-ngram-to-word"></a>
 </h2>
+<p>Users specify an ngram window size. This window rolls successively over your language sample to compute a semantic distance value for each new word relative to the n-words (ngram size) before it. This model of compouting distance is illustrated in the figure. The larger your specified ngram size the more smoothed the semantic vector will be over your language sample.</p>
+<p><img src="reference/figures/RollingNgramIllustrate.png" alt="illustrates how rolling ngrams work on a vector of words by moving a window and contrasting each chunk to each new word" width="60%"></p>
 </div>
 </div>
 
