@@ -69,15 +69,17 @@ cleaning function that matches the structure of your language
 transcript. The following code blocks illustrate these differences.
 <br/>
 
-## Prep Monologue (no talker info)
+## Prep a Monologue (no talker info)
+
+### View a messy monologue
 
 This could be a story or instructions - anything where you don’t care
 about talker information. You should format your transcript so that
 there is a vector (column) of words. All other metadata will be
-retained. <br/> Here’s a sample monologue with all sorts of junk in a
-column called ‘word’. The ‘clean_monologue’ function should split and
-append a unique identifier to each word while retaining empty strings
-that could be meaningful. Defaults are to omit stopwords and lemmatize.
+retained. Here’s a sample monologue with all sorts of junk in a column
+called ‘word’. The ‘clean_monologue’ function should split and append a
+unique identifier to each word while retaining empty strings that could
+be meaningful. Defaults are to omit stopwords and lemmatize.
 
 ``` r
 #raw messy transcript of a monologue with missing obs and text that needs to be split
@@ -92,7 +94,7 @@ head(MonologueSample1, n=6)
 #> 6               Dog
 ```
 
-## clean_monologue
+### clean_monologue
 
 Here’s what you need to specify in the function cal: df, wordcol,
 omit_stops=TRUE, lemmatize = TRUE df=dataframe name, wordcol = quoted
@@ -117,7 +119,9 @@ head(my_clean_dat, n=10)
 #> 10 Dog               6       "dog"
 ```
 
-# Prep dialogue (e.g.,conversation transcripts)
+## Prep a Dialogue (e.g.,conversation transcripts)
+
+### View a messy sample dialogue
 
 This could be a conversation transcript or any language sample where you
 care about talker/interlocutor information (e.g., computing semantic
@@ -135,14 +139,14 @@ head(DialogueSample1, n=6)
 #> 6             Dolphin    Mary
 ```
 
-## clean_dialogue
+### clean_dialogue
 
-Here’s what you need to specify in the function call…<br/> 1) df =
-dataframe <br/> 2) wordcol = column name (quoted) containing the text
-you want cleaned <br/> 3) whotalks = column name (quoted) containing the
-talker ID (will convert to factor) <br/> 4) omit_stops = option for
-omitting stopwords, default is TRUE <br/> 5) lemmatize = option for
-lemmatizing strings, default is TRUE <br/>
+Here’s what you need to specify in the function call…<br/> df =
+dataframe, wordcol = column name (quoted) containing the text you want
+cleaned, whotalks = column name (quoted) containing the talker ID (will
+convert to factor), omit_stops = option for omitting stopwords, default
+is TRUE, lemmatize = option for lemmatizing strings, default is TRUE
+<br/>
 
 ``` r
 dyad <- clean_dialogue(DialogueSample1, "word", "speaker", omit_stops=T, lemmatize=T)
@@ -158,7 +162,7 @@ head(dyad, n=6)
 #> 6 pop goes the weasel Mary    4       Mary   go                  1
 ```
 
-# Prep dataframe arrayed in columns
+## Prep Data Arrayed in Two Columns
 
 SemanticDistance also computes pairwise distance for data arrayed in
 columns.
@@ -183,7 +187,7 @@ head(ColumnSample, n=6)
 
 <br/> <br/>
 
-# Semantic Distance Options
+# Steo 2: Compute Semantic Distance
 
 Users have several options for chunking pairwise semantic distance
 comparisons. SemanticDistance contains two embedded lookup databases,
@@ -193,3 +197,5 @@ dimensions (e.g., color, sound, etc). Another metric (CosDist_Glo)
 reflects cosine distance between the 300-dimension embedding vectors
 tagged to each word (or averaged across the words within an ngram or
 turn).
+
+## Option 1: rolling ngram-to-word

@@ -48,8 +48,9 @@ SemanticDistance works on monologues (no talker information), dialogues (two or 
 1) Read your transcript into R. It doesn't matter how you label your variables. You will specify these names in the arguments to your function calls. <br/>
 2) Pick a cleaning function that matches the structure of your language transcript. The following code blocks illustrate these differences. <br/>
 
-## Prep Monologue (no talker info)
-This could be a story or instructions - anything where you don't care about talker information. You should format your transcript so that there is a vector (column) of words. All other metadata will be retained. <br/>
+## Prep a Monologue (no talker info)
+### View a messy monologue
+This could be a story or instructions - anything where you don't care about talker information. You should format your transcript so that there is a vector (column) of words. All other metadata will be retained. 
 Here's a sample monologue with all sorts of junk in a column called 'word'. The 'clean_monologue' function should split and append a unique identifier to each word while retaining empty strings that could be meaningful. Defaults are to omit stopwords and lemmatize.
 ```{r}
 #raw messy transcript of a monologue with missing obs and text that needs to be split
@@ -57,7 +58,7 @@ data(MonologueSample1)
 head(MonologueSample1, n=6)
 ```
 
-## clean_monologue
+### clean_monologue
 Here's what you need to specify in the function cal: df, wordcol, omit_stops=TRUE, lemmatize = TRUE
 df=dataframe name,  wordcol = quoted column name where your target text lives, omit_stops - omit stopwords default is TRUE, lemnatize - lemmatizes strings default is TRUE.
 ```{r}
@@ -65,26 +66,23 @@ my_clean_dat <- clean_monologue(MonologueSample1, 'word', omit_stops=T, lemmatiz
 head(my_clean_dat, n=10)
 ```
 
-# Prep dialogue (e.g.,conversation transcripts)
+## Prep a Dialogue (e.g.,conversation transcripts)
+### View a messy sample dialogue
 This could be a conversation transcript or any language sample where you care about talker/interlocutor information (e.g., computing semantic distance across turns in a conversation). 
 ```{r}
 data("DialogueSample1")
 head(DialogueSample1, n=6)
 ```
 
-## clean_dialogue
+### clean_dialogue
 Here's what you need to specify in the function call...<br/>
-1) df = dataframe <br/>
-2) wordcol = column name (quoted) containing the text you want cleaned <br/>
-3) whotalks = column name (quoted) containing the talker ID (will convert to factor) <br/>
-4) omit_stops = option for omitting stopwords, default is TRUE <br/>
-5) lemmatize = option for lemmatizing strings, default is TRUE <br/>
+df = dataframe,  wordcol = column name (quoted) containing the text you want cleaned, whotalks = column name (quoted) containing the talker ID (will convert to factor), omit_stops = option for omitting stopwords, default is TRUE, lemmatize = option for lemmatizing strings, default is TRUE <br/>
 ```{r}
 dyad <- clean_dialogue(DialogueSample1, "word", "speaker", omit_stops=T, lemmatize=T)
 head(dyad, n=6)
 ```
 
-# Prep dataframe arrayed in columns
+## Prep Data Arrayed in Two Columns
 SemanticDistance also computes pairwise distance for data arrayed in columns. 
 ```{r}
 #Add ColumnSample usethis
@@ -98,5 +96,8 @@ head(ColumnSample, n=6)
 <br/>
 <br/>
 
-# Semantic Distance Options
+# Steo 2: Compute Semantic Distance
 Users have several options for chunking pairwise semantic distance comparisons. SemanticDistance contains two embedded lookup databases, each with coverage of >60k English words. One metric 'CosDist_SD15' reflects pairwise cosine distance between semantic vectors spanning 15 dimensions (e.g., color, sound, etc). Another metric (CosDist_Glo) reflects cosine distance between the 300-dimension embedding vectors tagged to each word (or averaged across the words within an ngram or turn).
+
+## Option 1: rolling ngram-to-word
+

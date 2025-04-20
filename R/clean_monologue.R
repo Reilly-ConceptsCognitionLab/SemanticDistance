@@ -11,7 +11,6 @@
 #' @importFrom magrittr %>%
 #' @importFrom textclean replace_contraction
 #' @importFrom tm removeWords
-#' @importFrom tm stripWhitespace
 #' @importFrom textstem lemmatize_strings
 #' @importFrom tidyr separate_rows
 #' @export clean_monologue
