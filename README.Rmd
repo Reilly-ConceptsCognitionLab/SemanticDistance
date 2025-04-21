@@ -83,13 +83,15 @@ head(dyad, n=6)
 ## Word Pairs Arrayed in Columns
 SemanticDistance also computes pairwise distance for data arrayed in columns. 
 ```{r}
-data("ColumnSample")
+data("ColumnSample") #Some messy string data arrayed in columns
 head(ColumnSample, n=6)
 ```
 
 ### clean_columns
+Run the function, the cleaned columns will appear in the dataframe
 ```{r}
-
+MyCleanColumns <- clean_2columns(ColumnSample, 'word1', 'word2', omit_stops=T, lemmatize=T)
+head(MyCleanColumns, n=6)
 ```
 <br/>
 <br/>

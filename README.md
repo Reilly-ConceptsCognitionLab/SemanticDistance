@@ -166,7 +166,7 @@ SemanticDistance also computes pairwise distance for data arrayed in
 columns.
 
 ``` r
-data("ColumnSample")
+data("ColumnSample") #Some messy string data arrayed in columns
 head(ColumnSample, n=6)
 #>   word1     word2
 #> 1   Dog   trumpet
@@ -178,6 +178,22 @@ head(ColumnSample, n=6)
 ```
 
 ### clean_columns
+
+Run the function, the cleaned columns will appear in the dataframe
+
+``` r
+MyCleanColumns <- clean_2columns(ColumnSample, 'word1', 'word2', omit_stops=T, lemmatize=T)
+#> Warning in data(reillylab_stopwords25): data set 'reillylab_stopwords25' not
+#> found
+head(MyCleanColumns, n=6)
+#>   word1     word2 id_orig word1_clean word2_clean
+#> 1   Dog   trumpet       1         dog     trumpet
+#> 2   the    BANANA       2        <NA>      banana
+#> 3   rat astronaut       3         rat   astronaut
+#> 4  *&^%    lizard       4        <NA>      lizard
+#> 5  bird      bird       5        bird        bird
+#> 6 shark     shark       6       shark       shark
+```
 
 <br/> <br/>
 
