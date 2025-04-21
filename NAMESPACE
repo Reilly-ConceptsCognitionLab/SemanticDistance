@@ -2,6 +2,10 @@
 
 export(clean_dialogue)
 export(clean_monologue)
+export(dist_ngram2word_roll)
+importFrom(dplyr,left_join)
+importFrom(dplyr,select)
+importFrom(lsa,cosine)
 importFrom(magrittr,"%>%")
 importFrom(textclean,replace_contraction)
 importFrom(textstem,lemmatize_strings)

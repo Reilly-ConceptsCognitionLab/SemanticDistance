@@ -103,9 +103,11 @@ Users specify an ngram window size. This window rolls successively over your lan
 
 <img src="man/figures/RollingNgramIllustrate.png" alt="illustrates how rolling ngrams work on a vector of words by moving a window and contrasting each chunk to each new word" width="50%" />
 
-### dist_roll_monologue
-
+### dist_ngram2word_roll
+Once you settle on a window size and clean your language transcript (works for monologues only), you are ready to roll. Let's analyze one of the embedded datasets called 'FakeCats' that has 50 words grouped by semantic categories. We will clean the original data first (use clean_monologues) and then run the dist_ngram2word_roll function on it, specifying an ngram size of 1 (i.e., semantic distance from each word to the word immediately preceding it)
 ```{r}
-
+data('FakeCats')
+FakeCatsClean <- clean_monologue(FakeCats, "word") 
+#MyDists <- dist_ngram2word_roll(FakeCatsClean, 1) #takes dataframe name and ngram size as args
 ```
 

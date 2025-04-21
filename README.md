@@ -101,6 +101,8 @@ default is TRUE, lemnatize - lemmatizes strings default is TRUE.
 
 ``` r
 my_clean_dat <- clean_monologue(MonologueSample1, 'word', omit_stops=T, lemmatize=T)
+#> Warning in data(reillylab_stopwords25): data set 'reillylab_stopwords25' not
+#> found
 head(my_clean_dat, n=10)
 #> # A tibble: 10 × 3
 #>    word              id_orig word_clean
@@ -166,13 +168,13 @@ columns.
 ``` r
 data("ColumnSample")
 head(ColumnSample, n=6)
-#>    word1     word2
-#> 1    Dog   trumpet
-#> 2   cat     banana
-#> 3    rat astronaut
-#> 4 lizard    lizard
-#> 5   bird      bird
-#> 6  shark     shark
+#>   word1     word2
+#> 1   Dog   trumpet
+#> 2   the    BANANA
+#> 3   rat astronaut
+#> 4  *&^%    lizard
+#> 5  bird      bird
+#> 6 shark     shark
 ```
 
 ### clean_columns
@@ -201,4 +203,20 @@ your language sample. <br/> <br/>
 
 <img src="man/figures/RollingNgramIllustrate.png" alt="illustrates how rolling ngrams work on a vector of words by moving a window and contrasting each chunk to each new word" width="50%" />
 
-### dist_roll_monologue
+### dist_ngram2word_roll
+
+Once you settle on a window size and clean your language transcript
+(works for monologues only), you are ready to roll. Let’s analyze one of
+the embedded datasets called ‘FakeCats’ that has 50 words grouped by
+semantic categories. We will clean the original data first (use
+clean_monologues) and then run the dist_ngram2word_roll function on it,
+specifying an ngram size of 1 (i.e., semantic distance from each word to
+the word immediately preceding it)
+
+``` r
+data('FakeCats')
+FakeCatsClean <- clean_monologue(FakeCats, "word") 
+#> Warning in data(reillylab_stopwords25): data set 'reillylab_stopwords25' not
+#> found
+#MyDists <- dist_ngram2word_roll(FakeCatsClean, 1) #takes dataframe name and ngram size as args
+```

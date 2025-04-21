@@ -1,0 +1,98 @@
+#' dist_ngram2word_roll
+#'
+#' Function takes dataframe cleaned using 'clean_monologue', computes two metrics of semantic distance for each word relative to the average of the semantic vectors within an n-word window appearing before each word. User specifies the window (ngram) size. The window 'rolls' across the language sample providing distance metrics
+#'
+#' @name dist_ngram2word_roll
+#' @param dat a dataframe prepped using 'clean_monologue' fn
+#' @param ngram an integer specifying the window size of words for computing distance to a target word
+#' @return a dataframe
+#' @importFrom magrittr %>%
+#' @importFrom dplyr select
+#' @importFrom dplyr left_join
+#' @importFrom lsa cosine
+#' @export dist_ngram2word_roll
+
+dist_ngram2word_roll <- function(dat, ngram) {
+  # Load required packages
+  if (!requireNamespace("lsa", quietly = TRUE)) {
+    install.packages("lsa")
+  }
+  if (!requireNamespace("dplyr", quietly = TRUE)) {
+    install.packages("dplyr")
+  }
+  library(lsa)
+  library(dplyr)
+
+  data(glowca_25) #internal data within the sys directory automatically loaded
+  data(SD_2025)
+
+  orig <- dat
+  dat <- dat %>% select(id_orig, word_clean) %>% mutate(id_orig = as.factor(id_orig))
+
+  # Join with GLOVE and SD15 lookup databases
+  djoin_glo <- left_join(dat, glowca_25, by = c("word_clean" = "word"))
+  djoin_sd15 <- left_join(dat, SD15_2025, by = c("word_clean" = "word"))
+
+  # Create result column names with suffixes
+  cosdist_colname_glo <- paste0("CosDist_", ngram, "gram_glo")
+  cosdist_colname_sd15 <- paste0("CosDist_", ngram, "gram_sd15")
+
+  djoin_glo[[cosdist_colname_glo]] <- NA_real_
+  djoin_sd15[[cosdist_colname_sd15]] <- NA_real_
+
+  # Isolate 'param_' columns in the lookup databases
+  param_cols_glo <- grep("param_", names(djoin_glo), value = TRUE, ignore.case = TRUE)
+  param_cols_sd15 <- grep("param_", names(djoin_sd15), value = TRUE, ignore.case = TRUE)
+
+  # fn for computing cosine distance
+  compute_cosdist <- function(data, param_cols, result_col) {
+    if (length(param_cols) == 0) {
+      warning("No parameter columns (containing 'param_') found for cosine distance calculation")
+      return(data %>% select(-contains("param", ignore.case = TRUE)))
+    }
+
+    if (nrow(data) >= (ngram + 1)) {
+      param_matrix <- as.matrix(data[, param_cols])
+
+      for (i in (ngram + 1):nrow(data)) {
+        current_word <- param_matrix[i, ]
+        ngram_window <- param_matrix[(i-ngram):(i-1), , drop = FALSE]
+
+        ngram_vector <- colMeans(ngram_window, na.rm = TRUE)
+        ngram_vector[is.nan(ngram_vector)] <- NA
+
+        valid_dims <- !is.na(current_word) & !is.na(ngram_vector)
+
+        if (sum(valid_dims) > 0) {
+          cos_sim <- tryCatch(
+            lsa::cosine(
+              current_word[valid_dims],
+              ngram_vector[valid_dims]
+            ),
+            error = function(e) NA_real_
+          )
+
+          if (!is.na(cos_sim)) {
+            data[i, result_col] <- 1 - cos_sim
+          }
+        }
+      }
+    } else {
+      warning(paste("Not enough rows (", nrow(data),
+                    ") to calculate", ngram, "-gram distances"))
+    }
+
+    return(data %>% select(-contains("param", ignore.case = TRUE)))
+  }
+
+  # Compute for both conditions
+  result_glo <- compute_cosdist(djoin_glo, param_cols_glo, cosdist_colname_glo)
+  result_sd15 <- compute_cosdist(djoin_sd15, param_cols_sd15, cosdist_colname_sd15)
+
+  # Merge all results
+  both <- orig %>%
+    left_join(result_glo, by = c("id_orig", "word_clean")) %>%
+    left_join(result_sd15, by = c("id_orig", "word_clean"))
+
+  return(both)
+}

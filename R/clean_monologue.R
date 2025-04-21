@@ -16,6 +16,7 @@
 #' @export clean_monologue
 
 clean_monologue <- function(df, wordcol, omit_stops=TRUE, lemmatize = TRUE) {
+  data(reillylab_stopwords25)
   omissions <- reillylab_stopwords25
   df$id_orig <- factor(seq_len(nrow(df))) # Create ID_Orig as factor variable
   x <- df[[wordcol]]
