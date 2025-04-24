@@ -4,12 +4,14 @@
 \alias{clean_monologue}
 \title{clean_monologue}
 \usage{
-clean_monologue(df, wordcol, omit_stops = TRUE, lemmatize = TRUE)
+clean_monologue(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE)
 }
 \arguments{
 \item{df}{a dataframe with at least one target column of string data}
 
 \item{wordcol}{quoted column name storing the strings that will be cleaned and split}
+
+\item{clean}{apply cleaning functions (lowercase etc) default is TRUE}
 
 \item{omit_stops}{option for omitting stopwords default is TRUE}
 

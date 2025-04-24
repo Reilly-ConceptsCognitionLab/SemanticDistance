@@ -4,8 +4,8 @@ Title: Computes Pairwise Cosine Distance Between Successive Units of Language Sa
 Version: 0.1.0
 Authors@R: c(person("Jamie", "Reilly", email = "jamie_reilly@temple.edu", role = c("aut", "cre")),
     person("Hannah", "Mechtenberg", role = "aut"),
-    person("Jonathan","Peelle", role = "aut"),
-    person("Emily", "Myers", role = "aut"))
+    person("Emily", "Myers", role = "aut"),
+    person("Jonathan","Peelle", role = "aut"))
 Description: This package cleans and formats any user-specified language sample and appends two metrics of semantic distance (experiential and embedding) to each specified chunk (e.g., word-to-word, ngram-to-ngram, turn-to-turn). 
      Users have several options for how to clean their data (e.g., leave it alone, lemmatize it, retain/omit stopwords). 
      Users also have options for how to chunk distances. Options include word-to-word distance, ngram-to-ngram, sentence-to-sentence, turn-to-turn.
@@ -21,7 +21,10 @@ Imports:
     textstem,
     tm,
     tidyr,
-    textclean
+    textclean,
+    lsa,
+    dplyr,
+    utils
 Suggests: 
     knitr,
     rmarkdown

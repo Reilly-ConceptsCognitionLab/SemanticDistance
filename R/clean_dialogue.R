@@ -17,6 +17,20 @@
 #' @export clean_dialogue
 
 clean_dialogue <- function(df, wordcol, whotalks, omit_stops=TRUE, lemmatize = TRUE) {
+  if (!requireNamespace("textclean", quietly = TRUE)) {
+    install.packages("textclean")
+  }
+  if (!requireNamespace("textstem", quietly = TRUE)) {
+    install.packages("textstem")
+  }
+  if (!requireNamespace("tm", quietly = TRUE)) {
+    install.packages("tm")
+  }
+  if (!requireNamespace("tidyr", quietly = TRUE)) {
+    install.packages("tm")
+  }
+
+
   omissions <- reillylab_stopwords25
 
   # Create ID_Orig as factor variable

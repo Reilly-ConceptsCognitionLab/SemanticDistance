@@ -820,6 +820,27 @@
       "Maintainer": "Lionel Henry <lionel@posit.co>",
       "Repository": "CRAN"
     },
+    "lsa": {
+      "Package": "lsa",
+      "Version": "0.73.3",
+      "Source": "Repository",
+      "Title": "Latent Semantic Analysis",
+      "Author": "Fridolin Wild",
+      "Description": "The basic idea of latent semantic analysis (LSA) is,  that text do have a higher order (=latent semantic) structure which,  however, is obscured by word usage (e.g. through the use of synonyms  or polysemy). By using conceptual indices that are derived statistically  via a truncated singular value decomposition (a two-mode factor analysis)  over a given document-term matrix, this variability problem can be overcome.",
+      "Depends": [
+        "SnowballC"
+      ],
+      "Suggests": [
+        "tm"
+      ],
+      "Maintainer": "Fridolin Wild <wild@brookes.ac.uk>",
+      "License": "GPL (>= 2)",
+      "Encoding": "UTF-8",
+      "LazyData": "yes",
+      "BuildResaveData": "no",
+      "NeedsCompilation": "no",
+      "Repository": "CRAN"
+    },
     "magrittr": {
       "Package": "magrittr",
       "Version": "2.0.3",

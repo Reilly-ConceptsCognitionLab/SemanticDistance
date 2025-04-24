@@ -1,0 +1,87 @@
+#' dist_2cols
+#'
+#' Function takes dataframe cleaned using 'clean_2columns', computes two metrics of semantic distance for each word pair arrayed in Col1 vs. Col2
+#'
+#' @name dist_2cols
+#' @param dat a dataframe prepped using clean_2columns' with word pairs arrayed in two columns
+#' @return a dataframe
+#' @importFrom magrittr %>%
+#' @importFrom dplyr select
+#' @importFrom dplyr left_join
+#' @importFrom tidyr pivot_longer
+#' @importFrom lsa cosine
+#' @importFrom dplyr rename
+#' @export dist_2cols
+
+dist_2cols <- function(dat) {
+  if (!requireNamespace("dplyr", quietly = TRUE)) {
+    install.packages("tm")
+  }
+  if (!requireNamespace("tidyr", quietly = TRUE)) {
+    install.packages("tm")
+  }
+  if (!requireNamespace("lsa", quietly = TRUE)) {
+    install.packages("tm")
+  }
+
+  # Find columns ending with _clean1 and _clean2
+  clean_cols <- grep("_clean1$|_clean2$", names(dat), value = TRUE)
+
+  if (length(clean_cols) != 2) {
+    stop("Could not find exactly two columns ending with '_clean1' and '_clean2'")
+  }
+
+  col_1 <- clean_cols[grep("_clean1$", clean_cols)]
+  col_2 <- clean_cols[grep("_clean2$", clean_cols)]
+
+  dat_small <- dat %>% select(id_orig, !!sym(col_1), !!sym(col_2))
+  unspooled_txt <- dat_small %>%
+    tidyr::pivot_longer(cols = c(!!sym(col_1), !!sym(col_2)),
+                 names_to = "word_type",
+                 values_to = "word") %>%
+    select(-word_type)  # Drop 'word_type' column
+
+  djoin_sd15 <- dplyr::left_join(unspooled_txt, SD15_2025, by = "word")
+  djoin_glow <- dplyr::left_join(unspooled_txt, glowca_25, by = 'word')
+
+  # Initialize dataframes to store results
+  result_sd15 <- data.frame(id_orig = levels(djoin_sd15$id_orig), CosDist = NA)
+  result_glo <- data.frame(id_orig = levels(djoin_glow$id_orig), CosDist = NA)
+
+  # Cosine distance function
+  cos_dist <- function(row1, row2) {
+    vec1 <- as.numeric(row1)
+    vec2 <- as.numeric(row2)
+
+    # Calculate cosine distance
+    cos_sim <- lsa::cosine(vec1, vec2)
+    cos_dist <- 1 - cos_sim
+    return(cos_dist)
+  }
+
+  # Loop SD15
+  for (group in levels(djoin_sd15$id_orig)) {
+    subset_df <- djoin_sd15[djoin_sd15$id_orig == group, ]  # Subset data
+    if (nrow(subset_df) >= 2) {
+      row1 <- subset_df[1, sapply(subset_df, is.numeric)]
+      row2 <- subset_df[2, sapply(subset_df, is.numeric)]
+      result_sd15$CosDist[result_sd15$id_orig == group] <- cos_dist(row1, row2)
+    }
+  }
+
+  # Loop glove
+  for (group in levels(djoin_glow$id_orig)) {
+    subset_df <- djoin_glow[djoin_glow$id_orig == group, ]  # Subset data
+    if (nrow(subset_df) >= 2) {
+      row1 <- subset_df[1, sapply(subset_df, is.numeric)]
+      row2 <- subset_df[2, sapply(subset_df, is.numeric)]
+      result_glo$CosDist[result_glo$id_orig == group] <- cos_dist(row1, row2)
+    }
+  }
+
+  result_sd15 <- result_sd15 %>% dplyr::rename(CosDist_SD15 = CosDist)
+  result_glo <- result_glo %>% dplyr::rename(CosDist_GLO = CosDist)
+  all <- dat %>% dplyr::left_join(result_sd15, by = "id_orig")
+  all <- all %>% dplyr::left_join(result_glo, by = "id_orig")
+  return(all)
+}

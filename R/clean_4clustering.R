@@ -1,8 +1,8 @@
-#' clean_monologue
+#' clean_4clustering
 #'
-#' Cleans and formats text. User specifies the dataframe and column name where target text is stored as arguments to the function. Default option is to lemmatize strings. Function splits and unlists text so that the output is in a one-row-per-word format marked by a unique numeric identifier (i.e., 'id_orig')
+#' Cleans and formats text. User specifies the dataframe and column name where target text is stored. Word order does not matter (all words shuffled later). Cleaning takes only first instance of word.
 #'
-#' @name clean_monologue
+#' @name clean_4clustering
 #' @param df a dataframe with at least one target column of string data
 #' @param wordcol quoted column name storing the strings that will be cleaned and split
 #' @param clean apply cleaning functions (lowercase etc) default is TRUE
@@ -12,29 +12,30 @@
 #' @importFrom magrittr %>%
 #' @importFrom textclean replace_contraction
 #' @importFrom tm removeWords
+#' @importFrom dplyr ungroup
+#' @importFrom dplyr distinct
 #' @importFrom textstem lemmatize_strings
 #' @importFrom tidyr separate_rows
-#' @export clean_monologue
+#' @export clean_4clustering
 
-clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE) {
+clean_4clustering <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE) {
+  if (!requireNamespace("textclean", quietly = TRUE)) {
+    install.packages("textclean")
+  }
+  if (!requireNamespace("textstem", quietly = TRUE)) {
+    install.packages("textstem")
+  }
   if (!requireNamespace("tm", quietly = TRUE)) {
     install.packages("tm")
   }
-  if (!requireNamespace("textstem", quietly = TRUE)) {
-    install.packages("tm")
-  }
-  if (!requireNamespace("tidyr", quietly = TRUE)) {
-    install.packages("tm")
-  }
-  if (!requireNamespace("textclean", quietly = TRUE)) {
-    install.packages("tm")
-  }
 
-  df$id_orig <- factor(seq_len(nrow(df)))
-  # Copy original column to word_clean (base case)
+  # Create unique numeric ID for each original row
+  df$id_orig <- seq_len(nrow(df))
+
+  # Initialize word_clean with original values
   df$word_clean <- df[[wordcol]]
 
-  # Apply cleaning operations only if clean=TRUE
+  # Only perform cleaning if clean=TRUE
   if (clean) {
     x <- df[[wordcol]]
 
@@ -57,16 +58,25 @@ clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmat
 
     # Remove stopwords if requested
     if (omit_stops) {
-      omissions <- reillylab_stopwords25  # Load stopwords only when needed
+      omissions <- reillylab_stopwords25
       x <- tm::removeWords(x, omissions$word)
     }
 
-    # Update word_clean with cleaned version
+    # Update cleaned text
     df$word_clean <- x
   }
 
-  # Always split multi-word strings (applies to both cleaned and original text)
+  # Split into one word per row while preserving id_orig
   df <- tidyr::separate_rows(df, word_clean, sep = "\\s+")
+
+  # Remove empty strings and trim whitespace
+  df <- df[trimws(df$word_clean) != "", ]
+
+  # Apply distinct only to word_clean within each id_orig group
+  df <- df %>%
+    group_by(id_orig) %>%
+    distinct(word_clean, .keep_all = TRUE) %>%
+    dplyr::ungroup()
 
   return(df)
 }
