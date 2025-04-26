@@ -86,7 +86,7 @@ SemanticDistance also computes pairwise distance for data arrayed in columns. Ru
 
 ### <span style="color: green;">Example Column Arrays Word Pair Cleaning</span>
 ```{r}
-MyClean2Columns <- clean_2columns(ColumnSample, 'word1', 'word2', clean=T, omit_stops=T, lemmatize=T)
+MyClean2Columns <- clean_2cols(ColumnSample, 'word1', 'word2', clean=T, omit_stops=T, lemmatize=T)
 head(MyClean2Columns, n=6) #view head cleaned data
 ```
 <br/>
@@ -103,10 +103,9 @@ This cleaning option is used for prepping a vector of words for hierarchical clu
 ### <span style="color: green;">Example 'clean_4clustering' on Unordered Word List </span>
 ```{r}
 #Run clean fn 
-MyCleanCluster <- clean_4clustering(FakeCats, wordcol="word", clean=TRUE, omit_stops=TRUE, lemmatize=TRUE) 
+MyCleanCluster <- clean_4cluster(FakeCats, wordcol="word", clean=TRUE, omit_stops=TRUE, lemmatize=TRUE) 
 head(FakeCats, n=8)
 ```
-<br/>
 <br/>
 <br/>
 
@@ -115,7 +114,7 @@ SemanticDistance will append cosine distance values between each pair of element
 
 Users specify an ngram window size. This window rolls successively over your language sample to compute a semantic distance value for each new word relative to the n-words (ngram size) before it. This model of compouting distance is illustrated in the figure. The larger your specified ngram size the more smoothed the semantic vector will be over your language sample. Once you settle on a window size and clean your language transcript (works for monologues only), you are ready to roll. Here's the general idea... <br>
 
-## <span style="color: brown;">2.1: Rolling Ngram-to-Word Distance (dist_ngram2word)</span>
+## <span style="color: brown;">2.1: Compute Ngram-to-Word Distance (dist_ngram2word)</span>
 
 <img src="man/figures/RollingNgramIllustrate.png" alt="illustrates how rolling ngrams work on a vector of words by moving a window and contrasting each chunk to each new word" width="40%" />
 
@@ -129,9 +128,8 @@ MyMonologueDists <- dist_ngram2word(MyCleanCluster, ngram=1) #distance word-to-w
 head(MyMonologueDists, n=8)
 ```
 <br/>
-<br/>
 
-## <span style="color: brown;">2.2: Ngram-to-Ngram Distance (dist_ngram2ngram)</span>
+## <span style="color: brown;">2.2: Compute Ngram-to-Ngram Distance (dist_ngram2ngram)</span>
 User specifies n-gram size (e.g., ngram=2). Distance computed from each two-word chunk to the next iterating all the way down the dataframe until there are no more words to 'fill out' the last ngram.  
 
 <img src="man/figures/Ngram2Ngram_Dist.png" alt="illustrates how semantic distance is derived from chunk to chunk groupings of words" width="50%" />
@@ -147,9 +145,8 @@ MyNgramChunkDists <- dist_ngram2ngram(MyCleanMonologue, ngram=2)
 head(MyNgramChunkDists, n=8)
 ```
 <br/>
-<br/>
 
-## <span style="color: brown;">2.3: Turn-by-Turn Distance in Dialogue (dist_dialogue)</span>
+## <span style="color: brown;">2.3: Compute Turn-by-Turn Distance (dist_dialogue)</span>
 Averages the semantic vectors for all content words in a turn. Computes the cosine distance to the average of the semantic vectors of the content words in the subsequent turn. <br/>
 
 ### <span style="color: green;">Output 'dist_dialogue' on sample dialogue transcript </span>
@@ -157,9 +154,8 @@ Averages the semantic vectors for all content words in a turn. Computes the cosi
 #TBA
 ```
 <br/>
-<br/>
 
-## <span style="color: brown;">2.4: Distance Word Pairs Arrayed in 2 Columns (dist_2cols)</span>
+## <span style="color: brown;">2.4: Compute Distances Betweem Word Pairs in Columns (dist_2cols)</span>
 When your data are arrayed in two columns and you are interested in computing pairwise distance across the columns. The only critical argument is your dataframe name. Remember to pass a cleaned dataframe (even if you disable stopwords and lemmatization). Arguments to the function: <br/>
 | dat = your cleaned dataframe with two paired columns of text <br/>
 
@@ -169,9 +165,8 @@ MyDistsColumns <- dist_2cols(MyClean2Columns) #only argument is dataframe
 head(MyDistsColumns, n=8)
 ```
 <br/>
-<br/>
 
-## <span style="color: brown;">2.5: Distance fixed onset cluster to each new word (anchor_dist)</span>
+## <span style="color: brown;">2.5: Compute Distance from a Fixed Cluster of Words in the Beginning of a Language Sample to each new word in the sample (anchor_dist)</span>
 This approach models the semantic distance from each successive new word in a language sample to the average of the semantic vectors for the first block of 10 content words in that sample. This anchored distance provides a metric of overall semantic drift as a language sample unfolds relative to a fixed starting point.<br/>
 
 <img src="man/figures/Anchor_2Word_Dist.png" alt="illustrates distance from each new word of a language sample to an initial chunk of n-words" width="60%" />
@@ -181,9 +176,8 @@ This approach models the semantic distance from each successive new word in a la
 #TBA
 ```
 <br/>
-<br/>
 
-### <span style="color: brown;">2.6: Distance unordered set for hclust (dist_4cluster)</span>
+### <span style="color: brown;">2.6: Compute Distance Unordered Set of Words (dist_4cluster)</span>
 Input a set of words cleaned/prepped with 'clean_4clustering' function. <br/>
 
 ### <span style="color: green;">Output of 'dist_4cluster' on unordered word list</span>
@@ -194,7 +188,7 @@ Input a set of words cleaned/prepped with 'clean_4clustering' function. <br/>
 <br/>
 <br/>
 
-# <span style="color: darkred;">Step 3: Data Visualization Options</span>
+# <span style="color: darkred;">---Step 3: Data Visualization Options---</span>
 ```{r}
 #TBA
 ```

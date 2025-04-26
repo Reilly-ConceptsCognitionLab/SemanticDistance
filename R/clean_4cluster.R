@@ -1,8 +1,8 @@
-#' clean_4clustering
+#' clean_4cluster
 #'
 #' Cleans and formats text. User specifies the dataframe and column name where target text is stored. Word order does not matter (all words shuffled later). Cleaning takes only first instance of word.
 #'
-#' @name clean_4clustering
+#' @name clean_4cluster
 #' @param df a dataframe with at least one target column of string data
 #' @param wordcol quoted column name storing the strings that will be cleaned and split
 #' @param clean apply cleaning functions (lowercase etc) default is TRUE
@@ -16,7 +16,7 @@
 #' @importFrom dplyr distinct
 #' @importFrom textstem lemmatize_strings
 #' @importFrom tidyr separate_rows
-#' @export clean_4clustering
+#' @export clean_4cluster
 
 clean_4clustering <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE) {
   if (!requireNamespace("textclean", quietly = TRUE)) {
