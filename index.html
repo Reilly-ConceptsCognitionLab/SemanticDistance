@@ -60,12 +60,12 @@
 <p>Install the development version of SemanticDistance from <a href="https://github.com/" class="external-link">GitHub</a> using devtools.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#install.packages("devtools")</span></span>
-<span><span class="co">#devtools::install_github("Reilly-ConceptsCognitionLab/ConversationAlign")</span></span>
+<span><span class="co">#devtools::install_github("Reilly-ConceptsCognitionLab/SemanticDistance")</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance" class="external-link">SemanticDistance</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level1">
-<div class="page-header"><h1 id="step-1-clean-and-prep-your-text">
-<span style="color: darkred;">Step 1: Clean and Prep Your Text</span><a class="anchor" aria-label="anchor" href="#step-1-clean-and-prep-your-text"></a>
+<div class="page-header"><h1 id="step-1-cleaning-">
+<span style="color: darkred;">—Step 1: Cleaning— </span><a class="anchor" aria-label="anchor" href="#step-1-cleaning-"></a>
 </h1></div>
 <p>The semantic distance functions work by indexing unique numeric identifiers. You MUST first clean/prep your raw text to append these identifers. Prepare your lexical data for computing pairwise semantic distances by first doing the following: <br></p>
 <ol style="list-style-type: decimal">
@@ -186,8 +186,8 @@ lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
 </div>
 </div>
 <div class="section level1">
-<h1 id="step-2-compute-semantic-distance-on-your-prepped-data">
-<span style="color: darkred;">Step 2: Compute Semantic Distance on your Prepped Data</span><a class="anchor" aria-label="anchor" href="#step-2-compute-semantic-distance-on-your-prepped-data"></a>
+<h1 id="step-2-compute-semantic-distance">
+<span style="color: darkred;">—Step 2: Compute Semantic Distance—</span><a class="anchor" aria-label="anchor" href="#step-2-compute-semantic-distance"></a>
 </h1>
 <p>SemanticDistance will append cosine distance values between each pair of elements specified by the user (e.g., word-to-word, ngram-to-word). These distance values are derived from two large lookup databases in the package with fixed semantic vectors for &gt;70k English words. CosDist_Glo reflects cosine distance between vectors derived from training a GLOVE word embedding model (300 hyperparameters per word). CodDist_SD15 refects cosine distance between two chunks (words, groups of words) characterized across 15 meaningful perceptual and affective dimensions (e.g., color, sound, valence). <br></p>
 <p>Users specify an ngram window size. This window rolls successively over your language sample to compute a semantic distance value for each new word relative to the n-words (ngram size) before it. This model of compouting distance is illustrated in the figure. The larger your specified ngram size the more smoothed the semantic vector will be over your language sample. Once you settle on a window size and clean your language transcript (works for monologues only), you are ready to roll. Here’s the general idea… <br></p>
