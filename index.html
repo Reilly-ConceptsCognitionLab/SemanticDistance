@@ -192,17 +192,17 @@ lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
 <p>SemanticDistance will append cosine distance values between each pair of elements specified by the user (e.g., word-to-word, ngram-to-word). These distance values are derived from two large lookup databases in the package with fixed semantic vectors for &gt;70k English words. CosDist_Glo reflects cosine distance between vectors derived from training a GLOVE word embedding model (300 hyperparameters per word). CodDist_SD15 refects cosine distance between two chunks (words, groups of words) characterized across 15 meaningful perceptual and affective dimensions (e.g., color, sound, valence). <br></p>
 <p>Users specify an ngram window size. This window rolls successively over your language sample to compute a semantic distance value for each new word relative to the n-words (ngram size) before it. This model of compouting distance is illustrated in the figure. The larger your specified ngram size the more smoothed the semantic vector will be over your language sample. Once you settle on a window size and clean your language transcript (works for monologues only), you are ready to roll. Here’s the general idea… <br></p>
 <div class="section level2">
-<h2 id="id_21-rolling-ngram-to-word-distance-dist_ngram2word_roll">
-<span style="color: brown;">2.1: Rolling Ngram-to-Word Distance (dist_ngram2word_roll)</span><a class="anchor" aria-label="anchor" href="#id_21-rolling-ngram-to-word-distance-dist_ngram2word_roll"></a>
+<h2 id="id_21-rolling-ngram-to-word-distance-dist_ngram2word">
+<span style="color: brown;">2.1: Rolling Ngram-to-Word Distance (dist_ngram2word)</span><a class="anchor" aria-label="anchor" href="#id_21-rolling-ngram-to-word-distance-dist_ngram2word"></a>
 </h2>
 <p><img src="reference/figures/RollingNgramIllustrate.png" alt="illustrates how rolling ngrams work on a vector of words by moving a window and contrasting each chunk to each new word" width="40%"></p>
 <p>Remember to call a cleaned/prepped dataframe! Arguments to ‘dist_ngram2word_roll’ are: <br> | dat dataframe cleaned and prepped <br> | ngram ngram window size preceding each new content word <br></p>
 <div class="section level3">
-<h3 id="output-dist_ngram2word_roll-on-monologue-transcript-">
-<span style="color: green;">Output ‘dist_ngram2word_roll’ on monologue transcript </span><a class="anchor" aria-label="anchor" href="#output-dist_ngram2word_roll-on-monologue-transcript-"></a>
+<h3 id="output-dist_ngram2word-on-monologue-transcript-">
+<span style="color: green;">Output ‘dist_ngram2word’ on monologue transcript </span><a class="anchor" aria-label="anchor" href="#output-dist_ngram2word-on-monologue-transcript-"></a>
 </h3>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">MyMonologueDists</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_ngram2word_roll.html">dist_ngram2word_roll</a></span><span class="op">(</span><span class="va">MyCleanCluster</span>, ngram<span class="op">=</span><span class="fl">1</span><span class="op">)</span> <span class="co">#distance word-to-word</span></span>
+<code class="sourceCode R"><span><span class="va">MyMonologueDists</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_ngram2word.html">dist_ngram2word</a></span><span class="op">(</span><span class="va">MyCleanCluster</span>, ngram<span class="op">=</span><span class="fl">1</span><span class="op">)</span> <span class="co">#distance word-to-word</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyMonologueDists</span>, n<span class="op">=</span><span class="fl">8</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 8 × 8</span></span>
 <span><span class="co">#&gt;   ID_JR word     category prediction id_orig word_clean CosDist_1gram_glo</span></span>
