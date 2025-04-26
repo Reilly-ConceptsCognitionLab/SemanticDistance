@@ -1,8 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# SemanticDistance
-
 <img src="man/figures/header4readme.png" alt="semantic relations between cat, dog, leash" width="45%" />
 <br/>
 
@@ -110,7 +108,7 @@ word lives \| clean = T/F (default is T) applies cleaning functions \|
 omit_stops = T/F omits stopwords, default is TRUE \| lemmatize = T/F
 transforms raw word to lemmatized form, default is TRUE
 
-#### <span style="color: green;">Example Raw Column Arrays aid Word Pair Cleaning</span>
+#### <span style="color: green;">Example Column Arrays Word Pair Cleaning</span>
 
 ``` r
 #arrayed data in two columns for pairwise distance
@@ -136,7 +134,7 @@ head(MyClean2Columns, n=6) #view head cleaned data
 #> 6 shark     shark       6        shark        shark
 ```
 
-## <span style="color: brown;">1.3 Clean an Unordered Word List (clean_4clustering)</span>
+## <span style="color: brown;">1.3 Clean Unordered Word List (clean_4clustering)</span>
 
 This cleaning option is used for prepping a vector of words for
 hierarchical clustering. Word order is no longer a factor since all
@@ -183,7 +181,7 @@ head(FakeCats, n=8)
 #> 8     8     drum    music     within
 ```
 
-## <span style="color: brown;">1.4 Clean a Dialogue Transcript (clean_dialogue)</span>
+## <span style="color: brown;">1.4 Clean Dialogue Transcript (clean_dialogue)</span>
 
 This could be a conversation transcript or any language sample where you
 care about talker/interlocutor information (e.g., computing semantic
@@ -197,7 +195,7 @@ containing the talker ID (will convert to factor) \| clean = T/F
 stopwords, default is TRUE \| lemmatize = T/F transforms raw word to
 lemmatized form, default is TRUE
 
-#### <span style="color: green;">Example ‘clean_dialogue’ on a Dialogue Transcript</span>
+#### <span style="color: green;">Example ‘clean_dialogue’ on Dialogue Transcript</span>
 
 ``` r
 head(DialogueSample1, n=6)
@@ -247,9 +245,9 @@ your language sample. Once you settle on a window size and clean your
 language transcript (works for monologues only), you are ready to roll.
 Here’s the general idea… <br>
 
-## <span style="color: brown;">2.1: Monologues: Rolling Ngram-to-Word Distance (dist_ngram2word_roll)</span>
+## <span style="color: brown;">2.1: Rolling Ngram-to-Word Distance (dist_ngram2word_roll)</span>
 
-<img src="man/figures/RollingNgramIllustrate.png" alt="illustrates how rolling ngrams work on a vector of words by moving a window and contrasting each chunk to each new word" width="60%" />
+<img src="man/figures/RollingNgramIllustrate.png" alt="illustrates how rolling ngrams work on a vector of words by moving a window and contrasting each chunk to each new word" width="40%" />
 
 Remember to call a cleaned/prepped dataframe! Arguments to
 ‘dist_ngram2word_roll’ are: <br/> \| dat dataframe cleaned and prepped
@@ -274,16 +272,17 @@ head(MyMonologueDists, n=8)
 
 <br/>
 
-## <span style="color: brown;">2.2: Monologues: Ngram-to-Ngram Distance (dist_ngram2ngram)</span>
-
-<img src="man/figures/Ngram2Ngram_Dist.png" alt="illustrates how semantic distance is derived from chunk to chunk groupings of words" width="50%" />
+## <span style="color: brown;">2.2: Ngram-to-Ngram Distance (dist_ngram2ngram)</span>
 
 User specifies n-gram size (e.g., ngram=2). Distance computed from each
 two-word chunk to the next iterating all the way down the dataframe
 until there are no more words to ‘fill out’ the ngram size (e.g.,
-remainder). Arguments to dist_ngram2ngram are: \| dat dataframe w/ a
-monologue sample cleaned and prepped <br/> \| ngram chunk size
-(chunk-to-chunk)
+remainder).<br/>
+
+<img src="man/figures/Ngram2Ngram_Dist.png" alt="illustrates how semantic distance is derived from chunk to chunk groupings of words" width="50%" />
+
+Arguments to dist_ngram2ngram are: \| dat dataframe w/ a monologue
+sample cleaned and prepped <br/> \| ngram chunk size (chunk-to-chunk)
 
 ``` r
 #Give the function a cleaned monologue transcript
@@ -304,7 +303,19 @@ head(MyNgramChunkDists, n=8)
 
 <br/>
 
-## <span style="color: brown;">2.3: Distance Word Pairs Arrayed in 2 Columns (dist_2cols)</span>
+### <span style="color: brown;">2.3: Turn-by-Turn Distance in Dialogue (dist_dialogue)</span>
+
+Averages the semantic vectors for all content words in a turn. Computes
+the cosine distance to the average of the semantic vectors of the
+content words in the subsequent turn.
+
+``` r
+#TBA
+```
+
+<br/>
+
+## <span style="color: brown;">2.4: Distance Word Pairs Arrayed in 2 Columns (dist_2cols)</span>
 
 When your data are arrayed in two columns and you are interested in
 computing pairwise distance across the columns. The only critical
@@ -329,9 +340,7 @@ head(MyDistsColumns, n=8)
 
 <br/>
 
-## <span style="color: brown;">2.4: Distance anchored (fixed) cluster-to-word (anchor_dist)</span>
-
-<img src="man/figures/Anchored_WordDistance.png" alt="illustrates distance from each new word of a language sample to an initial chunk of n-words" width="60%" />
+## <span style="color: brown;">2.5: Distance fixed onset cluster to each new word (anchor_dist)</span>
 
 This approach models the semantic distance from each successive new word
 in a language sample to the average of the semantic vectors for the
@@ -339,22 +348,24 @@ first block of 10 content words in that sample. This anchored distance
 provides a metric of overall semantic drift as a language sample unfolds
 relative to a fixed starting point.
 
+<img src="man/figures/Anchored_WordDistance.png" alt="illustrates distance from each new word of a language sample to an initial chunk of n-words" width="60%" />
+
 ``` r
-#tbd
+#TBA
 ```
 
 <br/>
 
-### Option 5: Hierarchical Clustering of a Set of Words
+### <span style="color: brown;">2.6: Distance unordered set for hclust (dist_4cluster)</span>
 
 Input a set of words cleaned/prepped with ‘clean_4clustering’ function.
 
 ``` r
-#TBD
+#TBA
 ```
 
 # <span style="color: darkred;">Step 3: Data Visualization Options</span>
 
 ``` r
-#TBD
+#TBA
 ```

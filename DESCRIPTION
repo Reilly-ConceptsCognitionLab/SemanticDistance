@@ -24,7 +24,8 @@ Imports:
     textclean,
     lsa,
     dplyr,
-    utils
+    utils,
+    rlang
 Suggests: 
     knitr,
     rmarkdown
