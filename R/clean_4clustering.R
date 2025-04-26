@@ -28,7 +28,9 @@ clean_4clustering <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemm
   if (!requireNamespace("tm", quietly = TRUE)) {
     install.packages("tm")
   }
-
+  if (!requireNamespace("dplyr", quietly = TRUE)) {
+    install.packages("tm")
+  }
   # Create unique numeric ID for each original row
   df$id_orig <- seq_len(nrow(df))
 
@@ -73,10 +75,8 @@ clean_4clustering <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemm
   df <- df[trimws(df$word_clean) != "", ]
 
   # Apply distinct only to word_clean within each id_orig group
-  df <- df %>%
-    group_by(id_orig) %>%
-    distinct(word_clean, .keep_all = TRUE) %>%
-    dplyr::ungroup()
+  df <- df %>% dplyr::group_by(id_orig) %>%
+    dplyr::distinct(word_clean, .keep_all = TRUE) %>% dplyr::ungroup()
 
   return(df)
 }

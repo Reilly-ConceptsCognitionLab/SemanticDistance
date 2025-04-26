@@ -14,6 +14,7 @@
 #' @importFrom dplyr across
 #' @importFrom dplyr where
 #' @importFrom dplyr all_of
+#' @importFrom dplyr last
 #' @importFrom lsa cosine
 #' @export dist_ngram2ngram
 
@@ -25,9 +26,12 @@ dist_ngram2ngram <- function(dat, ngram) {
   if (!requireNamespace("dplyr", quietly = TRUE)) {
     install.packages("dplyr")
   }
+  if (!requireNamespace("magrittr", quietly = TRUE)) {
+    install.packages("magrittr")
+  }
 
   # Ngram splicing
-  dat <- dat %>% select(id_orig, word_clean) %>% mutate(id_orig = as.factor(id_orig))
+  dat <- dat %>% dplyr::select(id_orig, word_clean) %>% dplyr::mutate(id_orig = as.factor(id_orig))
   dat$word_clean <- tolower(dat$word_clean)
 
   # Calculate ngram groups
@@ -58,7 +62,7 @@ dist_ngram2ngram <- function(dat, ngram) {
 
   djoin_sd15 <- djoin_sd15 %>%
     dplyr::group_by(across(all_of(col_name))) %>%
-    dplyr::summarize(id_orig = last(id_orig),
+    dplyr::summarize(id_orig = dplyr::last(id_orig),
               across(where(is.numeric), ~ mean(., na.rm = TRUE)),
               .groups = 'drop')
 
@@ -100,7 +104,8 @@ dist_ngram2ngram <- function(dat, ngram) {
   sd15_dist <- calculate_cos_dist(djoin_sd15, col_name, "SD15")
 
   # Combine results with original data
-  result <- dat %>% left_join(glo_dist, by = "id_orig") %>% left_join(sd15_dist, by = "id_orig")
+  result <- dat %>% dplyr::left_join(glo_dist, by = "id_orig") %>%
+    dplyr::left_join(sd15_dist, by = "id_orig")
 
   return(result)
 }

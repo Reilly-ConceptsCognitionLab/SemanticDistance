@@ -10,18 +10,22 @@
 #' @importFrom dplyr left_join
 #' @importFrom tidyr pivot_longer
 #' @importFrom lsa cosine
+#' @importFrom rlang sym
 #' @importFrom dplyr rename
 #' @export dist_2cols
 
 dist_2cols <- function(dat) {
   if (!requireNamespace("dplyr", quietly = TRUE)) {
-    install.packages("tm")
+    install.packages("dplyr")
   }
   if (!requireNamespace("tidyr", quietly = TRUE)) {
-    install.packages("tm")
+    install.packages("tidyr")
   }
   if (!requireNamespace("lsa", quietly = TRUE)) {
-    install.packages("tm")
+    install.packages("lsa")
+  }
+  if (!requireNamespace("rlang", quietly = TRUE)) {
+    install.packages("rlang")
   }
 
   # Find columns ending with _clean1 and _clean2
@@ -34,12 +38,12 @@ dist_2cols <- function(dat) {
   col_1 <- clean_cols[grep("_clean1$", clean_cols)]
   col_2 <- clean_cols[grep("_clean2$", clean_cols)]
 
-  dat_small <- dat %>% select(id_orig, !!sym(col_1), !!sym(col_2))
+  dat_small <- dat %>% dplyr::select(id_orig, !!rlang::sym(col_1), !!rlang::sym(col_2))
   unspooled_txt <- dat_small %>%
     tidyr::pivot_longer(cols = c(!!sym(col_1), !!sym(col_2)),
                  names_to = "word_type",
                  values_to = "word") %>%
-    select(-word_type)  # Drop 'word_type' column
+    dplyr::select(-word_type)  # Drop 'word_type' column
 
   djoin_sd15 <- dplyr::left_join(unspooled_txt, SD15_2025, by = "word")
   djoin_glow <- dplyr::left_join(unspooled_txt, glowca_25, by = 'word')
