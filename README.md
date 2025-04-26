@@ -198,7 +198,7 @@ your language sample. Once you settle on a window size and clean your
 language transcript (works for monologues only), you are ready to roll.
 Here’s the general idea… <br>
 
-## <span style="color: brown;">2.1: Rolling Ngram-to-Word Distance (dist_ngram2word_roll)</span>
+## <span style="color: brown;">2.1: Rolling Ngram-to-Word Distance (dist_ngram2word)</span>
 
 <img src="man/figures/RollingNgramIllustrate.png" alt="illustrates how rolling ngrams work on a vector of words by moving a window and contrasting each chunk to each new word" width="40%" />
 
@@ -206,10 +206,10 @@ Remember to call a cleaned/prepped dataframe! Arguments to
 ‘dist_ngram2word_roll’ are: <br/> \| dat dataframe cleaned and prepped
 <br/> \| ngram ngram window size preceding each new content word <br/>
 
-### <span style="color: green;">Output ‘dist_ngram2word_roll’ on monologue transcript </span>
+### <span style="color: green;">Output ‘dist_ngram2word’ on monologue transcript </span>
 
 ``` r
-MyMonologueDists <- dist_ngram2word_roll(MyCleanCluster, ngram=1) #distance word-to-word
+MyMonologueDists <- dist_ngram2word(MyCleanCluster, ngram=1) #distance word-to-word
 head(MyMonologueDists, n=8)
 #> # A tibble: 8 × 8
 #>   ID_JR word     category prediction id_orig word_clean CosDist_1gram_glo
