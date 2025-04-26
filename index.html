@@ -81,8 +81,8 @@
 </li>
 </ol>
 <div class="section level2">
-<h2 id="id_11-clean-your-monologue-transcript-clean_monologue">
-<span style="color: brown;">1.1 Clean Your Monologue Transcript (clean_monologue)</span><a class="anchor" aria-label="anchor" href="#id_11-clean-your-monologue-transcript-clean_monologue"></a>
+<h2 id="id_11-clean-monologue-transcript-clean_monologue">
+<span style="color: brown;">1.1 Clean Monologue Transcript (clean_monologue)</span><a class="anchor" aria-label="anchor" href="#id_11-clean-monologue-transcript-clean_monologue"></a>
 </h2>
 <p>A monologue transcript consists of any ordered text sample NOT delineated by a talker/speaker (e.g., stories, narratives). Clean a monologue transcript by calling the ‘clean_monologue’ function. Specific arguments include: <br></p>
 <p>df = raw dataframe with at least one column of text<br>
@@ -160,10 +160,10 @@ lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="id_13-clean-unordered-word-list-clean_4clustering">
-<span style="color: brown;">1.3 Clean Unordered Word List (clean_4clustering)</span><a class="anchor" aria-label="anchor" href="#id_13-clean-unordered-word-list-clean_4clustering"></a>
+<h2 id="id_13-clean-unordered-word-list-clean_4cluster">
+<span style="color: brown;">1.3 Clean Unordered Word List (clean_4cluster)</span><a class="anchor" aria-label="anchor" href="#id_13-clean-unordered-word-list-clean_4cluster"></a>
 </h2>
-<p>This cleaning option is used for prepping a vector of words for hierarchical clustering. Word order is no longer a factor since all words will be shuffled. This cleaning function retains only one instance of a word (no duplicates). Arguments to the ‘clean_4clustering’ function call are: <br> | df = your raw dataframe with at least one column of text | wordcol = quoted variable reflecting where your text lives | clean = T/F (default is T) applies cleaning functions | omit_stops = T/F omits stopwords, default is TRUE | lemmatize = T/F transforms raw word to lemmatized form, default is TRUE</p>
+<p>This cleaning option is used for prepping a vector of words for hierarchical clustering. Word order is no longer a factor since all words will be shuffled. This cleaning function retains only one instance of a word (no duplicates). Arguments to the ‘clean_4cluster’ function call are: <br> | df = your raw dataframe with at least one column of text | wordcol = quoted variable reflecting where your text lives | clean = T/F (default is T) applies cleaning functions | omit_stops = T/F omits stopwords, default is TRUE | lemmatize = T/F transforms raw word to lemmatized form, default is TRUE</p>
 <div class="section level3">
 <h3 id="example-clean_4clustering-on-unordered-word-list-">
 <span style="color: green;">Example ‘clean_4clustering’ on Unordered Word List </span><a class="anchor" aria-label="anchor" href="#example-clean_4clustering-on-unordered-word-list-"></a>
@@ -291,7 +291,7 @@ lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
 <span style="color: brown;">2.5: Distance fixed onset cluster to each new word (anchor_dist)</span><a class="anchor" aria-label="anchor" href="#id_25-distance-fixed-onset-cluster-to-each-new-word-anchor_dist"></a>
 </h2>
 <p>This approach models the semantic distance from each successive new word in a language sample to the average of the semantic vectors for the first block of 10 content words in that sample. This anchored distance provides a metric of overall semantic drift as a language sample unfolds relative to a fixed starting point.<br></p>
-<p><img src="reference/figures/Anchored_WordDistance.png" alt="illustrates distance from each new word of a language sample to an initial chunk of n-words" width="60%"></p>
+<p><img src="reference/figures/Anchor_2Word_Dist.png" alt="illustrates distance from each new word of a language sample to an initial chunk of n-words" width="60%"></p>
 <div class="section level3">
 <h3 id="output-of-anchor_dist-on-a-sample-monologue-transcript">
 <span style="color: green;">Output of ‘anchor_dist’ on a sample monologue transcript</span><a class="anchor" aria-label="anchor" href="#output-of-anchor_dist-on-a-sample-monologue-transcript"></a>
