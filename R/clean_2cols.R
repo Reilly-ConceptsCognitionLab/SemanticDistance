@@ -1,8 +1,8 @@
-#' clean_2columns
+#' clean_2cols
 #'
 #' Cleans a transcript where there are two or more talkers. User specifies the dataframe and column name where target text is stored as arguments to the function. Default option is to lemmatize strings. Function splits and unlists text so that the output is in a one-row-per-word format marked by a unique numeric identifier (i.e., 'id_orig')
 #'
-#' @name clean_2columns
+#' @name clean_2cols
 #' @param df a dataframe with two columns of words you want pairwise distance for
 #' @param col1 quoted column name storing the first string for comparison
 #' @param col2 quoted column name storing the second string for comparison
@@ -14,7 +14,7 @@
 #' @importFrom textclean replace_contraction
 #' @importFrom tm removeWords
 #' @importFrom textstem lemmatize_strings
-#' @export clean_2columns
+#' @export clean_2cols
 
 clean_2columns <- function(df, col1, col2, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE) {
   if (!requireNamespace("textclean", quietly = TRUE)) {

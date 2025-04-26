@@ -49,7 +49,7 @@ distances by first doing the following: <br/>
 5)  Run the approproate cleaning function specifying the parameters that
     best fit your data and aims. <br/> <br/>
 
-## <span style="color: brown;">1.1 Clean Your Monologue Transcript (clean_monologue)</span>
+## <span style="color: brown;">1.1 Clean Monologue Transcript (clean_monologue)</span>
 
 A monologue transcript consists of any ordered text sample NOT
 delineated by a talker/speaker (e.g., stories, narratives). Clean a
@@ -146,12 +146,12 @@ head(MyClean2Columns, n=6) #view head cleaned data
 
 <br/> <br/>
 
-## <span style="color: brown;">1.3 Clean Unordered Word List (clean_4clustering)</span>
+## <span style="color: brown;">1.3 Clean Unordered Word List (clean_4cluster)</span>
 
 This cleaning option is used for prepping a vector of words for
 hierarchical clustering. Word order is no longer a factor since all
 words will be shuffled. This cleaning function retains only one instance
-of a word (no duplicates). Arguments to the ‘clean_4clustering’ function
+of a word (no duplicates). Arguments to the ‘clean_4cluster’ function
 call are: <br/> \| df = your raw dataframe with at least one column of
 text \| wordcol = quoted variable reflecting where your text lives \|
 clean = T/F (default is T) applies cleaning functions \| omit_stops =
@@ -309,7 +309,7 @@ first block of 10 content words in that sample. This anchored distance
 provides a metric of overall semantic drift as a language sample unfolds
 relative to a fixed starting point.<br/>
 
-<img src="man/figures/Anchored_WordDistance.png" alt="illustrates distance from each new word of a language sample to an initial chunk of n-words" width="60%" />
+<img src="man/figures/Anchor_2Word_Dist.png" alt="illustrates distance from each new word of a language sample to an initial chunk of n-words" width="60%" />
 
 ### <span style="color: green;">Output of ‘anchor_dist’ on a sample monologue transcript</span>
 
