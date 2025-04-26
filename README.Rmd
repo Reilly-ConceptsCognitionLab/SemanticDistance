@@ -27,11 +27,11 @@ SemanticDistance nominally requires a dataframe with at least one column variabl
 Install the development version of SemanticDistance from [GitHub](https://github.com/) using devtools.
 ```{r, message=FALSE}
 #install.packages("devtools")
-#devtools::install_github("Reilly-ConceptsCognitionLab/ConversationAlign")
+#devtools::install_github("Reilly-ConceptsCognitionLab/SemanticDistance")
 library(SemanticDistance)
 ```
 
-# <span style="color: darkred;">Step 1: Clean and Prep Your Text</span>
+# <span style="color: darkred;">---Step 1: Cleaning--- </span>
 The semantic distance functions work by indexing unique numeric identifiers. You MUST first clean/prep your raw text to append these identifers. Prepare your lexical data for computing pairwise semantic distances by first doing the following: <br/>
 
 1) Read your data into R. Label your text and metadata columns however you like. <br/>
@@ -110,7 +110,7 @@ head(FakeCats, n=8)
 <br/>
 <br/>
 
-# <span style="color: darkred;">Step 2: Compute Semantic Distance on your Prepped Data</span>
+# <span style="color: darkred;">---Step 2: Compute Semantic Distance---</span>
 SemanticDistance will append cosine distance values between each pair of elements specified by the user (e.g., word-to-word, ngram-to-word). These distance values are derived from two large lookup databases in the package with fixed semantic vectors for >70k English words. CosDist_Glo reflects cosine distance between vectors derived from training a GLOVE word embedding model (300 hyperparameters per word). CodDist_SD15 refects cosine distance between two chunks (words, groups of words) characterized across 15 meaningful perceptual and affective dimensions (e.g., color, sound, valence). <br/>
 
 Users specify an ngram window size. This window rolls successively over your language sample to compute a semantic distance value for each new word relative to the n-words (ngram size) before it. This model of compouting distance is illustrated in the figure. The larger your specified ngram size the more smoothed the semantic vector will be over your language sample. Once you settle on a window size and clean your language transcript (works for monologues only), you are ready to roll. Here's the general idea... <br>

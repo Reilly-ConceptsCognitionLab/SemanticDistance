@@ -27,11 +27,11 @@ Install the development version of SemanticDistance from
 
 ``` r
 #install.packages("devtools")
-#devtools::install_github("Reilly-ConceptsCognitionLab/ConversationAlign")
+#devtools::install_github("Reilly-ConceptsCognitionLab/SemanticDistance")
 library(SemanticDistance)
 ```
 
-# <span style="color: darkred;">Step 1: Clean and Prep Your Text</span>
+# <span style="color: darkred;">—Step 1: Cleaning— </span>
 
 The semantic distance functions work by indexing unique numeric
 identifiers. You MUST first clean/prep your raw text to append these
@@ -177,7 +177,7 @@ head(FakeCats, n=8)
 
 <br/> <br/> <br/>
 
-# <span style="color: darkred;">Step 2: Compute Semantic Distance on your Prepped Data</span>
+# <span style="color: darkred;">—Step 2: Compute Semantic Distance—</span>
 
 SemanticDistance will append cosine distance values between each pair of
 elements specified by the user (e.g., word-to-word, ngram-to-word).
