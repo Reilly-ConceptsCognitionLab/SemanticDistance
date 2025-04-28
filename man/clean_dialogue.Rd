@@ -4,7 +4,14 @@
 \alias{clean_dialogue}
 \title{clean_dialogue}
 \usage{
-clean_dialogue(df, wordcol, whotalks, omit_stops = TRUE, lemmatize = TRUE)
+clean_dialogue(
+  df,
+  wordcol,
+  whotalks,
+  clean = TRUE,
+  omit_stops = TRUE,
+  lemmatize = TRUE
+)
 }
 \arguments{
 \item{df}{a dataframe with at least one target column of string data}
@@ -12,6 +19,8 @@ clean_dialogue(df, wordcol, whotalks, omit_stops = TRUE, lemmatize = TRUE)
 \item{wordcol}{quoted column name storing the strings that will be cleaned and split}
 
 \item{whotalks}{quoted column name with speaker/talker identities will be factorized}
+
+\item{clean}{T/F apply cleaning transformations (default is TRUE)}
 
 \item{omit_stops}{T/F user wishes to remove stopwords (default is TRUE)}
 

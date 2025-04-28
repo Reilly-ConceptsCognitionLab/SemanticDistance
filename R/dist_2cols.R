@@ -12,9 +12,13 @@
 #' @importFrom lsa cosine
 #' @importFrom rlang sym
 #' @importFrom dplyr rename
+#' @importFrom utils install.packages
 #' @export dist_2cols
 
 dist_2cols <- function(dat) {
+  if (!requireNamespace("utils", quietly = TRUE)) {
+    install.packages("utils")
+  }
   if (!requireNamespace("dplyr", quietly = TRUE)) {
     install.packages("dplyr")
   }
@@ -40,7 +44,7 @@ dist_2cols <- function(dat) {
 
   dat_small <- dat %>% dplyr::select(id_orig, !!rlang::sym(col_1), !!rlang::sym(col_2))
   unspooled_txt <- dat_small %>%
-    tidyr::pivot_longer(cols = c(!!sym(col_1), !!sym(col_2)),
+    tidyr::pivot_longer(cols = c(!!sym(col_1), !!rlang::sym(col_2)),
                  names_to = "word_type",
                  values_to = "word") %>%
     dplyr::select(-word_type)  # Drop 'word_type' column

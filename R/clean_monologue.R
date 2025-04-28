@@ -14,6 +14,7 @@
 #' @importFrom tm removeWords
 #' @importFrom textstem lemmatize_strings
 #' @importFrom tidyr separate_rows
+#' @importFrom utils install.packages
 #' @export clean_monologue
 
 clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE) {

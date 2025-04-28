@@ -6,6 +6,7 @@
 #' @param df a dataframe with at least one target column of string data
 #' @param wordcol quoted column name storing the strings that will be cleaned and split
 #' @param whotalks quoted column name with speaker/talker identities will be factorized
+#' @param clean T/F apply cleaning transformations (default is TRUE)
 #' @param omit_stops T/F user wishes to remove stopwords (default is TRUE)
 #' @param lemmatize T/F user wishes to lemmatize each string (default is TRUE)
 #' @return a dataframe
@@ -14,6 +15,7 @@
 #' @importFrom tm removeWords
 #' @importFrom textstem lemmatize_strings
 #' @importFrom tidyr separate_rows
+#' @importFrom utils install.packages
 #' @export clean_dialogue
 
 clean_dialogue <- function(df, wordcol, whotalks, clean=TRUE, omit_stops=TRUE, lemmatize = TRUE) {

@@ -16,10 +16,13 @@
 #' @importFrom dplyr all_of
 #' @importFrom dplyr last
 #' @importFrom lsa cosine
+#' @importFrom utils install.packages
 #' @export dist_ngram2ngram
 
 dist_ngram2ngram <- function(dat, ngram) {
-  # Load required packages
+  if (!requireNamespace("utils", quietly = TRUE)) {
+    install.packages("utils")
+  }
   if (!requireNamespace("lsa", quietly = TRUE)) {
     install.packages("lsa")
   }

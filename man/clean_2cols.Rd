@@ -2,17 +2,9 @@
 % Please edit documentation in R/clean_2cols.R
 \name{clean_2cols}
 \alias{clean_2cols}
-\alias{clean_2columns}
 \title{clean_2cols}
 \usage{
-clean_2columns(
-  df,
-  col1,
-  col2,
-  clean = TRUE,
-  omit_stops = TRUE,
-  lemmatize = TRUE
-)
+clean_2cols(df, col1, col2, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE)
 }
 \arguments{
 \item{df}{a dataframe with two columns of words you want pairwise distance for}
@@ -31,5 +23,5 @@ clean_2columns(
 a dataframe
 }
 \description{
-Cleans a transcript where there are two or more talkers. User specifies the dataframe and column name where target text is stored as arguments to the function. Default option is to lemmatize strings. Function splits and unlists text so that the output is in a one-row-per-word format marked by a unique numeric identifier (i.e., 'id_orig')
+Cleans a transcript where word pairs are arrayed in two columns.
 }

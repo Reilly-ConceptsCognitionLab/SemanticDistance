@@ -9,8 +9,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
-)
+  out.width = "100%")
 ```
 
 <img src="man/figures/header4readme.png" alt="semantic relations between cat, dog, leash" width="45%" />
@@ -55,7 +54,6 @@ A monologue transcript consists of any ordered text sample NOT delineated by a t
 MyCleanMonologue <- clean_monologue(MonologueSample1, 'word', clean=T)
 head(MyCleanMonologue, n=10)
 ```
-<br/>
 <br/>
 
 ## <span style="color: brown;">1.4 Clean Dialogue Transcript (clean_dialogue)</span>
@@ -103,8 +101,8 @@ This cleaning option is used for prepping a vector of words for hierarchical clu
 ### <span style="color: green;">Example 'clean_4clustering' on Unordered Word List </span>
 ```{r}
 #Run clean fn 
-MyCleanCluster <- clean_4cluster(FakeCats, wordcol="word", clean=TRUE, omit_stops=TRUE, lemmatize=TRUE) 
-head(FakeCats, n=8)
+MyCleanUnordered <- clean_unordered(FakeCats, wordcol="word", clean=TRUE, omit_stops=TRUE, lemmatize=TRUE) 
+head(MyCleanUnordered, n=8)
 ```
 <br/>
 <br/>
@@ -149,15 +147,21 @@ head(MyNgramChunkDists, n=8)
 ## <span style="color: brown;">2.3: Compute Turn-by-Turn Distance (dist_dialogue)</span>
 Averages the semantic vectors for all content words in a turn. Computes the cosine distance to the average of the semantic vectors of the content words in the subsequent turn. <br/>
 
+Arguments to 'dist_dialogue' are: <br/>
+| dat = dataframe w/ a dialogue sample cleaned and prepped using 'clean_dialogue' fn<br/>
+
 ### <span style="color: green;">Output 'dist_dialogue' on sample dialogue transcript </span>
 ```{r}
 #TBA
 ```
 <br/>
 
-## <span style="color: brown;">2.4: Compute Distances Betweem Word Pairs in Columns (dist_2cols)</span>
+## <span style="color: brown;">2.4: Compute Distances Between Word Pairs in Columns (dist_2cols)</span>
 When your data are arrayed in two columns and you are interested in computing pairwise distance across the columns. The only critical argument is your dataframe name. Remember to pass a cleaned dataframe (even if you disable stopwords and lemmatization). Arguments to the function: <br/>
 | dat = your cleaned dataframe with two paired columns of text <br/>
+
+Arguments to 'dist_2cols' are: <br/>
+| dat = dataframe w/ word pairs arrayed in columns cleaned and prepped using 'clean_2cols' fn<br/>
 
 ### <span style="color: green;">Output 'dist_2cols' on 2-column arrayed dataframe </span>
 ```{r}
@@ -169,28 +173,50 @@ head(MyDistsColumns, n=8)
 ## <span style="color: brown;">2.5: Compute Distance from a Fixed Cluster of Words in the Beginning of a Language Sample to each new word in the sample (anchor_dist)</span>
 This approach models the semantic distance from each successive new word in a language sample to the average of the semantic vectors for the first block of 10 content words in that sample. This anchored distance provides a metric of overall semantic drift as a language sample unfolds relative to a fixed starting point.<br/>
 
+Arguments to 'anchor_dist' are: <br/>
+| dat = dataframe w/ a monologue sample cleaned and prepped using 'clean_monologue' fn<br/>
+| anchor_size = size of the initial chunk of words for chunk-to-new-word comparisons fn<br/>
+
 <img src="man/figures/Anchor_2Word_Dist.png" alt="illustrates distance from each new word of a language sample to an initial chunk of n-words" width="60%" />
 
 ### <span style="color: green;">Output of 'anchor_dist' on a sample monologue transcript</span>
 ```{r}
-#TBA
+MyDistsAnchored <- dist_anchor(MyCleanMonologue, anchor_size=8)
+head(MyDistsAnchored, n=10)
 ```
 <br/>
 
-### <span style="color: brown;">2.6: Compute Distance Unordered Set of Words (dist_4cluster)</span>
-Input a set of words cleaned/prepped with 'clean_4clustering' function. <br/>
+### <span style="color: brown;">2.6: Compute Distances Unordered Set of Words (dist_unordered)</span>
+Input a set of words cleaned/prepped with 'clean_unordered' function <br/>
 
-### <span style="color: green;">Output of 'dist_4cluster' on unordered word list</span>
+Arguments to 'dist_unorderd' are: <br/>
+| dat = dataframe w/ a monologue sample cleaned and prepped using 'clean_monologue' fn<br/>
+| anchor_size = size of the initial chunk of words for chunk-to-new-word comparisons fn<br/>
+
+### <span style="color: green;">Output of 'dist_unordered' on unordered word list</span>
 ```{r}
 #TBA
 ```
-<br/>
 <br/>
 <br/>
 
 # <span style="color: darkred;">---Step 3: Data Visualization Options---</span>
+## Time series plot for monologues
+id_orig (as x-axis time) by distance measure (facetted GLO and SD15). Add red line annotation if semantic distance jump is z>3 based on the distribution of that time series
 ```{r}
-#TBA
+#Select id_orig, "CosDist_Glo", "CosDist_SD15", pivot_longer
+```
+
+## Time series plot for dialogues
+Color point by talker
+```{r}
+
+```
+
+
+#Animate Time Series
+```{r}
+
 ```
 
 

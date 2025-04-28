@@ -84,7 +84,7 @@ head(MyCleanMonologue, n=10)
 #> 10 Dog               6       "dog"
 ```
 
-<br/> <br/>
+<br/>
 
 ## <span style="color: brown;">1.4 Clean Dialogue Transcript (clean_dialogue)</span>
 
@@ -106,7 +106,7 @@ lemmatized form, default is TRUE
 MyCleanDialogue <- clean_dialogue(DialogueSample1, "word", "speaker", omit_stops=T, lemmatize=T)
 head(MyCleanDialogue, n=6)
 #> # A tibble: 6 × 6
-#>   word                speaker ID_Orig talker word_clean turn_count
+#>   word                speaker id_orig talker word_clean turn_count
 #>   <chr>               <chr>   <fct>   <fct>  <chr>           <dbl>
 #> 1 Hi Peter            Mary    1       Mary   peter               1
 #> 2 Donkeys are gray    Mary    2       Mary   donkey              1
@@ -133,7 +133,7 @@ transforms raw word to lemmatized form, default is TRUE
 ### <span style="color: green;">Example Column Arrays Word Pair Cleaning</span>
 
 ``` r
-MyClean2Columns <- clean_2columns(ColumnSample, 'word1', 'word2', clean=T, omit_stops=T, lemmatize=T)
+MyClean2Columns <- clean_2cols(ColumnSample, 'word1', 'word2', clean=T, omit_stops=T, lemmatize=T)
 head(MyClean2Columns, n=6) #view head cleaned data
 #>   word1     word2 id_orig word1_clean1 word2_clean2
 #> 1   Dog   trumpet       1          dog      trumpet
@@ -162,7 +162,7 @@ word to lemmatized form, default is TRUE
 
 ``` r
 #Run clean fn 
-MyCleanCluster <- clean_4clustering(FakeCats, wordcol="word", clean=TRUE, omit_stops=TRUE, lemmatize=TRUE) 
+MyCleanCluster <- clean_4cluster(FakeCats, wordcol="word", clean=TRUE, omit_stops=TRUE, lemmatize=TRUE) 
 head(FakeCats, n=8)
 #>   ID_JR     word category prediction
 #> 1     1  trumpet    music     within
@@ -175,7 +175,7 @@ head(FakeCats, n=8)
 #> 8     8     drum    music     within
 ```
 
-<br/> <br/> <br/>
+<br/> <br/>
 
 # <span style="color: darkred;">—Step 2: Compute Semantic Distance—</span>
 
@@ -198,7 +198,7 @@ your language sample. Once you settle on a window size and clean your
 language transcript (works for monologues only), you are ready to roll.
 Here’s the general idea… <br>
 
-## <span style="color: brown;">2.1: Rolling Ngram-to-Word Distance (dist_ngram2word)</span>
+## <span style="color: brown;">2.1: Compute Ngram-to-Word Distance (dist_ngram2word)</span>
 
 <img src="man/figures/RollingNgramIllustrate.png" alt="illustrates how rolling ngrams work on a vector of words by moving a window and contrasting each chunk to each new word" width="40%" />
 
@@ -225,9 +225,9 @@ head(MyMonologueDists, n=8)
 #> # ℹ 1 more variable: CosDist_1gram_sd15 <dbl>
 ```
 
-<br/> <br/>
+<br/>
 
-## <span style="color: brown;">2.2: Ngram-to-Ngram Distance (dist_ngram2ngram)</span>
+## <span style="color: brown;">2.2: Compute Ngram-to-Ngram Distance (dist_ngram2ngram)</span>
 
 User specifies n-gram size (e.g., ngram=2). Distance computed from each
 two-word chunk to the next iterating all the way down the dataframe
@@ -258,13 +258,16 @@ head(MyNgramChunkDists, n=8)
 #> 8 5       "name"     4                          0.496              1.09
 ```
 
-<br/> <br/>
+<br/>
 
-## <span style="color: brown;">2.3: Turn-by-Turn Distance in Dialogue (dist_dialogue)</span>
+## <span style="color: brown;">2.3: Compute Turn-by-Turn Distance (dist_dialogue)</span>
 
 Averages the semantic vectors for all content words in a turn. Computes
 the cosine distance to the average of the semantic vectors of the
 content words in the subsequent turn. <br/>
+
+Arguments to ‘dist_dialogue’ are: <br/> \| dat = dataframe w/ a dialogue
+sample cleaned and prepped using ‘clean_dialogue’ fn<br/>
 
 ### <span style="color: green;">Output ‘dist_dialogue’ on sample dialogue transcript </span>
 
@@ -272,9 +275,9 @@ content words in the subsequent turn. <br/>
 #TBA
 ```
 
-<br/> <br/>
+<br/>
 
-## <span style="color: brown;">2.4: Distance Word Pairs Arrayed in 2 Columns (dist_2cols)</span>
+## <span style="color: brown;">2.4: Compute Distances Between Word Pairs in Columns (dist_2cols)</span>
 
 When your data are arrayed in two columns and you are interested in
 computing pairwise distance across the columns. The only critical
@@ -282,6 +285,9 @@ argument is your dataframe name. Remember to pass a cleaned dataframe
 (even if you disable stopwords and lemmatization). Arguments to the
 function: <br/> \| dat = your cleaned dataframe with two paired columns
 of text <br/>
+
+Arguments to ‘dist_2cols’ are: <br/> \| dat = dataframe w/ word pairs
+arrayed in columns cleaned and prepped using ‘clean_2cols’ fn<br/>
 
 ### <span style="color: green;">Output ‘dist_2cols’ on 2-column arrayed dataframe </span>
 
@@ -299,9 +305,9 @@ head(MyDistsColumns, n=8)
 #> 8   Dog     leash       8          dog        leash    0.6760924   0.5014043
 ```
 
-<br/> <br/>
+<br/>
 
-## <span style="color: brown;">2.5: Distance fixed onset cluster to each new word (anchor_dist)</span>
+## <span style="color: brown;">2.5: Compute Distance from a Fixed Cluster of Words in the Beginning of a Language Sample to each new word in the sample (anchor_dist)</span>
 
 This approach models the semantic distance from each successive new word
 in a language sample to the average of the semantic vectors for the
@@ -309,19 +315,24 @@ first block of 10 content words in that sample. This anchored distance
 provides a metric of overall semantic drift as a language sample unfolds
 relative to a fixed starting point.<br/>
 
+Arguments to ‘anchor_dist’ are: <br/> \| dat = dataframe w/ a monologue
+sample cleaned and prepped using ‘clean_monologue’ fn<br/> \|
+anchor_size = size of the initial chunk of words for chunk-to-new-word
+comparisons fn<br/>
+
 <img src="man/figures/Anchor_2Word_Dist.png" alt="illustrates distance from each new word of a language sample to an initial chunk of n-words" width="60%" />
 
 ### <span style="color: green;">Output of ‘anchor_dist’ on a sample monologue transcript</span>
 
 ``` r
-#TBA
+MyDistsAnchored <- dist_anchor(MyCleanMonologue, anchor_size=8)
 ```
 
-<br/> <br/>
+<br/>
 
-### <span style="color: brown;">2.6: Distance unordered set for hclust (dist_4cluster)</span>
+### <span style="color: brown;">2.6: Compute Distance Unordered Set of Words (dist_4cluster)</span>
 
-Input a set of words cleaned/prepped with ‘clean_4clustering’ function.
+Input a set of words cleaned/prepped with ‘clean_4cluster’ function.
 <br/>
 
 ### <span style="color: green;">Output of ‘dist_4cluster’ on unordered word list</span>
@@ -330,9 +341,9 @@ Input a set of words cleaned/prepped with ‘clean_4clustering’ function.
 #TBA
 ```
 
-<br/> <br/> <br/>
+<br/> <br/>
 
-# <span style="color: darkred;">Step 3: Data Visualization Options</span>
+# <span style="color: darkred;">—Step 3: Data Visualization Options—</span>
 
 ``` r
 #TBA

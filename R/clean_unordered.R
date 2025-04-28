@@ -1,8 +1,8 @@
-#' clean_4cluster
+#' clean_unordered
 #'
 #' Cleans and formats text. User specifies the dataframe and column name where target text is stored. Word order does not matter (all words shuffled later). Cleaning takes only first instance of word.
 #'
-#' @name clean_4cluster
+#' @name clean_unordered
 #' @param df a dataframe with at least one target column of string data
 #' @param wordcol quoted column name storing the strings that will be cleaned and split
 #' @param clean apply cleaning functions (lowercase etc) default is TRUE
@@ -16,9 +16,10 @@
 #' @importFrom dplyr distinct
 #' @importFrom textstem lemmatize_strings
 #' @importFrom tidyr separate_rows
-#' @export clean_4cluster
+#' @importFrom utils install.packages
+#' @export clean_unordered
 
-clean_4clustering <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE) {
+clean_unordered <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE) {
   if (!requireNamespace("textclean", quietly = TRUE)) {
     install.packages("textclean")
   }
@@ -30,6 +31,9 @@ clean_4clustering <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemm
   }
   if (!requireNamespace("dplyr", quietly = TRUE)) {
     install.packages("tm")
+  }
+  if (!requireNamespace("magrittr", quietly = TRUE)) {
+    install.packages("magrittr")
   }
   # Create unique numeric ID for each original row
   df$id_orig <- seq_len(nrow(df))
