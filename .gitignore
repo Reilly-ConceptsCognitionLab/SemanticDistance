@@ -5,3 +5,6 @@
 inst/doc
 docs
 .DS_Store
+NAMESPACE
+README.Rmd
+README.md
