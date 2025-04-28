@@ -162,17 +162,19 @@ word to lemmatized form, default is TRUE
 
 ``` r
 #Run clean fn 
-MyCleanCluster <- clean_4cluster(FakeCats, wordcol="word", clean=TRUE, omit_stops=TRUE, lemmatize=TRUE) 
-head(FakeCats, n=8)
-#>   ID_JR     word category prediction
-#> 1     1  trumpet    music     within
-#> 2     2 trombone    music     within
-#> 3     3    flute    music     within
-#> 4     4    piano    music     within
-#> 5     5   guitar    music     within
-#> 6     6  cymbals    music     within
-#> 7     7     horn    music     within
-#> 8     8     drum    music     within
+MyCleanUnordered <- clean_unordered(FakeCats, wordcol="word", clean=TRUE, omit_stops=TRUE, lemmatize=TRUE) 
+head(MyCleanUnordered, n=8)
+#> # A tibble: 8 × 6
+#>   ID_JR word     category prediction id_orig word_clean
+#>   <int> <chr>    <chr>    <chr>        <int> <chr>     
+#> 1     1 trumpet  music    within           1 trumpet   
+#> 2     2 trombone music    within           2 trombone  
+#> 3     3 flute    music    within           3 flute     
+#> 4     4 piano    music    within           4 piano     
+#> 5     5 guitar   music    within           5 guitar    
+#> 6     6 cymbals  music    within           6 cymbal    
+#> 7     7 horn     music    within           7 horn      
+#> 8     8 drum     music    within           8 drum
 ```
 
 <br/> <br/>
@@ -209,8 +211,8 @@ Remember to call a cleaned/prepped dataframe! Arguments to
 ### <span style="color: green;">Output ‘dist_ngram2word’ on monologue transcript </span>
 
 ``` r
-MyMonologueDists <- dist_ngram2word(MyCleanCluster, ngram=1) #distance word-to-word
-head(MyMonologueDists, n=8)
+MyNgram2WordDists <- dist_ngram2word(MyCleanUnordered, ngram=1) #distance word-to-word
+head(MyNgram2WordDists, n=8)
 #> # A tibble: 8 × 8
 #>   ID_JR word     category prediction id_orig word_clean CosDist_1gram_glo
 #>   <int> <chr>    <chr>    <chr>      <fct>   <chr>                  <dbl>
@@ -243,8 +245,8 @@ monologue sample cleaned and prepped <br/> \| ngram = chunk size
 
 ``` r
 #Give the function a cleaned monologue transcript
-MyNgramChunkDists <- dist_ngram2ngram(MyCleanMonologue, ngram=2)
-head(MyNgramChunkDists, n=8)
+MyNgram2NgramDists <- dist_ngram2ngram(MyCleanMonologue, ngram=2)
+head(MyNgram2NgramDists, n=8)
 #> # A tibble: 8 × 5
 #>   id_orig word_clean CountID_Ngram2 CosDist_2gram_GLO CosDist_2gram_SD15
 #>   <fct>   <chr>      <fct>                      <dbl>              <dbl>
@@ -326,16 +328,35 @@ comparisons fn<br/>
 
 ``` r
 MyDistsAnchored <- dist_anchor(MyCleanMonologue, anchor_size=8)
+head(MyDistsAnchored, n=10)
+#> # A tibble: 10 × 4
+#>    id_orig word_clean CosDist_Anchor_GLO CosDist_Anchor_SD15
+#>    <fct>   <chr>                   <dbl>               <dbl>
+#>  1 1       ""                    NA                  NA     
+#>  2 1       ""                    NA                   0.0266
+#>  3 1       ""                    NA                   1.26  
+#>  4 1       ""                     0.0640             NA     
+#>  5 1       ""                     0.0640              0.0266
+#>  6 1       ""                     0.0640              1.26  
+#>  7 1       ""                     0.353              NA     
+#>  8 1       ""                     0.353               0.0266
+#>  9 1       ""                     0.353               1.26  
+#> 10 1       "dog"                 NA                  NA
 ```
 
 <br/>
 
-### <span style="color: brown;">2.6: Compute Distance Unordered Set of Words (dist_4cluster)</span>
+### <span style="color: brown;">2.6: Compute Distances Unordered Set of Words (dist_unordered)</span>
 
-Input a set of words cleaned/prepped with ‘clean_4cluster’ function.
+Input a set of words cleaned/prepped with ‘clean_unordered’ function
 <br/>
 
-### <span style="color: green;">Output of ‘dist_4cluster’ on unordered word list</span>
+Arguments to ‘dist_unorderd’ are: <br/> \| dat = dataframe w/ a
+monologue sample cleaned and prepped using ‘clean_monologue’ fn<br/> \|
+anchor_size = size of the initial chunk of words for chunk-to-new-word
+comparisons fn<br/>
+
+### <span style="color: green;">Output of ‘dist_unordered’ on unordered word list</span>
 
 ``` r
 #TBA
@@ -345,6 +366,18 @@ Input a set of words cleaned/prepped with ‘clean_4cluster’ function.
 
 # <span style="color: darkred;">—Step 3: Data Visualization Options—</span>
 
+## Time series plot for monologues
+
+id_orig (as x-axis time) by distance measure (facetted GLO and SD15).
+Add red line annotation if semantic distance jump is z\>3 based on the
+distribution of that time series
+
 ``` r
-#TBA
+#Select id_orig, "CosDist_Glo", "CosDist_SD15", pivot_longer
 ```
+
+## Time series plot for dialogues
+
+Color point by talker
+
+\#Animate Time Series

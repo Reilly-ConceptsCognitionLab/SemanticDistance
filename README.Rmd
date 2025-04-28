@@ -122,8 +122,8 @@ Remember to call a cleaned/prepped dataframe! Arguments to 'dist_ngram2word_roll
 
 ### <span style="color: green;">Output 'dist_ngram2word' on monologue transcript </span>
 ```{r}
-MyMonologueDists <- dist_ngram2word(MyCleanCluster, ngram=1) #distance word-to-word
-head(MyMonologueDists, n=8)
+MyNgram2WordDists <- dist_ngram2word(MyCleanUnordered, ngram=1) #distance word-to-word
+head(MyNgram2WordDists, n=8)
 ```
 <br/>
 
@@ -139,8 +139,8 @@ Arguments to dist_ngram2ngram are: <br/>
 ### <span style="color: green;">Output 'dist_ngram2ngram' on monologue transcript </span>
 ```{r}
 #Give the function a cleaned monologue transcript
-MyNgramChunkDists <- dist_ngram2ngram(MyCleanMonologue, ngram=2)
-head(MyNgramChunkDists, n=8)
+MyNgram2NgramDists <- dist_ngram2ngram(MyCleanMonologue, ngram=2)
+head(MyNgram2NgramDists, n=8)
 ```
 <br/>
 
