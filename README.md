@@ -31,12 +31,67 @@ Install the development version of SemanticDistance from
 library(SemanticDistance)
 ```
 
+## SemanticDistance: Data Compatibility
+
+Sometimes you care about computing time-ordered semantic distances
+between words in running discourse sampples. Other times word order
+doesn’t matter (e.g., using a simple machine learning algorithm to
+cluster a bag of words by similarity). Sometimes your data will be
+structured as monologues (e.g., stories, narratives). Other times you
+might be interested in computing semantic distance turn-by-turn across
+speakers in a conversation transcript (i.e., dialogue). The
+SemanticDistance pockage can handle all of these scenarios. However, is
+is important that **you** understand the structure of your data and what
+the distance measures mean.<br/>
+
+Here are the formats SemanticDistance can currently handle: <br/> 1.
+**Monologues**: A monologue transcript consists of any ordered text
+sample NOT delineated by a talker/speaker (e.g., stories, narratives).
+The minimal requirement for a monologue is one row and one column with
+some text in it.<br/> 2. **Dialogues**: A dialogue transcript includes
+any sample split by talker/speaker/interlocutor information including
+conversation transcripts. The minimum requirment is two cells with
+interlocutor identity and text.<br/> 3. **Word Pairs in Columns**: A
+dataframe that contains two columns of paired string data (col1
+vs. col2). Calculates distance between each word pair across columns
+(e.g., Dog-Leash). <br/> 4. **Unordered Word Lists**: A dataframe with
+an unordered list of words (nominally one column, all text in one row)
+that will be transformed into a distance matrix and hierarchically
+clustered <br/>
+
+## Sample language transcripts embedded in the package
+
+SemanticDistance contains some sample language transcripts that will
+automatically load when you call the package. These can be helpful for
+evaluating and debugging your own own data.<br/>
+
+1.  **Monologue_Structured:** Dataframe 1-word per row already split no
+    missing observations <br/>
+2.  **Monologue_Dirty:** Dataframe text arrayed in one column ‘mytext’,
+    missing observations, junk, multiword phrases contains metadata
+    (simulated timestamps <br/>
+3.  **Monologue_VerbalFluency:** Dataframe ordered simulated semantic
+    fluency data switching between categories every ten words (animals,
+    tools, musical instruments, fruits)
+4.  **Dialogue_Structured:** Dataframe simulating ‘perfect’ conversation
+    transcript, one word per turn, two talkers
+5.  **Dialogue_Dirty:** \#Dataframe simulating ‘dirty’ conversation
+    transcript, multiple lines per person, lots of stopwords, missing
+    obervations, stray transcription symbols <br/>
+6.  **WordPairs_Columns:** \#Dataframe with word pairs arrayed in two
+    columns <br/>
+7.  **WordList_TestClustering:** Unordered unsplit word list, some junk
+    and also animal and weapon terms for hierachical clustering analysis
+    <br/> <br> <br/>
+
 # <span style="color: darkred;">—Step 1: Cleaning— </span>
 
-The semantic distance functions work by indexing unique numeric
-identifiers. You MUST first clean/prep your raw text to append these
-identifers. Prepare your lexical data for computing pairwise semantic
-distances by first doing the following: <br/>
+First identify the type of data structure you want to process (e.g.,
+monologue, dialogue, unordered list). The semantic distance functions
+work by indexing unique numeric identifiers. You **MUST** first
+clean/prep your raw text to append these identifers. Prepare your
+lexical data for computing pairwise semantic distances by first doing
+the following: <br/>
 
 1)  Read your data into R. Label your text and metadata columns however
     you like. <br/>
@@ -51,10 +106,8 @@ distances by first doing the following: <br/>
 
 ## <span style="color: brown;">1.1 Clean Monologue Transcript (clean_monologue)</span>
 
-A monologue transcript consists of any ordered text sample NOT
-delineated by a talker/speaker (e.g., stories, narratives). Clean a
-monologue transcript by calling the ‘clean_monologue’ function. Specific
-arguments include: <br/>
+Clean a monologue transcript by calling the ‘clean_monologue’ function.
+Specific arguments include: <br/>
 
 df = raw dataframe with at least one column of text  
 wordcol = quoted variable reflecting the column name where your target
@@ -64,13 +117,14 @@ default is TRUE
 omit_stops = omits stopwords, default is TRUE  
 lemmatize = transforms raw word to lemmatized form, default is TRUE
 
-### Output of ‘clean_monologue’ on cleaning/prepping a raw monologue transcript</span>
+### Output of ‘clean_monologue’ on cleaning a dirty monologue transcript
 
 ``` r
-MyCleanMonologue <- clean_monologue(MonologueSample1, 'word', clean=T)
-head(MyCleanMonologue, n=10)
+#text in this dataframe is in a column 'mytext'
+MyCleanMonologue1 <- clean_monologue(Monologue_Dirty, 'mytext', clean=T)
+head(MyCleanMonologue1, n=10)
 #> # A tibble: 10 × 3
-#>    word              id_orig word_clean
+#>    mytext            id_orig word_clean
 #>    <chr>             <fct>   <chr>     
 #>  1 The dog is blue.  1       ""        
 #>  2 The dog is blue.  1       "dog"     
@@ -84,9 +138,30 @@ head(MyCleanMonologue, n=10)
 #> 10 Dog               6       "dog"
 ```
 
+### Output of ‘clean_monologue’ on a structured monologue transcript
+
+``` r
+#text in this dataframe is in a column 'mytext'
+MyCleanMonologue2 <- clean_monologue(Monologue_Structured, 'mytext', clean=T)
+head(MyCleanMonologue2, n=10)
+#> # A tibble: 10 × 4
+#>    timestamp mytext    id_orig word_clean
+#>        <int> <chr>     <fct>   <chr>     
+#>  1         1 "the"     1       ""        
+#>  2         2 "girl"    2       "girl"    
+#>  3         3 "walked"  3       "walk"    
+#>  4         4 "down "   4       "down"    
+#>  5         5 "the "    5       ""        
+#>  6         6 "street"  6       "street"  
+#>  7         7 "the"     7       ""        
+#>  8         8 "boxer"   8       "boxer"   
+#>  9         9 "punched" 9       "punch"   
+#> 10        10 "the"     10      ""
+```
+
 <br/>
 
-## <span style="color: brown;">1.4 Clean Dialogue Transcript (clean_dialogue)</span>
+## <span style="color: brown;">1.2 Clean Dialogue Transcripts (clean_dialogue)</span>
 
 This could be a conversation transcript or any language sample where you
 care about talker/interlocutor information (e.g., computing semantic
@@ -100,25 +175,27 @@ containing the talker ID (will convert to factor) \| clean = T/F
 stopwords, default is TRUE \| lemmatize = T/F transforms raw word to
 lemmatized form, default is TRUE
 
-### Output of ‘clean_dialogue’ prepping a dialogue transcript
+### Output of ‘clean_dialogue’ prepping a well-structured dialogue transcript
 
 ``` r
-MyCleanDialogue <- clean_dialogue(DialogueSample1, "word", "speaker", omit_stops=T, lemmatize=T)
-head(MyCleanDialogue, n=6)
-#> # A tibble: 6 × 6
-#>   word                speaker id_orig talker word_clean turn_count
-#>   <chr>               <chr>   <fct>   <fct>  <chr>           <dbl>
-#> 1 Hi Peter            Mary    1       Mary   peter               1
-#> 2 Donkeys are gray    Mary    2       Mary   donkey              1
-#> 3 Donkeys are gray    Mary    2       Mary   gray                1
-#> 4 Leopard             Mary    3       Mary   leopard             1
-#> 5 pop goes the weasel Mary    4       Mary   pop                 1
-#> 6 pop goes the weasel Mary    4       Mary   go                  1
+My_CleanDialogue1 <- clean_dialogue(Dialogue_Structured, "mytext", "speaker", omit_stops=T, lemmatize=T)
+head(My_CleanDialogue1, n=8)
+#> # A tibble: 8 × 6
+#>   mytext    speaker id_orig talker word_clean turn_count
+#>   <chr>     <chr>   <fct>   <fct>  <chr>           <dbl>
+#> 1 donkey    P1      1       P1     donkey              1
+#> 2 astronaut P2      2       P2     astronaut           2
+#> 3 bubble    P1      3       P1     bubble              3
+#> 4 street    P2      4       P2     street              4
+#> 5 Pigeon    P1      5       P1     pigeon              5
+#> 6 Dolphin   P2      6       P2     dolphin             6
+#> 7 Eagle     P1      7       P1     eagle               7
+#> 8 eel       P2      8       P2     eel                 8
 ```
 
 <br/>
 
-## <span style="color: brown;">1.2 Clean Word Pairs Arrayed in Columns (clean_2columns)</span>
+## <span style="color: brown;">1.3 Clean Word Pairs Arrayed in Columns (clean_2columns)</span>
 
 SemanticDistance also computes pairwise distance for data arrayed in
 columns. Run the function, the cleaned columns will appear in the
@@ -133,20 +210,22 @@ transforms raw word to lemmatized form, default is TRUE
 ### Output of ‘clean_2columns’ cleaning word pairs arrayed in columns
 
 ``` r
-MyClean2Columns <- clean_2cols(ColumnSample, 'word1', 'word2', clean=T, omit_stops=T, lemmatize=T)
-head(MyClean2Columns, n=6) #view head cleaned data
+MyClean2Columns <- clean_2cols(WordPairs_Columns, 'word1', 'word2', clean=T, omit_stops=T, lemmatize=T)
+head(MyClean2Columns, n=8) #view head cleaned data
 #>   word1     word2 id_orig word1_clean1 word2_clean2
 #> 1   Dog   trumpet       1          dog      trumpet
-#> 2   the    BANANA       2         <NA>       banana
+#> 2   the    BANANA       2          the       banana
 #> 3   rat astronaut       3          rat    astronaut
 #> 4  *&^%    lizard       4         <NA>       lizard
 #> 5  bird      bird       5         bird         bird
 #> 6 shark     shark       6        shark        shark
+#> 7 table     38947       7        table         <NA>
+#> 8   Dog     leash       8          dog        leash
 ```
 
-<br/> <br/>
+<br/>
 
-## <span style="color: brown;">1.3 Clean Unordered Word List (clean_unordered4matrix)</span>
+## <span style="color: brown;">1.4 Clean Unordered Word List (clean_unordered4matrix)</span>
 
 This cleaning option is used for prepping a vector of words for
 hierarchical clustering. Word order is no longer a factor since all
@@ -162,19 +241,19 @@ transforms raw word to lemmatized form, default is TRUE
 
 ``` r
 #Run clean fn 
-MyCleanDat4Matrix <- clean_unordered4matrix(FakeCats, wordcol="word", clean=TRUE, omit_stops=TRUE, lemmatize=TRUE) 
+MyCleanDat4Matrix <- clean_unordered4matrix(WordList_TestClustering, wordcol="mytext", clean=TRUE, omit_stops=TRUE, lemmatize=TRUE) 
 head(MyCleanDat4Matrix, n=8)
-#> # A tibble: 8 × 6
-#>   ID_JR word     category prediction id_orig word_clean
-#>   <int> <chr>    <chr>    <chr>        <int> <chr>     
-#> 1     1 trumpet  music    within           1 trumpet   
-#> 2     2 trombone music    within           2 trombone  
-#> 3     3 flute    music    within           3 flute     
-#> 4     4 piano    music    within           4 piano     
-#> 5     5 guitar   music    within           5 guitar    
-#> 6     6 cymbals  music    within           6 cymbal    
-#> 7     7 horn     music    within           7 horn      
-#> 8     8 drum     music    within           8 drum
+#> # A tibble: 8 × 3
+#>   mytext                                                      id_orig word_clean
+#>   <chr>                                                         <int> <chr>     
+#> 1 dog cat $ Rat gun banana the sword table glasses phone sof…       1 dog       
+#> 2 dog cat $ Rat gun banana the sword table glasses phone sof…       1 cat       
+#> 3 dog cat $ Rat gun banana the sword table glasses phone sof…       1 rat       
+#> 4 dog cat $ Rat gun banana the sword table glasses phone sof…       1 gun       
+#> 5 dog cat $ Rat gun banana the sword table glasses phone sof…       1 banana    
+#> 6 dog cat $ Rat gun banana the sword table glasses phone sof…       1 sword     
+#> 7 dog cat $ Rat gun banana the sword table glasses phone sof…       1 table     
+#> 8 dog cat $ Rat gun banana the sword table glasses phone sof…       1 glass
 ```
 
 <br/> <br/>
@@ -213,13 +292,15 @@ Remember to call a cleaned/prepped dataframe! Arguments to
 cleaned and prepped with clean_monologue fn <br/> \| ngram ngram window
 size preceding each new content word <br/>
 
-### Output of ‘dist_ngram2word’ ngram-to-word distance on monologue transcript
+### Output ‘dist_ngram2word’ on a messy monologue
+
+Set the ngram=1, distance every word to the next
 
 ``` r
-MyNgram2WordDists <- dist_ngram2word(MyCleanMonologue, ngram=1) #distance word-to-word
-head(MyNgram2WordDists, n=8)
+MyNgram2WordDists1 <- dist_ngram2word(MyCleanMonologue1, ngram=1) #distance word-to-word
+head(MyNgram2WordDists1, n=8)
 #> # A tibble: 8 × 5
-#>   word              id_orig word_clean CosDist_1gram_glo CosDist_1gram_sd15
+#>   mytext            id_orig word_clean CosDist_1gram_glo CosDist_1gram_sd15
 #>   <chr>             <fct>   <chr>                  <dbl>              <dbl>
 #> 1 The dog is blue.  1       ""                    NA                  NA   
 #> 2 The dog is blue.  1       "dog"                 NA                  NA   
@@ -231,7 +312,29 @@ head(MyNgram2WordDists, n=8)
 #> 8 My name is Frank. 5       "name"                NA                  NA
 ```
 
-<br/>
+### Output ‘dist_ngram2word’ on a well-structured monologue
+
+Set the ngram=3, distance rolling chunks of 3 words to the next word
+
+``` r
+MyNgram2WordDists2 <- dist_ngram2word(MyCleanMonologue2, ngram=3) #distance word-to-word
+head(MyNgram2WordDists2, n=12)
+#> # A tibble: 12 × 6
+#>    timestamp mytext     id_orig word_clean CosDist_3gram_glo CosDist_3gram_sd15
+#>        <int> <chr>      <fct>   <chr>                  <dbl>              <dbl>
+#>  1         1 "the"      1       ""                    NA                 NA    
+#>  2         2 "girl"     2       "girl"                NA                 NA    
+#>  3         3 "walked"   3       "walk"                NA                 NA    
+#>  4         4 "down "    4       "down"                 0.261              1.28 
+#>  5         5 "the "     5       ""                    NA                 NA    
+#>  6         6 "street"   6       "street"               0.319              0.941
+#>  7         7 "the"      7       ""                    NA                 NA    
+#>  8         8 "boxer"    8       "boxer"                0.938              0.858
+#>  9         9 "punched"  9       "punch"                0.712              0.342
+#> 10        10 "the"      10      ""                    NA                 NA    
+#> 11        11 "wrestler" 11      "wrestler"             0.720              0.294
+#> 12        12 "open"     12      "open"                 0.791              0.706
+```
 
 ## <span style="color: brown;">2.2: Compute Ngram-to-Ngram Distance (dist_ngram2ngram)</span>
 
@@ -245,23 +348,25 @@ Arguments to dist_ngram2ngram are: <br/> \| dat = dataframe w/ a
 monologue sample cleaned and prepped <br/> \| ngram = chunk size
 (chunk-to-chunk) <br/>
 
-### Output of ‘dist_ngram2ngram’ ngram-to-ngram distance on monologue transcript
+### Output ‘dist_ngram2ngram’ on monologue transcript
+
+This example involves chunks of 2-words to 2-words
 
 ``` r
 #Give the function a cleaned monologue transcript
-MyNgram2NgramDists <- dist_ngram2ngram(MyCleanMonologue, ngram=2)
+MyNgram2NgramDists <- dist_ngram2ngram(MyCleanMonologue2, ngram=2)
 head(MyNgram2NgramDists, n=8)
 #> # A tibble: 8 × 5
 #>   id_orig word_clean CountID_Ngram2 CosDist_2gram_GLO CosDist_2gram_SD15
 #>   <fct>   <chr>      <fct>                      <dbl>              <dbl>
 #> 1 1       ""         1                         NA                 NA    
-#> 2 1       "dog"      1                         NA                 NA    
-#> 3 1       "blue"     2                         NA                 NA    
-#> 4 2       "dog"      2                          0.173              0.125
-#> 5 3       "dog"      3                         NA                 NA    
-#> 6 4       ""         3                          0.173              0.125
-#> 7 5       ""         4                          0.496              1.09 
-#> 8 5       "name"     4                          0.496              1.09
+#> 2 2       "girl"     1                         NA                 NA    
+#> 3 3       "walk"     2                         NA                 NA    
+#> 4 4       "down"     2                          0.398              1.36 
+#> 5 5       ""         3                         NA                 NA    
+#> 6 6       "street"   3                          0.319              0.941
+#> 7 7       ""         4                         NA                 NA    
+#> 8 8       "boxer"    4                          0.938              0.858
 ```
 
 <br/>
@@ -303,7 +408,7 @@ MyDistsColumns <- dist_2cols(MyClean2Columns) #only argument is dataframe
 head(MyDistsColumns, n=8)
 #>   word1     word2 id_orig word1_clean1 word2_clean2 CosDist_SD15 CosDist_GLO
 #> 1   Dog   trumpet       1          dog      trumpet    0.4534507   0.8409885
-#> 2   the    BANANA       2         <NA>       banana           NA          NA
+#> 2   the    BANANA       2          the       banana    1.1826228   0.7725166
 #> 3   rat astronaut       3          rat    astronaut    1.2154729   0.9272540
 #> 4  *&^%    lizard       4         <NA>       lizard           NA          NA
 #> 5  bird      bird       5         bird         bird    0.0000000   0.0000000
@@ -332,21 +437,21 @@ comparisons fn<br/>
 ### Output of ‘anchor_dist’ on a sample monologue transcript
 
 ``` r
-MyDistsAnchored <- dist_anchor(MyCleanMonologue, anchor_size=8)
+MyDistsAnchored <- dist_anchor(MyCleanMonologue2, anchor_size=8)
 head(MyDistsAnchored, n=10)
 #> # A tibble: 10 × 4
 #>    id_orig word_clean CosDist_Anchor_GLO CosDist_Anchor_SD15
 #>    <fct>   <chr>                   <dbl>               <dbl>
-#>  1 1       ""                    NA                  NA     
-#>  2 1       ""                    NA                   0.0266
-#>  3 1       ""                    NA                   1.26  
-#>  4 1       ""                     0.0640             NA     
-#>  5 1       ""                     0.0640              0.0266
-#>  6 1       ""                     0.0640              1.26  
-#>  7 1       ""                     0.353              NA     
-#>  8 1       ""                     0.353               0.0266
-#>  9 1       ""                     0.353               1.26  
-#> 10 1       "dog"                 NA                  NA
+#>  1 1       ""                     NA                  NA    
+#>  2 2       "girl"                  0.221               0.475
+#>  3 3       "walk"                  0.186               0.649
+#>  4 4       "down"                  0.141               0.625
+#>  5 5       ""                     NA                  NA    
+#>  6 6       "street"                0.220               0.393
+#>  7 7       ""                     NA                  NA    
+#>  8 8       "boxer"                 0.576               0.478
+#>  9 9       "punch"                 0.603               0.348
+#> 10 10      ""                     NA                  NA
 ```
 
 <br/>
@@ -369,55 +474,27 @@ argument default is ‘embedding’, other option is “SD15” fn<br/>
 ``` r
 MyDistMatrix <- dist_matrix_all(MyCleanDat4Matrix)
 head(MyDistMatrix)
-#>            trumpet  trombone     flute     piano    guitar    cymbal      horn
-#> trumpet  0.0000000 0.5717885 0.5138417 0.5558156 0.5520448 0.8515268 0.5426568
-#> trombone 0.5717885 0.0000000 0.6698538 0.6488034 0.6219389 0.8934566 0.7856703
-#> flute    0.5138417 0.6698538 0.0000000 0.4511922 0.5203509 0.8705058 0.7083871
-#> piano    0.5558156 0.6488034 0.4511922 0.0000000 0.2730333 0.9607622 0.6708519
-#> guitar   0.5520448 0.6219389 0.5203509 0.2730333 0.0000000 0.9291963 0.6608229
-#> cymbal   0.8515268 0.8934566 0.8705058 0.9607622 0.9291963 0.0000000 0.9332137
-#>               drum saxophone  clarinet       gun     knife   missile    bullet
-#> trumpet  0.6149113 0.5709129 0.5427555 0.8668525 0.8766921 0.9207663 0.8405419
-#> trombone 0.7811522 0.6649554 0.6243433 0.9475109 0.8880578 1.0274633 0.9357694
-#> flute    0.6104354 0.5973837 0.5602340 0.9288003 0.8349393 0.9453457 0.8365646
-#> piano    0.5534039 0.5154477 0.4781244 0.8374068 0.7856145 0.9610571 0.8678741
-#> guitar   0.4802157 0.4849726 0.5160797 0.7653835 0.7351402 0.8849044 0.8322209
-#> cymbal   0.8134030 0.9342221 0.8573442 1.0227859 0.8829481 0.9698002 0.9566038
-#>              spear slingshot    hammer     spike      club     sword     apple
-#> trumpet  0.8700478 1.0462993 0.8051553 0.8987646 0.7921973 0.7899880 0.8613004
-#> trombone 0.9619708 1.0490071 0.9134879 0.9722551 0.8759932 0.9391996 1.0194700
-#> flute    0.8986365 0.9569171 0.8102413 0.9712387 0.8394656 0.8480804 0.9113671
-#> piano    0.9531743 0.9992157 0.7361093 0.9000114 0.7190657 0.8395984 0.8508651
-#> guitar   0.9239212 0.9620300 0.7308032 0.8226126 0.7294101 0.7903486 0.8293306
-#> cymbal   0.9351836 1.0382142 0.9871326 0.9571988 1.0045617 0.9409464 1.0194576
-#>             banana    potato    tomato      kiwi      pear strawberry blueberry
-#> trumpet  0.9392574 0.9105490 0.8830221 0.8478773 0.8618217  0.8767784 0.9645774
-#> trombone 1.0000095 0.9274395 0.9674734 0.8688863 0.9791594  0.9238828 0.9729520
-#> flute    0.9885272 0.8556761 0.8531540 0.9460171 0.8875153  0.8993427 0.9281152
-#> piano    0.9084053 0.8730102 0.9341004 1.0368087 0.9692899  0.8735781 0.9579473
-#> guitar   0.8967875 0.8661847 0.9517537 0.9811987 0.9965683  0.9066593 0.9739581
-#> cymbal   0.9559512 0.9462551 0.9143732 0.9915347 0.9253868  0.9249834 0.9466407
-#>                sad     happy     angry melancholy    joyful   hateful   content
-#> trumpet  0.8666898 0.8488735 0.8308108  0.7873357 0.8519420 0.9333320 0.9868393
-#> trombone 0.9464790 1.0493566 0.9779906  0.8594294 0.9773888 1.0456382 1.0586970
-#> flute    0.9357723 0.9155405 0.9273802  0.8317150 0.9153496 1.0464467 0.9827075
-#> piano    0.7859402 0.7222168 0.8875885  0.7012845 0.8191960 1.0742481 0.8789366
-#> guitar   0.7650799 0.7498851 0.8490875  0.6950909 0.8167364 0.9957878 0.8351338
-#> cymbal   1.0602806 1.0185100 1.0254275  0.9961827 0.9754140 1.0062601 1.0907118
-#>           peaceful     scare   fearful alligator  elephant       rat     mouse
-#> trumpet  0.9975748 0.9715591 0.9653837 0.8851451 0.8407929 0.9699536 0.9220590
-#> trombone 1.1301653 1.0112355 0.9803312 0.9181429 0.9448770 0.9000255 0.9234132
-#> flute    0.9953972 1.0093566 1.0574564 0.8972824 0.8781440 0.9269048 0.8267300
-#> piano    0.8897098 1.0114782 1.0478673 0.9309292 0.8870312 0.9866920 0.8235185
-#> guitar   0.9433049 0.9376936 1.0143360 0.8359544 0.8739370 0.9203031 0.8490496
-#> cymbal   1.0507631 1.1156529 0.9887600 0.9749106 0.9424991 0.9912280 0.9568465
-#>                dog      wolf    parrot     eagle   dolphin     shark
-#> trumpet  0.8409885 0.9009243 0.8671039 0.8056629 0.8717605 0.9077489
-#> trombone 0.9260945 0.9442231 0.9553378 0.9744114 0.9286902 0.9399655
-#> flute    0.9037216 0.9617292 0.8961243 0.9114045 0.9250934 0.8988152
-#> piano    0.8010806 0.9438895 0.9130158 0.8946121 0.9109896 0.9708619
-#> guitar   0.7239519 0.8606558 0.9217278 0.8542731 0.9197273 0.9291874
-#> cymbal   0.9942344 1.0316744 0.9467443 0.9377037 0.9532934 0.9520321
+#>              dog       cat       rat       gun    banana     sword     table
+#> dog    0.0000000 0.2739303 0.5123881 0.5906894 0.7818078 0.7452758 0.6434250
+#> cat    0.2739303 0.0000000 0.5213184 0.6744473 0.7795409 0.8020755 0.6462459
+#> rat    0.5123881 0.5213184 0.0000000 0.7400105 0.9244186 0.8928397 0.7819956
+#> gun    0.5906894 0.6744473 0.7400105 0.0000000 0.8911675 0.6337077 0.6980466
+#> banana 0.7818078 0.7795409 0.9244186 0.8911675 0.0000000 0.8650971 0.7472485
+#> sword  0.7452758 0.8020755 0.8928397 0.6337077 0.8650971 0.0000000 0.8120899
+#>            glass     phone      sofa   missile      lamb     rifle   trumpet
+#> dog    0.7469269 0.6779000 0.7822941 0.9306060 0.7084598 0.7186925 0.8409885
+#> cat    0.7140502 0.6637064 0.6782575 0.9354524 0.7626201 0.7722337 0.8959449
+#> rat    0.8251858 0.8620877 0.9180761 0.9349857 0.8468455 0.8033361 0.9699536
+#> gun    0.7318920 0.6247425 0.8542499 0.7508974 0.8991612 0.3425261 0.8668525
+#> banana 0.7901191 0.8755222 0.7817425 0.9752764 0.7922279 0.9065630 0.9392574
+#> sword  0.7321883 0.8822808 0.8815341 0.8334430 0.8187028 0.6263753 0.7899880
+#>            piano     chair      desk     snake   dolphin     shark
+#> dog    0.8010806 0.6306125 0.6752448 0.5686341 0.7301250 0.6937237
+#> cat    0.8247876 0.6071512 0.6630289 0.6045210 0.6999727 0.7601385
+#> rat    0.9866920 0.8114072 0.8622854 0.5350589 0.7802583 0.7386961
+#> gun    0.8374068 0.6545550 0.6733489 0.7210518 0.8909221 0.8865868
+#> banana 0.9084053 0.8046723 0.9201190 0.8221203 0.9566140 0.9001270
+#> sword  0.8395984 0.7344415 0.8118196 0.7098538 0.9599949 0.8158018
 ```
 
 <br/> <br/>

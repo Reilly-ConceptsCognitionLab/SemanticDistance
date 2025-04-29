@@ -66,14 +66,14 @@
 #' No talker delineated. User arrays first word in one column, second word in another column of the dataframe.
 #'
 #'
-#' @format ## "WordList_Columns"
+#' @format ## "WordPairs_Columns"
 #' A data frame with 27 rows and 2 columns:
 #' \describe{
 #'   \item{word1}{text corresponding to the first word in a pair to contrast}
 #'   \item{word2}{text corresponding to the second word in a pair to contrast}
 #'   ...
 #' }
-"WordList_Columns"
+"WordPairs_Columns"
 
 
 
@@ -92,5 +92,5 @@
 #'   \item{prediction}{is the target word within category or at a switchpoint between cats}
 #'   ...
 #' }
-WordList_TestClustering
+'WordList_TestClustering'
 
