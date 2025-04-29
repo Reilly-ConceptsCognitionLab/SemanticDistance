@@ -38,7 +38,7 @@ dist_ngram2word <- function(dat, ngram) {
       word_clean = tolower(word_clean)
     )
 
-  # Join with lookup databases using row_id_glo
+  # Join with lookup databases using row_id_unique
   djoin_glo <- left_join(dat, glowca_25, by = c("word_clean" = "word"))
   djoin_sd15 <- left_join(dat, SD15_2025, by = c("word_clean" = "word"))
 
@@ -111,13 +111,13 @@ dist_ngram2word <- function(dat, ngram) {
   result_glo <- compute_cosdist(djoin_glo, param_cols_glo, cosdist_colname_glo)
   result_sd15 <- compute_cosdist(djoin_sd15, param_cols_sd15, cosdist_colname_sd15)
 
-  # Combine results using row_id_glo instead of id_orig
+  # Combine results using row_id_unique instead of id_orig
   final_result <- dat %>%
     dplyr::select(all_of(orig_cols), row_id_unique) %>%
     dplyr::left_join(
       result_glo %>%
         dplyr::select(row_id_unique, word_clean, contains("CosDist"), -contains("Param_")),
-      by = c("row_id_glo", "word_clean")) %>%
+      by = c("row_id_unique", "word_clean")) %>%
     dplyr::left_join(
       result_sd15 %>%
         dplyr::select(row_id_unique, word_clean, contains("CosDist"), -contains("Param_")),
