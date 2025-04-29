@@ -63,11 +63,43 @@
 <span><span class="co">#devtools::install_github("Reilly-ConceptsCognitionLab/SemanticDistance")</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance" class="external-link">SemanticDistance</a></span><span class="op">)</span></span></code></pre></div>
 </div>
+<div class="section level2">
+<h2 id="semanticdistance-data-compatibility">SemanticDistance: Data Compatibility<a class="anchor" aria-label="anchor" href="#semanticdistance-data-compatibility"></a>
+</h2>
+<p>Sometimes you care about computing time-ordered semantic distances between words in running discourse sampples. Other times word order doesn’t matter (e.g., using a simple machine learning algorithm to cluster a bag of words by similarity). Sometimes your data will be structured as monologues (e.g., stories, narratives). Other times you might be interested in computing semantic distance turn-by-turn across speakers in a conversation transcript (i.e., dialogue). The SemanticDistance pockage can handle all of these scenarios. However, is is important that <strong>you</strong> understand the structure of your data and what the distance measures mean.<br></p>
+<p>Here are the formats SemanticDistance can currently handle: <br> 1. <strong>Monologues</strong>: A monologue transcript consists of any ordered text sample NOT delineated by a talker/speaker (e.g., stories, narratives). The minimal requirement for a monologue is one row and one column with some text in it.<br> 2. <strong>Dialogues</strong>: A dialogue transcript includes any sample split by talker/speaker/interlocutor information including conversation transcripts. The minimum requirment is two cells with interlocutor identity and text.<br> 3. <strong>Word Pairs in Columns</strong>: A dataframe that contains two columns of paired string data (col1 vs. col2). Calculates distance between each word pair across columns (e.g., Dog-Leash). <br> 4. <strong>Unordered Word Lists</strong>: A dataframe with an unordered list of words (nominally one column, all text in one row) that will be transformed into a distance matrix and hierarchically clustered <br></p>
+</div>
+<div class="section level2">
+<h2 id="sample-language-transcripts-embedded-in-the-package">Sample language transcripts embedded in the package<a class="anchor" aria-label="anchor" href="#sample-language-transcripts-embedded-in-the-package"></a>
+</h2>
+<p>SemanticDistance contains some sample language transcripts that will automatically load when you call the package. These can be helpful for evaluating and debugging your own own data.<br></p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Monologue_Structured:</strong> Dataframe 1-word per row already split no missing observations <br>
+</li>
+<li>
+<strong>Monologue_Dirty:</strong> Dataframe text arrayed in one column ‘mytext’, missing observations, junk, multiword phrases contains metadata (simulated timestamps <br>
+</li>
+<li>
+<strong>Monologue_VerbalFluency:</strong> Dataframe ordered simulated semantic fluency data switching between categories every ten words (animals, tools, musical instruments, fruits)</li>
+<li>
+<strong>Dialogue_Structured:</strong> Dataframe simulating ‘perfect’ conversation transcript, one word per turn, two talkers</li>
+<li>
+<strong>Dialogue_Dirty:</strong> #Dataframe simulating ‘dirty’ conversation transcript, multiple lines per person, lots of stopwords, missing obervations, stray transcription symbols <br>
+</li>
+<li>
+<strong>WordPairs_Columns:</strong> #Dataframe with word pairs arrayed in two columns <br>
+</li>
+<li>
+<strong>WordList_TestClustering:</strong> Unordered unsplit word list, some junk and also animal and weapon terms for hierachical clustering analysis <br><br><br>
+</li>
+</ol>
+</div>
 <div class="section level1">
 <div class="page-header"><h1 id="step-1-cleaning-">
 <span style="color: darkred;">—Step 1: Cleaning— </span><a class="anchor" aria-label="anchor" href="#step-1-cleaning-"></a>
 </h1></div>
-<p>The semantic distance functions work by indexing unique numeric identifiers. You MUST first clean/prep your raw text to append these identifers. Prepare your lexical data for computing pairwise semantic distances by first doing the following: <br></p>
+<p>First identify the type of data structure you want to process (e.g., monologue, dialogue, unordered list). The semantic distance functions work by indexing unique numeric identifiers. You <strong>MUST</strong> first clean/prep your raw text to append these identifers. Prepare your lexical data for computing pairwise semantic distances by first doing the following: <br></p>
 <ol style="list-style-type: decimal">
 <li>Read your data into R. Label your text and metadata columns however you like. <br>
 </li>
@@ -84,20 +116,21 @@
 <h2 id="id_11-clean-monologue-transcript-clean_monologue">
 <span style="color: brown;">1.1 Clean Monologue Transcript (clean_monologue)</span><a class="anchor" aria-label="anchor" href="#id_11-clean-monologue-transcript-clean_monologue"></a>
 </h2>
-<p>A monologue transcript consists of any ordered text sample NOT delineated by a talker/speaker (e.g., stories, narratives). Clean a monologue transcript by calling the ‘clean_monologue’ function. Specific arguments include: <br></p>
+<p>Clean a monologue transcript by calling the ‘clean_monologue’ function. Specific arguments include: <br></p>
 <p>df = raw dataframe with at least one column of text<br>
 wordcol = quoted variable reflecting the column name where your target text lives (e.g., ‘mytext’)<br>
 clean = applies cleaning functions (e.g., punct out, lowercase, etc); default is TRUE<br>
 omit_stops = omits stopwords, default is TRUE<br>
 lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
 <div class="section level3">
-<h3 id="output-of-clean_monologue-on-cleaningprepping-a-raw-monologue-transcript">Output of ‘clean_monologue’ on cleaning/prepping a raw monologue transcript<a class="anchor" aria-label="anchor" href="#output-of-clean_monologue-on-cleaningprepping-a-raw-monologue-transcript"></a>
+<h3 id="output-of-clean_monologue-on-cleaning-a-dirty-monologue-transcript">Output of ‘clean_monologue’ on cleaning a dirty monologue transcript<a class="anchor" aria-label="anchor" href="#output-of-clean_monologue-on-cleaning-a-dirty-monologue-transcript"></a>
 </h3>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">MyCleanMonologue</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_monologue.html">clean_monologue</a></span><span class="op">(</span><span class="va">MonologueSample1</span>, <span class="st">'word'</span>, clean<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyCleanMonologue</span>, n<span class="op">=</span><span class="fl">10</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co">#text in this dataframe is in a column 'mytext'</span></span>
+<span><span class="va">MyCleanMonologue1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_monologue.html">clean_monologue</a></span><span class="op">(</span><span class="va">Monologue_Dirty</span>, <span class="st">'mytext'</span>, clean<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyCleanMonologue1</span>, n<span class="op">=</span><span class="fl">10</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 10 × 3</span></span>
-<span><span class="co">#&gt;    word              id_orig word_clean</span></span>
+<span><span class="co">#&gt;    mytext            id_orig word_clean</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;             &lt;fct&gt;   &lt;chr&gt;     </span></span>
 <span><span class="co">#&gt;  1 The dog is blue.  1       ""        </span></span>
 <span><span class="co">#&gt;  2 The dog is blue.  1       "dog"     </span></span>
@@ -109,76 +142,101 @@ lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
 <span><span class="co">#&gt;  8 My name is Frank. 5       "name"    </span></span>
 <span><span class="co">#&gt;  9 My name is Frank. 5       "frank"   </span></span>
 <span><span class="co">#&gt; 10 Dog               6       "dog"</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="output-of-clean_monologue-on-a-structured-monologue-transcript">Output of ‘clean_monologue’ on a structured monologue transcript<a class="anchor" aria-label="anchor" href="#output-of-clean_monologue-on-a-structured-monologue-transcript"></a>
+</h3>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#text in this dataframe is in a column 'mytext'</span></span>
+<span><span class="va">MyCleanMonologue2</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_monologue.html">clean_monologue</a></span><span class="op">(</span><span class="va">Monologue_Structured</span>, <span class="st">'mytext'</span>, clean<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyCleanMonologue2</span>, n<span class="op">=</span><span class="fl">10</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 10 × 4</span></span>
+<span><span class="co">#&gt;    timestamp mytext    id_orig word_clean</span></span>
+<span><span class="co">#&gt;        &lt;int&gt; &lt;chr&gt;     &lt;fct&gt;   &lt;chr&gt;     </span></span>
+<span><span class="co">#&gt;  1         1 "the"     1       ""        </span></span>
+<span><span class="co">#&gt;  2         2 "girl"    2       "girl"    </span></span>
+<span><span class="co">#&gt;  3         3 "walked"  3       "walk"    </span></span>
+<span><span class="co">#&gt;  4         4 "down "   4       "down"    </span></span>
+<span><span class="co">#&gt;  5         5 "the "    5       ""        </span></span>
+<span><span class="co">#&gt;  6         6 "street"  6       "street"  </span></span>
+<span><span class="co">#&gt;  7         7 "the"     7       ""        </span></span>
+<span><span class="co">#&gt;  8         8 "boxer"   8       "boxer"   </span></span>
+<span><span class="co">#&gt;  9         9 "punched" 9       "punch"   </span></span>
+<span><span class="co">#&gt; 10        10 "the"     10      ""</span></span></code></pre></div>
 <p><br></p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="id_14-clean-dialogue-transcript-clean_dialogue">
-<span style="color: brown;">1.4 Clean Dialogue Transcript (clean_dialogue)</span><a class="anchor" aria-label="anchor" href="#id_14-clean-dialogue-transcript-clean_dialogue"></a>
+<h2 id="id_12-clean-dialogue-transcripts-clean_dialogue">
+<span style="color: brown;">1.2 Clean Dialogue Transcripts (clean_dialogue)</span><a class="anchor" aria-label="anchor" href="#id_12-clean-dialogue-transcripts-clean_dialogue"></a>
 </h2>
 <p>This could be a conversation transcript or any language sample where you care about talker/interlocutor information (e.g., computing semantic distance across turns in a conversation). Your dataframe should nominally contain a text column and a speaker/talker column. Arguments clean_dialogue are: <br> | df = your raw dataframe with at least one column of text AND a talker column | wordcol = column name (quoted) containing the text you want cleaned | whotalks = column name (quoted) containing the talker ID (will convert to factor) | clean = T/F (default is T) applies cleaning functions | omit_stops = T/F omits stopwords, default is TRUE | lemmatize = T/F transforms raw word to lemmatized form, default is TRUE</p>
 <div class="section level3">
-<h3 id="output-of-clean_dialogue-prepping-a-dialogue-transcript">Output of ‘clean_dialogue’ prepping a dialogue transcript<a class="anchor" aria-label="anchor" href="#output-of-clean_dialogue-prepping-a-dialogue-transcript"></a>
+<h3 id="output-of-clean_dialogue-prepping-a-well-structured-dialogue-transcript">Output of ‘clean_dialogue’ prepping a well-structured dialogue transcript<a class="anchor" aria-label="anchor" href="#output-of-clean_dialogue-prepping-a-well-structured-dialogue-transcript"></a>
 </h3>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">MyCleanDialogue</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_dialogue.html">clean_dialogue</a></span><span class="op">(</span><span class="va">DialogueSample1</span>, <span class="st">"word"</span>, <span class="st">"speaker"</span>, omit_stops<span class="op">=</span><span class="cn">T</span>, lemmatize<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyCleanDialogue</span>, n<span class="op">=</span><span class="fl">6</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 6 × 6</span></span>
-<span><span class="co">#&gt;   word                speaker id_orig talker word_clean turn_count</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;               &lt;chr&gt;   &lt;fct&gt;   &lt;fct&gt;  &lt;chr&gt;           &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 Hi Peter            Mary    1       Mary   peter               1</span></span>
-<span><span class="co">#&gt; 2 Donkeys are gray    Mary    2       Mary   donkey              1</span></span>
-<span><span class="co">#&gt; 3 Donkeys are gray    Mary    2       Mary   gray                1</span></span>
-<span><span class="co">#&gt; 4 Leopard             Mary    3       Mary   leopard             1</span></span>
-<span><span class="co">#&gt; 5 pop goes the weasel Mary    4       Mary   pop                 1</span></span>
-<span><span class="co">#&gt; 6 pop goes the weasel Mary    4       Mary   go                  1</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">My_CleanDialogue1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_dialogue.html">clean_dialogue</a></span><span class="op">(</span><span class="va">Dialogue_Structured</span>, <span class="st">"mytext"</span>, <span class="st">"speaker"</span>, omit_stops<span class="op">=</span><span class="cn">T</span>, lemmatize<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">My_CleanDialogue1</span>, n<span class="op">=</span><span class="fl">8</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 8 × 6</span></span>
+<span><span class="co">#&gt;   mytext    speaker id_orig talker word_clean turn_count</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;fct&gt;   &lt;fct&gt;  &lt;chr&gt;           &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 donkey    P1      1       P1     donkey              1</span></span>
+<span><span class="co">#&gt; 2 astronaut P2      2       P2     astronaut           2</span></span>
+<span><span class="co">#&gt; 3 bubble    P1      3       P1     bubble              3</span></span>
+<span><span class="co">#&gt; 4 street    P2      4       P2     street              4</span></span>
+<span><span class="co">#&gt; 5 Pigeon    P1      5       P1     pigeon              5</span></span>
+<span><span class="co">#&gt; 6 Dolphin   P2      6       P2     dolphin             6</span></span>
+<span><span class="co">#&gt; 7 Eagle     P1      7       P1     eagle               7</span></span>
+<span><span class="co">#&gt; 8 eel       P2      8       P2     eel                 8</span></span></code></pre></div>
 <p><br></p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="id_12-clean-word-pairs-arrayed-in-columns-clean_2columns">
-<span style="color: brown;">1.2 Clean Word Pairs Arrayed in Columns (clean_2columns)</span><a class="anchor" aria-label="anchor" href="#id_12-clean-word-pairs-arrayed-in-columns-clean_2columns"></a>
+<h2 id="id_13-clean-word-pairs-arrayed-in-columns-clean_2columns">
+<span style="color: brown;">1.3 Clean Word Pairs Arrayed in Columns (clean_2columns)</span><a class="anchor" aria-label="anchor" href="#id_13-clean-word-pairs-arrayed-in-columns-clean_2columns"></a>
 </h2>
 <p>SemanticDistance also computes pairwise distance for data arrayed in columns. Run the function, the cleaned columns will appear in the dataframe. Arguments to the ‘clean_monologue’ function call are: <br> | df = your raw dataframe with at least one column of text | word1 = quoted variable reflecting the column name where your first word lives | word2 = quoted variable reflecting the column name where your first word lives | clean = T/F (default is T) applies cleaning functions | omit_stops = T/F omits stopwords, default is TRUE | lemmatize = T/F transforms raw word to lemmatized form, default is TRUE</p>
 <div class="section level3">
 <h3 id="output-of-clean_2columns-cleaning-word-pairs-arrayed-in-columns">Output of ‘clean_2columns’ cleaning word pairs arrayed in columns<a class="anchor" aria-label="anchor" href="#output-of-clean_2columns-cleaning-word-pairs-arrayed-in-columns"></a>
 </h3>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">MyClean2Columns</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_2cols.html">clean_2cols</a></span><span class="op">(</span><span class="va">ColumnSample</span>, <span class="st">'word1'</span>, <span class="st">'word2'</span>, clean<span class="op">=</span><span class="cn">T</span>, omit_stops<span class="op">=</span><span class="cn">T</span>, lemmatize<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyClean2Columns</span>, n<span class="op">=</span><span class="fl">6</span><span class="op">)</span> <span class="co">#view head cleaned data</span></span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">MyClean2Columns</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_2cols.html">clean_2cols</a></span><span class="op">(</span><span class="va">WordPairs_Columns</span>, <span class="st">'word1'</span>, <span class="st">'word2'</span>, clean<span class="op">=</span><span class="cn">T</span>, omit_stops<span class="op">=</span><span class="cn">T</span>, lemmatize<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyClean2Columns</span>, n<span class="op">=</span><span class="fl">8</span><span class="op">)</span> <span class="co">#view head cleaned data</span></span>
 <span><span class="co">#&gt;   word1     word2 id_orig word1_clean1 word2_clean2</span></span>
 <span><span class="co">#&gt; 1   Dog   trumpet       1          dog      trumpet</span></span>
-<span><span class="co">#&gt; 2   the    BANANA       2         &lt;NA&gt;       banana</span></span>
+<span><span class="co">#&gt; 2   the    BANANA       2          the       banana</span></span>
 <span><span class="co">#&gt; 3   rat astronaut       3          rat    astronaut</span></span>
 <span><span class="co">#&gt; 4  *&amp;^%    lizard       4         &lt;NA&gt;       lizard</span></span>
 <span><span class="co">#&gt; 5  bird      bird       5         bird         bird</span></span>
-<span><span class="co">#&gt; 6 shark     shark       6        shark        shark</span></span></code></pre></div>
-<p><br><br></p>
+<span><span class="co">#&gt; 6 shark     shark       6        shark        shark</span></span>
+<span><span class="co">#&gt; 7 table     38947       7        table         &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 8   Dog     leash       8          dog        leash</span></span></code></pre></div>
+<p><br></p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="id_13-clean-unordered-word-list-clean_unordered4matrix">
-<span style="color: brown;">1.3 Clean Unordered Word List (clean_unordered4matrix)</span><a class="anchor" aria-label="anchor" href="#id_13-clean-unordered-word-list-clean_unordered4matrix"></a>
+<h2 id="id_14-clean-unordered-word-list-clean_unordered4matrix">
+<span style="color: brown;">1.4 Clean Unordered Word List (clean_unordered4matrix)</span><a class="anchor" aria-label="anchor" href="#id_14-clean-unordered-word-list-clean_unordered4matrix"></a>
 </h2>
 <p>This cleaning option is used for prepping a vector of words for hierarchical clustering. Word order is no longer a factor since all words will be shuffled. This cleaning function retains only one instance of a word (no duplicates). Arguments to the ‘clean_unordered4matrix’ function call are: <br> | df = your raw dataframe with at least one column of text | wordcol = quoted variable reflecting where your text lives | clean = T/F (default is T) applies cleaning functions | omit_stops = T/F omits stopwords, default is TRUE | lemmatize = T/F transforms raw word to lemmatized form, default is TRUE</p>
 <div class="section level3">
 <h3 id="output-of-clean_unordered4matrix-on-unordered-word-list-">Output of ‘clean_unordered4matrix’ on unordered word list <a class="anchor" aria-label="anchor" href="#output-of-clean_unordered4matrix-on-unordered-word-list-"></a>
 </h3>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Run clean fn </span></span>
-<span><span class="va">MyCleanDat4Matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_unordered4matrix.html">clean_unordered4matrix</a></span><span class="op">(</span><span class="va">FakeCats</span>, wordcol<span class="op">=</span><span class="st">"word"</span>, clean<span class="op">=</span><span class="cn">TRUE</span>, omit_stops<span class="op">=</span><span class="cn">TRUE</span>, lemmatize<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> </span>
+<span><span class="va">MyCleanDat4Matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_unordered4matrix.html">clean_unordered4matrix</a></span><span class="op">(</span><span class="va">WordList_TestClustering</span>, wordcol<span class="op">=</span><span class="st">"mytext"</span>, clean<span class="op">=</span><span class="cn">TRUE</span>, omit_stops<span class="op">=</span><span class="cn">TRUE</span>, lemmatize<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> </span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyCleanDat4Matrix</span>, n<span class="op">=</span><span class="fl">8</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 8 × 6</span></span>
-<span><span class="co">#&gt;   ID_JR word     category prediction id_orig word_clean</span></span>
-<span><span class="co">#&gt;   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;     </span></span>
-<span><span class="co">#&gt; 1     1 trumpet  music    within           1 trumpet   </span></span>
-<span><span class="co">#&gt; 2     2 trombone music    within           2 trombone  </span></span>
-<span><span class="co">#&gt; 3     3 flute    music    within           3 flute     </span></span>
-<span><span class="co">#&gt; 4     4 piano    music    within           4 piano     </span></span>
-<span><span class="co">#&gt; 5     5 guitar   music    within           5 guitar    </span></span>
-<span><span class="co">#&gt; 6     6 cymbals  music    within           6 cymbal    </span></span>
-<span><span class="co">#&gt; 7     7 horn     music    within           7 horn      </span></span>
-<span><span class="co">#&gt; 8     8 drum     music    within           8 drum</span></span></code></pre></div>
+<span><span class="co">#&gt; # A tibble: 8 × 3</span></span>
+<span><span class="co">#&gt;   mytext                                                      id_orig word_clean</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;                                                         &lt;int&gt; &lt;chr&gt;     </span></span>
+<span><span class="co">#&gt; 1 dog cat $ Rat gun banana the sword table glasses phone sof…       1 dog       </span></span>
+<span><span class="co">#&gt; 2 dog cat $ Rat gun banana the sword table glasses phone sof…       1 cat       </span></span>
+<span><span class="co">#&gt; 3 dog cat $ Rat gun banana the sword table glasses phone sof…       1 rat       </span></span>
+<span><span class="co">#&gt; 4 dog cat $ Rat gun banana the sword table glasses phone sof…       1 gun       </span></span>
+<span><span class="co">#&gt; 5 dog cat $ Rat gun banana the sword table glasses phone sof…       1 banana    </span></span>
+<span><span class="co">#&gt; 6 dog cat $ Rat gun banana the sword table glasses phone sof…       1 sword     </span></span>
+<span><span class="co">#&gt; 7 dog cat $ Rat gun banana the sword table glasses phone sof…       1 table     </span></span>
+<span><span class="co">#&gt; 8 dog cat $ Rat gun banana the sword table glasses phone sof…       1 glass</span></span></code></pre></div>
 <p><br><br></p>
 </div>
 </div>
@@ -197,13 +255,14 @@ lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
 <p><img src="reference/figures/RollingNgramIllustrate.png" alt="illustrates how rolling ngrams work on a vector of words by moving a window and contrasting each chunk to each new word" width="40%"></p>
 <p>Remember to call a cleaned/prepped dataframe! Arguments to ‘dist_ngram2word’ are: <br> | dat dataframe of a monologue transcript cleaned and prepped with clean_monologue fn <br> | ngram ngram window size preceding each new content word <br></p>
 <div class="section level3">
-<h3 id="output-of-dist_ngram2word-ngram-to-word-distance-on-monologue-transcript">Output of ‘dist_ngram2word’ ngram-to-word distance on monologue transcript<a class="anchor" aria-label="anchor" href="#output-of-dist_ngram2word-ngram-to-word-distance-on-monologue-transcript"></a>
+<h3 id="output-dist_ngram2word-on-a-messy-monologue">Output ‘dist_ngram2word’ on a messy monologue<a class="anchor" aria-label="anchor" href="#output-dist_ngram2word-on-a-messy-monologue"></a>
 </h3>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">MyNgram2WordDists</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_ngram2word.html">dist_ngram2word</a></span><span class="op">(</span><span class="va">MyCleanMonologue</span>, ngram<span class="op">=</span><span class="fl">1</span><span class="op">)</span> <span class="co">#distance word-to-word</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyNgram2WordDists</span>, n<span class="op">=</span><span class="fl">8</span><span class="op">)</span></span>
+<p>Set the ngram=1, distance every word to the next</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">MyNgram2WordDists1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_ngram2word.html">dist_ngram2word</a></span><span class="op">(</span><span class="va">MyCleanMonologue1</span>, ngram<span class="op">=</span><span class="fl">1</span><span class="op">)</span> <span class="co">#distance word-to-word</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyNgram2WordDists1</span>, n<span class="op">=</span><span class="fl">8</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 8 × 5</span></span>
-<span><span class="co">#&gt;   word              id_orig word_clean CosDist_1gram_glo CosDist_1gram_sd15</span></span>
+<span><span class="co">#&gt;   mytext            id_orig word_clean CosDist_1gram_glo CosDist_1gram_sd15</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;             &lt;fct&gt;   &lt;chr&gt;                  &lt;dbl&gt;              &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt; 1 The dog is blue.  1       ""                    NA                  NA   </span></span>
 <span><span class="co">#&gt; 2 The dog is blue.  1       "dog"                 NA                  NA   </span></span>
@@ -213,7 +272,29 @@ lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
 <span><span class="co">#&gt; 6 Some              4       ""                    NA                  NA   </span></span>
 <span><span class="co">#&gt; 7 My name is Frank. 5       ""                    NA                  NA   </span></span>
 <span><span class="co">#&gt; 8 My name is Frank. 5       "name"                NA                  NA</span></span></code></pre></div>
-<p><br></p>
+</div>
+<div class="section level3">
+<h3 id="output-dist_ngram2word-on-a-well-structured-monologue">Output ‘dist_ngram2word’ on a well-structured monologue<a class="anchor" aria-label="anchor" href="#output-dist_ngram2word-on-a-well-structured-monologue"></a>
+</h3>
+<p>Set the ngram=3, distance rolling chunks of 3 words to the next word</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">MyNgram2WordDists2</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_ngram2word.html">dist_ngram2word</a></span><span class="op">(</span><span class="va">MyCleanMonologue2</span>, ngram<span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="co">#distance word-to-word</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyNgram2WordDists2</span>, n<span class="op">=</span><span class="fl">12</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 12 × 6</span></span>
+<span><span class="co">#&gt;    timestamp mytext     id_orig word_clean CosDist_3gram_glo CosDist_3gram_sd15</span></span>
+<span><span class="co">#&gt;        &lt;int&gt; &lt;chr&gt;      &lt;fct&gt;   &lt;chr&gt;                  &lt;dbl&gt;              &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1         1 "the"      1       ""                    NA                 NA    </span></span>
+<span><span class="co">#&gt;  2         2 "girl"     2       "girl"                NA                 NA    </span></span>
+<span><span class="co">#&gt;  3         3 "walked"   3       "walk"                NA                 NA    </span></span>
+<span><span class="co">#&gt;  4         4 "down "    4       "down"                 0.261              1.28 </span></span>
+<span><span class="co">#&gt;  5         5 "the "     5       ""                    NA                 NA    </span></span>
+<span><span class="co">#&gt;  6         6 "street"   6       "street"               0.319              0.941</span></span>
+<span><span class="co">#&gt;  7         7 "the"      7       ""                    NA                 NA    </span></span>
+<span><span class="co">#&gt;  8         8 "boxer"    8       "boxer"                0.938              0.858</span></span>
+<span><span class="co">#&gt;  9         9 "punched"  9       "punch"                0.712              0.342</span></span>
+<span><span class="co">#&gt; 10        10 "the"      10      ""                    NA                 NA    </span></span>
+<span><span class="co">#&gt; 11        11 "wrestler" 11      "wrestler"             0.720              0.294</span></span>
+<span><span class="co">#&gt; 12        12 "open"     12      "open"                 0.791              0.706</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -224,23 +305,24 @@ lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
 <p><img src="reference/figures/Ngram2Ngram_Dist.png" alt="illustrates how semantic distance is derived from chunk to chunk groupings of words" width="50%"></p>
 <p>Arguments to dist_ngram2ngram are: <br> | dat = dataframe w/ a monologue sample cleaned and prepped <br> | ngram = chunk size (chunk-to-chunk) <br></p>
 <div class="section level3">
-<h3 id="output-of-dist_ngram2ngram-ngram-to-ngram-distance-on-monologue-transcript">Output of ‘dist_ngram2ngram’ ngram-to-ngram distance on monologue transcript<a class="anchor" aria-label="anchor" href="#output-of-dist_ngram2ngram-ngram-to-ngram-distance-on-monologue-transcript"></a>
+<h3 id="output-dist_ngram2ngram-on-monologue-transcript">Output ‘dist_ngram2ngram’ on monologue transcript<a class="anchor" aria-label="anchor" href="#output-dist_ngram2ngram-on-monologue-transcript"></a>
 </h3>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p>This example involves chunks of 2-words to 2-words</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Give the function a cleaned monologue transcript</span></span>
-<span><span class="va">MyNgram2NgramDists</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_ngram2ngram.html">dist_ngram2ngram</a></span><span class="op">(</span><span class="va">MyCleanMonologue</span>, ngram<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">MyNgram2NgramDists</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_ngram2ngram.html">dist_ngram2ngram</a></span><span class="op">(</span><span class="va">MyCleanMonologue2</span>, ngram<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyNgram2NgramDists</span>, n<span class="op">=</span><span class="fl">8</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 8 × 5</span></span>
 <span><span class="co">#&gt;   id_orig word_clean CountID_Ngram2 CosDist_2gram_GLO CosDist_2gram_SD15</span></span>
 <span><span class="co">#&gt;   &lt;fct&gt;   &lt;chr&gt;      &lt;fct&gt;                      &lt;dbl&gt;              &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt; 1 1       ""         1                         NA                 NA    </span></span>
-<span><span class="co">#&gt; 2 1       "dog"      1                         NA                 NA    </span></span>
-<span><span class="co">#&gt; 3 1       "blue"     2                         NA                 NA    </span></span>
-<span><span class="co">#&gt; 4 2       "dog"      2                          0.173              0.125</span></span>
-<span><span class="co">#&gt; 5 3       "dog"      3                         NA                 NA    </span></span>
-<span><span class="co">#&gt; 6 4       ""         3                          0.173              0.125</span></span>
-<span><span class="co">#&gt; 7 5       ""         4                          0.496              1.09 </span></span>
-<span><span class="co">#&gt; 8 5       "name"     4                          0.496              1.09</span></span></code></pre></div>
+<span><span class="co">#&gt; 2 2       "girl"     1                         NA                 NA    </span></span>
+<span><span class="co">#&gt; 3 3       "walk"     2                         NA                 NA    </span></span>
+<span><span class="co">#&gt; 4 4       "down"     2                          0.398              1.36 </span></span>
+<span><span class="co">#&gt; 5 5       ""         3                         NA                 NA    </span></span>
+<span><span class="co">#&gt; 6 6       "street"   3                          0.319              0.941</span></span>
+<span><span class="co">#&gt; 7 7       ""         4                         NA                 NA    </span></span>
+<span><span class="co">#&gt; 8 8       "boxer"    4                          0.938              0.858</span></span></code></pre></div>
 <p><br></p>
 </div>
 </div>
@@ -253,7 +335,7 @@ lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
 <div class="section level3">
 <h3 id="output-of-dist_dialogue_turns-turn-to-turn-distance-on-sample-dialogue-transcript-">Output of ‘dist_dialogue_turns’ turn-to-turn distance on sample dialogue transcript <a class="anchor" aria-label="anchor" href="#output-of-dist_dialogue_turns-turn-to-turn-distance-on-sample-dialogue-transcript-"></a>
 </h3>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#MyDialogueDists &lt;- dist_dialogue_turns(MyCleanDialogue)</span></span>
 <span><span class="co">#head(MyDialogueDists, n=15)</span></span></code></pre></div>
 <p><br></p>
@@ -268,12 +350,12 @@ lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
 <div class="section level3">
 <h3 id="output-of-dist_2cols-on-2-column-arrayed-dataframe">Output of ‘dist_2cols’ on 2-column arrayed dataframe<a class="anchor" aria-label="anchor" href="#output-of-dist_2cols-on-2-column-arrayed-dataframe"></a>
 </h3>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">MyDistsColumns</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_2cols.html">dist_2cols</a></span><span class="op">(</span><span class="va">MyClean2Columns</span><span class="op">)</span> <span class="co">#only argument is dataframe</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyDistsColumns</span>, n<span class="op">=</span><span class="fl">8</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   word1     word2 id_orig word1_clean1 word2_clean2 CosDist_SD15 CosDist_GLO</span></span>
 <span><span class="co">#&gt; 1   Dog   trumpet       1          dog      trumpet    0.4534507   0.8409885</span></span>
-<span><span class="co">#&gt; 2   the    BANANA       2         &lt;NA&gt;       banana           NA          NA</span></span>
+<span><span class="co">#&gt; 2   the    BANANA       2          the       banana    1.1826228   0.7725166</span></span>
 <span><span class="co">#&gt; 3   rat astronaut       3          rat    astronaut    1.2154729   0.9272540</span></span>
 <span><span class="co">#&gt; 4  *&amp;^%    lizard       4         &lt;NA&gt;       lizard           NA          NA</span></span>
 <span><span class="co">#&gt; 5  bird      bird       5         bird         bird    0.0000000   0.0000000</span></span>
@@ -293,22 +375,22 @@ lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
 <div class="section level3">
 <h3 id="output-of-anchor_dist-on-a-sample-monologue-transcript">Output of ‘anchor_dist’ on a sample monologue transcript<a class="anchor" aria-label="anchor" href="#output-of-anchor_dist-on-a-sample-monologue-transcript"></a>
 </h3>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">MyDistsAnchored</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_anchor.html">dist_anchor</a></span><span class="op">(</span><span class="va">MyCleanMonologue</span>, anchor_size<span class="op">=</span><span class="fl">8</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">MyDistsAnchored</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_anchor.html">dist_anchor</a></span><span class="op">(</span><span class="va">MyCleanMonologue2</span>, anchor_size<span class="op">=</span><span class="fl">8</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyDistsAnchored</span>, n<span class="op">=</span><span class="fl">10</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 10 × 4</span></span>
 <span><span class="co">#&gt;    id_orig word_clean CosDist_Anchor_GLO CosDist_Anchor_SD15</span></span>
 <span><span class="co">#&gt;    &lt;fct&gt;   &lt;chr&gt;                   &lt;dbl&gt;               &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 1       ""                    NA                  NA     </span></span>
-<span><span class="co">#&gt;  2 1       ""                    NA                   0.0266</span></span>
-<span><span class="co">#&gt;  3 1       ""                    NA                   1.26  </span></span>
-<span><span class="co">#&gt;  4 1       ""                     0.0640             NA     </span></span>
-<span><span class="co">#&gt;  5 1       ""                     0.0640              0.0266</span></span>
-<span><span class="co">#&gt;  6 1       ""                     0.0640              1.26  </span></span>
-<span><span class="co">#&gt;  7 1       ""                     0.353              NA     </span></span>
-<span><span class="co">#&gt;  8 1       ""                     0.353               0.0266</span></span>
-<span><span class="co">#&gt;  9 1       ""                     0.353               1.26  </span></span>
-<span><span class="co">#&gt; 10 1       "dog"                 NA                  NA</span></span></code></pre></div>
+<span><span class="co">#&gt;  1 1       ""                     NA                  NA    </span></span>
+<span><span class="co">#&gt;  2 2       "girl"                  0.221               0.475</span></span>
+<span><span class="co">#&gt;  3 3       "walk"                  0.186               0.649</span></span>
+<span><span class="co">#&gt;  4 4       "down"                  0.141               0.625</span></span>
+<span><span class="co">#&gt;  5 5       ""                     NA                  NA    </span></span>
+<span><span class="co">#&gt;  6 6       "street"                0.220               0.393</span></span>
+<span><span class="co">#&gt;  7 7       ""                     NA                  NA    </span></span>
+<span><span class="co">#&gt;  8 8       "boxer"                 0.576               0.478</span></span>
+<span><span class="co">#&gt;  9 9       "punch"                 0.603               0.348</span></span>
+<span><span class="co">#&gt; 10 10      ""                     NA                  NA</span></span></code></pre></div>
 <p><br></p>
 </div>
 <div class="section level3">
@@ -321,58 +403,30 @@ lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
 <div class="section level3">
 <h3 id="output-of-dist_unordered-on-unordered-word-list">Output of ‘dist_unordered’ on unordered word list<a class="anchor" aria-label="anchor" href="#output-of-dist_unordered-on-unordered-word-list"></a>
 </h3>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">MyDistMatrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_matrix_all.html">dist_matrix_all</a></span><span class="op">(</span><span class="va">MyCleanDat4Matrix</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyDistMatrix</span><span class="op">)</span></span>
-<span><span class="co">#&gt;            trumpet  trombone     flute     piano    guitar    cymbal      horn</span></span>
-<span><span class="co">#&gt; trumpet  0.0000000 0.5717885 0.5138417 0.5558156 0.5520448 0.8515268 0.5426568</span></span>
-<span><span class="co">#&gt; trombone 0.5717885 0.0000000 0.6698538 0.6488034 0.6219389 0.8934566 0.7856703</span></span>
-<span><span class="co">#&gt; flute    0.5138417 0.6698538 0.0000000 0.4511922 0.5203509 0.8705058 0.7083871</span></span>
-<span><span class="co">#&gt; piano    0.5558156 0.6488034 0.4511922 0.0000000 0.2730333 0.9607622 0.6708519</span></span>
-<span><span class="co">#&gt; guitar   0.5520448 0.6219389 0.5203509 0.2730333 0.0000000 0.9291963 0.6608229</span></span>
-<span><span class="co">#&gt; cymbal   0.8515268 0.8934566 0.8705058 0.9607622 0.9291963 0.0000000 0.9332137</span></span>
-<span><span class="co">#&gt;               drum saxophone  clarinet       gun     knife   missile    bullet</span></span>
-<span><span class="co">#&gt; trumpet  0.6149113 0.5709129 0.5427555 0.8668525 0.8766921 0.9207663 0.8405419</span></span>
-<span><span class="co">#&gt; trombone 0.7811522 0.6649554 0.6243433 0.9475109 0.8880578 1.0274633 0.9357694</span></span>
-<span><span class="co">#&gt; flute    0.6104354 0.5973837 0.5602340 0.9288003 0.8349393 0.9453457 0.8365646</span></span>
-<span><span class="co">#&gt; piano    0.5534039 0.5154477 0.4781244 0.8374068 0.7856145 0.9610571 0.8678741</span></span>
-<span><span class="co">#&gt; guitar   0.4802157 0.4849726 0.5160797 0.7653835 0.7351402 0.8849044 0.8322209</span></span>
-<span><span class="co">#&gt; cymbal   0.8134030 0.9342221 0.8573442 1.0227859 0.8829481 0.9698002 0.9566038</span></span>
-<span><span class="co">#&gt;              spear slingshot    hammer     spike      club     sword     apple</span></span>
-<span><span class="co">#&gt; trumpet  0.8700478 1.0462993 0.8051553 0.8987646 0.7921973 0.7899880 0.8613004</span></span>
-<span><span class="co">#&gt; trombone 0.9619708 1.0490071 0.9134879 0.9722551 0.8759932 0.9391996 1.0194700</span></span>
-<span><span class="co">#&gt; flute    0.8986365 0.9569171 0.8102413 0.9712387 0.8394656 0.8480804 0.9113671</span></span>
-<span><span class="co">#&gt; piano    0.9531743 0.9992157 0.7361093 0.9000114 0.7190657 0.8395984 0.8508651</span></span>
-<span><span class="co">#&gt; guitar   0.9239212 0.9620300 0.7308032 0.8226126 0.7294101 0.7903486 0.8293306</span></span>
-<span><span class="co">#&gt; cymbal   0.9351836 1.0382142 0.9871326 0.9571988 1.0045617 0.9409464 1.0194576</span></span>
-<span><span class="co">#&gt;             banana    potato    tomato      kiwi      pear strawberry blueberry</span></span>
-<span><span class="co">#&gt; trumpet  0.9392574 0.9105490 0.8830221 0.8478773 0.8618217  0.8767784 0.9645774</span></span>
-<span><span class="co">#&gt; trombone 1.0000095 0.9274395 0.9674734 0.8688863 0.9791594  0.9238828 0.9729520</span></span>
-<span><span class="co">#&gt; flute    0.9885272 0.8556761 0.8531540 0.9460171 0.8875153  0.8993427 0.9281152</span></span>
-<span><span class="co">#&gt; piano    0.9084053 0.8730102 0.9341004 1.0368087 0.9692899  0.8735781 0.9579473</span></span>
-<span><span class="co">#&gt; guitar   0.8967875 0.8661847 0.9517537 0.9811987 0.9965683  0.9066593 0.9739581</span></span>
-<span><span class="co">#&gt; cymbal   0.9559512 0.9462551 0.9143732 0.9915347 0.9253868  0.9249834 0.9466407</span></span>
-<span><span class="co">#&gt;                sad     happy     angry melancholy    joyful   hateful   content</span></span>
-<span><span class="co">#&gt; trumpet  0.8666898 0.8488735 0.8308108  0.7873357 0.8519420 0.9333320 0.9868393</span></span>
-<span><span class="co">#&gt; trombone 0.9464790 1.0493566 0.9779906  0.8594294 0.9773888 1.0456382 1.0586970</span></span>
-<span><span class="co">#&gt; flute    0.9357723 0.9155405 0.9273802  0.8317150 0.9153496 1.0464467 0.9827075</span></span>
-<span><span class="co">#&gt; piano    0.7859402 0.7222168 0.8875885  0.7012845 0.8191960 1.0742481 0.8789366</span></span>
-<span><span class="co">#&gt; guitar   0.7650799 0.7498851 0.8490875  0.6950909 0.8167364 0.9957878 0.8351338</span></span>
-<span><span class="co">#&gt; cymbal   1.0602806 1.0185100 1.0254275  0.9961827 0.9754140 1.0062601 1.0907118</span></span>
-<span><span class="co">#&gt;           peaceful     scare   fearful alligator  elephant       rat     mouse</span></span>
-<span><span class="co">#&gt; trumpet  0.9975748 0.9715591 0.9653837 0.8851451 0.8407929 0.9699536 0.9220590</span></span>
-<span><span class="co">#&gt; trombone 1.1301653 1.0112355 0.9803312 0.9181429 0.9448770 0.9000255 0.9234132</span></span>
-<span><span class="co">#&gt; flute    0.9953972 1.0093566 1.0574564 0.8972824 0.8781440 0.9269048 0.8267300</span></span>
-<span><span class="co">#&gt; piano    0.8897098 1.0114782 1.0478673 0.9309292 0.8870312 0.9866920 0.8235185</span></span>
-<span><span class="co">#&gt; guitar   0.9433049 0.9376936 1.0143360 0.8359544 0.8739370 0.9203031 0.8490496</span></span>
-<span><span class="co">#&gt; cymbal   1.0507631 1.1156529 0.9887600 0.9749106 0.9424991 0.9912280 0.9568465</span></span>
-<span><span class="co">#&gt;                dog      wolf    parrot     eagle   dolphin     shark</span></span>
-<span><span class="co">#&gt; trumpet  0.8409885 0.9009243 0.8671039 0.8056629 0.8717605 0.9077489</span></span>
-<span><span class="co">#&gt; trombone 0.9260945 0.9442231 0.9553378 0.9744114 0.9286902 0.9399655</span></span>
-<span><span class="co">#&gt; flute    0.9037216 0.9617292 0.8961243 0.9114045 0.9250934 0.8988152</span></span>
-<span><span class="co">#&gt; piano    0.8010806 0.9438895 0.9130158 0.8946121 0.9109896 0.9708619</span></span>
-<span><span class="co">#&gt; guitar   0.7239519 0.8606558 0.9217278 0.8542731 0.9197273 0.9291874</span></span>
-<span><span class="co">#&gt; cymbal   0.9942344 1.0316744 0.9467443 0.9377037 0.9532934 0.9520321</span></span></code></pre></div>
+<span><span class="co">#&gt;              dog       cat       rat       gun    banana     sword     table</span></span>
+<span><span class="co">#&gt; dog    0.0000000 0.2739303 0.5123881 0.5906894 0.7818078 0.7452758 0.6434250</span></span>
+<span><span class="co">#&gt; cat    0.2739303 0.0000000 0.5213184 0.6744473 0.7795409 0.8020755 0.6462459</span></span>
+<span><span class="co">#&gt; rat    0.5123881 0.5213184 0.0000000 0.7400105 0.9244186 0.8928397 0.7819956</span></span>
+<span><span class="co">#&gt; gun    0.5906894 0.6744473 0.7400105 0.0000000 0.8911675 0.6337077 0.6980466</span></span>
+<span><span class="co">#&gt; banana 0.7818078 0.7795409 0.9244186 0.8911675 0.0000000 0.8650971 0.7472485</span></span>
+<span><span class="co">#&gt; sword  0.7452758 0.8020755 0.8928397 0.6337077 0.8650971 0.0000000 0.8120899</span></span>
+<span><span class="co">#&gt;            glass     phone      sofa   missile      lamb     rifle   trumpet</span></span>
+<span><span class="co">#&gt; dog    0.7469269 0.6779000 0.7822941 0.9306060 0.7084598 0.7186925 0.8409885</span></span>
+<span><span class="co">#&gt; cat    0.7140502 0.6637064 0.6782575 0.9354524 0.7626201 0.7722337 0.8959449</span></span>
+<span><span class="co">#&gt; rat    0.8251858 0.8620877 0.9180761 0.9349857 0.8468455 0.8033361 0.9699536</span></span>
+<span><span class="co">#&gt; gun    0.7318920 0.6247425 0.8542499 0.7508974 0.8991612 0.3425261 0.8668525</span></span>
+<span><span class="co">#&gt; banana 0.7901191 0.8755222 0.7817425 0.9752764 0.7922279 0.9065630 0.9392574</span></span>
+<span><span class="co">#&gt; sword  0.7321883 0.8822808 0.8815341 0.8334430 0.8187028 0.6263753 0.7899880</span></span>
+<span><span class="co">#&gt;            piano     chair      desk     snake   dolphin     shark</span></span>
+<span><span class="co">#&gt; dog    0.8010806 0.6306125 0.6752448 0.5686341 0.7301250 0.6937237</span></span>
+<span><span class="co">#&gt; cat    0.8247876 0.6071512 0.6630289 0.6045210 0.6999727 0.7601385</span></span>
+<span><span class="co">#&gt; rat    0.9866920 0.8114072 0.8622854 0.5350589 0.7802583 0.7386961</span></span>
+<span><span class="co">#&gt; gun    0.8374068 0.6545550 0.6733489 0.7210518 0.8909221 0.8865868</span></span>
+<span><span class="co">#&gt; banana 0.9084053 0.8046723 0.9201190 0.8221203 0.9566140 0.9001270</span></span>
+<span><span class="co">#&gt; sword  0.8395984 0.7344415 0.8118196 0.7098538 0.9599949 0.8158018</span></span></code></pre></div>
 <p><br><br></p>
 </div>
 </div>
@@ -385,7 +439,7 @@ lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
 <h2 id="monologue-time-series-ngram2word">Monologue Time Series: ngram2word<a class="anchor" aria-label="anchor" href="#monologue-time-series-ngram2word"></a>
 </h2>
 <p>Plots id_orig (as x-axis time) by distance measure (facetted GLO and SD15). Add red line annotation if semantic distance jump is z&gt;3 based on the distribution of that time series</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Select id_orig, "CosDist_Glo", "CosDist_SD15", pivot_longer</span></span>
 <span><span class="co">#add smoothing options</span></span>
 <span><span class="co">#Argument annotate=T, adds red line whenever semantic distance jump is z&gt;3</span></span>
@@ -397,17 +451,17 @@ lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
 <div class="section level2">
 <h2 id="monologue-time-series-anchor2word">Monologue Time Series: anchor2word<a class="anchor" aria-label="anchor" href="#monologue-time-series-anchor2word"></a>
 </h2>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#TBA</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="time-series-plot-for-dialogues">Time series plot for dialogues<a class="anchor" aria-label="anchor" href="#time-series-plot-for-dialogues"></a>
 </h2>
 <p>Color point by talker</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#TBA</span></span></code></pre></div>
 <p>#Animate Time Series</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#TBA</span></span></code></pre></div>
 </div>
 </div>
@@ -439,10 +493,10 @@ lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Jamie Reilly <br><small class="roles"> Author, maintainer </small>  </li>
-<li>Hannah Mechtenberg <br><small class="roles"> Author </small>  </li>
-<li>Emily Myers <br><small class="roles"> Author </small>  </li>
-<li>Jonathan Peelle <br><small class="roles"> Author </small>  </li>
+<li>Jamie Reilly <br><small class="roles"> Author, maintainer </small>   </li>
+<li>Hannah Mechtenberg <br><small class="roles"> Author </small>   </li>
+<li>Emily Myers <br><small class="roles"> Author </small>   </li>
+<li>Jonathan Peelle <br><small class="roles"> Author </small>   </li>
 </ul>
 </div>
 
@@ -462,7 +516,7 @@ lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
     </footer>

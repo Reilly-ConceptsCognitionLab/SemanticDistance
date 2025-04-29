@@ -1,9 +1,9 @@
 pandoc: 3.1.11
-pkgdown: 2.1.1
+pkgdown: 2.1.2
 pkgdown_sha: ~
 articles:
   SemanticDistance: SemanticDistance.html
-last_built: 2025-04-29T08:02Z
+last_built: 2025-04-29T15:43Z
 urls:
   reference: https://reilly-conceptscognitionlab.github.io/SemanticDistance/reference
   article: https://reilly-conceptscognitionlab.github.io/SemanticDistance/articles
