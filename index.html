@@ -64,7 +64,7 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance" class="external-link">SemanticDistance</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="semanticdistance-data-compatibility">SemanticDistance: Data Compatibility<a class="anchor" aria-label="anchor" href="#semanticdistance-data-compatibility"></a>
+<h2 id="data-compatibility">Data Compatibility<a class="anchor" aria-label="anchor" href="#data-compatibility"></a>
 </h2>
 <p>Sometimes you care about computing time-ordered semantic distances between words in running discourse sampples. Other times word order doesn’t matter (e.g., using a simple machine learning algorithm to cluster a bag of words by similarity). Sometimes your data will be structured as monologues (e.g., stories, narratives). Other times you might be interested in computing semantic distance turn-by-turn across speakers in a conversation transcript (i.e., dialogue). The SemanticDistance pockage can handle all of these scenarios. However, is is important that <strong>you</strong> understand the structure of your data and what the distance measures mean.<br></p>
 <p>Here are the formats SemanticDistance can currently handle: <br> 1. <strong>Monologues</strong>: A monologue transcript consists of any ordered text sample NOT delineated by a talker/speaker (e.g., stories, narratives). The minimal requirement for a monologue is one row and one column with some text in it.<br> 2. <strong>Dialogues</strong>: A dialogue transcript includes any sample split by talker/speaker/interlocutor information including conversation transcripts. The minimum requirment is two cells with interlocutor identity and text.<br> 3. <strong>Word Pairs in Columns</strong>: A dataframe that contains two columns of paired string data (col1 vs. col2). Calculates distance between each word pair across columns (e.g., Dog-Leash). <br> 4. <strong>Unordered Word Lists</strong>: A dataframe with an unordered list of words (nominally one column, all text in one row) that will be transformed into a distance matrix and hierarchically clustered <br></p>
@@ -85,13 +85,13 @@
 <li>
 <strong>Dialogue_Structured:</strong> Dataframe simulating ‘perfect’ conversation transcript, one word per turn, two talkers</li>
 <li>
-<strong>Dialogue_Dirty:</strong> #Dataframe simulating ‘dirty’ conversation transcript, multiple lines per person, lots of stopwords, missing obervations, stray transcription symbols <br>
+<strong>Dialogue_Dirty:</strong> Dataframe simulating ‘dirty’ conversation transcript, multiple lines per person, lots of stopwords, missing obervations, stray transcription symbols <br>
 </li>
 <li>
-<strong>WordPairs_Columns:</strong> #Dataframe with word pairs arrayed in two columns <br>
+<strong>WordPairs_Columns:</strong> Dataframe with word pairs arrayed in two columns <br>
 </li>
 <li>
-<strong>WordList_TestClustering:</strong> Unordered unsplit word list, some junk and also animal and weapon terms for hierachical clustering analysis <br><br><br>
+<strong>WordList_TestClustering:</strong> Unordered unsplit word list, some junk and also animal and weapon terms for hierachical clustering analysis <br><br>
 </li>
 </ol>
 </div>
@@ -99,32 +99,14 @@
 <div class="page-header"><h1 id="step-1-cleaning-">
 <span style="color: darkred;">—Step 1: Cleaning— </span><a class="anchor" aria-label="anchor" href="#step-1-cleaning-"></a>
 </h1></div>
-<p>First identify the type of data structure you want to process (e.g., monologue, dialogue, unordered list). The semantic distance functions work by indexing unique numeric identifiers. You <strong>MUST</strong> first clean/prep your raw text to append these identifers. Prepare your lexical data for computing pairwise semantic distances by first doing the following: <br></p>
-<ol style="list-style-type: decimal">
-<li>Read your data into R. Label your text and metadata columns however you like. <br>
-</li>
-<li>Your dataframe should contain at least one column with the target string data (e.g., mytext). <br>
-</li>
-<li>Identify the format of your sample (e.g., monologue, dialogue, columns, unstructured). <br>
-</li>
-<li>Decide on your cleaning parameters (lemmatize, omit stopwords, omit punctuation). <br>
-</li>
-<li>Run the approproate cleaning function specifying the parameters that best fit your data and aims. <br><br>
-</li>
-</ol>
+<p>First identify the type of data structure you want to process (e.g., monologue, dialogue, unordered list). The semantic distance functions work by indexing unique numeric identifiers. You <strong>MUST</strong> first clean/prep your raw text to append these identifers. Prepare your lexical data for computing pairwise semantic distances by first doing the following: <br> 1) Read your data into R. Label your text and metadata columns however you like. <br> 2) Your dataframe should contain at least one column with the target string data (e.g., mytext). <br> 3) Identify the format of your sample (e.g., monologue, dialogue, columns, unstructured). <br> 4) Decide on your cleaning parameters (lemmatize, omit stopwords, omit punctuation). <br> 5) Run the approproate cleaning function specifying the parameters that best fit your data and aims. <br><br></p>
 <div class="section level2">
 <h2 id="id_11-clean-monologue-transcript-clean_monologue">
 <span style="color: brown;">1.1 Clean Monologue Transcript (clean_monologue)</span><a class="anchor" aria-label="anchor" href="#id_11-clean-monologue-transcript-clean_monologue"></a>
 </h2>
 <p>Clean a monologue transcript by calling the ‘clean_monologue’ function. Specific arguments include: <br></p>
-<p>df = raw dataframe with at least one column of text<br>
-wordcol = quoted variable reflecting the column name where your target text lives (e.g., ‘mytext’)<br>
-clean = applies cleaning functions (e.g., punct out, lowercase, etc); default is TRUE<br>
-omit_stops = omits stopwords, default is TRUE<br>
-lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
-<div class="section level3">
-<h3 id="output-of-clean_monologue-on-cleaning-a-dirty-monologue-transcript">Output of ‘clean_monologue’ on cleaning a dirty monologue transcript<a class="anchor" aria-label="anchor" href="#output-of-clean_monologue-on-cleaning-a-dirty-monologue-transcript"></a>
-</h3>
+<p><strong>df</strong> = raw dataframe with at least one column of text <br><strong>wordcol</strong> = quoted variable column name where your target text lives (e.g., ‘mytext’) <br><strong>clean</strong> = applies cleaning functions (e.g., punct out, lowercase, etc); default is TRUE <br><strong>omit_stops</strong> = omits stopwords, default is TRUE <br><strong>lemmatize</strong> = transforms raw word to lemmatized form, default is TRUE <br></p>
+<p>Output of ‘clean_monologue’ on a messy monologue transcript</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#text in this dataframe is in a column 'mytext'</span></span>
 <span><span class="va">MyCleanMonologue1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_monologue.html">clean_monologue</a></span><span class="op">(</span><span class="va">Monologue_Dirty</span>, <span class="st">'mytext'</span>, clean<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
@@ -142,10 +124,7 @@ lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
 <span><span class="co">#&gt;  8 My name is Frank. 5       "name"    </span></span>
 <span><span class="co">#&gt;  9 My name is Frank. 5       "frank"   </span></span>
 <span><span class="co">#&gt; 10 Dog               6       "dog"</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="output-of-clean_monologue-on-a-structured-monologue-transcript">Output of ‘clean_monologue’ on a structured monologue transcript<a class="anchor" aria-label="anchor" href="#output-of-clean_monologue-on-a-structured-monologue-transcript"></a>
-</h3>
+<p>Output of ‘clean_monologue’ on a structured monologue transcript</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#text in this dataframe is in a column 'mytext'</span></span>
 <span><span class="va">MyCleanMonologue2</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_monologue.html">clean_monologue</a></span><span class="op">(</span><span class="va">Monologue_Structured</span>, <span class="st">'mytext'</span>, clean<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
@@ -165,15 +144,12 @@ lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
 <span><span class="co">#&gt; 10        10 "the"     10      ""</span></span></code></pre></div>
 <p><br></p>
 </div>
-</div>
 <div class="section level2">
 <h2 id="id_12-clean-dialogue-transcripts-clean_dialogue">
 <span style="color: brown;">1.2 Clean Dialogue Transcripts (clean_dialogue)</span><a class="anchor" aria-label="anchor" href="#id_12-clean-dialogue-transcripts-clean_dialogue"></a>
 </h2>
-<p>This could be a conversation transcript or any language sample where you care about talker/interlocutor information (e.g., computing semantic distance across turns in a conversation). Your dataframe should nominally contain a text column and a speaker/talker column. Arguments clean_dialogue are: <br> | df = your raw dataframe with at least one column of text AND a talker column | wordcol = column name (quoted) containing the text you want cleaned | whotalks = column name (quoted) containing the talker ID (will convert to factor) | clean = T/F (default is T) applies cleaning functions | omit_stops = T/F omits stopwords, default is TRUE | lemmatize = T/F transforms raw word to lemmatized form, default is TRUE</p>
-<div class="section level3">
-<h3 id="output-of-clean_dialogue-prepping-a-well-structured-dialogue-transcript">Output of ‘clean_dialogue’ prepping a well-structured dialogue transcript<a class="anchor" aria-label="anchor" href="#output-of-clean_dialogue-prepping-a-well-structured-dialogue-transcript"></a>
-</h3>
+<p>This could be a conversation transcript or any language sample where you care about talker/interlocutor information (e.g., computing semantic distance across turns in a conversation). Your dataframe should nominally contain a text column and a speaker/talker column. Arguments clean_dialogue are: <br><strong>df</strong> = your raw dataframe with at least one column of text AND a talker column <br><strong>wordcol</strong> = column name (quoted) containing the text you want cleaned <br><strong>whotalks</strong> = column name (quoted) containing the talker ID (will convert to factor) <br><strong>clean</strong> = T/F (default is T) applies cleaning functions <br><strong>omit_stops</strong> = T/F omits stopwords, default is TRUE <br><strong>lemmatize</strong> = T/F transforms raw word to lemmatized form, default is TRUE <br></p>
+<p>Output of ‘clean_dialogue’ prepping a well-structured dialogue transcript</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">My_CleanDialogue1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_dialogue.html">clean_dialogue</a></span><span class="op">(</span><span class="va">Dialogue_Structured</span>, <span class="st">"mytext"</span>, <span class="st">"speaker"</span>, omit_stops<span class="op">=</span><span class="cn">T</span>, lemmatize<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">My_CleanDialogue1</span>, n<span class="op">=</span><span class="fl">8</span><span class="op">)</span></span>
@@ -190,15 +166,13 @@ lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
 <span><span class="co">#&gt; 8 eel       P2      8       P2     eel                 8</span></span></code></pre></div>
 <p><br></p>
 </div>
-</div>
 <div class="section level2">
 <h2 id="id_13-clean-word-pairs-arrayed-in-columns-clean_2columns">
 <span style="color: brown;">1.3 Clean Word Pairs Arrayed in Columns (clean_2columns)</span><a class="anchor" aria-label="anchor" href="#id_13-clean-word-pairs-arrayed-in-columns-clean_2columns"></a>
 </h2>
-<p>SemanticDistance also computes pairwise distance for data arrayed in columns. Run the function, the cleaned columns will appear in the dataframe. Arguments to the ‘clean_monologue’ function call are: <br> | df = your raw dataframe with at least one column of text | word1 = quoted variable reflecting the column name where your first word lives | word2 = quoted variable reflecting the column name where your first word lives | clean = T/F (default is T) applies cleaning functions | omit_stops = T/F omits stopwords, default is TRUE | lemmatize = T/F transforms raw word to lemmatized form, default is TRUE</p>
-<div class="section level3">
-<h3 id="output-of-clean_2columns-cleaning-word-pairs-arrayed-in-columns">Output of ‘clean_2columns’ cleaning word pairs arrayed in columns<a class="anchor" aria-label="anchor" href="#output-of-clean_2columns-cleaning-word-pairs-arrayed-in-columns"></a>
-</h3>
+<p>SemanticDistance also computes pairwise distance for data arrayed in columns. Run the function, the cleaned columns will appear in the dataframe. Arguments to the ‘clean_monologue’ function call are: <br></p>
+<p><strong>df</strong> = your raw dataframe with at least one column of text <br><strong>word1</strong> = quoted variable reflecting the column name where your first word lives <br><strong>word2</strong> = quoted variable reflecting the column name where your first word lives <br><strong>clean</strong> = T/F (default is T) applies cleaning functions <br><strong>omit_stops</strong> = T/F omits stopwords, default is TRUE <br><strong>lemmatize</strong> = T/F transforms raw word to lemmatized form, default is TRUE <br></p>
+<p>Output of ‘clean_2columns’ word pairs arrayed in columns</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">MyClean2Columns</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_2cols.html">clean_2cols</a></span><span class="op">(</span><span class="va">WordPairs_Columns</span>, <span class="st">'word1'</span>, <span class="st">'word2'</span>, clean<span class="op">=</span><span class="cn">T</span>, omit_stops<span class="op">=</span><span class="cn">T</span>, lemmatize<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyClean2Columns</span>, n<span class="op">=</span><span class="fl">8</span><span class="op">)</span> <span class="co">#view head cleaned data</span></span>
@@ -213,20 +187,18 @@ lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
 <span><span class="co">#&gt; 8   Dog     leash       8          dog        leash</span></span></code></pre></div>
 <p><br></p>
 </div>
-</div>
 <div class="section level2">
 <h2 id="id_14-clean-unordered-word-list-clean_unordered4matrix">
 <span style="color: brown;">1.4 Clean Unordered Word List (clean_unordered4matrix)</span><a class="anchor" aria-label="anchor" href="#id_14-clean-unordered-word-list-clean_unordered4matrix"></a>
 </h2>
-<p>This cleaning option is used for prepping a vector of words for hierarchical clustering. Word order is no longer a factor since all words will be shuffled. This cleaning function retains only one instance of a word (no duplicates). Arguments to the ‘clean_unordered4matrix’ function call are: <br> | df = your raw dataframe with at least one column of text | wordcol = quoted variable reflecting where your text lives | clean = T/F (default is T) applies cleaning functions | omit_stops = T/F omits stopwords, default is TRUE | lemmatize = T/F transforms raw word to lemmatized form, default is TRUE</p>
-<div class="section level3">
-<h3 id="output-of-clean_unordered4matrix-on-unordered-word-list-">Output of ‘clean_unordered4matrix’ on unordered word list <a class="anchor" aria-label="anchor" href="#output-of-clean_unordered4matrix-on-unordered-word-list-"></a>
-</h3>
+<p>This cleaning option is used for prepping a vector of words for hierarchical clustering. Word order is no longer a factor since all words will be shuffled. This cleaning function retains only one instance of a word (no duplicates). Arguments to the ‘clean_unordered4matrix’ function call are: <br></p>
+<p><strong>df</strong> = your raw dataframe with at least one column of text <br><strong>wordcol</strong> = quoted variable reflecting where your text lives <br><strong>clean</strong> = T/F (default is T) applies cleaning functions <br><strong>omit_stops</strong> = T/F omits stopwords, default is TRUE <br><strong>lemmatize</strong> = T/F transforms raw word to lemmatized form, default is TRUE <br></p>
+<p>Output of ‘clean_unordered4matrix’ on unordered word list</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Run clean fn </span></span>
 <span><span class="va">MyCleanDat4Matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_unordered4matrix.html">clean_unordered4matrix</a></span><span class="op">(</span><span class="va">WordList_TestClustering</span>, wordcol<span class="op">=</span><span class="st">"mytext"</span>, clean<span class="op">=</span><span class="cn">TRUE</span>, omit_stops<span class="op">=</span><span class="cn">TRUE</span>, lemmatize<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> </span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyCleanDat4Matrix</span>, n<span class="op">=</span><span class="fl">8</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 8 × 3</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyCleanDat4Matrix</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 3</span></span>
 <span><span class="co">#&gt;   mytext                                                      id_orig word_clean</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;                                                         &lt;int&gt; &lt;chr&gt;     </span></span>
 <span><span class="co">#&gt; 1 dog cat $ Rat gun banana the sword table glasses phone sof…       1 dog       </span></span>
@@ -234,32 +206,26 @@ lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
 <span><span class="co">#&gt; 3 dog cat $ Rat gun banana the sword table glasses phone sof…       1 rat       </span></span>
 <span><span class="co">#&gt; 4 dog cat $ Rat gun banana the sword table glasses phone sof…       1 gun       </span></span>
 <span><span class="co">#&gt; 5 dog cat $ Rat gun banana the sword table glasses phone sof…       1 banana    </span></span>
-<span><span class="co">#&gt; 6 dog cat $ Rat gun banana the sword table glasses phone sof…       1 sword     </span></span>
-<span><span class="co">#&gt; 7 dog cat $ Rat gun banana the sword table glasses phone sof…       1 table     </span></span>
-<span><span class="co">#&gt; 8 dog cat $ Rat gun banana the sword table glasses phone sof…       1 glass</span></span></code></pre></div>
+<span><span class="co">#&gt; 6 dog cat $ Rat gun banana the sword table glasses phone sof…       1 sword</span></span></code></pre></div>
 <p><br><br></p>
-</div>
 </div>
 </div>
 <div class="section level1">
 <h1 id="step-2-compute-semantic-distance">
-<span style="color: darkred;">—Step 2: Compute Semantic Distance—</span><a class="anchor" aria-label="anchor" href="#step-2-compute-semantic-distance"></a>
+<span style="color: darkred;">–Step 2: Compute Semantic Distance–</span><a class="anchor" aria-label="anchor" href="#step-2-compute-semantic-distance"></a>
 </h1>
-<p>SemanticDistance will append cosine distance values between each pair of elements specified by the user (e.g., word-to-word, ngram-to-word). These distance values are derived from two large lookup databases in the package with fixed semantic vectors for &gt;70k English words. CosDist_Glo reflects cosine distance between vectors derived from training a GLOVE word embedding model (300 hyperparameters per word). CodDist_SD15 refects cosine distance between two chunks (words, groups of words) characterized across 15 meaningful perceptual and affective dimensions (e.g., color, sound, valence). <br></p>
-<p>Users specify an ngram window size. This window rolls successively over your language sample to compute a semantic distance value for each new word relative to the n-words (ngram size) before it. This model of compouting distance is illustrated in the figure. The larger your specified ngram size the more smoothed the semantic vector will be over your language sample. Once you settle on a window size and clean your language transcript (works for monologues only), you are ready to roll. Here’s the general idea… <br></p>
+<p>SemanticDistance will append cosine distance values between each pair of elements specified by the user (e.g., word-to-word, ngram-to-word). These distance values are derived from two large lookup databases in the package with fixed semantic vectors for &gt;70k English words. CosDist_Glo reflects cosine distance between vectors derived from training a GLOVE word embedding model (300 hyperparameters per word). CodDist_SD15 refects cosine distance between two chunks (words, groups of words) characterized across 15 meaningful perceptual and affective dimensions (e.g., color, sound, valence). <br><br></p>
 <div class="section level2">
 <h2 id="id_21-compute-ngram-to-word-distance-dist_ngram2word">
 <span style="color: brown;">2.1: Compute Ngram-to-Word Distance (dist_ngram2word)</span><a class="anchor" aria-label="anchor" href="#id_21-compute-ngram-to-word-distance-dist_ngram2word"></a>
 </h2>
 <p>Computes cosine distance for two models (embedding and experiential) using a rolling ngram approach consisting of groups of words (ngrams) to the next word.</p>
-<p><img src="reference/figures/RollingNgramIllustrate.png" alt="illustrates how rolling ngrams work on a vector of words by moving a window and contrasting each chunk to each new word" width="40%"></p>
-<p>Remember to call a cleaned/prepped dataframe! Arguments to ‘dist_ngram2word’ are: <br> | dat dataframe of a monologue transcript cleaned and prepped with clean_monologue fn <br> | ngram ngram window size preceding each new content word <br></p>
-<div class="section level3">
-<h3 id="output-dist_ngram2word-on-a-messy-monologue">Output ‘dist_ngram2word’ on a messy monologue<a class="anchor" aria-label="anchor" href="#output-dist_ngram2word-on-a-messy-monologue"></a>
-</h3>
-<p>Set the ngram=1, distance every word to the next</p>
+<p><img src="reference/figures/RollingNgramIllustrate.png" alt="illustrates how rolling ngrams work on a vector of words by moving a window and contrasting each chunk to each new word" width="50%"><br><br></p>
+<p>Remember to call a cleaned/prepped dataframe! Arguments to ‘dist_ngram2word’ are: <br> | <strong>dat</strong> dataframe of a monologue transcript cleaned and prepped with clean_monologue fn <br> | <strong>ngram</strong> window size preceding each new content word <br></p>
+<p>Output ‘dist_ngram2word’ on a messy monologue</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">MyNgram2WordDists1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_ngram2word.html">dist_ngram2word</a></span><span class="op">(</span><span class="va">MyCleanMonologue1</span>, ngram<span class="op">=</span><span class="fl">1</span><span class="op">)</span> <span class="co">#distance word-to-word</span></span>
+<code class="sourceCode R"><span><span class="co">#Set the ngram=1, distance every word to the next word</span></span>
+<span><span class="va">MyNgram2WordDists1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_ngram2word.html">dist_ngram2word</a></span><span class="op">(</span><span class="va">MyCleanMonologue1</span>, ngram<span class="op">=</span><span class="fl">1</span><span class="op">)</span> <span class="co">#distance word-to-word</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyNgram2WordDists1</span>, n<span class="op">=</span><span class="fl">8</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 8 × 5</span></span>
 <span><span class="co">#&gt;   mytext            id_orig word_clean CosDist_1gram_glo CosDist_1gram_sd15</span></span>
@@ -272,13 +238,10 @@ lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
 <span><span class="co">#&gt; 6 Some              4       ""                    NA                  NA   </span></span>
 <span><span class="co">#&gt; 7 My name is Frank. 5       ""                    NA                  NA   </span></span>
 <span><span class="co">#&gt; 8 My name is Frank. 5       "name"                NA                  NA</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="output-dist_ngram2word-on-a-well-structured-monologue">Output ‘dist_ngram2word’ on a well-structured monologue<a class="anchor" aria-label="anchor" href="#output-dist_ngram2word-on-a-well-structured-monologue"></a>
-</h3>
-<p>Set the ngram=3, distance rolling chunks of 3 words to the next word</p>
+<p>Output ‘dist_ngram2word’ on a well-structured monologue</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">MyNgram2WordDists2</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_ngram2word.html">dist_ngram2word</a></span><span class="op">(</span><span class="va">MyCleanMonologue2</span>, ngram<span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="co">#distance word-to-word</span></span>
+<code class="sourceCode R"><span><span class="co">#Set the ngram=3, distance rolling chunks of 3 words to the next word</span></span>
+<span><span class="va">MyNgram2WordDists2</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_ngram2word.html">dist_ngram2word</a></span><span class="op">(</span><span class="va">MyCleanMonologue2</span>, ngram<span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="co">#distance word-to-word</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyNgram2WordDists2</span>, n<span class="op">=</span><span class="fl">12</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 12 × 6</span></span>
 <span><span class="co">#&gt;    timestamp mytext     id_orig word_clean CosDist_3gram_glo CosDist_3gram_sd15</span></span>
@@ -295,21 +258,18 @@ lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
 <span><span class="co">#&gt; 10        10 "the"      10      ""                    NA                 NA    </span></span>
 <span><span class="co">#&gt; 11        11 "wrestler" 11      "wrestler"             0.720              0.294</span></span>
 <span><span class="co">#&gt; 12        12 "open"     12      "open"                 0.791              0.706</span></span></code></pre></div>
-</div>
+<p><br></p>
 </div>
 <div class="section level2">
 <h2 id="id_22-compute-ngram-to-ngram-distance-dist_ngram2ngram">
 <span style="color: brown;">2.2: Compute Ngram-to-Ngram Distance (dist_ngram2ngram)</span><a class="anchor" aria-label="anchor" href="#id_22-compute-ngram-to-ngram-distance-dist_ngram2ngram"></a>
 </h2>
-<p>User specifies n-gram size (e.g., ngram=2). Distance computed from each two-word chunk to the next iterating all the way down the dataframe until there are no more words to ‘fill out’ the last ngram.</p>
-<p><img src="reference/figures/Ngram2Ngram_Dist.png" alt="illustrates how semantic distance is derived from chunk to chunk groupings of words" width="50%"></p>
+<p>User specifies n-gram size (e.g., ngram=2). Distance computed from each two-word chunk to the next iterating all the way down the dataframe until there are no more words to ‘fill out’ the last ngram. <br></p>
+<p><img src="reference/figures/Ngram2Ngram_Dist.png" alt="semantic distance is derived from chunk to chunk groupings of words" width="50%"><br></p>
 <p>Arguments to dist_ngram2ngram are: <br> | dat = dataframe w/ a monologue sample cleaned and prepped <br> | ngram = chunk size (chunk-to-chunk) <br></p>
-<div class="section level3">
-<h3 id="output-dist_ngram2ngram-on-monologue-transcript">Output ‘dist_ngram2ngram’ on monologue transcript<a class="anchor" aria-label="anchor" href="#output-dist_ngram2ngram-on-monologue-transcript"></a>
-</h3>
-<p>This example involves chunks of 2-words to 2-words</p>
+<p>Output ‘dist_ngram2ngram’ on monologue transcript</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#Give the function a cleaned monologue transcript</span></span>
+<code class="sourceCode R"><span><span class="co">#Give the function a cleaned monologue transcript, This example involves chunks of 2-words to 2-words</span></span>
 <span><span class="va">MyNgram2NgramDists</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_ngram2ngram.html">dist_ngram2ngram</a></span><span class="op">(</span><span class="va">MyCleanMonologue2</span>, ngram<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyNgram2NgramDists</span>, n<span class="op">=</span><span class="fl">8</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 8 × 5</span></span>
@@ -325,31 +285,25 @@ lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
 <span><span class="co">#&gt; 8 8       "boxer"    4                          0.938              0.858</span></span></code></pre></div>
 <p><br></p>
 </div>
-</div>
 <div class="section level2">
 <h2 id="id_23-compute-turn-by-turn-distance-dist_dialogue_turns">
 <span style="color: brown;">2.3: Compute Turn-by-Turn Distance (dist_dialogue_turns)</span><a class="anchor" aria-label="anchor" href="#id_23-compute-turn-by-turn-distance-dist_dialogue_turns"></a>
 </h2>
 <p>Averages the semantic vectors for all content words in a turn. Computes the cosine distance to the average of the semantic vectors of the content words in the subsequent turn. <br></p>
-<p>Arguments to ‘dist_dialogue_turns’ are: <br> | dat = dataframe w/ a dialogue sample cleaned and prepped using ‘clean_dialogue’ fn<br></p>
-<div class="section level3">
-<h3 id="output-of-dist_dialogue_turns-turn-to-turn-distance-on-sample-dialogue-transcript-">Output of ‘dist_dialogue_turns’ turn-to-turn distance on sample dialogue transcript <a class="anchor" aria-label="anchor" href="#output-of-dist_dialogue_turns-turn-to-turn-distance-on-sample-dialogue-transcript-"></a>
-</h3>
+<p>Arguments to ‘dist_dialogue_turns’ are: <br><strong>dat</strong> = dataframe w/ a dialogue sample cleaned and prepped using ‘clean_dialogue’ fn<br></p>
+<p>Output of ‘dist_dialogue_turns’ turn-to-turn distance on sample dialogue transcript</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#MyDialogueDists &lt;- dist_dialogue_turns(MyCleanDialogue)</span></span>
 <span><span class="co">#head(MyDialogueDists, n=15)</span></span></code></pre></div>
 <p><br></p>
-</div>
 </div>
 <div class="section level2">
 <h2 id="id_24-compute-distances-between-word-pairs-in-columns-dist_2cols">
 <span style="color: brown;">2.4: Compute Distances Between Word Pairs in Columns (dist_2cols)</span><a class="anchor" aria-label="anchor" href="#id_24-compute-distances-between-word-pairs-in-columns-dist_2cols"></a>
 </h2>
 <p>When your data are arrayed in two columns and you are interested in computing pairwise distance across the columns. The only critical argument is your dataframe name. Remember to pass a cleaned dataframe (even if you disable stopwords and lemmatization). Arguments to the function: <br> | dat = your cleaned dataframe with two paired columns of text <br></p>
-<p>Arguments to ‘dist_2cols’ are: <br> | dat = dataframe w/ word pairs arrayed in columns cleaned and prepped using ‘clean_2cols’ fn<br></p>
-<div class="section level3">
-<h3 id="output-of-dist_2cols-on-2-column-arrayed-dataframe">Output of ‘dist_2cols’ on 2-column arrayed dataframe<a class="anchor" aria-label="anchor" href="#output-of-dist_2cols-on-2-column-arrayed-dataframe"></a>
-</h3>
+<p>Arguments to ‘dist_2cols’ are: <br><strong>dat</strong> = dataframe w/ word pairs arrayed in columns cleaned and prepped using ‘clean_2cols’ fn<br></p>
+<p>Output of ‘dist_2cols’ on 2-column arrayed dataframe</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">MyDistsColumns</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_2cols.html">dist_2cols</a></span><span class="op">(</span><span class="va">MyClean2Columns</span><span class="op">)</span> <span class="co">#only argument is dataframe</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyDistsColumns</span>, n<span class="op">=</span><span class="fl">8</span><span class="op">)</span></span>
@@ -364,17 +318,14 @@ lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
 <span><span class="co">#&gt; 8   Dog     leash       8          dog        leash    0.6760924   0.5014043</span></span></code></pre></div>
 <p><br></p>
 </div>
-</div>
 <div class="section level2">
-<h2 id="id_25-compute-distance-from-a-fixed-cluster-of-words-in-the-beginning-of-a-language-sample-to-each-new-word-in-the-sample-anchor_dist">
-<span style="color: brown;">2.5: Compute Distance from a Fixed Cluster of Words in the Beginning of a Language Sample to each new word in the sample (anchor_dist)</span><a class="anchor" aria-label="anchor" href="#id_25-compute-distance-from-a-fixed-cluster-of-words-in-the-beginning-of-a-language-sample-to-each-new-word-in-the-sample-anchor_dist"></a>
+<h2 id="id_25-distance-fixed-cluster-of-words-to-each-new-word-anchor_dist">
+<span style="color: brown;">2.5: Distance Fixed Cluster of Words to each new word (anchor_dist)</span><a class="anchor" aria-label="anchor" href="#id_25-distance-fixed-cluster-of-words-to-each-new-word-anchor_dist"></a>
 </h2>
-<p>This approach models the semantic distance from each successive new word in a language sample to the average of the semantic vectors for the first block of 10 content words in that sample. This anchored distance provides a metric of overall semantic drift as a language sample unfolds relative to a fixed starting point.<br></p>
-<p>Arguments to ‘anchor_dist’ are: <br> | dat = dataframe w/ a monologue sample cleaned and prepped using ‘clean_monologue’ fn<br> | anchor_size = size of the initial chunk of words for chunk-to-new-word comparisons fn<br></p>
-<p><img src="reference/figures/Anchor_2Word_Dist.png" alt="illustrates distance from each new word of a language sample to an initial chunk of n-words" width="60%"></p>
-<div class="section level3">
-<h3 id="output-of-anchor_dist-on-a-sample-monologue-transcript">Output of ‘anchor_dist’ on a sample monologue transcript<a class="anchor" aria-label="anchor" href="#output-of-anchor_dist-on-a-sample-monologue-transcript"></a>
-</h3>
+<p>Models semantic distance from each successive new word in a language sample to the average of the semantic vectors for the first block of N content words in that sample. This anchored distance provides a metric of overall semantic drift as a language sample unfolds relative to a fixed starting point.<br></p>
+<p>Arguments to ‘anchor_dist’ are: <br><strong>dat</strong> = dataframe w/ a monologue sample cleaned and prepped using ‘clean_monologue’ fn<br><strong>anchor_size</strong> = size of the initial chunk of words for chunk-to-new-word comparisons fn<br></p>
+<p><img src="reference/figures/Anchor_2Word_Dist.png" alt="illustrates distance from each new word of a language sample to an initial chunk of n-words" width="80%"></p>
+<p>Output of ‘anchor_dist’ on a sample monologue transcript</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">MyDistsAnchored</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_anchor.html">dist_anchor</a></span><span class="op">(</span><span class="va">MyCleanMonologue2</span>, anchor_size<span class="op">=</span><span class="fl">8</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyDistsAnchored</span>, n<span class="op">=</span><span class="fl">10</span><span class="op">)</span></span>
@@ -392,17 +343,13 @@ lemmatize = transforms raw word to lemmatized form, default is TRUE</p>
 <span><span class="co">#&gt;  9 9       "punch"                 0.603               0.348</span></span>
 <span><span class="co">#&gt; 10 10      ""                     NA                  NA</span></span></code></pre></div>
 <p><br></p>
-</div>
 <div class="section level3">
-<h3 id="id_26-compute-distance-matrix-all-word-pairs-dist_matrix_all">
-<span style="color: brown;">2.6: Compute Distance Matrix All Word Pairs (dist_matrix_all)</span><a class="anchor" aria-label="anchor" href="#id_26-compute-distance-matrix-all-word-pairs-dist_matrix_all"></a>
+<h3 id="id_26-distance-matrix-all-word-pairs-dist_matrix_all">
+<span style="color: brown;">2.6: Distance Matrix All Word Pairs (dist_matrix_all)</span><a class="anchor" aria-label="anchor" href="#id_26-distance-matrix-all-word-pairs-dist_matrix_all"></a>
 </h3>
 <p>Returns square matrix where each entry [i,j] is the cosine distance between word i and word j. Matrix contains original words as both row and column names for reference. User specifies whether to return a matrix based on embeddings (GLOVE) or experiential norms (SD15). Input a unordered vector of words cleaned/prepped with ‘clean_unordered4matrix’ function <br></p>
-<p>Arguments to ‘dist_matrix_all’ are: <br> | dat = dataframe cleaned and prepped using ‘clean_unordered4matrix’ fn<br> | dist_type = quoted argument default is ‘embedding’, other option is “SD15” fn<br></p>
-</div>
-<div class="section level3">
-<h3 id="output-of-dist_unordered-on-unordered-word-list">Output of ‘dist_unordered’ on unordered word list<a class="anchor" aria-label="anchor" href="#output-of-dist_unordered-on-unordered-word-list"></a>
-</h3>
+<p>Arguments to ‘dist_matrix_all’ are: <br><strong>dat</strong> = dataframe cleaned and prepped using ‘clean_unordered4matrix’ fn<br><strong>dist_type</strong> = quoted argument default is ‘embedding’, other option is “SD15” fn<br></p>
+<p>Output of ‘dist_unordered’ on unordered word list</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">MyDistMatrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_matrix_all.html">dist_matrix_all</a></span><span class="op">(</span><span class="va">MyCleanDat4Matrix</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyDistMatrix</span><span class="op">)</span></span>
