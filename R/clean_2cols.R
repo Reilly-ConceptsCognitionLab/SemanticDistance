@@ -44,11 +44,6 @@ clean_2cols <- function(df, col1, col2, clean = TRUE, omit_stops = TRUE, lemmati
       # Apply cleaning pipeline
       x <- tolower(x)
       x <- gsub("`", "'", x)
-      x <- gsub("'s", "", x)
-      x <- gsub("-", " ", x)
-      x <- gsub("[^a-zA-Z]", " ", x)
-
-
       # Lemmatize if requested
       if (lemmatize) {
         text <- textstem::lemmatize_strings(x)
@@ -60,6 +55,7 @@ clean_2cols <- function(df, col1, col2, clean = TRUE, omit_stops = TRUE, lemmati
       }
 
       # Trim whitespace and ensure single word
+      x <- gsub("[^a-zA-Z]", " ", x)
       text <- trimws(x)
       if (text == "" || length(unlist(strsplit(x, "\\s+"))) > 1) {
         return(NA_character_)

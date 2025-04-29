@@ -46,10 +46,6 @@ clean_unordered4matrix <- function(df, wordcol, clean = TRUE, omit_stops = TRUE,
 
     # Apply cleaning pipeline
     x <- tolower(x)
-    x <- gsub("`", "'", x)
-    x <- gsub("'s", "", x)
-    x <- gsub("-", " ", x)
-    x <- gsub("[^a-zA-Z]", " ", x)
 
     # Apply lemmatization if requested
     if (lemmatize) {
@@ -62,7 +58,7 @@ clean_unordered4matrix <- function(df, wordcol, clean = TRUE, omit_stops = TRUE,
       x <- tm::removeWords(x, omissions$word)
     }
 
-    # Update cleaned text
+    x <- gsub("[^a-zA-Z]", " ", x)
     df$word_clean <- x
   }
 

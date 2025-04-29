@@ -41,9 +41,6 @@ clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmat
     # Apply cleaning pipeline
     x <- tolower(x)
     x <- gsub("`", "'", x)
-    x <- gsub("'s", "", x)
-    x <- gsub("-", " ", x)
-    x <- gsub("[^a-zA-Z]", " ", x)
 
     # Apply lemmatization if requested
     if (lemmatize) {
@@ -56,7 +53,7 @@ clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmat
       x <- tm::removeWords(x, omissions$word)
     }
 
-    # Update word_clean with cleaned version
+    x <- gsub("[^a-zA-Z]", " ", x) #omit non-alphabetic chars
     df$word_clean <- x
   }
 

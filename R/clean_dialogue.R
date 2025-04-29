@@ -44,9 +44,6 @@ clean_dialogue <- function(df, wordcol, whotalks, clean=TRUE, omit_stops=TRUE, l
     # Apply cleaning operations only if clean=TRUE
     x <- tolower(x)
     x <- gsub("`", "'", x)
-    x <- gsub("'s", "", x)
-    x <- gsub("-", " ", x)
-    x <- gsub("[^a-zA-Z]", " ", x)
 
     # Apply lemmatization if requested
     if (lemmatize) {
@@ -58,7 +55,7 @@ clean_dialogue <- function(df, wordcol, whotalks, clean=TRUE, omit_stops=TRUE, l
       x <- tm::removeWords(x, omissions$word) # removes stopwords indexing custom list
     }
   }
-
+  x <- gsub("[^a-zA-Z]", " ", x)
   df$word_clean <- x
 
   # Split multi-word strings into separate rows while maintaining ID_Orig and talker
