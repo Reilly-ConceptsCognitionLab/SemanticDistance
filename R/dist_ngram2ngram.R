@@ -36,11 +36,11 @@ dist_ngram2ngram <- function(dat, ngram) {
   # Create unique row identifier and prepare data
   dat <- dat %>%
     dplyr::mutate(
-      row_id_glo = seq_len(nrow(dat)),  # Unique identifier for each row
+      row_id_unique = seq_len(nrow(dat)),  # Unique identifier for each row
       id_orig = as.factor(id_orig),
       word_clean = tolower(word_clean)
     ) %>%
-    dplyr::select(row_id_glo, id_orig, word_clean)
+    dplyr::select(row_id_unique, id_orig, word_clean)
 
   # Calculate ngram groups
   n <- nrow(dat)
@@ -65,7 +65,7 @@ dist_ngram2ngram <- function(dat, ngram) {
   djoin_glow <- djoin_glow %>%
     dplyr::group_by(across(all_of(col_name))) %>%
     dplyr::summarize(
-      row_id_glo = last(row_id_glo),  # Use row_id_glo instead of id_orig
+      row_id_unique = last(row_id_unique),  # Use row_id_glo instead of id_orig
       across(where(is.numeric), ~ mean(., na.rm = TRUE)),
       .groups = 'drop'
     )
@@ -73,7 +73,7 @@ dist_ngram2ngram <- function(dat, ngram) {
   djoin_sd15 <- djoin_sd15 %>%
     dplyr::group_by(across(all_of(col_name))) %>%
     dplyr::summarize(
-      row_id_glo = last(row_id_glo),  # Use row_id_glo instead of id_orig
+      row_id_unique = last(row_id_unique),  # Use row_id_glo instead of id_orig
       across(where(is.numeric), ~ mean(., na.rm = TRUE)),
       .groups = 'drop'
     )
@@ -108,7 +108,7 @@ dist_ngram2ngram <- function(dat, ngram) {
         }
       }
     }
-    return(embed_df %>% dplyr::select(row_id_glo, all_of(cosdist_colname)))
+    return(embed_df %>% dplyr::select(row_id_unique, all_of(cosdist_colname)))
   }
 
   # Calculate distances for both embeddings
@@ -117,9 +117,8 @@ dist_ngram2ngram <- function(dat, ngram) {
 
   # Combine results using row_id_glo and remove temporary IDs
   result <- dat %>%
-    dplyr::left_join(glo_dist, by = "row_id_glo") %>%
-    dplyr::left_join(sd15_dist, by = "row_id_glo") %>%
-    dplyr::select(-row_id_glo, -id_orig)  # Remove temporary ID columns
+    dplyr::left_join(glo_dist, by = "row_id_unique") %>%
+    dplyr::left_join(sd15_dist, by = "row_id_unique")
 
   return(result)
 }

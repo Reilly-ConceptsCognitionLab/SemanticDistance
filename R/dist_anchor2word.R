@@ -35,11 +35,11 @@ dist_anchor <- function(dat, anchor_size = 10) {
   # Prepare data with unique row identifier
   dat <- dat %>%
     dplyr::mutate(
-      row_id_glo = seq_len(nrow(dat)),  # Create unique row identifier
+      row_id_unique = seq_len(nrow(dat)),  # Create unique row identifier
       id_orig = as.factor(id_orig),
       word_clean = tolower(word_clean)
     ) %>%
-    dplyr::select(row_id_glo, id_orig, word_clean)
+    dplyr::select(row_id_unique, id_orig, word_clean)
 
   # Join with embedding databases
   djoin_glow <- dplyr::left_join(dat, glowca_25, by = c("word_clean" = "word"))
@@ -67,7 +67,7 @@ dist_anchor <- function(dat, anchor_size = 10) {
       }
     )
 
-    return(embed_df %>% dplyr::select(row_id_glo, contains("CosDist")))
+    return(embed_df %>% dplyr::select(row_id_unique, contains("CosDist")))
   }
 
   # Calculate distances for both embeddings
@@ -76,9 +76,7 @@ dist_anchor <- function(dat, anchor_size = 10) {
 
   # Combine results using row_id_glo and remove temporary IDs
   result <- dat %>%
-    dplyr::left_join(glo_dist, by = "row_id_glo") %>%
-    dplyr::left_join(sd15_dist, by = "row_id_glo") %>%
-    dplyr::select(-row_id_glo, -id_orig)  # Remove temporary ID columns
-
+    dplyr::left_join(glo_dist, by = "row_id_unique") %>%
+    dplyr::left_join(sd15_dist, by = "row_id_unique")
   return(result)
 }

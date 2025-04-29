@@ -108,16 +108,13 @@ dist_dialogue_turns <- function(dat) {
   final_result <- glo_results %>%
     dplyr::full_join(sd15_results, by = "turn_count") %>%
     dplyr::left_join(
-      dat %>%
-        dplyr::group_by(turn_count) %>%
-        dplyr::summarize(
-          talker = dplyr::first(talker),
+      dat %>% dplyr::group_by(turn_count) %>%
+        dplyr::summarize(talker = dplyr::first(talker),
           n_words = dplyr::n(),
           .groups = "drop"
         ),
       by = "turn_count"
-    ) %>%
-    dplyr::select(turn_count, talker, n_words, everything())
+    ) %>% dplyr::select(turn_count, talker, n_words, everything())
 
   return(final_result)
 }

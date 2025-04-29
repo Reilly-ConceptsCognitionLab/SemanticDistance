@@ -12,12 +12,14 @@
 #' @export dist_matrix_all
 
 dist_matrix_all <- function(dat, dist_type = "embedding") {
-  # Load required packages
   if (!requireNamespace("lsa", quietly = TRUE)) {
     install.packages("lsa")
   }
   if (!requireNamespace("dplyr", quietly = TRUE)) {
     install.packages("dplyr")
+  }
+  if (!requireNamespace("magrittr", quietly = TRUE)) {
+    install.packages("magrittr")
   }
 
   # Prepare data - just get the words we need to compare

@@ -34,7 +34,7 @@ dist_ngram2word <- function(dat, ngram) {
   # Prepare working data and create unique row IDs
   dat <- dat %>%
     dplyr::mutate(
-      row_id_glo = seq_len(nrow(dat)),  # Create unique row identifier
+      row_id_unique = seq_len(nrow(dat)),  # Create unique row identifier
       word_clean = tolower(word_clean)
     )
 
@@ -113,17 +113,15 @@ dist_ngram2word <- function(dat, ngram) {
 
   # Combine results using row_id_glo instead of id_orig
   final_result <- dat %>%
-    dplyr::select(all_of(orig_cols), row_id_glo) %>%
+    dplyr::select(all_of(orig_cols), row_id_unique) %>%
     dplyr::left_join(
       result_glo %>%
-        dplyr::select(row_id_glo, word_clean, contains("CosDist"), -contains("Param_")),
+        dplyr::select(row_id_unique, word_clean, contains("CosDist"), -contains("Param_")),
       by = c("row_id_glo", "word_clean")) %>%
     dplyr::left_join(
       result_sd15 %>%
-        dplyr::select(row_id_glo, word_clean, contains("CosDist"), -contains("Param_")),
-      by = c("row_id_glo", "word_clean")) %>%
-    # Remove temporary ID columns before returning
-    dplyr::select(-row_id_glo, -id_orig)
+        dplyr::select(row_id_unique, word_clean, contains("CosDist"), -contains("Param_")),
+      by = c("row_id_unique", "word_clean"))
 
   return(final_result)
 }
