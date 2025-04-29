@@ -1,8 +1,8 @@
-#' clean_unordered
+#' clean_unordered4matrix
 #'
 #' Cleans and formats text. User specifies the dataframe and column name where target text is stored. Word order does not matter (all words shuffled later). Cleaning takes only first instance of word.
 #'
-#' @name clean_unordered
+#' @name clean_unordered4matrix
 #' @param df a dataframe with at least one target column of string data
 #' @param wordcol quoted column name storing the strings that will be cleaned and split
 #' @param clean apply cleaning functions (lowercase etc) default is TRUE
@@ -17,9 +17,9 @@
 #' @importFrom textstem lemmatize_strings
 #' @importFrom tidyr separate_rows
 #' @importFrom utils install.packages
-#' @export clean_unordered
+#' @export clean_unordered4matrix
 
-clean_unordered <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE) {
+clean_unordered4matrix <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE) {
   if (!requireNamespace("textclean", quietly = TRUE)) {
     install.packages("textclean")
   }

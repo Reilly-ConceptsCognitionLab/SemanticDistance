@@ -11,7 +11,6 @@
 #' @param lemmatize T/F user wishes to lemmatize each string (default is TRUE)
 #' @return a dataframe
 #' @importFrom magrittr %>%
-#' @importFrom textclean replace_contraction
 #' @importFrom tm removeWords
 #' @importFrom textstem lemmatize_strings
 #' @importFrom utils install.packages
@@ -35,42 +34,38 @@ clean_2cols <- function(df, col1, col2, clean = TRUE, omit_stops = TRUE, lemmati
   df$id_orig <- factor(seq_len(nrow(df)))
 
   # Define cleaning operations function
-  clean_text <- function(text, clean_flag = TRUE) {
+  clean_text <- function(x, clean_flag = TRUE) {
     if (clean_flag) {
       # Check for multiple words
-      if (length(unlist(strsplit(text, "\\s+"))) > 1) {
+      if (length(unlist(strsplit(x, "\\s+"))) > 1) {
         return(NA_character_)
       }
 
       # Apply cleaning pipeline
-      text <- tolower(text)
-      text <- gsub("`", "'", text)
-      text <- gsub("can't", "can not", text)
-      text <- gsub("won't", "will not", text)
-      text <- gsub("gonna", "going to", text)
-      text <- gsub("there'd", "there would", text)
-      text <- gsub("don't", "do not", text)
-      text <- textclean::replace_contraction(text)
-      text <- gsub("-", " ", text)
-      text <- gsub("[^a-zA-Z]", " ", text)
+      x <- tolower(x)
+      x <- gsub("`", "'", x)
+      x <- gsub("'s", "", X)
+      x <- gsub("-", " ", x)
+      x <- gsub("[^a-zA-Z]", " ", x)
+
 
       # Lemmatize if requested
       if (lemmatize) {
-        text <- textstem::lemmatize_strings(text)
+        text <- textstem::lemmatize_strings(x)
       }
 
       # Remove stopwords if requested
       if (omit_stops) {
-        text <- tm::removeWords(text, reillylab_stopwords25$word)
+        text <- tm::removeWords(x, reillylab_stopwords25$word)
       }
 
       # Trim whitespace and ensure single word
-      text <- trimws(text)
-      if (text == "" || length(unlist(strsplit(text, "\\s+"))) > 1) {
+      text <- trimws(x)
+      if (text == "" || length(unlist(strsplit(x, "\\s+"))) > 1) {
         return(NA_character_)
       }
     }
-    return(text)
+    return(x)
   }
 
   # Apply processing to both columns

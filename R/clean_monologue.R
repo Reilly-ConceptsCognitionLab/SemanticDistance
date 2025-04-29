@@ -10,7 +10,6 @@
 #' @param lemmatize option for lemmatizing strings default is TRUE
 #' @return a dataframe
 #' @importFrom magrittr %>%
-#' @importFrom textclean replace_contraction
 #' @importFrom tm removeWords
 #' @importFrom textstem lemmatize_strings
 #' @importFrom tidyr separate_rows
@@ -42,12 +41,7 @@ clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmat
     # Apply cleaning pipeline
     x <- tolower(x)
     x <- gsub("`", "'", x)
-    x <- gsub("can't", "can not", x)
-    x <- gsub("won't", "will not", x)
-    x <- gsub("gonna", "going to", x)
-    x <- gsub("there'd", "there would", x)
-    x <- gsub("don't", "do not", x)
-    x <- textclean::replace_contraction(x)
+    x <- gsub("'s", "", X)
     x <- gsub("-", " ", x)
     x <- gsub("[^a-zA-Z]", " ", x)
 
@@ -66,7 +60,7 @@ clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmat
     df$word_clean <- x
   }
 
-  # Always split multi-word strings (applies to both cleaned and original text)
+  # Split multi-word strings into separate rows while maintaining ID_Orig and talker
   df <- tidyr::separate_rows(df, word_clean, sep = "\\s+")
 
   return(df)

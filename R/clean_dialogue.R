@@ -11,7 +11,6 @@
 #' @param lemmatize T/F user wishes to lemmatize each string (default is TRUE)
 #' @return a dataframe
 #' @importFrom magrittr %>%
-#' @importFrom textclean replace_contraction
 #' @importFrom tm removeWords
 #' @importFrom textstem lemmatize_strings
 #' @importFrom tidyr separate_rows
@@ -43,17 +42,11 @@ clean_dialogue <- function(df, wordcol, whotalks, clean=TRUE, omit_stops=TRUE, l
 
   if (clean) {
     # Apply cleaning operations only if clean=TRUE
-    x <- tolower(x) # to lower
-    x <- gsub("`", "'", x)  # replaces tick marks with apostrophe for contractions
-    x <- gsub("can't", "can not", x)
-    x <- gsub("won't", "will not", x)
-    x <- gsub("gonna", "going to", x)
-    x <- gsub("there'd", "there would", x)
-    x <- gsub("don't", "do not", x)
-    x <- textclean::replace_contraction(x) # replace contractions
-    x <- gsub("-", " ", x) # replace all hyphens with spaces
-    x <- gsub("[^a-zA-Z]", " ", x) # omit non-alphabetic characters
-    x <- tm::removeWords(x, omissions$word) # removes stopwords indexing custom list
+    x <- tolower(x)
+    x <- gsub("`", "'", x)
+    x <- gsub("'s", "", X)
+    x <- gsub("-", " ", x)
+    x <- gsub("[^a-zA-Z]", " ", x)
 
     # Apply lemmatization if requested
     if (lemmatize) {
