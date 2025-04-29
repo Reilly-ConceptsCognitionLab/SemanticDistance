@@ -36,7 +36,7 @@ clean_dialogue <- function(df, wordcol, whotalks, clean=TRUE, omit_stops=TRUE, l
 
   omissions <- reillylab_stopwords25
   df$id_orig <- factor(seq_len(nrow(df)))
-  df$word_clean <- tolower(df$word_clean)
+  df$word_clean <- tolower(df[[wordcol]])  # Fixed: using wordcol parameter
 
   # Create talker factor variable from whotalks column
   df$talker <- factor(df[[whotalks]])
@@ -55,9 +55,7 @@ clean_dialogue <- function(df, wordcol, whotalks, clean=TRUE, omit_stops=TRUE, l
     # Apply cleaning pipeline
     x <- gsub("`", "'", x)
     x <- gsub("[^a-zA-Z']", " ", x) # omit non-alphabetic chars (keeping apostrophes)
-
-    # Remove singleton letters (added cleaning step)
-    x <- gsub("\\b[a-z]\\b", "", x)
+    x <- gsub("\\b[a-z]\\b", "", x) # omit stray singleton letters
 
     # Apply lemmatization if requested
     if (lemmatize) {
@@ -72,7 +70,7 @@ clean_dialogue <- function(df, wordcol, whotalks, clean=TRUE, omit_stops=TRUE, l
 
   # Remove any empty strings that might have been created
   df <- df[df$word_clean != "", ]
-}
+
   # Create turncount variable when talker level changes
   df$turn_count <- cumsum(c(1, diff(as.numeric(df$talker)) != 0))
   rownames(df) <- NULL

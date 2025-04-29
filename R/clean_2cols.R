@@ -17,6 +17,7 @@
 #' @export clean_2cols
 
 clean_2cols <- function(df, col1, col2, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE) {
+  # Check and install required packages
   if (!requireNamespace("textclean", quietly = TRUE)) {
     install.packages("textclean")
   }
@@ -35,38 +36,41 @@ clean_2cols <- function(df, col1, col2, clean = TRUE, omit_stops = TRUE, lemmati
 
   # Define cleaning operations function
   clean_text <- function(x, clean_flag = TRUE) {
-    if (clean_flag) {
-      # Check for multiple words
-      if (length(unlist(strsplit(x, "\\s+"))) > 1) {
-        return(NA_character_)
-      }
+    # Convert to lowercase first
+    x <- tolower(x)
 
+    # Remove stopwords if requested (now before cleaning)
+    if (omit_stops) {
+      x <- tm::removeWords(x, reillylab_stopwords25$word)
+    }
+
+    if (clean_flag) {
       # Apply cleaning pipeline
-      x <- tolower(x)
       x <- gsub("`", "'", x)
+      x <- gsub("[^a-zA-Z']", " ", x) # omit non-alphabetic chars (keeping apostrophes)
+      x <- gsub("\\b[a-z]\\b", "", x) # remove single letters
+
       # Lemmatize if requested
       if (lemmatize) {
-        text <- textstem::lemmatize_strings(x)
+        x <- textstem::lemmatize_strings(x)
       }
 
-      # Remove stopwords if requested
-      if (omit_stops) {
-        text <- tm::removeWords(x, reillylab_stopwords25$word)
-      }
+      # Final cleanup
+      x <- gsub("\\s+", " ", x) # collapse multiple spaces
+      x <- trimws(x) # trim whitespace
 
-      # Trim whitespace and ensure single word
-      x <- gsub("[^a-zA-Z]", " ", x)
-      text <- trimws(x)
-      if (text == "" || length(unlist(strsplit(x, "\\s+"))) > 1) {
+      # Return NA if empty or multiple words
+      if (x == "" || length(unlist(strsplit(x, "\\s+"))) > 1) {
         return(NA_character_)
       }
     }
+
     return(x)
   }
 
   # Apply processing to both columns
-  df[[paste0(col1, "_clean1")]] <- sapply(df[[col1]], clean_text, clean_flag = clean)
-  df[[paste0(col2, "_clean2")]] <- sapply(df[[col2]], clean_text, clean_flag = clean)
+  df[[paste0(col1, "_clean")]] <- sapply(df[[col1]], clean_text, clean_flag = clean)
+  df[[paste0(col2, "_clean")]] <- sapply(df[[col2]], clean_text, clean_flag = clean)
 
   return(df)
 }
