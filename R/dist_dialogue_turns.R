@@ -33,9 +33,6 @@ dist_dialogue_turns <- function(dat) {
     install.packages("purrr")
   }
 
-  library(dplyr)
-  library(purrr)
-
   # Check if required columns exist in input data
   required_cols <- c("id_orig", "talker", "turn_count", "word_clean")
   if (!all(required_cols %in% names(dat))) {
@@ -43,70 +40,79 @@ dist_dialogue_turns <- function(dat) {
     stop(paste("Missing required columns:", paste(missing_cols, collapse = ", ")))
   }
 
-  # Prepare data
+  # Prepare data with unique row identifier
   dat <- dat %>%
-    dplyr::select(id_orig, talker, turn_count, word_clean) %>%
     dplyr::mutate(
+      row_id = seq_len(nrow(dat)),  # Add unique row identifier
       word_clean = tolower(word_clean),
       talker = as.factor(talker),
-      turn_count = as.integer(turn_count)  # Keep as integer for ordering
-    )
+      turn_count = as.integer(turn_count)
+    ) %>%
+    dplyr::select(row_id, id_orig, talker, turn_count, word_clean)
 
-  # Join with embedding databases (assuming these exist in global environment)
+  # Join with embedding databases
   djoin_glo <- dplyr::left_join(dat, glowca_25, by = c("word_clean" = "word"))
   djoin_sd15 <- dplyr::left_join(dat, SD15_2025, by = c("word_clean" = "word"))
 
-  # Function to compute average vectors and consecutive turn distances
-  process_embeddings <- function(embed_df, prefix) {
-    # Get numeric columns (embedding dimensions), excluding grouping vars
-    numeric_cols <- setdiff(
-      names(embed_df)[sapply(embed_df, is.numeric)],
-      c("turn_count", "id_orig")  # Exclude non-embedding numeric columns
-    )
+  # Function to compute turn-level vectors and distances
+  process_turn_embeddings <- function(embed_df, prefix) {
+    # Get embedding dimensions
+    numeric_cols <- names(embed_df)[sapply(embed_df, is.numeric)]
+    numeric_cols <- setdiff(numeric_cols, c("row_id", "id_orig", "turn_count"))
 
-    # Check if we have any numeric columns to process
     if (length(numeric_cols) == 0) {
-      stop(paste("No numeric columns found in", prefix, "embedding data"))
+      stop(paste("No numeric embedding columns found in", prefix, "data"))
     }
 
-    # Compute average vector for each turn_count
-    avg_vectors <- embed_df %>%
+    # Compute mean vector for each turn
+    turn_vectors <- embed_df %>%
       dplyr::group_by(turn_count) %>%
       dplyr::summarize(
-        dplyr::across(all_of(numeric_cols), ~mean(., na.rm = TRUE)),
+        dplyr::across(all_of(numeric_cols), ~ mean(., na.rm = TRUE)),
         .groups = "drop"
       ) %>%
-      dplyr::arrange(turn_count)  # Ensure proper ordering
+      dplyr::arrange(turn_count)
 
-    # Calculate distances between consecutive turns
-    avg_vectors <- avg_vectors %>%
+    # Calculate cosine distances between consecutive turns
+    turn_vectors <- turn_vectors %>%
       dplyr::mutate(
-        next_turn_vector = purrr::map(
-          dplyr::lead(dplyr::across(all_of(numeric_cols))),  # Get next turn's vector
-          ~ if (all(is.na(.))) NA else .
-        ),
-        distance_to_next = purrr::map2_dbl(
-          dplyr::across(all_of(numeric_cols)) %>% purrr::transpose(),
-          next_turn_vector,
+        "{prefix}_cosdist" := purrr::map_dbl(
+          1:n(),
           ~ {
-            if (all(is.na(.y))) return(NA)
-            1 - lsa::cosine(unlist(.x), unlist(.y))
-          }
-        )
-      ) %>%
-      dplyr::select(-next_turn_vector) %>%  # Remove temporary column
-      dplyr::rename_with(~paste0(prefix, "_", .), -turn_count)
+            if (. == n()) return(NA)  # No next turn for last one
+            vec_current <- unlist(turn_vectors[., numeric_cols])
+            vec_next <- unlist(turn_vectors[.+1, numeric_cols])
 
-    return(avg_vectors)
+            if (any(is.na(vec_current)) return(NA)
+                if (any(is.na(vec_next))) return(NA)
+
+                1 - lsa::cosine(vec_current, vec_next)
+          }
+            )
+        ) %>%
+          dplyr::select(turn_count, contains("cosdist"))
+
+        return(turn_vectors)
   }
 
-
   # Process both embeddings
-  glo_results <- process_embeddings(djoin_glo, "glo")
-  sd15_results <- process_embeddings(djoin_sd15, "sd15")
+  glo_results <- process_turn_embeddings(djoin_glo, "glo")
+  sd15_results <- process_turn_embeddings(djoin_sd15, "sd15")
 
-  # Combine results
-  final_result <- dplyr::full_join(glo_results, sd15_results, by = "turn_count")
+  # Combine results and add original metadata
+  final_result <- glo_results %>%
+    dplyr::full_join(sd15_results, by = "turn_count") %>%
+    dplyr::left_join(
+      dat %>%
+        dplyr::group_by(turn_count) %>%
+        dplyr::summarize(
+          talker = dplyr::first(talker),
+          n_words = dplyr::n(),
+          .groups = "drop"
+        ),
+      by = "turn_count"
+    ) %>%
+    dplyr::select(turn_count, talker, n_words, everything())
 
   return(final_result)
 }

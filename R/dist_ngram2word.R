@@ -31,11 +31,14 @@ dist_ngram2word <- function(dat, ngram) {
   # Store original columns to preserve them in output
   orig_cols <- names(dat)
 
-  # Prepare working data
-  dat <- dat %>% dplyr::mutate(id_orig = as.factor(id_orig),
-                               word_clean = tolower(word_clean))
+  # Prepare working data and create unique row IDs
+  dat <- dat %>%
+    dplyr::mutate(
+      row_id_glo = seq_len(nrow(dat)),  # Create unique row identifier
+      word_clean = tolower(word_clean)
+    )
 
-  # Join with lookup databases
+  # Join with lookup databases using row_id_glo
   djoin_glo <- left_join(dat, glowca_25, by = c("word_clean" = "word"))
   djoin_sd15 <- left_join(dat, SD15_2025, by = c("word_clean" = "word"))
 
@@ -63,7 +66,7 @@ dist_ngram2word <- function(dat, ngram) {
   param_cols_glo <- grep("Param_", names(djoin_glo), value = TRUE, ignore.case = TRUE)
   param_cols_sd15 <- grep("Param_", names(djoin_sd15), value = TRUE, ignore.case = TRUE)
 
-  # Compute cosine distances
+  # Compute cosine distances (unchanged)
   compute_cosdist <- function(data, param_cols, result_col) {
     if (length(param_cols) == 0) {
       warning("No parameter columns found for cosine distance calculation")
@@ -108,16 +111,19 @@ dist_ngram2word <- function(dat, ngram) {
   result_glo <- compute_cosdist(djoin_glo, param_cols_glo, cosdist_colname_glo)
   result_sd15 <- compute_cosdist(djoin_sd15, param_cols_sd15, cosdist_colname_sd15)
 
-  # Combine results while excluding Param_ columns
-  final_result <- dat %>% dplyr::select(all_of(orig_cols)) %>%
+  # Combine results using row_id_glo instead of id_orig
+  final_result <- dat %>%
+    dplyr::select(all_of(orig_cols), row_id_glo) %>%
     dplyr::left_join(
       result_glo %>%
-        dplyr::select(id_orig, word_clean, contains("CosDist"), -contains("Param_", ignore.case = TRUE)),
-      by = c("id_orig", "word_clean")) %>%
+        dplyr::select(row_id_glo, word_clean, contains("CosDist"), -contains("Param_")),
+      by = c("row_id_glo", "word_clean")) %>%
     dplyr::left_join(
       result_sd15 %>%
-        dplyr::select(id_orig, word_clean, contains("CosDist"), -contains("Param_", ignore.case = TRUE)),
-      by = c("id_orig", "word_clean"))
+        dplyr::select(row_id_glo, word_clean, contains("CosDist"), -contains("Param_")),
+      by = c("row_id_glo", "word_clean")) %>%
+    # Remove temporary ID columns before returning
+    dplyr::select(-row_id_glo, -id_orig)
 
   return(final_result)
 }

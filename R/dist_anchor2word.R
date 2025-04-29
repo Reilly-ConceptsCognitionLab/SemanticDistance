@@ -32,13 +32,14 @@ dist_anchor <- function(dat, anchor_size = 10) {
     install.packages("magrittr")
   }
 
-  # Prepare data
+  # Prepare data with unique row identifier
   dat <- dat %>%
-    dplyr::select(id_orig, word_clean) %>%
     dplyr::mutate(
+      row_id_glo = seq_len(nrow(dat)),  # Create unique row identifier
       id_orig = as.factor(id_orig),
       word_clean = tolower(word_clean)
-    )
+    ) %>%
+    dplyr::select(row_id_glo, id_orig, word_clean)
 
   # Join with embedding databases
   djoin_glow <- dplyr::left_join(dat, glowca_25, by = c("word_clean" = "word"))
@@ -56,7 +57,8 @@ dist_anchor <- function(dat, anchor_size = 10) {
       colMeans(na.rm = TRUE)
 
     # Calculate cosine distance to anchor for each word
-    embed_df[[paste0("CosDist_Anchor_", prefix)]] <- apply(
+    dist_colname <- paste0("CosDist_Anchor_", prefix)
+    embed_df[[dist_colname]] <- apply(
       embed_df[, numeric_cols],
       1,
       function(x) {
@@ -65,17 +67,18 @@ dist_anchor <- function(dat, anchor_size = 10) {
       }
     )
 
-    return(embed_df %>% dplyr::select(id_orig, contains("CosDist")))
+    return(embed_df %>% dplyr::select(row_id_glo, contains("CosDist")))
   }
 
   # Calculate distances for both embeddings
   glo_dist <- calculate_anchor_dist(djoin_glow, "GLO")
   sd15_dist <- calculate_anchor_dist(djoin_sd15, "SD15")
 
-  # Combine results with original data
+  # Combine results using row_id_glo and remove temporary IDs
   result <- dat %>%
-    dplyr::left_join(glo_dist, by = "id_orig") %>%
-    dplyr::left_join(sd15_dist, by = "id_orig")
+    dplyr::left_join(glo_dist, by = "row_id_glo") %>%
+    dplyr::left_join(sd15_dist, by = "row_id_glo") %>%
+    dplyr::select(-row_id_glo, -id_orig)  # Remove temporary ID columns
 
   return(result)
 }
