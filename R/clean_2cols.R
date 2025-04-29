@@ -44,7 +44,7 @@ clean_2cols <- function(df, col1, col2, clean = TRUE, omit_stops = TRUE, lemmati
       # Apply cleaning pipeline
       x <- tolower(x)
       x <- gsub("`", "'", x)
-      x <- gsub("'s", "", X)
+      x <- gsub("'s", "", x)
       x <- gsub("-", " ", x)
       x <- gsub("[^a-zA-Z]", " ", x)
 

@@ -44,7 +44,7 @@ clean_dialogue <- function(df, wordcol, whotalks, clean=TRUE, omit_stops=TRUE, l
     # Apply cleaning operations only if clean=TRUE
     x <- tolower(x)
     x <- gsub("`", "'", x)
-    x <- gsub("'s", "", X)
+    x <- gsub("'s", "", x)
     x <- gsub("-", " ", x)
     x <- gsub("[^a-zA-Z]", " ", x)
 

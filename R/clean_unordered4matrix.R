@@ -10,7 +10,6 @@
 #' @param lemmatize option for lemmatizing strings default is TRUE
 #' @return a dataframe
 #' @importFrom magrittr %>%
-#' @importFrom textclean replace_contraction
 #' @importFrom tm removeWords
 #' @importFrom dplyr ungroup
 #' @importFrom dplyr distinct
@@ -48,12 +47,7 @@ clean_unordered4matrix <- function(df, wordcol, clean = TRUE, omit_stops = TRUE,
     # Apply cleaning pipeline
     x <- tolower(x)
     x <- gsub("`", "'", x)
-    x <- gsub("can't", "can not", x)
-    x <- gsub("won't", "will not", x)
-    x <- gsub("gonna", "going to", x)
-    x <- gsub("there'd", "there would", x)
-    x <- gsub("don't", "do not", x)
-    x <- textclean::replace_contraction(x)
+    x <- gsub("'s", "", x)
     x <- gsub("-", " ", x)
     x <- gsub("[^a-zA-Z]", " ", x)
 

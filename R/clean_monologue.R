@@ -41,7 +41,7 @@ clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmat
     # Apply cleaning pipeline
     x <- tolower(x)
     x <- gsub("`", "'", x)
-    x <- gsub("'s", "", X)
+    x <- gsub("'s", "", x)
     x <- gsub("-", " ", x)
     x <- gsub("[^a-zA-Z]", " ", x)
 
