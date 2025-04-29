@@ -79,20 +79,25 @@ dist_dialogue_turns <- function(dat) {
         "{prefix}_cosdist" := purrr::map_dbl(
           1:n(),
           ~ {
-            if (. == n()) return(NA)  # No next turn for last one
-            vec_current <- unlist(turn_vectors[., numeric_cols])
-            vec_next <- unlist(turn_vectors[.+1, numeric_cols])
+            if (. == n()) return(NA_real_)  # No next turn for last one
+            vec_current <- as.numeric(turn_vectors[., numeric_cols, drop = TRUE])
+            vec_next <- as.numeric(turn_vectors[.+1, numeric_cols, drop = TRUE])
 
-            if (any(is.na(vec_current)) return(NA)
-                if (any(is.na(vec_next))) return(NA)
+            # More robust NA checking
+            if (any(is.na(vec_current))) return(NA_real_)
+            if (any(is.na(vec_next))) return(NA_real_)
+            if (length(vec_current) != length(vec_next)) return(NA_real_)
 
-                1 - lsa::cosine(vec_current, vec_next)
+            # Safe cosine calculation with error handling
+            tryCatch({
+              1 - lsa::cosine(vec_current, vec_next)
+            }, error = function(e) NA_real_)
           }
-            )
-        ) %>%
-          dplyr::select(turn_count, contains("cosdist"))
+        )
+      ) %>%
+      dplyr::select(turn_count, contains("cosdist"))
 
-        return(turn_vectors)
+    return(turn_vectors)
   }
 
   # Process both embeddings
