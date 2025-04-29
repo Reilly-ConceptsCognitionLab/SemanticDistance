@@ -53,8 +53,8 @@ clean_unordered4matrix <- function(df, wordcol, clean = TRUE, omit_stops = TRUE,
   if (clean) {
     x <- df$word_clean  # Start with the lowercase (and potentially stopword-free) version
     x <- gsub("`", "'", x)
-    x <- gsub("[^a-zA-Z']", " ", x) # omit non-alphabetic chars (keeping apostrophes)
-    x <- gsub("\\b[a-z]\\b", "", x)
+    x <- gsub("[^a-zA-Z']", "", x) # omit non-alphabetic chars (keeping apostrophes)
+    x <- gsub("\\b[a-z]\\b", "", x) # removes alphabetic singletons
 
     # Apply lemmatization if requested
     if (lemmatize) {
@@ -66,9 +66,6 @@ clean_unordered4matrix <- function(df, wordcol, clean = TRUE, omit_stops = TRUE,
 
   # Split multi-word strings into separate rows while maintaining ID_Orig and talker
   df <- tidyr::separate_rows(df, word_clean, sep = "\\s+")
-
-  # Remove any empty strings that might have been created
-  df <- df[df$word_clean != "", ]
 
   # Split into one word per row while preserving id_orig
   df <- tidyr::separate_rows(df, word_clean, sep = "\\s+")

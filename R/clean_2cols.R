@@ -47,8 +47,8 @@ clean_2cols <- function(df, col1, col2, clean = TRUE, omit_stops = TRUE, lemmati
     if (clean_flag) {
       # Apply cleaning pipeline
       x <- gsub("`", "'", x)
-      x <- gsub("[^a-zA-Z']", " ", x) # omit non-alphabetic chars (keeping apostrophes)
-      x <- gsub("\\b[a-z]\\b", "", x) # remove single letters
+      x <- gsub("[^a-zA-Z']", "", x) # omit non-alphabetic chars (keeping apostrophes)
+      x <- gsub("\\b[a-z]\\b", "", x) # removes alphabetic singletons
 
       # Lemmatize if requested
       if (lemmatize) {

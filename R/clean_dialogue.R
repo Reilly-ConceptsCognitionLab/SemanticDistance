@@ -68,9 +68,6 @@ clean_dialogue <- function(df, wordcol, whotalks, clean=TRUE, omit_stops=TRUE, l
   # Split multi-word strings into separate rows while maintaining ID_Orig and talker
   df <- tidyr::separate_rows(df, word_clean, sep = "\\s+")
 
-  # Remove any empty strings that might have been created
-  df <- df[df$word_clean != "", ]
-
   # Create turncount variable when talker level changes
   df$turn_count <- cumsum(c(1, diff(as.numeric(df$talker)) != 0))
   rownames(df) <- NULL

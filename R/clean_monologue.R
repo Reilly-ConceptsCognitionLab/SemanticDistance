@@ -67,8 +67,8 @@ clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmat
   # Split multi-word strings into separate rows while maintaining ID_Orig and talker
   df <- tidyr::separate_rows(df, word_clean, sep = "\\s+")
 
-  # Remove any empty strings that might have been created
-  df <- df[df$word_clean != "", ]
+  # Replace empty strings with NA instead of removing rows
+  df$word_clean[df$word_clean == ""] <- NA
 
   return(df)
 }
