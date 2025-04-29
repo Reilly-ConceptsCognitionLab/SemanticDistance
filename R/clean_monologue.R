@@ -21,44 +21,54 @@ clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmat
     install.packages("tm")
   }
   if (!requireNamespace("textstem", quietly = TRUE)) {
-    install.packages("tm")
+    install.packages("textstem")
   }
   if (!requireNamespace("tidyr", quietly = TRUE)) {
-    install.packages("tm")
+    install.packages("tidyr")
   }
   if (!requireNamespace("textclean", quietly = TRUE)) {
-    install.packages("tm")
+    install.packages("textclean")
+  }
+  if (!requireNamespace("magrittr", quietly = TRUE)) {
+    install.packages("magrittr")
   }
 
   df$id_orig <- factor(seq_len(nrow(df)))
-  # Copy original column to word_clean (base case)
   df$word_clean <- df[[wordcol]]
+
+  # Obligatorily transform to lowercase first
+  df$word_clean <- tolower(df$word_clean)
+
+  # Apply stopword omission BEFORE cleaning (if requested)
+  if (omit_stops) {
+    omissions <- reillylab_stopwords25  # Load stopwords
+    df$word_clean <- tm::removeWords(df$word_clean, omissions$word)
+  }
 
   # Apply cleaning operations only if clean=TRUE
   if (clean) {
-    x <- df[[wordcol]]
+    x <- df$word_clean  # Start with the lowercase (and potentially stopword-free) version
 
     # Apply cleaning pipeline
-    x <- tolower(x)
     x <- gsub("`", "'", x)
+    x <- gsub("[^a-zA-Z']", " ", x) # omit non-alphabetic chars (keeping apostrophes)
+
+    # Remove singleton letters (added cleaning step)
+    x <- gsub("\\b[a-z]\\b", "", x)
 
     # Apply lemmatization if requested
     if (lemmatize) {
       x <- textstem::lemmatize_strings(x)
     }
 
-    # Remove stopwords if requested
-    if (omit_stops) {
-      omissions <- reillylab_stopwords25  # Load stopwords only when needed
-      x <- tm::removeWords(x, omissions$word)
-    }
-
-    x <- gsub("[^a-zA-Z]", " ", x) #omit non-alphabetic chars
     df$word_clean <- x
   }
 
   # Split multi-word strings into separate rows while maintaining ID_Orig and talker
   df <- tidyr::separate_rows(df, word_clean, sep = "\\s+")
+
+  # Remove any empty strings that might have been created
+  df <- df[df$word_clean != "", ]
 
   return(df)
 }

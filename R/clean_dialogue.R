@@ -28,39 +28,51 @@ clean_dialogue <- function(df, wordcol, whotalks, clean=TRUE, omit_stops=TRUE, l
     install.packages("tm")
   }
   if (!requireNamespace("tidyr", quietly = TRUE)) {
-    install.packages("tm")
+    install.packages("tidyr")
+  }
+  if (!requireNamespace("magrittr", quietly = TRUE)) {
+    install.packages("magrittr")
   }
 
   omissions <- reillylab_stopwords25
   df$id_orig <- factor(seq_len(nrow(df)))
+  df$word_clean <- tolower(df$word_clean)
 
   # Create talker factor variable from whotalks column
   df$talker <- factor(df[[whotalks]])
-
-  # Extract the specified text column
   x <- df[[wordcol]]
 
+  # Apply stopword omission BEFORE cleaning (if requested)
+  if (omit_stops) {
+    omissions <- reillylab_stopwords25  # Load stopwords
+    df$word_clean <- tm::removeWords(df$word_clean, omissions$word)
+  }
+
+  # Apply cleaning operations only if clean=TRUE
   if (clean) {
-    # Apply cleaning operations only if clean=TRUE
-    x <- tolower(x)
+    x <- df$word_clean  # Start with the lowercase (and potentially stopword-free) version
+
+    # Apply cleaning pipeline
     x <- gsub("`", "'", x)
+    x <- gsub("[^a-zA-Z']", " ", x) # omit non-alphabetic chars (keeping apostrophes)
+
+    # Remove singleton letters (added cleaning step)
+    x <- gsub("\\b[a-z]\\b", "", x)
 
     # Apply lemmatization if requested
     if (lemmatize) {
       x <- textstem::lemmatize_strings(x)
     }
 
-    # Omit stopwords default is TRUE
-    if (omit_stops) {
-      x <- tm::removeWords(x, omissions$word) # removes stopwords indexing custom list
-    }
+    df$word_clean <- x
   }
-  x <- gsub("[^a-zA-Z]", " ", x)
-  df$word_clean <- x
 
   # Split multi-word strings into separate rows while maintaining ID_Orig and talker
   df <- tidyr::separate_rows(df, word_clean, sep = "\\s+")
 
+  # Remove any empty strings that might have been created
+  df <- df[df$word_clean != "", ]
+}
   # Create turncount variable when talker level changes
   df$turn_count <- cumsum(c(1, diff(as.numeric(df$talker)) != 0))
   rownames(df) <- NULL

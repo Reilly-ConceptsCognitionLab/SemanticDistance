@@ -40,27 +40,35 @@ clean_unordered4matrix <- function(df, wordcol, clean = TRUE, omit_stops = TRUE,
   # Initialize word_clean with original values
   df$word_clean <- df[[wordcol]]
 
-  # Only perform cleaning if clean=TRUE
-  if (clean) {
-    x <- df[[wordcol]]
+  # Obligatorily transform to lowercase first
+  df$word_clean <- tolower(df$word_clean)
 
-    # Apply cleaning pipeline
-    x <- tolower(x)
+  # Apply stopword omission BEFORE cleaning (if requested)
+  if (omit_stops) {
+    omissions <- reillylab_stopwords25  # Load stopwords
+    df$word_clean <- tm::removeWords(df$word_clean, omissions$word)
+  }
+
+  # Apply cleaning pipeline only if clean=TRUE
+  if (clean) {
+    x <- df$word_clean  # Start with the lowercase (and potentially stopword-free) version
+    x <- gsub("`", "'", x)
+    x <- gsub("[^a-zA-Z']", " ", x) # omit non-alphabetic chars (keeping apostrophes)
+    x <- gsub("\\b[a-z]\\b", "", x)
 
     # Apply lemmatization if requested
     if (lemmatize) {
       x <- textstem::lemmatize_strings(x)
     }
 
-    # Remove stopwords if requested
-    if (omit_stops) {
-      omissions <- reillylab_stopwords25
-      x <- tm::removeWords(x, omissions$word)
-    }
-
-    x <- gsub("[^a-zA-Z]", " ", x)
     df$word_clean <- x
   }
+
+  # Split multi-word strings into separate rows while maintaining ID_Orig and talker
+  df <- tidyr::separate_rows(df, word_clean, sep = "\\s+")
+
+  # Remove any empty strings that might have been created
+  df <- df[df$word_clean != "", ]
 
   # Split into one word per row while preserving id_orig
   df <- tidyr::separate_rows(df, word_clean, sep = "\\s+")
