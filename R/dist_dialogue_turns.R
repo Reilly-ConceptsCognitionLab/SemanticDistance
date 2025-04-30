@@ -52,7 +52,7 @@ dist_dialogue_turns <- function(dat) {
 
   # Join with embedding databases
   djoin_glo <- dplyr::left_join(dat, glowca_25, by = c("word_clean" = "word"))
-  djoin_sd15 <- dplyr::left_join(dat, SD15_2025, by = c("word_clean" = "word"))
+  djoin_sd15 <- dplyr::left_join(dat, SD15_2025_complete, by = c("word_clean" = "word"))
 
   # Function to compute turn-level vectors and distances
   process_turn_embeddings <- function(embed_df, prefix) {

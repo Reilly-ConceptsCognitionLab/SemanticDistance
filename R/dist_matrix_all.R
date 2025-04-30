@@ -30,7 +30,7 @@ dist_matrix_all <- function(dat, dist_type = "embedding") {
     embeddings <- dplyr::left_join(data.frame(word = words), glowca_25, by = "word")
   } else if (tolower(dist_type) == "sd15") {
     # Join with SD15 embeddings
-    embeddings <- dplyr::left_join(data.frame(word = words), SD15_2025, by = "word")
+    embeddings <- dplyr::left_join(data.frame(word = words), SD15_2025_complete, by = "word")
   } else {
     stop("dist_type must be either 'embedding' or 'SD15'")
   }

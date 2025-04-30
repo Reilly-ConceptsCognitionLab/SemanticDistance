@@ -43,7 +43,7 @@ dist_anchor <- function(dat, anchor_size = 10) {
 
   # Join with embedding databases
   djoin_glow <- dplyr::left_join(dat, glowca_25, by = c("word_clean" = "word"))
-  djoin_sd15 <- dplyr::left_join(dat, SD15_2025, by = c("word_clean" = "word"))
+  djoin_sd15 <- dplyr::left_join(dat, SD15_2025_complete, by = c("word_clean" = "word"))
 
   # Function to calculate anchor-based cosine distances
   calculate_anchor_dist <- function(embed_df, prefix) {

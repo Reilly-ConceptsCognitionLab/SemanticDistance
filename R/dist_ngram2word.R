@@ -4,7 +4,7 @@
 #'
 #' @name dist_ngram2word
 #' @param dat a dataframe prepped using 'clean_monologue' fn
-#' @param ngram an integer specifying the window size of words for computing distance to a target word
+#' @param ngram an integer specifying the window size of words for computing distance to a target word will go back skipping NAs until content words equals the ngram window
 #' @return a dataframe
 #' @importFrom magrittr %>%
 #' @importFrom dplyr select
@@ -40,7 +40,7 @@ dist_ngram2word <- function(dat, ngram) {
 
   # Join with lookup databases using row_id_unique
   djoin_glo <- left_join(dat, glowca_25, by = c("word_clean" = "word"))
-  djoin_sd15 <- left_join(dat, SD15_2025, by = c("word_clean" = "word"))
+  djoin_sd15 <- left_join(dat, SD15_2025_complete, by = c("word_clean" = "word"))
 
   # Create result column names
   cosdist_colname_glo <- paste0("CosDist_", ngram, "gram_glo")
@@ -66,7 +66,7 @@ dist_ngram2word <- function(dat, ngram) {
   param_cols_glo <- grep("Param_", names(djoin_glo), value = TRUE, ignore.case = TRUE)
   param_cols_sd15 <- grep("Param_", names(djoin_sd15), value = TRUE, ignore.case = TRUE)
 
-  # Compute cosine distances (unchanged)
+  # Compute cosine distances with NA skipping
   compute_cosdist <- function(data, param_cols, result_col) {
     if (length(param_cols) == 0) {
       warning("No parameter columns found for cosine distance calculation")
@@ -78,24 +78,36 @@ dist_ngram2word <- function(dat, ngram) {
 
       for (i in (ngram + 1):nrow(data)) {
         current_word <- param_matrix[i, ]
-        ngram_window <- param_matrix[(i-ngram):(i-1), , drop = FALSE]
 
-        ngram_vector <- colMeans(ngram_window, na.rm = TRUE)
-        ngram_vector[is.nan(ngram_vector)] <- NA
+        # Find the previous ngram non-NA words
+        prev_words <- list()
+        j <- i - 1
+        while (length(prev_words) < ngram && j >= 1) {
+          if (!any(is.na(param_matrix[j, ]))) {
+            prev_words <- c(list(param_matrix[j, ]), prev_words)
+          }
+          j <- j - 1
+        }
 
-        valid_dims <- !is.na(current_word) & !is.na(ngram_vector)
+        # Only proceed if we found enough non-NA words
+        if (length(prev_words) == ngram) {
+          ngram_window <- do.call(rbind, prev_words)
+          ngram_vector <- colMeans(ngram_window, na.rm = TRUE)
 
-        if (sum(valid_dims) > 0) {
-          cos_sim <- tryCatch(
-            lsa::cosine(
-              current_word[valid_dims],
-              ngram_vector[valid_dims]
-            ),
-            error = function(e) NA_real_
-          )
+          valid_dims <- !is.na(current_word) & !is.na(ngram_vector)
 
-          if (!is.na(cos_sim)) {
-            data[i, result_col] <- 1 - cos_sim
+          if (sum(valid_dims) > 0) {
+            cos_sim <- tryCatch(
+              lsa::cosine(
+                current_word[valid_dims],
+                ngram_vector[valid_dims]
+              ),
+              error = function(e) NA_real_
+            )
+
+            if (!is.na(cos_sim)) {
+              data[i, result_col] <- 1 - cos_sim
+            }
           }
         }
       }
