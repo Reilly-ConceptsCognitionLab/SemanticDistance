@@ -8,6 +8,7 @@
 #' @param clean apply cleaning functions (lowercase etc) default is TRUE
 #' @param omit_stops option for omitting stopwords default is TRUE
 #' @param lemmatize option for lemmatizing strings default is TRUE
+#' @param split_strings option T/F (default T) will split multiword utterances into separate rows
 #' @return a dataframe
 #' @importFrom magrittr %>%
 #' @importFrom tm removeWords
@@ -16,7 +17,7 @@
 #' @importFrom utils install.packages
 #' @export clean_monologue
 
-clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE) {
+clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE, split_strings = TRUE) {
   if (!requireNamespace("tm", quietly = TRUE)) {
     install.packages("tm")
   }
@@ -65,7 +66,9 @@ clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmat
   }
 
   # Split multi-word strings into separate rows while maintaining ID_Orig and talker
-  df <- tidyr::separate_rows(df, word_clean, sep = "\\s+")
+  if (split_strings) {
+    df <- tidyr::separate_rows(df, word_clean, sep = "\\s+")
+  }
 
   # Replace empty strings with NA instead of removing rows
   df$word_clean[df$word_clean == ""] <- NA
