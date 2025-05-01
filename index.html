@@ -109,21 +109,21 @@
 <p>Output of ‘clean_monologue’ on a messy monologue transcript</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#text in this dataframe is in a column 'mytext'</span></span>
-<span><span class="va">MyCleanMonologue1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_monologue.html">clean_monologue</a></span><span class="op">(</span><span class="va">Monologue_Dirty</span>, <span class="st">'mytext'</span>, clean<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
+<span><span class="va">MyCleanMonologue1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_monologue.html">clean_monologue</a></span><span class="op">(</span><span class="va">Monologue_Dirty</span>, <span class="st">'mytext'</span>, clean<span class="op">=</span><span class="cn">T</span>, omit_stops<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyCleanMonologue1</span>, n<span class="op">=</span><span class="fl">10</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 10 × 3</span></span>
 <span><span class="co">#&gt;    mytext            id_orig word_clean</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;             &lt;fct&gt;   &lt;chr&gt;     </span></span>
-<span><span class="co">#&gt;  1 The dog is blue.  1       ""        </span></span>
-<span><span class="co">#&gt;  2 The dog is blue.  1       "dog"     </span></span>
-<span><span class="co">#&gt;  3 The dog is blue.  1       "blue"    </span></span>
-<span><span class="co">#&gt;  4 Dog               2       "dog"     </span></span>
-<span><span class="co">#&gt;  5 Dog               3       "dog"     </span></span>
-<span><span class="co">#&gt;  6 Some              4       ""        </span></span>
-<span><span class="co">#&gt;  7 My name is Frank. 5       ""        </span></span>
-<span><span class="co">#&gt;  8 My name is Frank. 5       "name"    </span></span>
-<span><span class="co">#&gt;  9 My name is Frank. 5       "frank"   </span></span>
-<span><span class="co">#&gt; 10 Dog               6       "dog"</span></span></code></pre></div>
+<span><span class="co">#&gt;  1 The dog is blue.  1       dog       </span></span>
+<span><span class="co">#&gt;  2 The dog is blue.  1       blue      </span></span>
+<span><span class="co">#&gt;  3 Dog               2       dog       </span></span>
+<span><span class="co">#&gt;  4 Dog               3       dog       </span></span>
+<span><span class="co">#&gt;  5 Some              4       &lt;NA&gt;      </span></span>
+<span><span class="co">#&gt;  6 My name is Frank. 5       name      </span></span>
+<span><span class="co">#&gt;  7 My name is Frank. 5       frank     </span></span>
+<span><span class="co">#&gt;  8 Dog               6       dog       </span></span>
+<span><span class="co">#&gt;  9 John's a jerk!    7       john'     </span></span>
+<span><span class="co">#&gt; 10 John's a jerk!    7       jerk</span></span></code></pre></div>
 <p>Output of ‘clean_monologue’ on a structured monologue transcript</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#text in this dataframe is in a column 'mytext'</span></span>
@@ -132,16 +132,16 @@
 <span><span class="co">#&gt; # A tibble: 10 × 4</span></span>
 <span><span class="co">#&gt;    timestamp mytext    id_orig word_clean</span></span>
 <span><span class="co">#&gt;        &lt;int&gt; &lt;chr&gt;     &lt;fct&gt;   &lt;chr&gt;     </span></span>
-<span><span class="co">#&gt;  1         1 "the"     1       ""        </span></span>
-<span><span class="co">#&gt;  2         2 "girl"    2       "girl"    </span></span>
-<span><span class="co">#&gt;  3         3 "walked"  3       "walk"    </span></span>
-<span><span class="co">#&gt;  4         4 "down "   4       "down"    </span></span>
-<span><span class="co">#&gt;  5         5 "the "    5       ""        </span></span>
-<span><span class="co">#&gt;  6         6 "street"  6       "street"  </span></span>
-<span><span class="co">#&gt;  7         7 "the"     7       ""        </span></span>
-<span><span class="co">#&gt;  8         8 "boxer"   8       "boxer"   </span></span>
-<span><span class="co">#&gt;  9         9 "punched" 9       "punch"   </span></span>
-<span><span class="co">#&gt; 10        10 "the"     10      ""</span></span></code></pre></div>
+<span><span class="co">#&gt;  1         1 "the"     1       &lt;NA&gt;      </span></span>
+<span><span class="co">#&gt;  2         2 "girl"    2       girl      </span></span>
+<span><span class="co">#&gt;  3         3 "walked"  3       walk      </span></span>
+<span><span class="co">#&gt;  4         4 "down "   4       down      </span></span>
+<span><span class="co">#&gt;  5         5 "the "    5       &lt;NA&gt;      </span></span>
+<span><span class="co">#&gt;  6         6 "street"  6       street    </span></span>
+<span><span class="co">#&gt;  7         7 "the"     7       &lt;NA&gt;      </span></span>
+<span><span class="co">#&gt;  8         8 "boxer"   8       boxer     </span></span>
+<span><span class="co">#&gt;  9         9 "punched" 9       punch     </span></span>
+<span><span class="co">#&gt; 10        10 "the"     10      &lt;NA&gt;</span></span></code></pre></div>
 <p><br></p>
 </div>
 <div class="section level2">
@@ -154,16 +154,16 @@
 <code class="sourceCode R"><span><span class="va">My_CleanDialogue1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_dialogue.html">clean_dialogue</a></span><span class="op">(</span><span class="va">Dialogue_Structured</span>, <span class="st">"mytext"</span>, <span class="st">"speaker"</span>, omit_stops<span class="op">=</span><span class="cn">T</span>, lemmatize<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">My_CleanDialogue1</span>, n<span class="op">=</span><span class="fl">8</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 8 × 6</span></span>
-<span><span class="co">#&gt;   mytext    speaker id_orig talker word_clean turn_count</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;fct&gt;   &lt;fct&gt;  &lt;chr&gt;           &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 donkey    P1      1       P1     donkey              1</span></span>
-<span><span class="co">#&gt; 2 astronaut P2      2       P2     astronaut           2</span></span>
-<span><span class="co">#&gt; 3 bubble    P1      3       P1     bubble              3</span></span>
-<span><span class="co">#&gt; 4 street    P2      4       P2     street              4</span></span>
-<span><span class="co">#&gt; 5 Pigeon    P1      5       P1     pigeon              5</span></span>
-<span><span class="co">#&gt; 6 Dolphin   P2      6       P2     dolphin             6</span></span>
-<span><span class="co">#&gt; 7 Eagle     P1      7       P1     eagle               7</span></span>
-<span><span class="co">#&gt; 8 eel       P2      8       P2     eel                 8</span></span></code></pre></div>
+<span><span class="co">#&gt;   mytext    speaker id_orig word_clean talker turn_count</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;fct&gt;   &lt;chr&gt;      &lt;fct&gt;       &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 donkey    P1      1       donkey     P1              1</span></span>
+<span><span class="co">#&gt; 2 astronaut P2      2       astronaut  P2              2</span></span>
+<span><span class="co">#&gt; 3 bubble    P1      3       bubble     P1              3</span></span>
+<span><span class="co">#&gt; 4 street    P2      4       street     P2              4</span></span>
+<span><span class="co">#&gt; 5 Pigeon    P1      5       pigeon     P1              5</span></span>
+<span><span class="co">#&gt; 6 Dolphin   P2      6       dolphin    P2              6</span></span>
+<span><span class="co">#&gt; 7 Eagle     P1      7       eagle      P1              7</span></span>
+<span><span class="co">#&gt; 8 eel       P2      8       eel        P2              8</span></span></code></pre></div>
 <p><br></p>
 </div>
 <div class="section level2">
@@ -176,15 +176,15 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">MyClean2Columns</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_2cols.html">clean_2cols</a></span><span class="op">(</span><span class="va">WordPairs_Columns</span>, <span class="st">'word1'</span>, <span class="st">'word2'</span>, clean<span class="op">=</span><span class="cn">T</span>, omit_stops<span class="op">=</span><span class="cn">T</span>, lemmatize<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyClean2Columns</span>, n<span class="op">=</span><span class="fl">8</span><span class="op">)</span> <span class="co">#view head cleaned data</span></span>
-<span><span class="co">#&gt;   word1     word2 id_orig word1_clean1 word2_clean2</span></span>
-<span><span class="co">#&gt; 1   Dog   trumpet       1          dog      trumpet</span></span>
-<span><span class="co">#&gt; 2   the    BANANA       2          the       banana</span></span>
-<span><span class="co">#&gt; 3   rat astronaut       3          rat    astronaut</span></span>
-<span><span class="co">#&gt; 4  *&amp;^%    lizard       4         &lt;NA&gt;       lizard</span></span>
-<span><span class="co">#&gt; 5  bird      bird       5         bird         bird</span></span>
-<span><span class="co">#&gt; 6 shark     shark       6        shark        shark</span></span>
-<span><span class="co">#&gt; 7 table     38947       7        table         &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 8   Dog     leash       8          dog        leash</span></span></code></pre></div>
+<span><span class="co">#&gt;   word1     word2 id_orig word1_clean word2_clean</span></span>
+<span><span class="co">#&gt; 1   Dog   trumpet       1         dog     trumpet</span></span>
+<span><span class="co">#&gt; 2   the    BANANA       2        &lt;NA&gt;      banana</span></span>
+<span><span class="co">#&gt; 3   rat astronaut       3         rat   astronaut</span></span>
+<span><span class="co">#&gt; 4  *&amp;^%    lizard       4        &lt;NA&gt;      lizard</span></span>
+<span><span class="co">#&gt; 5  bird      bird       5        bird        bird</span></span>
+<span><span class="co">#&gt; 6 shark     shark       6       shark       shark</span></span>
+<span><span class="co">#&gt; 7 table     38947       7       table        &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 8   Dog     leash       8         dog       leash</span></span></code></pre></div>
 <p><br></p>
 </div>
 <div class="section level2">
@@ -198,15 +198,10 @@
 <code class="sourceCode R"><span><span class="co">#Run clean fn </span></span>
 <span><span class="va">MyCleanDat4Matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_unordered4matrix.html">clean_unordered4matrix</a></span><span class="op">(</span><span class="va">WordList_TestClustering</span>, wordcol<span class="op">=</span><span class="st">"mytext"</span>, clean<span class="op">=</span><span class="cn">TRUE</span>, omit_stops<span class="op">=</span><span class="cn">TRUE</span>, lemmatize<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> </span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyCleanDat4Matrix</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 6 × 3</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 3</span></span>
 <span><span class="co">#&gt;   mytext                                                      id_orig word_clean</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;                                                         &lt;int&gt; &lt;chr&gt;     </span></span>
-<span><span class="co">#&gt; 1 dog cat $ Rat gun banana the sword table glasses phone sof…       1 dog       </span></span>
-<span><span class="co">#&gt; 2 dog cat $ Rat gun banana the sword table glasses phone sof…       1 cat       </span></span>
-<span><span class="co">#&gt; 3 dog cat $ Rat gun banana the sword table glasses phone sof…       1 rat       </span></span>
-<span><span class="co">#&gt; 4 dog cat $ Rat gun banana the sword table glasses phone sof…       1 gun       </span></span>
-<span><span class="co">#&gt; 5 dog cat $ Rat gun banana the sword table glasses phone sof…       1 banana    </span></span>
-<span><span class="co">#&gt; 6 dog cat $ Rat gun banana the sword table glasses phone sof…       1 sword</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 dog cat $ Rat gun banana the sword table glasses phone sof…       1 dogcatrat…</span></span></code></pre></div>
 <p><br><br></p>
 </div>
 </div>
@@ -219,45 +214,19 @@
 <h2 id="id_21-compute-ngram-to-word-distance-dist_ngram2word">
 <span style="color: brown;">2.1: Compute Ngram-to-Word Distance (dist_ngram2word)</span><a class="anchor" aria-label="anchor" href="#id_21-compute-ngram-to-word-distance-dist_ngram2word"></a>
 </h2>
-<p>Computes cosine distance for two models (embedding and experiential) using a rolling ngram approach consisting of groups of words (ngrams) to the next word.</p>
+<p>Computes cosine distance for two models (embedding and experiential) using a rolling ngram approach consisting of groups of words (ngrams) to the next word. <em>IMPORTANT</em> the way this works is that the function rolls backward from the target word skipping over NAs until filling the desired ngram size. It does not do the same procedure for filling forward. If you evaluate a row with an NA it will look backward until finding n real words and then produce an NA when trying to compare the ngram to the target word (because there is no target word for that row).</p>
 <p><img src="reference/figures/RollingNgramIllustrate.png" alt="illustrates how rolling ngrams work on a vector of words by moving a window and contrasting each chunk to each new word" width="50%"><br><br></p>
 <p>Remember to call a cleaned/prepped dataframe! Arguments to ‘dist_ngram2word’ are: <br> | <strong>dat</strong> dataframe of a monologue transcript cleaned and prepped with clean_monologue fn <br> | <strong>ngram</strong> window size preceding each new content word <br></p>
 <p>Output ‘dist_ngram2word’ on a messy monologue</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Set the ngram=1, distance every word to the next word</span></span>
-<span><span class="va">MyNgram2WordDists1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_ngram2word.html">dist_ngram2word</a></span><span class="op">(</span><span class="va">MyCleanMonologue1</span>, ngram<span class="op">=</span><span class="fl">1</span><span class="op">)</span> <span class="co">#distance word-to-word</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyNgram2WordDists1</span>, n<span class="op">=</span><span class="fl">8</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 8 × 5</span></span>
-<span><span class="co">#&gt;   mytext            id_orig word_clean CosDist_1gram_glo CosDist_1gram_sd15</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;             &lt;fct&gt;   &lt;chr&gt;                  &lt;dbl&gt;              &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 The dog is blue.  1       ""                    NA                  NA   </span></span>
-<span><span class="co">#&gt; 2 The dog is blue.  1       "dog"                 NA                  NA   </span></span>
-<span><span class="co">#&gt; 3 The dog is blue.  1       "blue"                 0.607               1.44</span></span>
-<span><span class="co">#&gt; 4 Dog               2       "dog"                  0.607               1.44</span></span>
-<span><span class="co">#&gt; 5 Dog               3       "dog"                  0                   0   </span></span>
-<span><span class="co">#&gt; 6 Some              4       ""                    NA                  NA   </span></span>
-<span><span class="co">#&gt; 7 My name is Frank. 5       ""                    NA                  NA   </span></span>
-<span><span class="co">#&gt; 8 My name is Frank. 5       "name"                NA                  NA</span></span></code></pre></div>
+<span><span class="co">#MyNgram2WordDists1 &lt;- dist_ngram2word(MyCleanMonologue1, ngram=1) #distance word-to-word</span></span>
+<span><span class="co">#head(MyNgram2WordDists1, n=8)</span></span></code></pre></div>
 <p>Output ‘dist_ngram2word’ on a well-structured monologue</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Set the ngram=3, distance rolling chunks of 3 words to the next word</span></span>
-<span><span class="va">MyNgram2WordDists2</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_ngram2word.html">dist_ngram2word</a></span><span class="op">(</span><span class="va">MyCleanMonologue2</span>, ngram<span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="co">#distance word-to-word</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyNgram2WordDists2</span>, n<span class="op">=</span><span class="fl">12</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 12 × 6</span></span>
-<span><span class="co">#&gt;    timestamp mytext     id_orig word_clean CosDist_3gram_glo CosDist_3gram_sd15</span></span>
-<span><span class="co">#&gt;        &lt;int&gt; &lt;chr&gt;      &lt;fct&gt;   &lt;chr&gt;                  &lt;dbl&gt;              &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1         1 "the"      1       ""                    NA                 NA    </span></span>
-<span><span class="co">#&gt;  2         2 "girl"     2       "girl"                NA                 NA    </span></span>
-<span><span class="co">#&gt;  3         3 "walked"   3       "walk"                NA                 NA    </span></span>
-<span><span class="co">#&gt;  4         4 "down "    4       "down"                 0.261              1.28 </span></span>
-<span><span class="co">#&gt;  5         5 "the "     5       ""                    NA                 NA    </span></span>
-<span><span class="co">#&gt;  6         6 "street"   6       "street"               0.319              0.941</span></span>
-<span><span class="co">#&gt;  7         7 "the"      7       ""                    NA                 NA    </span></span>
-<span><span class="co">#&gt;  8         8 "boxer"    8       "boxer"                0.938              0.858</span></span>
-<span><span class="co">#&gt;  9         9 "punched"  9       "punch"                0.712              0.342</span></span>
-<span><span class="co">#&gt; 10        10 "the"      10      ""                    NA                 NA    </span></span>
-<span><span class="co">#&gt; 11        11 "wrestler" 11      "wrestler"             0.720              0.294</span></span>
-<span><span class="co">#&gt; 12        12 "open"     12      "open"                 0.791              0.706</span></span></code></pre></div>
+<span><span class="co">#MyNgram2WordDists2 &lt;- dist_ngram2word(MyCleanMonologue2, ngram=3) #distance word-to-word</span></span>
+<span><span class="co">#head(MyNgram2WordDists2, n=12)</span></span></code></pre></div>
 <p><br></p>
 </div>
 <div class="section level2">
@@ -272,17 +241,18 @@
 <code class="sourceCode R"><span><span class="co">#Give the function a cleaned monologue transcript, This example involves chunks of 2-words to 2-words</span></span>
 <span><span class="va">MyNgram2NgramDists</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_ngram2ngram.html">dist_ngram2ngram</a></span><span class="op">(</span><span class="va">MyCleanMonologue2</span>, ngram<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyNgram2NgramDists</span>, n<span class="op">=</span><span class="fl">8</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 8 × 5</span></span>
-<span><span class="co">#&gt;   id_orig word_clean CountID_Ngram2 CosDist_2gram_GLO CosDist_2gram_SD15</span></span>
-<span><span class="co">#&gt;   &lt;fct&gt;   &lt;chr&gt;      &lt;fct&gt;                      &lt;dbl&gt;              &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 1       ""         1                         NA                 NA    </span></span>
-<span><span class="co">#&gt; 2 2       "girl"     1                         NA                 NA    </span></span>
-<span><span class="co">#&gt; 3 3       "walk"     2                         NA                 NA    </span></span>
-<span><span class="co">#&gt; 4 4       "down"     2                          0.398              1.36 </span></span>
-<span><span class="co">#&gt; 5 5       ""         3                         NA                 NA    </span></span>
-<span><span class="co">#&gt; 6 6       "street"   3                          0.319              0.941</span></span>
-<span><span class="co">#&gt; 7 7       ""         4                         NA                 NA    </span></span>
-<span><span class="co">#&gt; 8 8       "boxer"    4                          0.938              0.858</span></span></code></pre></div>
+<span><span class="co">#&gt; # A tibble: 8 × 6</span></span>
+<span><span class="co">#&gt;   row_id_unique id_orig word_clean CountID_Ngram2 CosDist_2gram_GLO</span></span>
+<span><span class="co">#&gt;           &lt;dbl&gt; &lt;fct&gt;   &lt;chr&gt;      &lt;fct&gt;                      &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1             1 1       &lt;NA&gt;       1                         NA    </span></span>
+<span><span class="co">#&gt; 2             2 2       girl       1                         NA    </span></span>
+<span><span class="co">#&gt; 3             3 3       walk       2                         NA    </span></span>
+<span><span class="co">#&gt; 4             4 4       down       2                          0.353</span></span>
+<span><span class="co">#&gt; 5             5 5       &lt;NA&gt;       3                         NA    </span></span>
+<span><span class="co">#&gt; 6             6 6       street     3                          0.202</span></span>
+<span><span class="co">#&gt; 7             7 7       &lt;NA&gt;       4                         NA    </span></span>
+<span><span class="co">#&gt; 8             8 8       boxer      4                          0.429</span></span>
+<span><span class="co">#&gt; # ℹ 1 more variable: CosDist_2gram_SD15 &lt;dbl&gt;</span></span></code></pre></div>
 <p><br></p>
 </div>
 <div class="section level2">
@@ -305,17 +275,8 @@
 <p>Arguments to ‘dist_2cols’ are: <br><strong>dat</strong> = dataframe w/ word pairs arrayed in columns cleaned and prepped using ‘clean_2cols’ fn<br></p>
 <p>Output of ‘dist_2cols’ on 2-column arrayed dataframe</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">MyDistsColumns</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_2cols.html">dist_2cols</a></span><span class="op">(</span><span class="va">MyClean2Columns</span><span class="op">)</span> <span class="co">#only argument is dataframe</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyDistsColumns</span>, n<span class="op">=</span><span class="fl">8</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   word1     word2 id_orig word1_clean1 word2_clean2 CosDist_SD15 CosDist_GLO</span></span>
-<span><span class="co">#&gt; 1   Dog   trumpet       1          dog      trumpet    0.4534507   0.8409885</span></span>
-<span><span class="co">#&gt; 2   the    BANANA       2          the       banana    1.1826228   0.7725166</span></span>
-<span><span class="co">#&gt; 3   rat astronaut       3          rat    astronaut    1.2154729   0.9272540</span></span>
-<span><span class="co">#&gt; 4  *&amp;^%    lizard       4         &lt;NA&gt;       lizard           NA          NA</span></span>
-<span><span class="co">#&gt; 5  bird      bird       5         bird         bird    0.0000000   0.0000000</span></span>
-<span><span class="co">#&gt; 6 shark     shark       6        shark        shark    0.0000000   0.0000000</span></span>
-<span><span class="co">#&gt; 7 table     38947       7        table         &lt;NA&gt;           NA          NA</span></span>
-<span><span class="co">#&gt; 8   Dog     leash       8          dog        leash    0.6760924   0.5014043</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#MyDistsColumns &lt;- dist_2cols(MyClean2Columns) #only argument is dataframe</span></span>
+<span><span class="co">#head(MyDistsColumns, n=8)</span></span></code></pre></div>
 <p><br></p>
 </div>
 <div class="section level2">
@@ -329,19 +290,19 @@
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">MyDistsAnchored</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_anchor.html">dist_anchor</a></span><span class="op">(</span><span class="va">MyCleanMonologue2</span>, anchor_size<span class="op">=</span><span class="fl">8</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyDistsAnchored</span>, n<span class="op">=</span><span class="fl">10</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 10 × 4</span></span>
-<span><span class="co">#&gt;    id_orig word_clean CosDist_Anchor_GLO CosDist_Anchor_SD15</span></span>
-<span><span class="co">#&gt;    &lt;fct&gt;   &lt;chr&gt;                   &lt;dbl&gt;               &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 1       ""                     NA                  NA    </span></span>
-<span><span class="co">#&gt;  2 2       "girl"                  0.221               0.475</span></span>
-<span><span class="co">#&gt;  3 3       "walk"                  0.186               0.649</span></span>
-<span><span class="co">#&gt;  4 4       "down"                  0.141               0.625</span></span>
-<span><span class="co">#&gt;  5 5       ""                     NA                  NA    </span></span>
-<span><span class="co">#&gt;  6 6       "street"                0.220               0.393</span></span>
-<span><span class="co">#&gt;  7 7       ""                     NA                  NA    </span></span>
-<span><span class="co">#&gt;  8 8       "boxer"                 0.576               0.478</span></span>
-<span><span class="co">#&gt;  9 9       "punch"                 0.603               0.348</span></span>
-<span><span class="co">#&gt; 10 10      ""                     NA                  NA</span></span></code></pre></div>
+<span><span class="co">#&gt; # A tibble: 10 × 5</span></span>
+<span><span class="co">#&gt;    row_id_unique id_orig word_clean CosDist_Anchor_GLO CosDist_Anchor_SD15</span></span>
+<span><span class="co">#&gt;            &lt;int&gt; &lt;fct&gt;   &lt;chr&gt;                   &lt;dbl&gt;               &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1             1 1       &lt;NA&gt;                   NA                 NA     </span></span>
+<span><span class="co">#&gt;  2             2 2       girl                    0.255              0.439 </span></span>
+<span><span class="co">#&gt;  3             3 3       walk                    0.159              0.173 </span></span>
+<span><span class="co">#&gt;  4             4 4       down                    0.116              0.275 </span></span>
+<span><span class="co">#&gt;  5             5 5       &lt;NA&gt;                   NA                 NA     </span></span>
+<span><span class="co">#&gt;  6             6 6       street                  0.116              0.0457</span></span>
+<span><span class="co">#&gt;  7             7 7       &lt;NA&gt;                   NA                 NA     </span></span>
+<span><span class="co">#&gt;  8             8 8       boxer                   0.256              0.0585</span></span>
+<span><span class="co">#&gt;  9             9 9       punch                   0.254              0.0828</span></span>
+<span><span class="co">#&gt; 10            10 10      &lt;NA&gt;                   NA                 NA</span></span></code></pre></div>
 <p><br></p>
 <div class="section level3">
 <h3 id="id_26-distance-matrix-all-word-pairs-dist_matrix_all">
@@ -353,27 +314,8 @@
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">MyDistMatrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_matrix_all.html">dist_matrix_all</a></span><span class="op">(</span><span class="va">MyCleanDat4Matrix</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyDistMatrix</span><span class="op">)</span></span>
-<span><span class="co">#&gt;              dog       cat       rat       gun    banana     sword     table</span></span>
-<span><span class="co">#&gt; dog    0.0000000 0.2739303 0.5123881 0.5906894 0.7818078 0.7452758 0.6434250</span></span>
-<span><span class="co">#&gt; cat    0.2739303 0.0000000 0.5213184 0.6744473 0.7795409 0.8020755 0.6462459</span></span>
-<span><span class="co">#&gt; rat    0.5123881 0.5213184 0.0000000 0.7400105 0.9244186 0.8928397 0.7819956</span></span>
-<span><span class="co">#&gt; gun    0.5906894 0.6744473 0.7400105 0.0000000 0.8911675 0.6337077 0.6980466</span></span>
-<span><span class="co">#&gt; banana 0.7818078 0.7795409 0.9244186 0.8911675 0.0000000 0.8650971 0.7472485</span></span>
-<span><span class="co">#&gt; sword  0.7452758 0.8020755 0.8928397 0.6337077 0.8650971 0.0000000 0.8120899</span></span>
-<span><span class="co">#&gt;            glass     phone      sofa   missile      lamb     rifle   trumpet</span></span>
-<span><span class="co">#&gt; dog    0.7469269 0.6779000 0.7822941 0.9306060 0.7084598 0.7186925 0.8409885</span></span>
-<span><span class="co">#&gt; cat    0.7140502 0.6637064 0.6782575 0.9354524 0.7626201 0.7722337 0.8959449</span></span>
-<span><span class="co">#&gt; rat    0.8251858 0.8620877 0.9180761 0.9349857 0.8468455 0.8033361 0.9699536</span></span>
-<span><span class="co">#&gt; gun    0.7318920 0.6247425 0.8542499 0.7508974 0.8991612 0.3425261 0.8668525</span></span>
-<span><span class="co">#&gt; banana 0.7901191 0.8755222 0.7817425 0.9752764 0.7922279 0.9065630 0.9392574</span></span>
-<span><span class="co">#&gt; sword  0.7321883 0.8822808 0.8815341 0.8334430 0.8187028 0.6263753 0.7899880</span></span>
-<span><span class="co">#&gt;            piano     chair      desk     snake   dolphin     shark</span></span>
-<span><span class="co">#&gt; dog    0.8010806 0.6306125 0.6752448 0.5686341 0.7301250 0.6937237</span></span>
-<span><span class="co">#&gt; cat    0.8247876 0.6071512 0.6630289 0.6045210 0.6999727 0.7601385</span></span>
-<span><span class="co">#&gt; rat    0.9866920 0.8114072 0.8622854 0.5350589 0.7802583 0.7386961</span></span>
-<span><span class="co">#&gt; gun    0.8374068 0.6545550 0.6733489 0.7210518 0.8909221 0.8865868</span></span>
-<span><span class="co">#&gt; banana 0.9084053 0.8046723 0.9201190 0.8221203 0.9566140 0.9001270</span></span>
-<span><span class="co">#&gt; sword  0.8395984 0.7344415 0.8118196 0.7098538 0.9599949 0.8158018</span></span></code></pre></div>
+<span><span class="co">#&gt;                                                                                                    dogcatratgunbananaswordtableglassesphonesofamissilelambrifletrumpetpianochairdesksnakedolphinshark</span></span>
+<span><span class="co">#&gt; dogcatratgunbananaswordtableglassesphonesofamissilelambrifletrumpetpianochairdesksnakedolphinshark                                                                                                 NA</span></span></code></pre></div>
 <p><br><br></p>
 </div>
 </div>
