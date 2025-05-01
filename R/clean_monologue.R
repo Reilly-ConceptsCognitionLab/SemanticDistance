@@ -34,6 +34,12 @@ clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmat
   if (!requireNamespace("magrittr", quietly = TRUE)) {
     install.packages("magrittr")
   }
+  if (!requireNamespace("stringr", quietly = TRUE)) {
+    install.packages("stringr")
+  }
+  if (!requireNamespace("dplyr", quietly = TRUE)) {
+    install.packages("dplyr")
+  }
 
   df$id_row_orig <- factor(seq_len(nrow(df)))
   df$word_clean <- df[[wordcol]]
@@ -55,6 +61,7 @@ clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmat
     x <- gsub("`", "'", x)
     x <- gsub("[^a-zA-Z']", " ", x) # omit non-alphabetic chars (keeping apostrophes)
     x <- gsub("\\b[a-z]\\b", "", x)  # Remove singleton letters
+    x <- textclean::replace_white(x) # Clean up whitespace
 
     # Apply lemmatization if requested
     if (lemmatize) {
@@ -64,21 +71,18 @@ clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmat
     df$word_clean <- x
   }
 
-  # Split multi-word strings into separate rows while maintaining ID_Orig and talker
-  if (split_strings) {
-    df <- tidyr::separate_rows(df, word_clean, sep = "\\s+")
-  }
-
-  #squish any multiword rows into one string
-  df$word_clean <- textclean::replace_white(df$word_clean)
-
-  # Replace empty strings with NA instead of removing rows
+  # Replace empty strings with NA before splitting
   df$word_clean[df$word_clean == ""] <- NA
 
+  # Split multi-word strings into separate rows while maintaining ID_Orig and talker
+  if (split_strings) {
+    df <- tidyr::separate_rows(df, word_clean, sep = "\\s+") %>%
+      dplyr::filter(!is.na(word_clean), word_clean != "")
+  }
+
   #append unique ID by row after splitting the dataframe
-  # Prepare working data and create unique row IDs
   df <- df %>% dplyr::mutate(
-      id_row_postsplit = seq_len(nrow(df)))  # unique row identifier after splitting
+    id_row_postsplit = seq_len(nrow(df)))  # unique row identifier after splitting
 
   return(df)
 }
