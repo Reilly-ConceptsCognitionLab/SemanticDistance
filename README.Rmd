@@ -72,7 +72,7 @@ Clean a monologue transcript by calling the 'clean_monologue' function. Specific
 Output of 'clean_monologue' on a messy monologue transcript
 ```{r}
 #text in this dataframe is in a column 'mytext'
-MyCleanMonologue1 <- clean_monologue(Monologue_Dirty, 'mytext', clean=T)
+MyCleanMonologue1 <- clean_monologue(Monologue_Dirty, 'mytext', clean=T, omit_stops=T)
 head(MyCleanMonologue1, n=10)
 ```
 
@@ -140,7 +140,7 @@ SemanticDistance will append cosine distance values between each pair of element
 <br>
 
 ## <span style="color: brown;">2.1: Compute Ngram-to-Word Distance (dist_ngram2word)</span>
-Computes cosine distance for two models (embedding and experiential) using a rolling ngram approach consisting of groups of words (ngrams) to the next word.
+Computes cosine distance for two models (embedding and experiential) using a rolling ngram approach consisting of groups of words (ngrams) to the next word. *IMPORTANT* the way this works is that the function rolls backward from the target word skipping over NAs until filling the desired ngram size. It does not do the same procedure for filling forward. If you evaluate a row with an NA it will look backward until finding n real words and then produce an NA when trying to compare the ngram to the target word (because there is no target word for that row).
 
 <img src="man/figures/RollingNgramIllustrate.png" alt="illustrates how rolling ngrams work on a vector of words by moving a window and contrasting each chunk to each new word" width="50%" /> <br/>
 <br/>
@@ -152,15 +152,15 @@ Remember to call a cleaned/prepped dataframe! Arguments to 'dist_ngram2word' are
 Output 'dist_ngram2word' on a messy monologue
 ```{r}
 #Set the ngram=1, distance every word to the next word
-MyNgram2WordDists1 <- dist_ngram2word(MyCleanMonologue1, ngram=1) #distance word-to-word
-head(MyNgram2WordDists1, n=8)
+#MyNgram2WordDists1 <- dist_ngram2word(MyCleanMonologue1, ngram=1) #distance word-to-word
+#head(MyNgram2WordDists1, n=8)
 ```
 
 Output 'dist_ngram2word' on a well-structured monologue
 ```{r}
 #Set the ngram=3, distance rolling chunks of 3 words to the next word
-MyNgram2WordDists2 <- dist_ngram2word(MyCleanMonologue2, ngram=3) #distance word-to-word
-head(MyNgram2WordDists2, n=12)
+#MyNgram2WordDists2 <- dist_ngram2word(MyCleanMonologue2, ngram=3) #distance word-to-word
+#head(MyNgram2WordDists2, n=12)
 ```
 <br/>
 
@@ -203,8 +203,8 @@ Arguments to 'dist_2cols' are: <br/>
 
 Output of 'dist_2cols' on 2-column arrayed dataframe
 ```{r}
-MyDistsColumns <- dist_2cols(MyClean2Columns) #only argument is dataframe
-head(MyDistsColumns, n=8)
+#MyDistsColumns <- dist_2cols(MyClean2Columns) #only argument is dataframe
+#head(MyDistsColumns, n=8)
 ```
 <br/>
 

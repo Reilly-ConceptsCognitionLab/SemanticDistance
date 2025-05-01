@@ -10,7 +10,8 @@ clean_dialogue(
   whotalks,
   clean = TRUE,
   omit_stops = TRUE,
-  lemmatize = TRUE
+  lemmatize = TRUE,
+  split_stings = TRUE
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ clean_dialogue(
 \item{omit_stops}{T/F user wishes to remove stopwords (default is TRUE)}
 
 \item{lemmatize}{T/F user wishes to lemmatize each string (default is TRUE)}
+
+\item{split_strings}{T/F (default is TRUE) will split and unlist contents of rows}
 }
 \value{
 a dataframe

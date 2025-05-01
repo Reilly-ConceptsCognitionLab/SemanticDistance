@@ -9,7 +9,7 @@ dist_ngram2word(dat, ngram)
 \arguments{
 \item{dat}{a dataframe prepped using 'clean_monologue' fn}
 
-\item{ngram}{an integer specifying the window size of words for computing distance to a target word}
+\item{ngram}{an integer specifying the window size of words for computing distance to a target word will go back skipping NAs until content words equals the ngram window}
 }
 \value{
 a dataframe

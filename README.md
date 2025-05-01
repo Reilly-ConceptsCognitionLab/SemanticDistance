@@ -116,21 +116,21 @@ Output of ‘clean_monologue’ on a messy monologue transcript
 
 ``` r
 #text in this dataframe is in a column 'mytext'
-MyCleanMonologue1 <- clean_monologue(Monologue_Dirty, 'mytext', clean=T)
+MyCleanMonologue1 <- clean_monologue(Monologue_Dirty, 'mytext', clean=T, omit_stops=T)
 head(MyCleanMonologue1, n=10)
 #> # A tibble: 10 × 3
 #>    mytext            id_orig word_clean
 #>    <chr>             <fct>   <chr>     
-#>  1 The dog is blue.  1       ""        
-#>  2 The dog is blue.  1       "dog"     
-#>  3 The dog is blue.  1       "blue"    
-#>  4 Dog               2       "dog"     
-#>  5 Dog               3       "dog"     
-#>  6 Some              4       ""        
-#>  7 My name is Frank. 5       ""        
-#>  8 My name is Frank. 5       "name"    
-#>  9 My name is Frank. 5       "frank"   
-#> 10 Dog               6       "dog"
+#>  1 The dog is blue.  1       dog       
+#>  2 The dog is blue.  1       blue      
+#>  3 Dog               2       dog       
+#>  4 Dog               3       dog       
+#>  5 Some              4       <NA>      
+#>  6 My name is Frank. 5       name      
+#>  7 My name is Frank. 5       frank     
+#>  8 Dog               6       dog       
+#>  9 John's a jerk!    7       john'     
+#> 10 John's a jerk!    7       jerk
 ```
 
 Output of ‘clean_monologue’ on a structured monologue transcript
@@ -142,16 +142,16 @@ head(MyCleanMonologue2, n=10)
 #> # A tibble: 10 × 4
 #>    timestamp mytext    id_orig word_clean
 #>        <int> <chr>     <fct>   <chr>     
-#>  1         1 "the"     1       ""        
-#>  2         2 "girl"    2       "girl"    
-#>  3         3 "walked"  3       "walk"    
-#>  4         4 "down "   4       "down"    
-#>  5         5 "the "    5       ""        
-#>  6         6 "street"  6       "street"  
-#>  7         7 "the"     7       ""        
-#>  8         8 "boxer"   8       "boxer"   
-#>  9         9 "punched" 9       "punch"   
-#> 10        10 "the"     10      ""
+#>  1         1 "the"     1       <NA>      
+#>  2         2 "girl"    2       girl      
+#>  3         3 "walked"  3       walk      
+#>  4         4 "down "   4       down      
+#>  5         5 "the "    5       <NA>      
+#>  6         6 "street"  6       street    
+#>  7         7 "the"     7       <NA>      
+#>  8         8 "boxer"   8       boxer     
+#>  9         9 "punched" 9       punch     
+#> 10        10 "the"     10      <NA>
 ```
 
 <br/>
@@ -178,16 +178,16 @@ transcript
 My_CleanDialogue1 <- clean_dialogue(Dialogue_Structured, "mytext", "speaker", omit_stops=T, lemmatize=T)
 head(My_CleanDialogue1, n=8)
 #> # A tibble: 8 × 6
-#>   mytext    speaker id_orig talker word_clean turn_count
-#>   <chr>     <chr>   <fct>   <fct>  <chr>           <dbl>
-#> 1 donkey    P1      1       P1     donkey              1
-#> 2 astronaut P2      2       P2     astronaut           2
-#> 3 bubble    P1      3       P1     bubble              3
-#> 4 street    P2      4       P2     street              4
-#> 5 Pigeon    P1      5       P1     pigeon              5
-#> 6 Dolphin   P2      6       P2     dolphin             6
-#> 7 Eagle     P1      7       P1     eagle               7
-#> 8 eel       P2      8       P2     eel                 8
+#>   mytext    speaker id_orig word_clean talker turn_count
+#>   <chr>     <chr>   <fct>   <chr>      <fct>       <dbl>
+#> 1 donkey    P1      1       donkey     P1              1
+#> 2 astronaut P2      2       astronaut  P2              2
+#> 3 bubble    P1      3       bubble     P1              3
+#> 4 street    P2      4       street     P2              4
+#> 5 Pigeon    P1      5       pigeon     P1              5
+#> 6 Dolphin   P2      6       dolphin    P2              6
+#> 7 Eagle     P1      7       eagle      P1              7
+#> 8 eel       P2      8       eel        P2              8
 ```
 
 <br/>
@@ -211,15 +211,15 @@ Output of ‘clean_2columns’ word pairs arrayed in columns
 ``` r
 MyClean2Columns <- clean_2cols(WordPairs_Columns, 'word1', 'word2', clean=T, omit_stops=T, lemmatize=T)
 head(MyClean2Columns, n=8) #view head cleaned data
-#>   word1     word2 id_orig word1_clean1 word2_clean2
-#> 1   Dog   trumpet       1          dog      trumpet
-#> 2   the    BANANA       2          the       banana
-#> 3   rat astronaut       3          rat    astronaut
-#> 4  *&^%    lizard       4         <NA>       lizard
-#> 5  bird      bird       5         bird         bird
-#> 6 shark     shark       6        shark        shark
-#> 7 table     38947       7        table         <NA>
-#> 8   Dog     leash       8          dog        leash
+#>   word1     word2 id_orig word1_clean word2_clean
+#> 1   Dog   trumpet       1         dog     trumpet
+#> 2   the    BANANA       2        <NA>      banana
+#> 3   rat astronaut       3         rat   astronaut
+#> 4  *&^%    lizard       4        <NA>      lizard
+#> 5  bird      bird       5        bird        bird
+#> 6 shark     shark       6       shark       shark
+#> 7 table     38947       7       table        <NA>
+#> 8   Dog     leash       8         dog       leash
 ```
 
 <br/>
@@ -245,15 +245,10 @@ Output of ‘clean_unordered4matrix’ on unordered word list
 #Run clean fn 
 MyCleanDat4Matrix <- clean_unordered4matrix(WordList_TestClustering, wordcol="mytext", clean=TRUE, omit_stops=TRUE, lemmatize=TRUE) 
 head(MyCleanDat4Matrix)
-#> # A tibble: 6 × 3
+#> # A tibble: 1 × 3
 #>   mytext                                                      id_orig word_clean
 #>   <chr>                                                         <int> <chr>     
-#> 1 dog cat $ Rat gun banana the sword table glasses phone sof…       1 dog       
-#> 2 dog cat $ Rat gun banana the sword table glasses phone sof…       1 cat       
-#> 3 dog cat $ Rat gun banana the sword table glasses phone sof…       1 rat       
-#> 4 dog cat $ Rat gun banana the sword table glasses phone sof…       1 gun       
-#> 5 dog cat $ Rat gun banana the sword table glasses phone sof…       1 banana    
-#> 6 dog cat $ Rat gun banana the sword table glasses phone sof…       1 sword
+#> 1 dog cat $ Rat gun banana the sword table glasses phone sof…       1 dogcatrat…
 ```
 
 <br/> <br/>
@@ -274,7 +269,12 @@ characterized across 15 meaningful perceptual and affective dimensions
 
 Computes cosine distance for two models (embedding and experiential)
 using a rolling ngram approach consisting of groups of words (ngrams) to
-the next word.
+the next word. *IMPORTANT* the way this works is that the function rolls
+backward from the target word skipping over NAs until filling the
+desired ngram size. It does not do the same procedure for filling
+forward. If you evaluate a row with an NA it will look backward until
+finding n real words and then produce an NA when trying to compare the
+ngram to the target word (because there is no target word for that row).
 
 <img src="man/figures/RollingNgramIllustrate.png" alt="illustrates how rolling ngrams work on a vector of words by moving a window and contrasting each chunk to each new word" width="50%" />
 <br/> <br/>
@@ -288,42 +288,16 @@ Output ‘dist_ngram2word’ on a messy monologue
 
 ``` r
 #Set the ngram=1, distance every word to the next word
-MyNgram2WordDists1 <- dist_ngram2word(MyCleanMonologue1, ngram=1) #distance word-to-word
-head(MyNgram2WordDists1, n=8)
-#> # A tibble: 8 × 5
-#>   mytext            id_orig word_clean CosDist_1gram_glo CosDist_1gram_sd15
-#>   <chr>             <fct>   <chr>                  <dbl>              <dbl>
-#> 1 The dog is blue.  1       ""                    NA                  NA   
-#> 2 The dog is blue.  1       "dog"                 NA                  NA   
-#> 3 The dog is blue.  1       "blue"                 0.607               1.44
-#> 4 Dog               2       "dog"                  0.607               1.44
-#> 5 Dog               3       "dog"                  0                   0   
-#> 6 Some              4       ""                    NA                  NA   
-#> 7 My name is Frank. 5       ""                    NA                  NA   
-#> 8 My name is Frank. 5       "name"                NA                  NA
+#MyNgram2WordDists1 <- dist_ngram2word(MyCleanMonologue1, ngram=1) #distance word-to-word
+#head(MyNgram2WordDists1, n=8)
 ```
 
 Output ‘dist_ngram2word’ on a well-structured monologue
 
 ``` r
 #Set the ngram=3, distance rolling chunks of 3 words to the next word
-MyNgram2WordDists2 <- dist_ngram2word(MyCleanMonologue2, ngram=3) #distance word-to-word
-head(MyNgram2WordDists2, n=12)
-#> # A tibble: 12 × 6
-#>    timestamp mytext     id_orig word_clean CosDist_3gram_glo CosDist_3gram_sd15
-#>        <int> <chr>      <fct>   <chr>                  <dbl>              <dbl>
-#>  1         1 "the"      1       ""                    NA                 NA    
-#>  2         2 "girl"     2       "girl"                NA                 NA    
-#>  3         3 "walked"   3       "walk"                NA                 NA    
-#>  4         4 "down "    4       "down"                 0.261              1.28 
-#>  5         5 "the "     5       ""                    NA                 NA    
-#>  6         6 "street"   6       "street"               0.319              0.941
-#>  7         7 "the"      7       ""                    NA                 NA    
-#>  8         8 "boxer"    8       "boxer"                0.938              0.858
-#>  9         9 "punched"  9       "punch"                0.712              0.342
-#> 10        10 "the"      10      ""                    NA                 NA    
-#> 11        11 "wrestler" 11      "wrestler"             0.720              0.294
-#> 12        12 "open"     12      "open"                 0.791              0.706
+#MyNgram2WordDists2 <- dist_ngram2word(MyCleanMonologue2, ngram=3) #distance word-to-word
+#head(MyNgram2WordDists2, n=12)
 ```
 
 <br/>
@@ -347,17 +321,18 @@ Output ‘dist_ngram2ngram’ on monologue transcript
 #Give the function a cleaned monologue transcript, This example involves chunks of 2-words to 2-words
 MyNgram2NgramDists <- dist_ngram2ngram(MyCleanMonologue2, ngram=2)
 head(MyNgram2NgramDists, n=8)
-#> # A tibble: 8 × 5
-#>   id_orig word_clean CountID_Ngram2 CosDist_2gram_GLO CosDist_2gram_SD15
-#>   <fct>   <chr>      <fct>                      <dbl>              <dbl>
-#> 1 1       ""         1                         NA                 NA    
-#> 2 2       "girl"     1                         NA                 NA    
-#> 3 3       "walk"     2                         NA                 NA    
-#> 4 4       "down"     2                          0.398              1.36 
-#> 5 5       ""         3                         NA                 NA    
-#> 6 6       "street"   3                          0.319              0.941
-#> 7 7       ""         4                         NA                 NA    
-#> 8 8       "boxer"    4                          0.938              0.858
+#> # A tibble: 8 × 6
+#>   row_id_unique id_orig word_clean CountID_Ngram2 CosDist_2gram_GLO
+#>           <dbl> <fct>   <chr>      <fct>                      <dbl>
+#> 1             1 1       <NA>       1                         NA    
+#> 2             2 2       girl       1                         NA    
+#> 3             3 3       walk       2                         NA    
+#> 4             4 4       down       2                          0.353
+#> 5             5 5       <NA>       3                         NA    
+#> 6             6 6       street     3                          0.202
+#> 7             7 7       <NA>       4                         NA    
+#> 8             8 8       boxer      4                          0.429
+#> # ℹ 1 more variable: CosDist_2gram_SD15 <dbl>
 ```
 
 <br/>
@@ -396,17 +371,8 @@ arrayed in columns cleaned and prepped using ‘clean_2cols’ fn<br/>
 Output of ‘dist_2cols’ on 2-column arrayed dataframe
 
 ``` r
-MyDistsColumns <- dist_2cols(MyClean2Columns) #only argument is dataframe
-head(MyDistsColumns, n=8)
-#>   word1     word2 id_orig word1_clean1 word2_clean2 CosDist_SD15 CosDist_GLO
-#> 1   Dog   trumpet       1          dog      trumpet    0.4534507   0.8409885
-#> 2   the    BANANA       2          the       banana    1.1826228   0.7725166
-#> 3   rat astronaut       3          rat    astronaut    1.2154729   0.9272540
-#> 4  *&^%    lizard       4         <NA>       lizard           NA          NA
-#> 5  bird      bird       5         bird         bird    0.0000000   0.0000000
-#> 6 shark     shark       6        shark        shark    0.0000000   0.0000000
-#> 7 table     38947       7        table         <NA>           NA          NA
-#> 8   Dog     leash       8          dog        leash    0.6760924   0.5014043
+#MyDistsColumns <- dist_2cols(MyClean2Columns) #only argument is dataframe
+#head(MyDistsColumns, n=8)
 ```
 
 <br/>
@@ -431,19 +397,19 @@ Output of ‘anchor_dist’ on a sample monologue transcript
 ``` r
 MyDistsAnchored <- dist_anchor(MyCleanMonologue2, anchor_size=8)
 head(MyDistsAnchored, n=10)
-#> # A tibble: 10 × 4
-#>    id_orig word_clean CosDist_Anchor_GLO CosDist_Anchor_SD15
-#>    <fct>   <chr>                   <dbl>               <dbl>
-#>  1 1       ""                     NA                  NA    
-#>  2 2       "girl"                  0.221               0.475
-#>  3 3       "walk"                  0.186               0.649
-#>  4 4       "down"                  0.141               0.625
-#>  5 5       ""                     NA                  NA    
-#>  6 6       "street"                0.220               0.393
-#>  7 7       ""                     NA                  NA    
-#>  8 8       "boxer"                 0.576               0.478
-#>  9 9       "punch"                 0.603               0.348
-#> 10 10      ""                     NA                  NA
+#> # A tibble: 10 × 5
+#>    row_id_unique id_orig word_clean CosDist_Anchor_GLO CosDist_Anchor_SD15
+#>            <int> <fct>   <chr>                   <dbl>               <dbl>
+#>  1             1 1       <NA>                   NA                 NA     
+#>  2             2 2       girl                    0.255              0.439 
+#>  3             3 3       walk                    0.159              0.173 
+#>  4             4 4       down                    0.116              0.275 
+#>  5             5 5       <NA>                   NA                 NA     
+#>  6             6 6       street                  0.116              0.0457
+#>  7             7 7       <NA>                   NA                 NA     
+#>  8             8 8       boxer                   0.256              0.0585
+#>  9             9 9       punch                   0.254              0.0828
+#> 10            10 10      <NA>                   NA                 NA
 ```
 
 <br/>
@@ -466,27 +432,8 @@ Output of ‘dist_unordered’ on unordered word list
 ``` r
 MyDistMatrix <- dist_matrix_all(MyCleanDat4Matrix)
 head(MyDistMatrix)
-#>              dog       cat       rat       gun    banana     sword     table
-#> dog    0.0000000 0.2739303 0.5123881 0.5906894 0.7818078 0.7452758 0.6434250
-#> cat    0.2739303 0.0000000 0.5213184 0.6744473 0.7795409 0.8020755 0.6462459
-#> rat    0.5123881 0.5213184 0.0000000 0.7400105 0.9244186 0.8928397 0.7819956
-#> gun    0.5906894 0.6744473 0.7400105 0.0000000 0.8911675 0.6337077 0.6980466
-#> banana 0.7818078 0.7795409 0.9244186 0.8911675 0.0000000 0.8650971 0.7472485
-#> sword  0.7452758 0.8020755 0.8928397 0.6337077 0.8650971 0.0000000 0.8120899
-#>            glass     phone      sofa   missile      lamb     rifle   trumpet
-#> dog    0.7469269 0.6779000 0.7822941 0.9306060 0.7084598 0.7186925 0.8409885
-#> cat    0.7140502 0.6637064 0.6782575 0.9354524 0.7626201 0.7722337 0.8959449
-#> rat    0.8251858 0.8620877 0.9180761 0.9349857 0.8468455 0.8033361 0.9699536
-#> gun    0.7318920 0.6247425 0.8542499 0.7508974 0.8991612 0.3425261 0.8668525
-#> banana 0.7901191 0.8755222 0.7817425 0.9752764 0.7922279 0.9065630 0.9392574
-#> sword  0.7321883 0.8822808 0.8815341 0.8334430 0.8187028 0.6263753 0.7899880
-#>            piano     chair      desk     snake   dolphin     shark
-#> dog    0.8010806 0.6306125 0.6752448 0.5686341 0.7301250 0.6937237
-#> cat    0.8247876 0.6071512 0.6630289 0.6045210 0.6999727 0.7601385
-#> rat    0.9866920 0.8114072 0.8622854 0.5350589 0.7802583 0.7386961
-#> gun    0.8374068 0.6545550 0.6733489 0.7210518 0.8909221 0.8865868
-#> banana 0.9084053 0.8046723 0.9201190 0.8221203 0.9566140 0.9001270
-#> sword  0.8395984 0.7344415 0.8118196 0.7098538 0.9599949 0.8158018
+#>                                                                                                    dogcatratgunbananaswordtableglassesphonesofamissilelambrifletrumpetpianochairdesksnakedolphinshark
+#> dogcatratgunbananaswordtableglassesphonesofamissilelambrifletrumpetpianochairdesksnakedolphinshark                                                                                                 NA
 ```
 
 <br/> <br/>

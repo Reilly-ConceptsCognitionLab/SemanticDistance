@@ -31,13 +31,6 @@ dist_ngram2word <- function(dat, ngram) {
   # Store original columns to preserve them in output
   orig_cols <- names(dat)
 
-  # Prepare working data and create unique row IDs
-  dat <- dat %>%
-    dplyr::mutate(
-      row_id_unique = seq_len(nrow(dat)),  # Create unique row identifier
-      word_clean = tolower(word_clean)
-    )
-
   # Join with lookup databases using row_id_unique
   djoin_glo <- left_join(dat, glowca_25, by = c("word_clean" = "word"))
   djoin_sd15 <- left_join(dat, SD15_2025_complete, by = c("word_clean" = "word"))
@@ -125,15 +118,15 @@ dist_ngram2word <- function(dat, ngram) {
 
   # Combine results using row_id_unique instead of id_orig
   final_result <- dat %>%
-    dplyr::select(all_of(orig_cols), row_id_unique) %>%
+    dplyr::select(all_of(orig_cols), id_row_postsplit) %>%
     dplyr::left_join(
       result_glo %>%
-        dplyr::select(row_id_unique, word_clean, contains("CosDist"), -contains("Param_")),
+        dplyr::select(id_row_postsplit, word_clean, contains("CosDist"), -contains("Param_")),
       by = c("row_id_unique", "word_clean")) %>%
     dplyr::left_join(
       result_sd15 %>%
-        dplyr::select(row_id_unique, word_clean, contains("CosDist"), -contains("Param_")),
-      by = c("row_id_unique", "word_clean"))
+        dplyr::select(id_row_postsplit, word_clean, contains("CosDist"), -contains("Param_")),
+      by = c("id_row_postsplit", "word_clean"))
 
   return(final_result)
 }

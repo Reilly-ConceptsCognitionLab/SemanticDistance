@@ -15,6 +15,7 @@
 #' @importFrom textstem lemmatize_strings
 #' @importFrom tidyr separate_rows
 #' @importFrom utils install.packages
+#' @importFrom stringr str_replace_all
 #' @export clean_monologue
 
 clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE, split_strings = TRUE) {
@@ -34,7 +35,7 @@ clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmat
     install.packages("magrittr")
   }
 
-  df$id_orig <- factor(seq_len(nrow(df)))
+  df$id_row_orig <- factor(seq_len(nrow(df)))
   df$word_clean <- df[[wordcol]]
 
   # Obligatorily transform to lowercase first
@@ -42,20 +43,18 @@ clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmat
 
   # Apply stopword omission BEFORE cleaning (if requested)
   if (omit_stops) {
-    omissions <- reillylab_stopwords25  # Load stopwords
-    df$word_clean <- tm::removeWords(df$word_clean, omissions$word)
+    replacement_lookup <- setNames(replacements_25$replacement,
+                                   replacements_25$target)
+    df$word_clean <- stringr::str_replace_all(df$word_clean, replacement_lookup)
+    df$word_clean <- tm::removeWords(df$word_clean, reillylab_stopwords25$word)
   }
 
   # Apply cleaning operations only if clean=TRUE
   if (clean) {
     x <- df$word_clean  # Start with the lowercase (and potentially stopword-free) version
-
-    # Apply cleaning pipeline
     x <- gsub("`", "'", x)
     x <- gsub("[^a-zA-Z']", " ", x) # omit non-alphabetic chars (keeping apostrophes)
-
-    # Remove singleton letters (added cleaning step)
-    x <- gsub("\\b[a-z]\\b", "", x)
+    x <- gsub("\\b[a-z]\\b", "", x)  # Remove singleton letters
 
     # Apply lemmatization if requested
     if (lemmatize) {
@@ -70,8 +69,16 @@ clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmat
     df <- tidyr::separate_rows(df, word_clean, sep = "\\s+")
   }
 
+  #squish any multiword rows into one string
+  df$word_clean <- textclean::replace_white(df$word_clean)
+
   # Replace empty strings with NA instead of removing rows
   df$word_clean[df$word_clean == ""] <- NA
+
+  #append unique ID by row after splitting the dataframe
+  # Prepare working data and create unique row IDs
+  df <- df %>% dplyr::mutate(
+      id_row_postsplit = seq_len(nrow(df)))  # unique row identifier after splitting
 
   return(df)
 }

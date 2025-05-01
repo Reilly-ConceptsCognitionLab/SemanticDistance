@@ -4,7 +4,14 @@
 \alias{clean_monologue}
 \title{clean_monologue}
 \usage{
-clean_monologue(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE)
+clean_monologue(
+  df,
+  wordcol,
+  clean = TRUE,
+  omit_stops = TRUE,
+  lemmatize = TRUE,
+  split_strings = TRUE
+)
 }
 \arguments{
 \item{df}{a dataframe with at least one target column of string data}
@@ -16,6 +23,8 @@ clean_monologue(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE)
 \item{omit_stops}{option for omitting stopwords default is TRUE}
 
 \item{lemmatize}{option for lemmatizing strings default is TRUE}
+
+\item{split_strings}{option T/F (default T) will split multiword utterances into separate rows}
 }
 \value{
 a dataframe
