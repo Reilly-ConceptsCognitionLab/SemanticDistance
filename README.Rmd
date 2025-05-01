@@ -72,15 +72,15 @@ Clean a monologue transcript by calling the 'clean_monologue' function. Specific
 Output of 'clean_monologue' on a messy monologue transcript
 ```{r}
 #text in this dataframe is in a column 'mytext'
-MyCleanMonologue1 <- clean_monologue(Monologue_Dirty, 'mytext', clean=T, omit_stops=T)
-head(MyCleanMonologue1, n=10)
+#MyCleanMonologue1 <- clean_monologue(Monologue_Dirty, wordcol='mytext', clean=T, omit_stops=T)
+#head(MyCleanMonologue1, n=10)
 ```
 
 Output of 'clean_monologue' on a structured monologue transcript
 ```{r}
 #text in this dataframe is in a column 'mytext'
-MyCleanMonologue2 <- clean_monologue(Monologue_Structured, 'mytext', clean=T)
-head(MyCleanMonologue2, n=10)
+#MyCleanMonologue2 <- clean_monologue(Monologue_Structured, 'mytext', clean=T)
+#head(MyCleanMonologue2, n=10)
 ```
 <br/>
 
@@ -95,8 +95,8 @@ This could be a conversation transcript or any language sample where you care ab
 
 Output of 'clean_dialogue' prepping a well-structured dialogue transcript
 ```{r}
-My_CleanDialogue1 <- clean_dialogue(Dialogue_Structured, "mytext", "speaker", omit_stops=T, lemmatize=T)
-head(My_CleanDialogue1, n=8)
+#My_CleanDialogue1 <- clean_dialogue(Dialogue_Structured, "mytext", "speaker", omit_stops=T, lemmatize=T)
+#head(My_CleanDialogue1, n=8)
 ```
 <br/>
 
@@ -176,8 +176,8 @@ Arguments to dist_ngram2ngram are: <br/>
 Output 'dist_ngram2ngram' on monologue transcript
 ```{r}
 #Give the function a cleaned monologue transcript, This example involves chunks of 2-words to 2-words
-MyNgram2NgramDists <- dist_ngram2ngram(MyCleanMonologue2, ngram=2)
-head(MyNgram2NgramDists, n=8)
+#MyNgram2NgramDists <- dist_ngram2ngram(MyCleanMonologue2, ngram=2)
+#head(MyNgram2NgramDists, n=8)
 ```
 <br/>
 
@@ -219,8 +219,8 @@ Arguments to 'anchor_dist' are: <br/>
 
 Output of 'anchor_dist' on a sample monologue transcript
 ```{r}
-MyDistsAnchored <- dist_anchor(MyCleanMonologue2, anchor_size=8)
-head(MyDistsAnchored, n=10)
+#MyDistsAnchored <- dist_anchor(MyCleanMonologue2, anchor_size=8)
+#head(MyDistsAnchored, n=10)
 ```
 <br/>
 

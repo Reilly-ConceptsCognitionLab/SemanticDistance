@@ -116,42 +116,16 @@ Output of ‘clean_monologue’ on a messy monologue transcript
 
 ``` r
 #text in this dataframe is in a column 'mytext'
-MyCleanMonologue1 <- clean_monologue(Monologue_Dirty, 'mytext', clean=T, omit_stops=T)
-head(MyCleanMonologue1, n=10)
-#> # A tibble: 10 × 3
-#>    mytext            id_orig word_clean
-#>    <chr>             <fct>   <chr>     
-#>  1 The dog is blue.  1       dog       
-#>  2 The dog is blue.  1       blue      
-#>  3 Dog               2       dog       
-#>  4 Dog               3       dog       
-#>  5 Some              4       <NA>      
-#>  6 My name is Frank. 5       name      
-#>  7 My name is Frank. 5       frank     
-#>  8 Dog               6       dog       
-#>  9 John's a jerk!    7       john'     
-#> 10 John's a jerk!    7       jerk
+#MyCleanMonologue1 <- clean_monologue(Monologue_Dirty, wordcol='mytext', clean=T, omit_stops=T)
+#head(MyCleanMonologue1, n=10)
 ```
 
 Output of ‘clean_monologue’ on a structured monologue transcript
 
 ``` r
 #text in this dataframe is in a column 'mytext'
-MyCleanMonologue2 <- clean_monologue(Monologue_Structured, 'mytext', clean=T)
-head(MyCleanMonologue2, n=10)
-#> # A tibble: 10 × 4
-#>    timestamp mytext    id_orig word_clean
-#>        <int> <chr>     <fct>   <chr>     
-#>  1         1 "the"     1       <NA>      
-#>  2         2 "girl"    2       girl      
-#>  3         3 "walked"  3       walk      
-#>  4         4 "down "   4       down      
-#>  5         5 "the "    5       <NA>      
-#>  6         6 "street"  6       street    
-#>  7         7 "the"     7       <NA>      
-#>  8         8 "boxer"   8       boxer     
-#>  9         9 "punched" 9       punch     
-#> 10        10 "the"     10      <NA>
+#MyCleanMonologue2 <- clean_monologue(Monologue_Structured, 'mytext', clean=T)
+#head(MyCleanMonologue2, n=10)
 ```
 
 <br/>
@@ -175,19 +149,8 @@ Output of ‘clean_dialogue’ prepping a well-structured dialogue
 transcript
 
 ``` r
-My_CleanDialogue1 <- clean_dialogue(Dialogue_Structured, "mytext", "speaker", omit_stops=T, lemmatize=T)
-head(My_CleanDialogue1, n=8)
-#> # A tibble: 8 × 6
-#>   mytext    speaker id_orig word_clean talker turn_count
-#>   <chr>     <chr>   <fct>   <chr>      <fct>       <dbl>
-#> 1 donkey    P1      1       donkey     P1              1
-#> 2 astronaut P2      2       astronaut  P2              2
-#> 3 bubble    P1      3       bubble     P1              3
-#> 4 street    P2      4       street     P2              4
-#> 5 Pigeon    P1      5       pigeon     P1              5
-#> 6 Dolphin   P2      6       dolphin    P2              6
-#> 7 Eagle     P1      7       eagle      P1              7
-#> 8 eel       P2      8       eel        P2              8
+#My_CleanDialogue1 <- clean_dialogue(Dialogue_Structured, "mytext", "speaker", omit_stops=T, lemmatize=T)
+#head(My_CleanDialogue1, n=8)
 ```
 
 <br/>
@@ -319,20 +282,8 @@ Output ‘dist_ngram2ngram’ on monologue transcript
 
 ``` r
 #Give the function a cleaned monologue transcript, This example involves chunks of 2-words to 2-words
-MyNgram2NgramDists <- dist_ngram2ngram(MyCleanMonologue2, ngram=2)
-head(MyNgram2NgramDists, n=8)
-#> # A tibble: 8 × 6
-#>   row_id_unique id_orig word_clean CountID_Ngram2 CosDist_2gram_GLO
-#>           <dbl> <fct>   <chr>      <fct>                      <dbl>
-#> 1             1 1       <NA>       1                         NA    
-#> 2             2 2       girl       1                         NA    
-#> 3             3 3       walk       2                         NA    
-#> 4             4 4       down       2                          0.353
-#> 5             5 5       <NA>       3                         NA    
-#> 6             6 6       street     3                          0.202
-#> 7             7 7       <NA>       4                         NA    
-#> 8             8 8       boxer      4                          0.429
-#> # ℹ 1 more variable: CosDist_2gram_SD15 <dbl>
+#MyNgram2NgramDists <- dist_ngram2ngram(MyCleanMonologue2, ngram=2)
+#head(MyNgram2NgramDists, n=8)
 ```
 
 <br/>
@@ -395,21 +346,8 @@ chunk-to-new-word comparisons fn<br/>
 Output of ‘anchor_dist’ on a sample monologue transcript
 
 ``` r
-MyDistsAnchored <- dist_anchor(MyCleanMonologue2, anchor_size=8)
-head(MyDistsAnchored, n=10)
-#> # A tibble: 10 × 5
-#>    row_id_unique id_orig word_clean CosDist_Anchor_GLO CosDist_Anchor_SD15
-#>            <int> <fct>   <chr>                   <dbl>               <dbl>
-#>  1             1 1       <NA>                   NA                 NA     
-#>  2             2 2       girl                    0.255              0.439 
-#>  3             3 3       walk                    0.159              0.173 
-#>  4             4 4       down                    0.116              0.275 
-#>  5             5 5       <NA>                   NA                 NA     
-#>  6             6 6       street                  0.116              0.0457
-#>  7             7 7       <NA>                   NA                 NA     
-#>  8             8 8       boxer                   0.256              0.0585
-#>  9             9 9       punch                   0.254              0.0828
-#> 10            10 10      <NA>                   NA                 NA
+#MyDistsAnchored <- dist_anchor(MyCleanMonologue2, anchor_size=8)
+#head(MyDistsAnchored, n=10)
 ```
 
 <br/>
