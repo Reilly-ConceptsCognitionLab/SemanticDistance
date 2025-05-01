@@ -48,7 +48,10 @@ clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmat
       ),
       .before = 1
     ) %>%
-    dplyr::mutate(word_clean = tolower(word_clean))
+    dplyr::mutate(
+      word_clean = tolower(word_clean),
+      is_stopword = FALSE  # Initialize stopword flag
+    )
 
   # Enhanced stopword processing with encoding protection
   if (omit_stops) {
@@ -72,7 +75,7 @@ clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmat
         dplyr::filter(
           !is.na(target),
           !stringi::stri_isempty(target),
-          stringi::stri_enc_isutf8(target)  # Only keep valid UTF-8 strings
+          stringi::stri_enc_isutf8(target)
         )
 
       if (nrow(valid_replacements) > 0) {
@@ -92,7 +95,7 @@ clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmat
 
       # Process stopwords with same encoding protection
       valid_stopwords <- reillylab_stopwords25 %>%
-        dplyr::mutate(word = safe_convert(word))) %>%
+        dplyr::mutate(word = safe_convert(word)) %>%
   dplyr::filter(
     !is.na(word),
     !stringi::stri_isempty(word),
@@ -100,23 +103,22 @@ clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmat
   )
 
 if (nrow(valid_stopwords) > 0) {
-  non_empty <- which(!is.na(df$word_clean) & !stringi::stri_isempty(df$word_clean))
-  if (length(non_empty) > 0) {
-    df$word_clean[non_empty] <- tm::removeWords(
-      df$word_clean[non_empty],
-      valid_stopwords$word
+  # Mark stopwords before removal
+  df <- df %>%
+    dplyr::mutate(
+      is_stopword = word_clean %in% valid_stopwords$word,
+      word_clean = ifelse(is_stopword, NA, word_clean)  # Replace stopwords with NA
     )
-  }
 }
     }
   }
 
-  # Text cleaning pipeline with encoding-safe operations
+  # Text cleaning pipeline
   if (clean) {
     df <- df %>%
       dplyr::mutate(
         word_clean = stringi::stri_replace_all_fixed(word_clean, "`", "'"),
-        word_clean = stringi::stri_replace_all_regex(word_clean, "[^a-zA-Z']", " "),
+        word_clean = stringi::stri_replace_all_regex(word_clean, "[^a-zA-Z]", " "),
         word_clean = stringi::stri_replace_all_regex(word_clean, "\\b[a-z]\\b", ""),
         word_clean = textclean::replace_white(word_clean),
         word_clean = if (lemmatize) textstem::lemmatize_strings(word_clean) else word_clean,
@@ -129,13 +131,16 @@ if (nrow(valid_stopwords) > 0) {
     df <- df %>%
       tidyr::separate_rows(word_clean, sep = "\\s+") %>%
       dplyr::filter(
-        !is.na(word_clean),
-        !stringi::stri_isempty(word_clean)
+        !is.na(word_clean) | is_stopword,  # Keep rows that are either non-NA or marked as stopwords
+        !stringi::stri_isempty(word_clean) | is_stopword
       )
   }
 
   # Add post-split ID
-  df <- df %>% dplyr::mutate(id_row_postsplit = seq_len(nrow(df)))
+  df <- df %>%
+    dplyr::mutate(id_row_postsplit = seq_len(nrow(df)),
+      is_stopword = NULL  # Remove the temporary stopword flag
+    )
 
   return(df)
 }

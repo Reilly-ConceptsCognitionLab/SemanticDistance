@@ -110,22 +110,86 @@ Specific arguments include: <br/>
 (e.g., ‘mytext’) <br/> **clean** = applies cleaning functions (e.g.,
 punct out, lowercase, etc); default is TRUE <br/> **omit_stops** = omits
 stopwords, default is TRUE <br/> **lemmatize** = transforms raw word to
-lemmatized form, default is TRUE <br/>
+lemmatized form, default is TRUE <br/> **split_strings** = T/F (default
+is T) option to split multiword utterances into separate rows <br/>
 
-Output of ‘clean_monologue’ on a messy monologue transcript
+Output of ‘clean_monologue’ on a messy monologue transcript. Note that
+there are two ‘ID” variables appended. ’id_row_orig’ marks where your
+word was originally (pre-spitting) if you have rows with multi-word
+utterances. ‘id_row_postsplit’ marks a unique row ID after you have
+split contractions etc into a one-word-per-row format. Note that
+SemanticDistance requires a one word per row format. If you do not split
+strings, the program will squish all your separate strings in a row into
+one frankenword before moving on to compute distance, split_strings=F
+should only be used when you have already formatted your dataframe into
+a one word per row format and you absoluelty do not want to expand
+contractions or omit stopwords, etc.
 
 ``` r
 #text in this dataframe is in a column 'mytext'
-#MyCleanMonologue1 <- clean_monologue(Monologue_Dirty, wordcol='mytext', clean=T, omit_stops=T)
-#head(MyCleanMonologue1, n=10)
+MyCleanMonologue1 <- clean_monologue(Monologue_Dirty, wordcol='mytext', clean=T, omit_stops=T)
+#> Loading required package: NLP
+#> Loading required package: koRpus.lang.en
+#> Loading required package: koRpus
+#> Loading required package: sylly
+#> For information on available language packages for 'koRpus', run
+#> 
+#>   available.koRpus.lang()
+#> 
+#> and see ?install.koRpus.lang()
+#> 
+#> Attaching package: 'koRpus'
+#> The following object is masked from 'package:tm':
+#> 
+#>     readTagged
+#> 
+#> Attaching package: 'magrittr'
+#> The following object is masked from 'package:tidyr':
+#> 
+#>     extract
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
+head(MyCleanMonologue1, n=10)
+#> # A tibble: 10 × 4
+#>    id_row_orig word_clean mytext            id_row_postsplit
+#>    <fct>       <chr>      <chr>                        <int>
+#>  1 1           dog        The dog is blue.                 1
+#>  2 1           blue       The dog is blue.                 2
+#>  3 2           dog        Dog                              3
+#>  4 3           dog        Dog                              4
+#>  5 5           name       My name is Frank.                5
+#>  6 5           frank      My name is Frank.                6
+#>  7 6           dog        Dog                              7
+#>  8 7           john       John's a jerk!                   8
+#>  9 7           jerk       John's a jerk!                   9
+#> 10 8           storm      Storm                           10
 ```
 
 Output of ‘clean_monologue’ on a structured monologue transcript
 
 ``` r
 #text in this dataframe is in a column 'mytext'
-#MyCleanMonologue2 <- clean_monologue(Monologue_Structured, 'mytext', clean=T)
-#head(MyCleanMonologue2, n=10)
+MyCleanMonologue2 <- clean_monologue(Monologue_Structured, 'mytext', clean=T)
+head(MyCleanMonologue2, n=10)
+#> # A tibble: 10 × 5
+#>    id_row_orig word_clean timestamp mytext     id_row_postsplit
+#>    <fct>       <chr>          <int> <chr>                 <int>
+#>  1 2           girl               2 "girl"                    1
+#>  2 3           walk               3 "walked"                  2
+#>  3 4           down               4 "down "                   3
+#>  4 6           street             6 "street"                  4
+#>  5 8           boxer              8 "boxer"                   5
+#>  6 9           punch              9 "punched"                 6
+#>  7 11          wrestler          11 "wrestler"                7
+#>  8 12          open              12 "open"                    8
+#>  9 14          door              14 "door"                    9
+#> 10 15          why               15 "why "                   10
 ```
 
 <br/>
@@ -352,7 +416,7 @@ Output of ‘anchor_dist’ on a sample monologue transcript
 
 <br/>
 
-### <span style="color: brown;">2.6: Distance Matrix All Word Pairs (dist_matrix_all)</span>
+## <span style="color: brown;">2.6: Distance Matrix All Word Pairs (dist_matrix_all)</span>
 
 Returns square matrix where each entry \[i,j\] is the cosine distance
 between word i and word j. Matrix contains original words as both row
