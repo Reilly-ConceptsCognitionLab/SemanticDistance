@@ -19,70 +19,105 @@
 #' @export clean_monologue
 
 clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE, split_strings = TRUE) {
-  if (!requireNamespace("tm", quietly = TRUE)) {
-    install.packages("tm")
-  }
-  if (!requireNamespace("textstem", quietly = TRUE)) {
-    install.packages("textstem")
-  }
-  if (!requireNamespace("tidyr", quietly = TRUE)) {
-    install.packages("tidyr")
-  }
-  if (!requireNamespace("textclean", quietly = TRUE)) {
-    install.packages("textclean")
-  }
-  if (!requireNamespace("magrittr", quietly = TRUE)) {
-    install.packages("magrittr")
-  }
-  if (!requireNamespace("stringr", quietly = TRUE)) {
-    install.packages("stringr")
-  }
-  if (!requireNamespace("dplyr", quietly = TRUE)) {
-    install.packages("dplyr")
-  }
-
-  df$id_row_orig <- factor(seq_len(nrow(df)))
-  df$word_clean <- df[[wordcol]]
-
-  # Obligatorily transform to lowercase first
-  df$word_clean <- tolower(df$word_clean)
-
-  # Apply stopword omission BEFORE cleaning (if requested)
-  if (omit_stops) {
-    replacement_lookup <- setNames(replacements_25$replacement,
-                                   replacements_25$target)
-    df$word_clean <- stringr::str_replace_all(df$word_clean, replacement_lookup)
-    df$word_clean <- tm::removeWords(df$word_clean, reillylab_stopwords25$word)
-  }
-
-  # Apply cleaning operations only if clean=TRUE
-  if (clean) {
-    x <- df$word_clean  # Start with the lowercase (and potentially stopword-free) version
-    x <- gsub("`", "'", x)
-    x <- gsub("[^a-zA-Z']", " ", x) # omit non-alphabetic chars (keeping apostrophes)
-    x <- gsub("\\b[a-z]\\b", "", x)  # Remove singleton letters
-    x <- textclean::replace_white(x) # Clean up whitespace
-
-    # Apply lemmatization if requested
-    if (lemmatize) {
-      x <- textstem::lemmatize_strings(x)
+  # Load required packages
+  required_packages <- c("tm", "textstem", "tidyr", "textclean", "magrittr", "stringr", "dplyr")
+  for (pkg in required_packages) {
+    if (!requireNamespace(pkg, quietly = TRUE)) {
+      install.packages(pkg)
     }
-
-    df$word_clean <- x
+    library(pkg, character.only = TRUE)
   }
 
-  # Replace empty strings with NA before splitting
-  df$word_clean[df$word_clean == ""] <- NA
+  # Input validation
+  if (nrow(df) == 0) {
+    warning("Input dataframe is empty")
+    return(df)
+  }
 
-  # Split multi-word strings into separate rows while maintaining ID_Orig and talker
+  if (!wordcol %in% names(df)) {
+    stop(paste("Column", wordcol, "not found in dataframe"))
+  }
+
+  # Create working copy with proper encoding handling
+  df <- df %>%
+    dplyr::mutate(
+      id_row_orig = factor(seq_len(nrow(df))),
+      word_clean = stringi::stri_enc_toutf8(as.character(.[[wordcol]])), # Ensure UTF-8 encoding
+      .before = 1
+    ) %>%
+    dplyr::mutate(word_clean = tolower(word_clean))
+
+  # Stopword processing with encoding-safe empty pattern protection
+  if (omit_stops) {
+    if (!exists("replacements_25") || !exists("reillylab_stopwords25")) {
+      warning("Stopword data not found. Skipping stopword removal.")
+    } else {
+      # Ensure UTF-8 encoding and filter empty targets safely
+      valid_replacements <- replacements_25 %>%
+        dplyr::mutate(
+          target = stringi::stri_enc_toutf8(as.character(target)),
+          replacement = stringi::stri_enc_toutf8(as.character(replacement))
+        ) %>%
+        dplyr::filter(!is.na(target),
+                      target != "",
+                      stringi::stri_length(target) > 0) # Use stringi's encoding-safe length
+
+      if (nrow(valid_replacements) > 0) {
+        replacement_lookup <- setNames(valid_replacements$replacement,
+                                       valid_replacements$target)
+
+        non_empty <- which(df$word_clean != "" & !is.na(df$word_clean))
+        if (length(non_empty) > 0) {
+          df$word_clean[non_empty] <- stringi::stri_replace_all_regex(
+            df$word_clean[non_empty],
+            pattern = names(replacement_lookup),
+            replacement = replacement_lookup,
+            vectorize_all = FALSE
+          )
+        }
+      }
+
+      # Process stopwords with encoding handling
+      valid_stopwords <- reillylab_stopwords25 %>%
+        dplyr::mutate(word = stringi::stri_enc_toutf8(as.character(word))) %>%
+  dplyr::filter(!is.na(word),
+                word != "",
+                stringi::stri_length(word) > 0)
+
+if (nrow(valid_stopwords) > 0) {
+  non_empty <- which(df$word_clean != "" & !is.na(df$word_clean))
+  if (length(non_empty) > 0) {
+    df$word_clean[non_empty] <- tm::removeWords(
+      stringi::stri_enc_toutf8(df$word_clean[non_empty]),
+      stringi::stri_enc_toutf8(valid_stopwords$word)
+    )
+  }
+}
+    }
+  }
+
+  # Text cleaning pipeline with encoding handling
+  if (clean) {
+    df <- df %>%
+      dplyr::mutate(
+        word_clean = stringi::stri_replace_all_fixed(word_clean, "`", "'"),
+        word_clean = stringi::stri_replace_all_regex(word_clean, "[^a-zA-Z']", " "),
+        word_clean = stringi::stri_replace_all_regex(word_clean, "\\b[a-z]\\b", ""),
+        word_clean = textclean::replace_white(word_clean),
+        word_clean = if (lemmatize) textstem::lemmatize_strings(word_clean) else word_clean,
+        word_clean = ifelse(word_clean == "", NA, word_clean)
+      )
+  }
+
+  # String splitting with empty handling
   if (split_strings) {
-    df <- tidyr::separate_rows(df, word_clean, sep = "\\s+") %>%
+    df <- df %>%
+      tidyr::separate_rows(word_clean, sep = "\\s+") %>%
       dplyr::filter(!is.na(word_clean), word_clean != "")
   }
 
-  #append unique ID by row after splitting the dataframe
-  df <- df %>% dplyr::mutate(
-    id_row_postsplit = seq_len(nrow(df)))  # unique row identifier after splitting
+  # Add post-split ID
+  df <- df %>% dplyr::mutate(id_row_postsplit = seq_len(nrow(df)))
 
   return(df)
 }
