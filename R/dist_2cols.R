@@ -16,20 +16,13 @@
 #' @export dist_2cols
 
 dist_2cols <- function(dat) {
-  if (!requireNamespace("utils", quietly = TRUE)) {
-    install.packages("utils")
-  }
-  if (!requireNamespace("dplyr", quietly = TRUE)) {
-    install.packages("dplyr")
-  }
-  if (!requireNamespace("tidyr", quietly = TRUE)) {
-    install.packages("tidyr")
-  }
-  if (!requireNamespace("lsa", quietly = TRUE)) {
-    install.packages("lsa")
-  }
-  if (!requireNamespace("rlang", quietly = TRUE)) {
-    install.packages("rlang")
+  # Load required packages
+  required_packages <- c("dplyr", "magrittr", "lsa", "rlang", "tidyr", "utils")
+  for (pkg in required_packages) {
+    if (!requireNamespace(pkg, quietly = TRUE)) {
+      install.packages(pkg)
+    }
+    library(pkg, character.only = TRUE)
   }
 
   # Find columns ending with _clean1 and _clean2
@@ -69,27 +62,27 @@ dist_2cols <- function(dat) {
 
   # Loop SD15
   for (group in levels(djoin_sd15$id_orig)) {
-    subset_df <- djoin_sd15[djoin_sd15$id_orig == group, ]  # Subset data
+    subset_df <- djoin_sd15[djoin_sd15$id_row_orig == group, ]  # Subset data
     if (nrow(subset_df) >= 2) {
       row1 <- subset_df[1, sapply(subset_df, is.numeric)]
       row2 <- subset_df[2, sapply(subset_df, is.numeric)]
-      result_sd15$CosDist[result_sd15$id_orig == group] <- cos_dist(row1, row2)
+      result_sd15$CosDist[result_sd15$id_row_orig == group] <- cos_dist(row1, row2)
     }
   }
 
   # Loop glove
-  for (group in levels(djoin_glow$id_orig)) {
-    subset_df <- djoin_glow[djoin_glow$id_orig == group, ]  # Subset data
+  for (group in levels(djoin_glow$id_row_orig)) {
+    subset_df <- djoin_glow[djoin_glow$id_row_orig == group, ]  # Subset data
     if (nrow(subset_df) >= 2) {
       row1 <- subset_df[1, sapply(subset_df, is.numeric)]
       row2 <- subset_df[2, sapply(subset_df, is.numeric)]
-      result_glo$CosDist[result_glo$id_orig == group] <- cos_dist(row1, row2)
+      result_glo$CosDist[result_glo$id_row_orig == group] <- cos_dist(row1, row2)
     }
   }
 
   result_sd15 <- result_sd15 %>% dplyr::rename(CosDist_SD15 = CosDist)
   result_glo <- result_glo %>% dplyr::rename(CosDist_GLO = CosDist)
-  all <- dat %>% dplyr::left_join(result_sd15, by = "id_orig")
-  all <- all %>% dplyr::left_join(result_glo, by = "id_orig")
+  all <- dat %>% dplyr::left_join(result_sd15, by = "id_row_orig")
+  all <- all %>% dplyr::left_join(result_glo, by = "id_row_orig")
   return(all)
 }

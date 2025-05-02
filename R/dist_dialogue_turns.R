@@ -23,18 +23,17 @@
 
 dist_dialogue_turns <- function(dat) {
   # Load required packages
-  if (!requireNamespace("lsa", quietly = TRUE)) {
-    install.packages("lsa")
-  }
-  if (!requireNamespace("dplyr", quietly = TRUE)) {
-    install.packages("dplyr")
-  }
-  if (!requireNamespace("purrr", quietly = TRUE)) {
-    install.packages("purrr")
+  required_packages <- c("purrr", "magrittr",  "dplyr", "lsa", "utils")
+  for (pkg in required_packages) {
+    if (!requireNamespace(pkg, quietly = TRUE)) {
+      install.packages(pkg)
+    }
+    library(pkg, character.only = TRUE)
   }
 
+
   # Check if required columns exist in input data
-  required_cols <- c("id_orig", "talker", "turn_count", "word_clean")
+  required_cols <- c("id_orig", "talker", "id_turn", "word_clean")
   if (!all(required_cols %in% names(dat))) {
     missing_cols <- setdiff(required_cols, names(dat))
     stop(paste("Missing required columns:", paste(missing_cols, collapse = ", ")))
@@ -46,9 +45,9 @@ dist_dialogue_turns <- function(dat) {
       row_id = seq_len(nrow(dat)),  # Add unique row identifier
       word_clean = tolower(word_clean),
       talker = as.factor(talker),
-      turn_count = as.integer(turn_count)
+      turn_count = as.integer(id_turn)
     ) %>%
-    dplyr::select(row_id, id_orig, talker, turn_count, word_clean)
+    dplyr::select(row_id, id_orig, talker, id_turn, word_clean)
 
   # Join with embedding databases
   djoin_glo <- dplyr::left_join(dat, glowca_25, by = c("word_clean" = "word"))
@@ -66,12 +65,11 @@ dist_dialogue_turns <- function(dat) {
 
     # Compute mean vector for each turn
     turn_vectors <- embed_df %>%
-      dplyr::group_by(turn_count) %>%
-      dplyr::summarize(
-        dplyr::across(all_of(numeric_cols), ~ mean(., na.rm = TRUE)),
+      dplyr::group_by(id_turn) %>%
+      dplyr::summarize(dplyr::across(all_of(numeric_cols), ~ mean(., na.rm = TRUE)),
         .groups = "drop"
       ) %>%
-      dplyr::arrange(turn_count)
+      dplyr::arrange(id_turn)
 
     # Calculate cosine distances between consecutive turns
     turn_vectors <- turn_vectors %>%
@@ -88,14 +86,11 @@ dist_dialogue_turns <- function(dat) {
             if (any(is.na(vec_next))) return(NA_real_)
             if (length(vec_current) != length(vec_next)) return(NA_real_)
 
-            # Safe cosine calculation with error handling
             tryCatch({
               1 - lsa::cosine(vec_current, vec_next)
             }, error = function(e) NA_real_)
           }
-        )
-      ) %>%
-      dplyr::select(turn_count, contains("cosdist"))
+        )) %>% dplyr::select(id_turn, contains("cosdist"))
 
     return(turn_vectors)
   }
@@ -106,15 +101,15 @@ dist_dialogue_turns <- function(dat) {
 
   # Combine results and add original metadata
   final_result <- glo_results %>%
-    dplyr::full_join(sd15_results, by = "turn_count") %>%
+    dplyr::full_join(sd15_results, by = "id_turn") %>%
     dplyr::left_join(
-      dat %>% dplyr::group_by(turn_count) %>%
+      dat %>% dplyr::group_by(id_turn) %>%
         dplyr::summarize(talker = dplyr::first(talker),
           n_words = dplyr::n(),
           .groups = "drop"
         ),
       by = "turn_count"
-    ) %>% dplyr::select(turn_count, talker, n_words, everything())
+    ) %>% dplyr::select(id_turn, talker, n_words, everything())
 
   return(final_result)
 }

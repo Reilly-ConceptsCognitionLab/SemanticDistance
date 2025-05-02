@@ -10,67 +10,100 @@
 #' @param omit_stops T/F user wishes to remove stopwords (default is TRUE)
 #' @param lemmatize T/F user wishes to lemmatize each string (default is TRUE)
 #' @return a dataframe
+#' @importFrom dplyr mutate
 #' @importFrom magrittr %>%
-#' @importFrom tm removeWords
+#' @importFrom stringi stri_isempty
+#' @importFrom stringi stri_enc_toutf8
+#' @importFrom stringi stri_encode
+#' @importFrom stringi stri_enc_isutf8
+#' @importFrom stringi stri_replace_all_fixed
+#' @importFrom stringi stri_replace_all_regex
 #' @importFrom textstem lemmatize_strings
+#' @importFrom tm removeWords
+#' @importFrom textclean replace_white
 #' @importFrom utils install.packages
 #' @export clean_2cols
 
 clean_2cols <- function(df, col1, col2, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE) {
-  # Check and install required packages
-  if (!requireNamespace("textclean", quietly = TRUE)) {
-    install.packages("textclean")
+  # Load required packages
+  required_packages <- c("dplyr", "magrittr", "stringi", "textstem", "tm", "textclean", "utils")
+  for (pkg in required_packages) {
+    if (!requireNamespace(pkg, quietly = TRUE)) {
+      install.packages(pkg)
+    }
+    library(pkg, character.only = TRUE)
   }
-  if (!requireNamespace("textstem", quietly = TRUE)) {
-    install.packages("textstem")
-  }
-  if (!requireNamespace("tm", quietly = TRUE)) {
-    install.packages("tm")
-  }
-  if (!requireNamespace("magrittr", quietly = TRUE)) {
-    install.packages("magrittr")
-  }
+
+  # Convert specified columns to lowercase first
+  df <- df %>%
+    dplyr::mutate(
+      !!col1 := tolower(.[[col1]]),
+      !!col2 := tolower(.[[col2]])
+    )
 
   # Create ID column
-  df$id_orig <- factor(seq_len(nrow(df)))
+  df$id_row_orig <- factor(seq_len(nrow(df)))
 
-  # Define cleaning operations function
-  clean_text <- function(x, clean_flag = TRUE) {
-    # Convert to lowercase first
-    x <- tolower(x)
-
-    # Remove stopwords if requested (now before cleaning)
-    if (omit_stops) {
-      x <- tm::removeWords(x, reillylab_stopwords25$word)
+  # Text cleaning function
+  clean_text <- function(x, clean_flag = TRUE, omit_stops_flag = TRUE, lemmatize_flag = TRUE) {
+    if (clean_flag) {
+      # Convert backticks to apostrophes
+      x <- stringi::stri_replace_all_fixed(x, "`", "'")
+      # Keep apostrophes and letters (remove other punctuation)
+      x <- stringi::stri_replace_all_regex(x, "[^a-zA-Z']", " ")
+      # Remove single letters
+      x <- stringi::stri_replace_all_regex(x, "\\b[a-z]\\b", "")
+      # Clean whitespace
+      x <- textclean::replace_white(x)
+      # Lemmatization (preserves apostrophes)
+      x <- if (lemmatize_flag) textstem::lemmatize_strings(x) else x
+      # Remove apostrophes
+      x <- stringi::stri_replace_all_fixed(x, "'", "")
+      # Mark empty strings as NA
+      x <- ifelse(stringi::stri_isempty(x), NA, x)
     }
 
-    if (clean_flag) {
-      # Apply cleaning pipeline
-      x <- gsub("`", "'", x)
-      x <- gsub("[^a-zA-Z']", "", x) # omit non-alphabetic chars (keeping apostrophes)
-      x <- gsub("\\b[a-z]\\b", "", x) # removes alphabetic singletons
+    # Stopword removal
+    if (omit_stops_flag) {
+      if (!exists("replacements_25") || !exists("reillylab_stopwords25")) {
+        warning("Stopword data not found. Skipping stopword removal.")
+      } else {
+        # Safe encoding conversion for stopwords
+        safe_convert <- function(x) {
+          tryCatch(
+            stringi::stri_enc_toutf8(as.character(x), is_unknown_8bit = TRUE, validate = TRUE),
+            error = function(e) stringi::stri_encode(as.character(x), to = "UTF-8")
+          )
+        }
 
-      # Lemmatize if requested
-      if (lemmatize) {
-        x <- textstem::lemmatize_strings(x)
-      }
+        # Process stopwords with encoding protection
+        valid_stopwords <- reillylab_stopwords25 %>%
+          dplyr::mutate(word = safe_convert(word)) %>%
+          dplyr::filter(
+            !is.na(word),
+            !stringi::stri_isempty(word),
+            stringi::stri_enc_isutf8(word)
+          )
 
-      # Final cleanup
-      x <- gsub("\\s+", " ", x) # collapse multiple spaces
-      x <- trimws(x) # trim whitespace
-
-      # Return NA if empty or multiple words
-      if (x == "" || length(unlist(strsplit(x, "\\s+"))) > 1) {
-        return(NA_character_)
+        if (nrow(valid_stopwords) > 0) {
+          x <- ifelse(x %in% valid_stopwords$word, NA, x)
+        }
       }
     }
 
     return(x)
   }
 
-  # Apply processing to both columns
-  df[[paste0(col1, "_clean")]] <- sapply(df[[col1]], clean_text, clean_flag = clean)
-  df[[paste0(col2, "_clean")]] <- sapply(df[[col2]], clean_text, clean_flag = clean)
+  # Apply processing to both columns with different suffixes
+  df[[paste0(col1, "_clean1")]] <- sapply(df[[col1]], clean_text,
+                                          clean_flag = clean,
+                                          omit_stops_flag = omit_stops,
+                                          lemmatize_flag = lemmatize)
+
+  df[[paste0(col2, "_clean2")]] <- sapply(df[[col2]], clean_text,
+                                          clean_flag = clean,
+                                          omit_stops_flag = omit_stops,
+                                          lemmatize_flag = lemmatize)
 
   return(df)
 }

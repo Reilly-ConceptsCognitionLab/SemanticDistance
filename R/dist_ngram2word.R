@@ -6,32 +6,27 @@
 #' @param dat a dataframe prepped using 'clean_monologue' fn
 #' @param ngram an integer specifying the window size of words for computing distance to a target word will go back skipping NAs until content words equals the ngram window
 #' @return a dataframe
-#' @importFrom magrittr %>%
 #' @importFrom dplyr select
 #' @importFrom dplyr left_join
 #' @importFrom dplyr mutate
 #' @importFrom lsa cosine
+#' @importFrom magrittr %>%
 #' @importFrom utils install.packages
 #' @export dist_ngram2word
 
 dist_ngram2word <- function(dat, ngram) {
-  if (!requireNamespace("utils", quietly = TRUE)) {
-    install.packages("utils")
-  }
-  if (!requireNamespace("lsa", quietly = TRUE)) {
-    install.packages("lsa")
-  }
-  if (!requireNamespace("dplyr", quietly = TRUE)) {
-    install.packages("dplyr")
-  }
-  if (!requireNamespace("magrittr", quietly = TRUE)) {
-    install.packages("magrittr")
+  my_packages <- c("dplyr", "lsa", "magrittr", "utils")
+  for (pkg in my_packages) {
+    if (!requireNamespace(pkg, quietly = TRUE)) {
+      install.packages(pkg)
+    }
+    library(pkg, character.only = TRUE)
   }
 
   # Store original columns to preserve them in output
   orig_cols <- names(dat)
 
-  # Join with lookup databases using row_id_unique
+  # Join with lookup databases
   djoin_glo <- left_join(dat, glowca_25, by = c("word_clean" = "word"))
   djoin_sd15 <- left_join(dat, SD15_2025_complete, by = c("word_clean" = "word"))
 
@@ -116,13 +111,13 @@ dist_ngram2word <- function(dat, ngram) {
   result_glo <- compute_cosdist(djoin_glo, param_cols_glo, cosdist_colname_glo)
   result_sd15 <- compute_cosdist(djoin_sd15, param_cols_sd15, cosdist_colname_sd15)
 
-  # Combine results using row_id_unique instead of id_orig
+  # Combine results using id_row_postsplit consistently
   final_result <- dat %>%
     dplyr::select(all_of(orig_cols), id_row_postsplit) %>%
     dplyr::left_join(
       result_glo %>%
         dplyr::select(id_row_postsplit, word_clean, contains("CosDist"), -contains("Param_")),
-      by = c("row_id_unique", "word_clean")) %>%
+      by = c("id_row_postsplit", "word_clean")) %>%
     dplyr::left_join(
       result_sd15 %>%
         dplyr::select(id_row_postsplit, word_clean, contains("CosDist"), -contains("Param_")),
