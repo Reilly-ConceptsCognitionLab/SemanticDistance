@@ -212,7 +212,7 @@
 <p>Output of ‘clean_unordered4matrix’ on unordered word list</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Run clean fn </span></span>
-<span><span class="va">MyCleanDat4Matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_unordered4matrix.html">clean_unordered4matrix</a></span><span class="op">(</span><span class="va">WordList_TestClustering</span>, wordcol<span class="op">=</span><span class="st">"mytext"</span>, clean<span class="op">=</span><span class="cn">TRUE</span>, omit_stops<span class="op">=</span><span class="cn">TRUE</span>, lemmatize<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> </span>
+<span><span class="va">MyCleanDat4Matrix</span> <span class="op">&lt;-</span> <span class="fu">clean_unordered4matrix</span><span class="op">(</span><span class="va">WordList_TestClustering</span>, wordcol<span class="op">=</span><span class="st">"mytext"</span>, clean<span class="op">=</span><span class="cn">TRUE</span>, omit_stops<span class="op">=</span><span class="cn">TRUE</span>, lemmatize<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> </span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">MyCleanDat4Matrix</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 1 × 3</span></span>
 <span><span class="co">#&gt;   mytext                                                      id_orig word_clean</span></span>
