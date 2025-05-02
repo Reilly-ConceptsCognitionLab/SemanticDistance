@@ -30,8 +30,7 @@ clean_dialogue <- function(df, wordcol, whotalks, clean=TRUE, omit_stops=TRUE, l
 
   # Create working copy with robust encoding handling
   df <- df %>%
-    dplyr::mutate(
-      id_row_orig = factor(seq_len(nrow(df))),
+    dplyr::mutate(id_row_orig = factor(seq_len(nrow(df))),
       word_clean = tryCatch(
         stringi::stri_enc_toutf8(as.character(.[[wordcol]]), is_unknown_8bit = TRUE, validate = TRUE),
         error = function(e) stringi::stri_encode(as.character(.[[wordcol]]), to = "UTF-8")
@@ -98,8 +97,7 @@ clean_dialogue <- function(df, wordcol, whotalks, clean=TRUE, omit_stops=TRUE, l
       # Process stopwords with encoding protection
       valid_stopwords <- reillylab_stopwords25 %>%
         dplyr::mutate(word = safe_convert(word)) %>%
-        dplyr::filter(
-          !is.na(word),
+        dplyr::filter(!is.na(word),
           !stringi::stri_isempty(word),
           stringi::stri_enc_isutf8(word)
         )

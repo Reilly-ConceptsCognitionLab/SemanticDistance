@@ -35,7 +35,7 @@ dist_2cols <- function(dat) {
   col_1 <- clean_cols[grep("_clean1$", clean_cols)]
   col_2 <- clean_cols[grep("_clean2$", clean_cols)]
 
-  dat_small <- dat %>% dplyr::select(id_orig, !!rlang::sym(col_1), !!rlang::sym(col_2))
+  dat_small <- dat %>% dplyr::select(id_row_orig, !!rlang::sym(col_1), !!rlang::sym(col_2))
   unspooled_txt <- dat_small %>%
     tidyr::pivot_longer(cols = c(!!sym(col_1), !!rlang::sym(col_2)),
                  names_to = "word_type",

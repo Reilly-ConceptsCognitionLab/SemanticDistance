@@ -1,25 +1,23 @@
-#' dist_matrix_all
+#' dist_matrix
 #'
 #' Function takes dataframe cleaned using 'clean_unordered4matrix', pairwise distance between all elements as a matrix
-#' @name dist_matrix_all
+#' @name dist_matrix
 #' @param dat a dataframe prepped using 'clean_unordered4matrix' fn
 #' @param dist_type semantic norms for running distance matrix on default='embedding', other is 'SD15'
 #' @return a dataframe
-#' @importFrom magrittr %>%
 #' @importFrom dplyr left_join
 #' @importFrom lsa cosine
+#' @importFrom magrittr %>%
 #' @importFrom utils install.packages
-#' @export dist_matrix_all
+#' @export dist_matrix
 
-dist_matrix_all <- function(dat, dist_type = "embedding") {
-  if (!requireNamespace("lsa", quietly = TRUE)) {
-    install.packages("lsa")
-  }
-  if (!requireNamespace("dplyr", quietly = TRUE)) {
-    install.packages("dplyr")
-  }
-  if (!requireNamespace("magrittr", quietly = TRUE)) {
-    install.packages("magrittr")
+dist_matrix <- function(dat, dist_type = "embedding") {
+  my_packages <- c("dplyr", "lsa", "magrittr", "utils")
+  for (pkg in my_packages) {
+    if (!requireNamespace(pkg, quietly = TRUE)) {
+      install.packages(pkg)
+    }
+    library(pkg, character.only = TRUE)
   }
 
   # Prepare data - just get the words we need to compare
@@ -28,11 +26,9 @@ dist_matrix_all <- function(dat, dist_type = "embedding") {
   if (tolower(dist_type) == "embedding") {
     # Join with GLO embeddings
     embeddings <- dplyr::left_join(data.frame(word = words), glowca_25, by = "word")
-  } else if (tolower(dist_type) == "sd15") {
+  } else if (tolower(dist_type) == "SD15") {
     # Join with SD15 embeddings
     embeddings <- dplyr::left_join(data.frame(word = words), SD15_2025_complete, by = "word")
-  } else {
-    stop("dist_type must be either 'embedding' or 'SD15'")
   }
 
   # Get numeric columns (the embedding vectors)

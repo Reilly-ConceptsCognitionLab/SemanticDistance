@@ -20,27 +20,16 @@
 #' @export dist_ngram2ngram
 
 dist_ngram2ngram <- function(dat, ngram) {
-  if (!requireNamespace("utils", quietly = TRUE)) {
-    install.packages("utils")
-  }
-  if (!requireNamespace("lsa", quietly = TRUE)) {
-    install.packages("lsa")
-  }
-  if (!requireNamespace("dplyr", quietly = TRUE)) {
-    install.packages("dplyr")
-  }
-  if (!requireNamespace("magrittr", quietly = TRUE)) {
-    install.packages("magrittr")
+  my_packages <- c("dplyr", "lsa", "magrittr", "utils")
+  for (pkg in my_packages) {
+    if (!requireNamespace(pkg, quietly = TRUE)) {
+      install.packages(pkg)
+    }
+    library(pkg, character.only = TRUE)
   }
 
-  # Create unique row identifier and prepare data
-  dat <- dat %>%
-    dplyr::mutate(
-      row_id_unique = seq_len(nrow(dat)),  # Unique identifier for each row
-      id_orig = as.factor(id_orig),
-      word_clean = tolower(word_clean)
-    ) %>%
-    dplyr::select(row_id_unique, id_orig, word_clean)
+  # Store original columns to preserve them in output
+  orig_cols <- names(dat)
 
   # Join with embedding databases first to get all parameters
   djoin_glow <- dplyr::left_join(dat, glowca_25, by = c("word_clean" = "word"))
@@ -105,8 +94,8 @@ dist_ngram2ngram <- function(dat, ngram) {
     }
 
     embed_df %>%
-      dplyr::select(row_id_unique, all_of(cosdist_colname)) %>%
-      dplyr::filter(!is.na(row_id_unique))
+      dplyr::select(id_row_postsplit, all_of(cosdist_colname)) %>%
+      dplyr::filter(!is.na(id_row_postsplit))
   }
 
   # Process both embeddings
@@ -115,8 +104,8 @@ dist_ngram2ngram <- function(dat, ngram) {
 
   # Combine results
   result <- dat %>%
-    dplyr::left_join(glo_dist, by = "row_id_unique") %>%
-    dplyr::left_join(sd15_dist, by = "row_id_unique")
+    dplyr::left_join(glo_dist, by = "id_row_postsplit") %>%
+    dplyr::left_join(sd15_dist, by = "id_row_postsplit")
 
   return(result)
 }
