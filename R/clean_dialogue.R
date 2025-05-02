@@ -9,7 +9,7 @@
 #' @param clean T/F apply cleaning transformations (default is TRUE)
 #' @param omit_stops T/F user wishes to remove stopwords (default is TRUE)
 #' @param lemmatize T/F user wishes to lemmatize each string (default is TRUE)
-#' @param split_strings T/F (default is TRUE) will split and unlist contents of rows
+#' @param split_strings option T/F (default T) split multiword contractions into separate rows
 #' @return a dataframe
 #' @importFrom magrittr %>%
 #' @importFrom tm removeWords
@@ -18,7 +18,7 @@
 #' @importFrom utils install.packages
 #' @export clean_dialogue
 
-clean_dialogue <- function(df, wordcol, whotalks, clean=TRUE, omit_stops=TRUE, lemmatize = TRUE, split_stings=TRUE) {
+clean_dialogue <- function(df, wordcol, whotalks, clean=TRUE, omit_stops=TRUE, lemmatize = TRUE, split_strings=TRUE) {
   if (!requireNamespace("textclean", quietly = TRUE)) {
     install.packages("textclean")
   }

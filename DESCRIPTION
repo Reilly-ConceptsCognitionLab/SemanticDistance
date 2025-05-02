@@ -26,6 +26,7 @@ Imports:
     dplyr,
     utils,
     purrr,
+    stringr,
     rlang
 Suggests: 
     knitr,

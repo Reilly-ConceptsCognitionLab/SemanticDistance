@@ -83,8 +83,8 @@ clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmat
     df <- df %>%
       tidyr::separate_rows(word_clean, sep = "\\s+") %>%
       dplyr::filter(
-        !is.na(word_clean),
-        !stringi::stri_isempty(word_clean)
+        !is.na(word_clean) | is_stopword,  # Keep NAs that are stopwords
+        !stringi::stri_isempty(word_clean) | is_stopword
       )
   }
 
@@ -113,9 +113,9 @@ clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmat
       if (nrow(valid_stopwords) > 0) {
         df <- df %>%
           dplyr::mutate(
-            word_clean = ifelse(word_clean %in% valid_stopwords$word, NA, word_clean)
-          ) %>%
-          dplyr::filter(!is.na(word_clean))  # Remove the stopwords
+            is_stopword = word_clean %in% valid_stopwords$word,
+            word_clean = ifelse(is_stopword, NA, word_clean)
+          )
       }
     }
   }
@@ -123,7 +123,8 @@ clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmat
   # Add post-split ID and clean up
   df <- df %>%
     dplyr::mutate(
-      id_row_postsplit = seq_len(nrow(df))
+      id_row_postsplit = seq_len(nrow(df)),
+      is_stopword = NULL  # Remove the temporary stopword flag
     )
 
   return(df)

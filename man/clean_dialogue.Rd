@@ -11,7 +11,7 @@ clean_dialogue(
   clean = TRUE,
   omit_stops = TRUE,
   lemmatize = TRUE,
-  split_stings = TRUE
+  split_strings = TRUE
 )
 }
 \arguments{
@@ -27,7 +27,7 @@ clean_dialogue(
 
 \item{lemmatize}{T/F user wishes to lemmatize each string (default is TRUE)}
 
-\item{split_strings}{T/F (default is TRUE) will split and unlist contents of rows}
+\item{split_strings}{option T/F (default T) split multiword contractions into separate rows}
 }
 \value{
 a dataframe
