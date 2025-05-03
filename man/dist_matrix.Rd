@@ -2,10 +2,9 @@
 % Please edit documentation in R/dist_matrix.R
 \name{dist_matrix}
 \alias{dist_matrix}
-\alias{dist_matrix_all}
 \title{dist_matrix}
 \usage{
-dist_matrix_all(dat, dist_type = "embedding")
+dist_matrix(dat, dist_type = "embedding")
 }
 \arguments{
 \item{dat}{a dataframe prepped using 'clean_unordered4matrix' fn}
