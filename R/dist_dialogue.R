@@ -22,7 +22,6 @@
 #' @export dist_dialogue
 
 dist_dialogue <- function(dat) {
-  # Load required packages
   required_packages <- c("purrr", "magrittr", "dplyr", "lsa", "utils")
   for (pkg in required_packages) {
     if (!requireNamespace(pkg, quietly = TRUE)) {
@@ -44,7 +43,7 @@ dist_dialogue <- function(dat) {
       row_id = seq_len(nrow(dat)),  # Add unique row identifier
       word_clean = tolower(word_clean),
       talker = as.factor(talker),
-      turn_count = as.integer(id_turn)
+      id_turn = as.integer(id_turn)
     ) %>%
     dplyr::select(id_row_orig, talker, id_turn, word_clean)
 
@@ -53,9 +52,9 @@ dist_dialogue <- function(dat) {
   djoin_sd15 <- dplyr::left_join(dat, SD15_2025_complete, by = c("word_clean" = "word"))
 
   # Function to compute turn-level vectors and distances
-  process_turn_embeddings <- function(embed_df, prefix) {
+  process_turn_embeddings <- function(embed_dat, prefix) {
     # Get embedding dimensions
-    numeric_cols <- names(embed_df)[sapply(embed_df, is.numeric)]
+    numeric_cols <- names(embed_dat)[sapply(embed_dat, is.numeric)]
     numeric_cols <- setdiff(numeric_cols, c("row_id", "id_row_orig", "turn_count"))
 
     if (length(numeric_cols) == 0) {
@@ -63,10 +62,11 @@ dist_dialogue <- function(dat) {
     }
 
     # Compute mean vector for each turn
-    turn_vectors <- embed_df %>%
+    turn_vectors <- embed_dat %>%
       dplyr::group_by(id_turn) %>%
       dplyr::summarize(dplyr::across(all_of(numeric_cols), ~ mean(., na.rm = TRUE)),
-                       .groups = "drop") %>% dplyr::arrange(id_turn)
+                       .groups = "drop") %>%
+      dplyr::arrange(id_turn)
 
     # Calculate cosine distances between consecutive turns
     turn_vectors <- turn_vectors %>%
@@ -87,7 +87,8 @@ dist_dialogue <- function(dat) {
               1 - lsa::cosine(vec_current, vec_next)
             }, error = function(e) NA_real_)
           }
-        )) %>% dplyr::select(id_turn, contains("cosdist"))
+        )) %>%
+      dplyr::select(id_turn, contains("cosdist"))
 
     return(turn_vectors)
   }
@@ -100,10 +101,10 @@ dist_dialogue <- function(dat) {
   final_result <- glo_results %>%
     dplyr::full_join(sd15_results, by = "id_turn") %>%
     dplyr::left_join(
-      dat %>% dplyr::group_by(id_turn) %>%
+      dat %>%
+        dplyr::group_by(id_turn) %>%
         dplyr::summarize(talker = dplyr::first(talker),
-                         .groups = "drop"
-        ),
+                         .groups = "drop"),
       by = "id_turn") %>%
     dplyr::select(talker, id_turn, glo_cosdist, sd15_cosdist)
 

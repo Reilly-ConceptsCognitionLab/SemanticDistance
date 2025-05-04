@@ -3,7 +3,7 @@
 #' Cleans a transcript where there are two or more talkers. User specifies the dataframe and column name where target text is stored as arguments to the function. Default option is to lemmatize strings. Function splits and unlists text so that the output is in a one-row-per-word format marked by a unique numeric identifier (i.e., 'id_orig')
 #'
 #' @name clean_dialogue
-#' @param df a dataframe with at least one target column of string data
+#' @param dat a datataframe with at least one target column of string data
 #' @param wordcol quoted column name storing the strings that will be cleaned and split
 #' @param whotalks quoted column name with speaker/talker identities will be factorized
 #' @param clean T/F apply cleaning transformations (default is TRUE)
@@ -19,7 +19,7 @@
 #' @export clean_dialogue
 
 
-clean_dialogue <- function(df, wordcol, whotalks, clean=TRUE, omit_stops=TRUE, lemmatize = TRUE, split_strings=TRUE) {
+clean_dialogue <- function(dat, wordcol, whotalks, clean=TRUE, omit_stops=TRUE, lemmatize = TRUE, split_strings=TRUE) {
   required_packages <- c("tm", "textstem", "tidyr", "textclean", "magrittr", "stringr", "dplyr", "stringi", "utils")
   for (pkg in required_packages) {
     if (!requireNamespace(pkg, quietly = TRUE)) {
@@ -29,8 +29,8 @@ clean_dialogue <- function(df, wordcol, whotalks, clean=TRUE, omit_stops=TRUE, l
   }
 
   # Create working copy with robust encoding handling
-  df <- df %>%
-    dplyr::mutate(id_row_orig = factor(seq_len(nrow(df))),
+  dat <- dat %>%
+    dplyr::mutate(id_row_orig = factor(seq_len(nrow(dat))),
       word_clean = tryCatch(
         stringi::stri_enc_toutf8(as.character(.[[wordcol]]), is_unknown_8bit = TRUE, validate = TRUE),
         error = function(e) stringi::stri_encode(as.character(.[[wordcol]]), to = "UTF-8")
@@ -43,12 +43,12 @@ clean_dialogue <- function(df, wordcol, whotalks, clean=TRUE, omit_stops=TRUE, l
     )
 
   # Create talker factor variable from whotalks column
-  df$talker <- factor(df[[whotalks]])
-  x <- df[[wordcol]]
+  dat$talker <- factor(dat[[whotalks]])
+  x <- dat[[wordcol]]
 
   # Text cleaning pipeline (preserve apostrophes)
   if (clean) {
-    df <- df %>%
+    dat <- dat %>%
       dplyr::mutate(
         # Convert backticks to apostrophes
         word_clean = stringi::stri_replace_all_fixed(word_clean, "`", "'"),
@@ -66,14 +66,14 @@ clean_dialogue <- function(df, wordcol, whotalks, clean=TRUE, omit_stops=TRUE, l
   }
 
   # Remove apostrophes BEFORE splitting (helps with stopword matching)
-  df <- df %>%
+  dat <- dat %>%
     dplyr::mutate(
       word_clean = stringi::stri_replace_all_fixed(word_clean, "'", "")
     )
 
   # String splitting - only if split_strings=TRUE
   if (isTRUE(split_strings)) {
-    df <- df %>%
+    dat <- dat %>%
       tidyr::separate_rows(word_clean, sep = "\\s+") %>%
       dplyr::filter(
         !is.na(word_clean) | is_stopword,  # Keep NAs that are stopwords
@@ -103,7 +103,7 @@ clean_dialogue <- function(df, wordcol, whotalks, clean=TRUE, omit_stops=TRUE, l
         )
 
       if (nrow(valid_stopwords) > 0) {
-        df <- df %>%
+        dat <- dat %>%
           dplyr::mutate(
             is_stopword = word_clean %in% valid_stopwords$word,
             word_clean = ifelse(is_stopword, NA, word_clean)
@@ -113,14 +113,14 @@ clean_dialogue <- function(df, wordcol, whotalks, clean=TRUE, omit_stops=TRUE, l
   }
 
   # Add post-split ID and clean up
-  df <- df %>%
+  dat <- dat %>%
     dplyr::mutate(
-      id_row_postsplit = seq_len(nrow(df)),
+      id_row_postsplit = seq_len(nrow(dat)),
       is_stopword = NULL  # Remove the temporary stopword flag
     )
 
   # Create turncount variable when talker level changes
-  df$id_turn <- cumsum(c(1, diff(as.numeric(df$talker)) != 0))
-  rownames(df) <- NULL
-  return(df)
+  dat$id_turn <- cumsum(c(1, diff(as.numeric(dat$talker)) != 0))
+  rownames(dat) <- NULL
+  return(dat)
 }

@@ -62,20 +62,20 @@ dist_2cols <- function(dat) {
 
   # Loop SD15
   for (group in levels(djoin_sd15$id_row_orig)) {
-    subset_df <- djoin_sd15[djoin_sd15$id_row_orig == group, ]  # Subset data
-    if (nrow(subset_df) >= 2) {
-      row1 <- subset_df[1, sapply(subset_df, is.numeric)]
-      row2 <- subset_df[2, sapply(subset_df, is.numeric)]
+    subset_dat <- djoin_sd15[djoin_sd15$id_row_orig == group, ]  # Subset data
+    if (nrow(subset_dat) >= 2) {
+      row1 <- subset_dat[1, sapply(subset_dat, is.numeric)]
+      row2 <- subset_dat[2, sapply(subset_dat, is.numeric)]
       result_sd15$CosDist[result_sd15$id_row_orig == group] <- cos_dist(row1, row2)
     }
   }
 
   # Loop glove
   for (group in levels(djoin_glow$id_row_orig)) {
-    subset_df <- djoin_glow[djoin_glow$id_row_orig == group, ]  # Subset data
-    if (nrow(subset_df) >= 2) {
-      row1 <- subset_df[1, sapply(subset_df, is.numeric)]
-      row2 <- subset_df[2, sapply(subset_df, is.numeric)]
+    subset_dat <- djoin_glow[djoin_glow$id_row_orig == group, ]  # Subset data
+    if (nrow(subset_dat) >= 2) {
+      row1 <- subset_dat[1, sapply(subset_dat, is.numeric)]
+      row2 <- subset_dat[2, sapply(subset_dat, is.numeric)]
       result_glo$CosDist[result_glo$id_row_orig == group] <- cos_dist(row1, row2)
     }
   }

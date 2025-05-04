@@ -3,9 +3,9 @@
 #' Cleans a transcript where word pairs are arrayed in two columns.
 #'
 #' @name clean_2cols
-#' @param df a dataframe with two columns of words you want pairwise distance for
-#' @param col1 quoted column name storing the first string for comparison
-#' @param col2 quoted column name storing the second string for comparison
+#' @param dat a dataframe with two columns of words you want pairwise distance for
+#' @param wordcol1 quoted column name storing the first string for comparison
+#' @param wordcol2 quoted column name storing the second string for comparison
 #' @param clean T/F default is T specifies whether to apply cleaning transformations or leave data alone
 #' @param omit_stops T/F user wishes to remove stopwords (default is TRUE)
 #' @param lemmatize T/F user wishes to lemmatize each string (default is TRUE)
@@ -24,7 +24,7 @@
 #' @importFrom utils install.packages
 #' @export clean_2cols
 
-clean_2cols <- function(df, col1, col2, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE) {
+clean_2cols <- function(dat, wordcol1, wordcol2, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE) {
   # Load required packages
   required_packages <- c("dplyr", "magrittr", "stringi", "textstem", "tm", "textclean", "utils")
   for (pkg in required_packages) {
@@ -35,14 +35,14 @@ clean_2cols <- function(df, col1, col2, clean = TRUE, omit_stops = TRUE, lemmati
   }
 
   # Convert specified columns to lowercase first
-  df <- df %>%
+  dat <- dat %>%
     dplyr::mutate(
-      !!col1 := tolower(.[[col1]]),
-      !!col2 := tolower(.[[col2]])
+      !!wordcol1 := tolower(.[[col1]]),
+      !!wordcol2 := tolower(.[[col2]])
     )
 
   # Create ID column
-  df$id_row_orig <- factor(seq_len(nrow(df)))
+  dat$id_row_orig <- factor(seq_len(nrow(dat)))
 
   # Text cleaning function
   clean_text <- function(x, clean_flag = TRUE, omit_stops_flag = TRUE, lemmatize_flag = TRUE) {
@@ -95,15 +95,15 @@ clean_2cols <- function(df, col1, col2, clean = TRUE, omit_stops = TRUE, lemmati
   }
 
   # Apply processing to both columns with different suffixes
-  df[[paste0(col1, "_clean1")]] <- sapply(df[[col1]], clean_text,
+  dat[[paste0(wordcol1, "_clean1")]] <- sapply(dat[[wordco1]], clean_text,
                                           clean_flag = clean,
                                           omit_stops_flag = omit_stops,
                                           lemmatize_flag = lemmatize)
 
-  df[[paste0(col2, "_clean2")]] <- sapply(df[[col2]], clean_text,
+  dat[[paste0(wordcol2, "_clean2")]] <- sapply(dat[[wordcol2]], clean_text,
                                           clean_flag = clean,
                                           omit_stops_flag = omit_stops,
                                           lemmatize_flag = lemmatize)
 
-  return(df)
+  return(dat)
 }

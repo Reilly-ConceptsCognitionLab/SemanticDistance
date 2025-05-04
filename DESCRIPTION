@@ -1,13 +1,18 @@
-Package:SemanticDistance
-Type: Package
-Title:Compute and Visualize Pairwise Semantic Distance Relationships in Ordered and Unordered Language Samples
+Package: SemanticDistance
 Version: 0.1.0
-Authors@R: c(person("Jamie", "Reilly", email = "jamie_reilly@temple.edu", role = c("aut", "cre")),
+Type: Package
+Title: Compute and Visualize Pairwise Semantic Distance Relationships in Ordered and Unordered Language Samples
+Date: 2025-05-01
+License: GPL (>= 3)
+Authors@R: c(
+    person("Jamie", "Reilly", 
+           role = c("aut", "cre"), 
+           email = "jamie_reilly@temple.edu",
+           comment = c(ORCID = "0000-0002-0891-438X")),
     person("Emily B.", "Myers", role = "aut"),
     person("Hannah R.", "Mechtenberg", role = "aut"),
-    person("Jonathan E.","Peelle", role = "aut"))
-Description:SemanticDistance cleans and formats any user-specified language sample guided by a series of transformation options (e.g., lemmatize words, omit stopwords, split strings across rows). The package indexes a cleaned and formatted dataframe to compute two distinct metrics of cosine semantic distance (experiential and embedding). These values reflect reflect pairwise cosine distance between different elements or 'chunks' of a language sample. SemanticDistance can process monologues (e.g., stories, ordered text), dialogues (e.g., conversation transcripts), word pairs arrayed in columns, and unordered word lists. Users specify options for how they wish to 'chunk' distance calculations. These options include: rolling ngram-to-word distance (window of n-words to each new word), ngram-to-ngram distance (2-word chunk to the next 2-word chunk), pairwise distance between words arrayed in columns, matrix comparisons (i.e., all possible pairwise distances between words in an unordered list), turn-by-turn distance (talker to talker in a dialogue transcript). SemanticDistance includes visualization options for analyzing distances as time series data and simple semantic network dynamics (e.g., clustering, undirected graph network).
-License: GPL (>= 3)
+    person("Jonathan E.", "Peelle", role = "aut"))
+Description:SemanticDistance cleans and formats language transcripts guided by a series of transformation options (e.g., lemmatize words, omit stopwords, split strings across rows). The package indexes a cleaned and formatted dataframe to compute two distinct metrics of cosine semantic distance (experiential and embedding). These values reflect reflect pairwise cosine distance between different elements or 'chunks' of a language sample. SemanticDistance can process monologues (e.g., stories, ordered text), dialogues (e.g., conversation transcripts), word pairs arrayed in columns, and unordered word lists. Users specify options for how they wish to 'chunk' distance calculations. These options include: rolling ngram-to-word distance (window of n-words to each new word), ngram-to-ngram distance (2-word chunk to the next 2-word chunk), pairwise distance between words arrayed in columns, matrix comparisons (i.e., all possible pairwise distances between words in an unordered list), turn-by-turn distance (talker to talker in a dialogue transcript). SemanticDistance includes visualization options for analyzing distances as time series data and simple semantic network dynamics (e.g., clustering, undirected graph network).
 Encoding: UTF-8
 LazyData: true
 URL: https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance, https://reilly-conceptscognitionlab.github.io/SemanticDistance/

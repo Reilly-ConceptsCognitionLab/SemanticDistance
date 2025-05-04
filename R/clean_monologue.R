@@ -3,7 +3,7 @@
 #' Cleans and formats text. User specifies the dataframe and column name where target text is stored as arguments to the function. Default option is to lemmatize strings. Function splits and unlists text so that the output is in a one-row-per-word format marked by a unique numeric identifier (i.e., 'id_orig')
 #'
 #' @name clean_monologue
-#' @param df a dataframe with at least one target column of string data
+#' @param dat a dataframe with at least one target column of string data
 #' @param wordcol quoted column name storing the strings that will be cleaned and split
 #' @param clean apply cleaning functions (lowercase etc) default is TRUE
 #' @param omit_stops option for omitting stopwords default is TRUE
@@ -26,7 +26,7 @@
 
 #' @export clean_monologue
 
-clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE, split_strings = TRUE) {
+clean_monologue <- function(dat, wordcol, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE, split_strings = TRUE) {
   my_packages <- c("dplyr", "magrittr", "stringr",  "stringi", "textstem", "tm", "tidyr", "textclean", "utils")
   for (pkg in my_packages) {
     if (!requireNamespace(pkg, quietly = TRUE)) {
@@ -36,13 +36,13 @@ clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmat
   }
 
   # Input validation
-  if (!wordcol %in% names(df)) {
+  if (!wordcol %in% names(dat)) {
     stop(paste("Column", wordcol, "not found in dataframe"))
   }
 
   # Create working copy handlke UTF encode
-  df <- df %>% dplyr::mutate(
-      id_row_orig = factor(seq_len(nrow(df))),
+  dat <- dat %>% dplyr::mutate(
+      id_row_orig = factor(seq_len(nrow(dat))),
       word_clean = tryCatch(
         stringi::stri_enc_toutf8(as.character(.[[wordcol]]), is_unknown_8bit = TRUE, validate = TRUE),
         error = function(e) stringi::stri_encode(as.character(.[[wordcol]]), to = "UTF-8")
@@ -55,7 +55,7 @@ clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmat
 
   # Text cleaning pipeline (preserve apostrophes)
   if (clean) {
-    df <- df %>% dplyr::mutate(
+    dat <- dat %>% dplyr::mutate(
         # Convert backticks to apostrophes
         word_clean = stringi::stri_replace_all_fixed(word_clean, "`", "'"),
         # Keep apostrophes and letters (remove other punctuation)
@@ -72,12 +72,12 @@ clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmat
   }
 
   # Remove apostrophes BEFORE splitting (helps with stopword matching)
-  df <- df %>%
+  dat <- dat %>%
     dplyr::mutate(word_clean = stringi::stri_replace_all_fixed(word_clean, "'", ""))
 
   # String splitting FIRST
   if (split_strings) {
-    df <- df %>%
+    dat <- dat %>%
       tidyr::separate_rows(word_clean, sep = "\\s+") %>% dplyr::filter(
         !is.na(word_clean) | is_stopword,  # Keep NAs that are stopwords
         !stringi::stri_isempty(word_clean) | is_stopword
@@ -107,7 +107,7 @@ clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmat
         )
 
       if (nrow(valid_stopwords) > 0) {
-        df <- df %>%
+        dat <- dat %>%
           dplyr::mutate(
             is_stopword = word_clean %in% valid_stopwords$word,
             word_clean = ifelse(is_stopword, NA, word_clean)
@@ -117,9 +117,9 @@ clean_monologue <- function(df, wordcol, clean = TRUE, omit_stops = TRUE, lemmat
   }
 
   # Add post-split ID and clean up
-  df <- df %>% dplyr::mutate(id_row_postsplit = seq_len(nrow(df)),
+  dat <- dat %>% dplyr::mutate(id_row_postsplit = seq_len(nrow(dat)),
       is_stopword = NULL  # Remove the temporary stopword flag
     )
 
-  return(df)
+  return(dat)
 }

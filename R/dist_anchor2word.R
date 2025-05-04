@@ -38,20 +38,20 @@ dist_anchor <- function(dat, anchor_size = 10) {
   djoin_sd15 <- dplyr::left_join(dat, SD15_2025_complete, by = c("word_clean" = "word"))
 
   # Function to calculate anchor-based cosine distances
-  calculate_anchor_dist <- function(embed_df, prefix) {
+  calculate_anchor_dist <- function(embed_dat, prefix) {
     # Get numeric columns
-    numeric_cols <- names(embed_df)[sapply(embed_df, is.numeric)]
+    numeric_cols <- names(embed_dat)[sapply(embed_dat, is.numeric)]
 
     # Calculate anchor vector (mean of first anchor_size words)
-    anchor_vec <- embed_df %>%
+    anchor_vec <- embed_dat %>%
       dplyr::slice(1:anchor_size) %>%
       dplyr::select(all_of(numeric_cols)) %>%
       colMeans(na.rm = TRUE)
 
     # Calculate cosine distance to anchor for each word
     dist_colname <- paste0("CosDist_Anchor_", prefix)
-    embed_df[[dist_colname]] <- apply(
-      embed_df[, numeric_cols],
+    embed_dat[[dist_colname]] <- apply(
+      embed_dat[, numeric_cols],
       1,
       function(x) {
         if (all(is.na(x))) return(NA)
@@ -59,7 +59,7 @@ dist_anchor <- function(dat, anchor_size = 10) {
       }
     )
 
-    return(embed_df %>% dplyr::select(id_row_postsplit, contains("CosDist")))
+    return(embed_dat %>% dplyr::select(id_row_postsplit, contains("CosDist")))
   }
 
   # Calculate distances for both embeddings

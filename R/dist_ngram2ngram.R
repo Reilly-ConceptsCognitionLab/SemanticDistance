@@ -60,26 +60,26 @@ dist_ngram2ngram <- function(dat, ngram) {
   }
 
   # Function to process embeddings and calculate distances
-  process_embeddings <- function(embed_df, prefix) {
+  process_embeddings <- function(embed_dat, prefix) {
     cosdist_colname <- paste0("CosDist_", ngram, "gram_", prefix)
-    embed_df[[cosdist_colname]] <- NA_real_
+    embed_dat[[cosdist_colname]] <- NA_real_
 
-    param_cols <- grep("Param_", names(embed_df), value = TRUE)
+    param_cols <- grep("Param_", names(embed_dat), value = TRUE)
 
     # Create current ngrams (allowing NAs)
-    current_ngrams <- lapply(seq_len(nrow(embed_df)), function(i) {
+    current_ngrams <- lapply(seq_len(nrow(embed_dat)), function(i) {
       if (i >= ngram) {
         indices <- (i - ngram + 1):i
-        colMeans(embed_df[indices, param_cols, drop = FALSE], na.rm = TRUE)
+        colMeans(embed_dat[indices, param_cols, drop = FALSE], na.rm = TRUE)
       } else {
         NULL
       }
     })
 
     # Calculate distances
-    for (i in (ngram + 1):nrow(embed_df)) {
+    for (i in (ngram + 1):nrow(embed_dat)) {
       current <- current_ngrams[[i]]
-      previous <- find_previous_ngram(embed_df, i, ngram)
+      previous <- find_previous_ngram(embed_dat, i, ngram)
 
       if (!is.null(current) && !is.null(previous)) {
         valid_dims <- !is.na(current) & !is.na(previous)
@@ -89,12 +89,12 @@ dist_ngram2ngram <- function(dat, ngram) {
             lsa::cosine(current[valid_dims], previous[valid_dims]),
             error = function(e) NA_real_
           )
-          embed_df[[cosdist_colname]][i] <- ifelse(is.na(cos_sim), NA, 1 - cos_sim)
+          embed_dat[[cosdist_colname]][i] <- ifelse(is.na(cos_sim), NA, 1 - cos_sim)
         }
       }
     }
 
-    embed_df %>%
+    embed_dat %>%
       dplyr::select(id_row_postsplit, all_of(cosdist_colname)) %>%
       dplyr::filter(!is.na(id_row_postsplit))
   }
