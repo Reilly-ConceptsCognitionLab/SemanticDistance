@@ -16,11 +16,12 @@
 #' @importFrom dplyr all_of
 #' @importFrom dplyr last
 #' @importFrom lsa cosine
+#' @importFrom stats complete.cases
 #' @importFrom utils install.packages
 #' @export dist_ngram2ngram
 
 dist_ngram2ngram <- function(dat, ngram) {
-  my_packages <- c("dplyr", "lsa", "magrittr", "utils")
+  my_packages <- c("dplyr", "lsa", "magrittr", "utils", "stats")
   for (pkg in my_packages) {
     if (!requireNamespace(pkg, quietly = TRUE)) {
       install.packages(pkg)
@@ -45,7 +46,7 @@ dist_ngram2ngram <- function(dat, ngram) {
       candidate_indices <- (current_index - lookback - ngram + 1):(current_index - lookback)
 
       # Check if all words in candidate ngram are complete (no NAs)
-      if (all(complete.cases(data[candidate_indices, param_cols]))) {
+      if (all(stats::complete.cases(data[candidate_indices, param_cols]))) {
         prev_ngram <- candidate_indices
       }
       lookback <- lookback + 1

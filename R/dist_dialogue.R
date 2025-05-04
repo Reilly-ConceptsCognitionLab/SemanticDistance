@@ -23,7 +23,7 @@
 
 dist_dialogue <- function(dat) {
   # Load required packages
-  required_packages <- c("purrr", "magrittr",  "dplyr", "lsa", "utils")
+  required_packages <- c("purrr", "magrittr", "dplyr", "lsa", "utils")
   for (pkg in required_packages) {
     if (!requireNamespace(pkg, quietly = TRUE)) {
       install.packages(pkg)
@@ -46,7 +46,7 @@ dist_dialogue <- function(dat) {
       talker = as.factor(talker),
       turn_count = as.integer(id_turn)
     ) %>%
-    dplyr::select(id_row_postsplit, id_row_orig, talker, id_turn, word_clean)
+    dplyr::select(id_row_orig, talker, id_turn, word_clean)
 
   # Join with embedding databases
   djoin_glo <- dplyr::left_join(dat, glowca_25, by = c("word_clean" = "word"))
@@ -56,7 +56,7 @@ dist_dialogue <- function(dat) {
   process_turn_embeddings <- function(embed_df, prefix) {
     # Get embedding dimensions
     numeric_cols <- names(embed_df)[sapply(embed_df, is.numeric)]
-    numeric_cols <- setdiff(numeric_cols, c("row_id", "id_row_postsplit", "turn_count"))
+    numeric_cols <- setdiff(numeric_cols, c("row_id", "id_row_orig", "turn_count"))
 
     if (length(numeric_cols) == 0) {
       stop(paste("No numeric embedding columns found in", prefix, "data"))
@@ -66,7 +66,7 @@ dist_dialogue <- function(dat) {
     turn_vectors <- embed_df %>%
       dplyr::group_by(id_turn) %>%
       dplyr::summarize(dplyr::across(all_of(numeric_cols), ~ mean(., na.rm = TRUE)),
-        .groups = "drop") %>% dplyr::arrange(id_turn)
+                       .groups = "drop") %>% dplyr::arrange(id_turn)
 
     # Calculate cosine distances between consecutive turns
     turn_vectors <- turn_vectors %>%
@@ -102,10 +102,10 @@ dist_dialogue <- function(dat) {
     dplyr::left_join(
       dat %>% dplyr::group_by(id_turn) %>%
         dplyr::summarize(talker = dplyr::first(talker),
-          n_words = dplyr::n(),
-          .groups = "drop"
+                         .groups = "drop"
         ),
-      by = "turn_count") %>% dplyr::select(id_turn, talker, n_words, everything())
+      by = "id_turn") %>%
+    dplyr::select(talker, id_turn, glo_cosdist, sd15_cosdist)
 
   return(final_result)
 }

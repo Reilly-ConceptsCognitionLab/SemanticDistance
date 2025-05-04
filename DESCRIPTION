@@ -1,14 +1,12 @@
-Package: SemanticDistance
+Package:SemanticDistance
 Type: Package
-Title: Computes Pairwise Cosine Distance Between Successive Units of Language Samples
+Title:Compute and Visualize Pairwise Semantic Distance Relationships in Ordered and Unordered Language Samples
 Version: 0.1.0
 Authors@R: c(person("Jamie", "Reilly", email = "jamie_reilly@temple.edu", role = c("aut", "cre")),
-    person("Hannah", "Mechtenberg", role = "aut"),
-    person("Emily", "Myers", role = "aut"),
-    person("Jonathan","Peelle", role = "aut"))
-Description: This package cleans and formats any user-specified language sample and appends two metrics of semantic distance (experiential and embedding) to each specified chunk (e.g., word-to-word, ngram-to-ngram, turn-to-turn). 
-     Users have several options for how to clean their data (e.g., leave it alone, lemmatize it, retain/omit stopwords). 
-     Users also have options for how to chunk distances. Options include word-to-word distance, ngram-to-ngram, sentence-to-sentence, turn-to-turn.
+    person("Emily B.", "Myers", role = "aut"),
+    person("Hannah R.", "Mechtenberg", role = "aut"),
+    person("Jonathan E.","Peelle", role = "aut"))
+Description:SemanticDistance cleans and formats any user-specified language sample guided by a series of transformation options (e.g., lemmatize words, omit stopwords, split strings across rows). The package indexes a cleaned and formatted dataframe to compute two distinct metrics of cosine semantic distance (experiential and embedding). These values reflect reflect pairwise cosine distance between different elements or 'chunks' of a language sample. SemanticDistance can process monologues (e.g., stories, ordered text), dialogues (e.g., conversation transcripts), word pairs arrayed in columns, and unordered word lists. Users specify options for how they wish to 'chunk' distance calculations. These options include: rolling ngram-to-word distance (window of n-words to each new word), ngram-to-ngram distance (2-word chunk to the next 2-word chunk), pairwise distance between words arrayed in columns, matrix comparisons (i.e., all possible pairwise distances between words in an unordered list), turn-by-turn distance (talker to talker in a dialogue transcript). SemanticDistance includes visualization options for analyzing distances as time series data and simple semantic network dynamics (e.g., clustering, undirected graph network).
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
@@ -28,6 +26,7 @@ Imports:
     purrr,
     stringr,
     stringi,
+    stats,
     rlang
 Suggests: 
     knitr,
