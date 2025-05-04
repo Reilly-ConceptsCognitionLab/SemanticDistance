@@ -5,14 +5,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Computes Pairwise Cosine Distance Between Successive Units of Language Samples • SemanticDistance</title>
+<title>Compute and Visualize Pairwise Semantic Distance Relationships in Ordered and Unordered Language Samples • SemanticDistance</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Computes Pairwise Cosine Distance Between Successive Units of Language Samples">
-<meta name="description" content="This package cleans and formats any user-specified language sample and appends two metrics of semantic distance (experiential and embedding) to each specified chunk (e.g., word-to-word, ngram-to-ngram, turn-to-turn). Users have several options for how to clean their data (e.g., leave it alone, lemmatize it, retain/omit stopwords). Users also have options for how to chunk distances. Options include word-to-word distance, ngram-to-ngram, sentence-to-sentence, turn-to-turn.">
-<meta property="og:description" content="This package cleans and formats any user-specified language sample and appends two metrics of semantic distance (experiential and embedding) to each specified chunk (e.g., word-to-word, ngram-to-ngram, turn-to-turn). Users have several options for how to clean their data (e.g., leave it alone, lemmatize it, retain/omit stopwords). Users also have options for how to chunk distances. Options include word-to-word distance, ngram-to-ngram, sentence-to-sentence, turn-to-turn.">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Compute and Visualize Pairwise Semantic Distance Relationships in Ordered and Unordered Language Samples">
+<meta name="description" content="SemanticDistance cleans and formats language transcripts guided by a series of transformation options (e.g., lemmatize words, omit stopwords, split strings across rows). The package indexes a cleaned and formatted dataframe to compute two distinct metrics of cosine semantic distance (experiential and embedding). These values reflect reflect pairwise cosine distance between different elements or chunks of a language sample. SemanticDistance can process monologues (e.g., stories, ordered text), dialogues (e.g., conversation transcripts), word pairs arrayed in columns, and unordered word lists. Users specify options for how they wish to chunk distance calculations. These options include: rolling ngram-to-word distance (window of n-words to each new word), ngram-to-ngram distance (2-word chunk to the next 2-word chunk), pairwise distance between words arrayed in columns, matrix comparisons (i.e., all possible pairwise distances between words in an unordered list), turn-by-turn distance (talker to talker in a dialogue transcript). SemanticDistance includes visualization options for analyzing distances as time series data and simple semantic network dynamics (e.g., clustering, undirected graph network).">
+<meta property="og:description" content="SemanticDistance cleans and formats language transcripts guided by a series of transformation options (e.g., lemmatize words, omit stopwords, split strings across rows). The package indexes a cleaned and formatted dataframe to compute two distinct metrics of cosine semantic distance (experiential and embedding). These values reflect reflect pairwise cosine distance between different elements or chunks of a language sample. SemanticDistance can process monologues (e.g., stories, ordered text), dialogues (e.g., conversation transcripts), word pairs arrayed in columns, and unordered word lists. Users specify options for how they wish to chunk distance calculations. These options include: rolling ngram-to-word distance (window of n-words to each new word), ngram-to-ngram distance (2-word chunk to the next 2-word chunk), pairwise distance between words arrayed in columns, matrix comparisons (i.e., all possible pairwise distances between words in an unordered list), turn-by-turn distance (talker to talker in a dialogue transcript). SemanticDistance includes visualization options for analyzing distances as time series data and simple semantic network dynamics (e.g., clustering, undirected graph network).">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -513,10 +513,10 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Jamie Reilly <br><small class="roles"> Author, maintainer </small>   </li>
-<li>Hannah Mechtenberg <br><small class="roles"> Author </small>   </li>
-<li>Emily Myers <br><small class="roles"> Author </small>   </li>
-<li>Jonathan Peelle <br><small class="roles"> Author </small>   </li>
+<li>Jamie Reilly <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-0891-438X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li>Emily B. Myers <br><small class="roles"> Author </small>   </li>
+<li>Hannah R. Mechtenberg <br><small class="roles"> Author </small>   </li>
+<li>Jonathan E. Peelle <br><small class="roles"> Author </small>   </li>
 </ul>
 </div>
 
@@ -532,7 +532,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Jamie Reilly, Hannah Mechtenberg, Emily Myers, Jonathan Peelle.</p>
+  <p>Developed by Jamie Reilly, Emily B. Myers, Hannah R. Mechtenberg, Jonathan E. Peelle.</p>
 </div>
 
 <div class="pkgdown-footer-right">
