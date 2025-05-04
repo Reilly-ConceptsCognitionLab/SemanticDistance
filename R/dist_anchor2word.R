@@ -22,24 +22,16 @@
 
 dist_anchor <- function(dat, anchor_size = 10) {
   # Load required packages
-  if (!requireNamespace("lsa", quietly = TRUE)) {
-    install.packages("lsa")
-  }
-  if (!requireNamespace("dplyr", quietly = TRUE)) {
-    install.packages("dplyr")
-  }
-  if (!requireNamespace("magrittr", quietly = TRUE)) {
-    install.packages("magrittr")
+  required_packages <- c("magrittr",  "dplyr", "lsa", "utils")
+  for (pkg in required_packages) {
+    if (!requireNamespace(pkg, quietly = TRUE)) {
+      install.packages(pkg)
+    }
+    library(pkg, character.only = TRUE)
   }
 
   # Prepare data with unique row identifier
-  dat <- dat %>%
-    dplyr::mutate(
-      row_id_unique = seq_len(nrow(dat)),  # Create unique row identifier
-      id_orig = as.factor(id_orig),
-      word_clean = tolower(word_clean)
-    ) %>%
-    dplyr::select(row_id_unique, id_orig, word_clean)
+  dat <- dat %>% dplyr::select(id_row_postsplit, word_clean)
 
   # Join with embedding databases
   djoin_glow <- dplyr::left_join(dat, glowca_25, by = c("word_clean" = "word"))
@@ -67,7 +59,7 @@ dist_anchor <- function(dat, anchor_size = 10) {
       }
     )
 
-    return(embed_df %>% dplyr::select(row_id_unique, contains("CosDist")))
+    return(embed_df %>% dplyr::select(id_row_postsplit, contains("CosDist")))
   }
 
   # Calculate distances for both embeddings
@@ -76,7 +68,7 @@ dist_anchor <- function(dat, anchor_size = 10) {
 
   # Combine results using row_id_glo and remove temporary IDs
   result <- dat %>%
-    dplyr::left_join(glo_dist, by = "row_id_unique") %>%
-    dplyr::left_join(sd15_dist, by = "row_id_unique")
+    dplyr::left_join(glo_dist, by = "id_row_postsplit") %>%
+    dplyr::left_join(sd15_dist, by = "id_row_postsplit")
   return(result)
 }

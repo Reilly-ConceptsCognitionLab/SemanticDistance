@@ -27,6 +27,7 @@ Imports:
     utils,
     purrr,
     stringr,
+    stringi,
     rlang
 Suggests: 
     knitr,

@@ -42,12 +42,12 @@ dist_2cols <- function(dat) {
                  values_to = "word") %>%
     dplyr::select(-word_type)  # Drop 'word_type' column
 
-  djoin_sd15 <- dplyr::left_join(unspooled_txt, SD15_2025, by = "word")
+  djoin_sd15 <- dplyr::left_join(unspooled_txt, SD15_2025_complete, by = "word")
   djoin_glow <- dplyr::left_join(unspooled_txt, glowca_25, by = 'word')
 
   # Initialize dataframes to store results
-  result_sd15 <- data.frame(id_orig = levels(djoin_sd15$id_orig), CosDist = NA)
-  result_glo <- data.frame(id_orig = levels(djoin_glow$id_orig), CosDist = NA)
+  result_sd15 <- data.frame(id_row_orig = levels(djoin_sd15$id_row_orig), CosDist = NA)
+  result_glo <- data.frame(id_row_orig = levels(djoin_glow$id_row_orig), CosDist = NA)
 
   # Cosine distance function
   cos_dist <- function(row1, row2) {
@@ -61,7 +61,7 @@ dist_2cols <- function(dat) {
   }
 
   # Loop SD15
-  for (group in levels(djoin_sd15$id_orig)) {
+  for (group in levels(djoin_sd15$id_row_orig)) {
     subset_df <- djoin_sd15[djoin_sd15$id_row_orig == group, ]  # Subset data
     if (nrow(subset_df) >= 2) {
       row1 <- subset_df[1, sapply(subset_df, is.numeric)]

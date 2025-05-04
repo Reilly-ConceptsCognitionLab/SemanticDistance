@@ -23,6 +23,8 @@ clean_unordered(
 \item{omit_stops}{option for omitting stopwords default is TRUE}
 
 \item{lemmatize}{option for lemmatizing strings default is TRUE}
+
+\item{split_strings}{option for splitting multiple words in one row across rows default is TRUE}
 }
 \value{
 a dataframe

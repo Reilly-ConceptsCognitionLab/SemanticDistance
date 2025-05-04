@@ -8,6 +8,7 @@
 #' @param clean apply cleaning functions (lowercase etc) default is TRUE
 #' @param omit_stops option for omitting stopwords default is TRUE
 #' @param lemmatize option for lemmatizing strings default is TRUE
+#' @param split_strings option for splitting multiple words in one row across rows default is TRUE
 #' @return a dataframe
 #' @importFrom dplyr ungroup
 #' @importFrom dplyr distinct
