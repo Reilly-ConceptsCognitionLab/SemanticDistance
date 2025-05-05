@@ -5,7 +5,7 @@
 \title{clean_monologue}
 \usage{
 clean_monologue(
-  df,
+  dat,
   wordcol,
   clean = TRUE,
   omit_stops = TRUE,
@@ -14,7 +14,7 @@ clean_monologue(
 )
 }
 \arguments{
-\item{df}{a dataframe with at least one target column of string data}
+\item{dat}{a dataframe with at least one target column of string data}
 
 \item{wordcol}{quoted column name storing the strings that will be cleaned and split}
 

@@ -5,7 +5,7 @@
 \title{clean_dialogue}
 \usage{
 clean_dialogue(
-  df,
+  dat,
   wordcol,
   whotalks,
   clean = TRUE,
@@ -15,7 +15,7 @@ clean_dialogue(
 )
 }
 \arguments{
-\item{df}{a dataframe with at least one target column of string data}
+\item{dat}{a datataframe with at least one target column of string data}
 
 \item{wordcol}{quoted column name storing the strings that will be cleaned and split}
 

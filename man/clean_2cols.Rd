@@ -4,14 +4,21 @@
 \alias{clean_2cols}
 \title{clean_2cols}
 \usage{
-clean_2cols(df, col1, col2, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE)
+clean_2cols(
+  dat,
+  wordcol1,
+  wordcol2,
+  clean = TRUE,
+  omit_stops = TRUE,
+  lemmatize = TRUE
+)
 }
 \arguments{
-\item{df}{a dataframe with two columns of words you want pairwise distance for}
+\item{dat}{a dataframe with two columns of words you want pairwise distance for}
 
-\item{col1}{quoted column name storing the first string for comparison}
+\item{wordcol1}{quoted column name storing the first string for comparison}
 
-\item{col2}{quoted column name storing the second string for comparison}
+\item{wordcol2}{quoted column name storing the second string for comparison}
 
 \item{clean}{T/F default is T specifies whether to apply cleaning transformations or leave data alone}
 

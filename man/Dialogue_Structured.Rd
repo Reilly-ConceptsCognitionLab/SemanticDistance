@@ -3,7 +3,7 @@
 \docType{data}
 \name{Dialogue_Structured}
 \alias{Dialogue_Structured}
-\title{Dialogue Structured/Ideal Formatted Transcript}
+\title{Dialogue Transcript Perfectly Formatted}
 \format{
 ## "Dialogue_Structured"
 A data frame with 50 rows and 2 vars:
