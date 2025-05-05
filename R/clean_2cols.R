@@ -37,8 +37,8 @@ clean_2cols <- function(dat, wordcol1, wordcol2, clean = TRUE, omit_stops = TRUE
   # Convert specified columns to lowercase first
   dat <- dat %>%
     dplyr::mutate(
-      !!wordcol1 := tolower(.[[col1]]),
-      !!wordcol2 := tolower(.[[col2]])
+      !!wordcol1 := tolower(.[[wordcol1]]),
+      !!wordcol2 := tolower(.[[wordcol2]])
     )
 
   # Create ID column
