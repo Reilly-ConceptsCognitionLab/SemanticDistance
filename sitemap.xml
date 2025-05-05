@@ -5,11 +5,13 @@
 <url><loc>https://reilly-conceptscognitionlab.github.io/SemanticDistance/articles/index.html</loc></url>
 <url><loc>https://reilly-conceptscognitionlab.github.io/SemanticDistance/authors.html</loc></url>
 <url><loc>https://reilly-conceptscognitionlab.github.io/SemanticDistance/index.html</loc></url>
+<url><loc>https://reilly-conceptscognitionlab.github.io/SemanticDistance/reference/Dialogue_Messy.html</loc></url>
 <url><loc>https://reilly-conceptscognitionlab.github.io/SemanticDistance/reference/Dialogue_Structured.html</loc></url>
-<url><loc>https://reilly-conceptscognitionlab.github.io/SemanticDistance/reference/Monologue_Dirty.html</loc></url>
+<url><loc>https://reilly-conceptscognitionlab.github.io/SemanticDistance/reference/Grandfather_Passage.html</loc></url>
+<url><loc>https://reilly-conceptscognitionlab.github.io/SemanticDistance/reference/Monologue_Messy.html</loc></url>
 <url><loc>https://reilly-conceptscognitionlab.github.io/SemanticDistance/reference/Monologue_Structured.html</loc></url>
-<url><loc>https://reilly-conceptscognitionlab.github.io/SemanticDistance/reference/WordList_TestClustering.html</loc></url>
-<url><loc>https://reilly-conceptscognitionlab.github.io/SemanticDistance/reference/WordPairs_Columns.html</loc></url>
+<url><loc>https://reilly-conceptscognitionlab.github.io/SemanticDistance/reference/Semantic_Clusters.html</loc></url>
+<url><loc>https://reilly-conceptscognitionlab.github.io/SemanticDistance/reference/Word_Pairs.html</loc></url>
 <url><loc>https://reilly-conceptscognitionlab.github.io/SemanticDistance/reference/clean_2cols.html</loc></url>
 <url><loc>https://reilly-conceptscognitionlab.github.io/SemanticDistance/reference/clean_dialogue.html</loc></url>
 <url><loc>https://reilly-conceptscognitionlab.github.io/SemanticDistance/reference/clean_monologue.html</loc></url>
@@ -17,9 +19,12 @@
 <url><loc>https://reilly-conceptscognitionlab.github.io/SemanticDistance/reference/dist_2cols.html</loc></url>
 <url><loc>https://reilly-conceptscognitionlab.github.io/SemanticDistance/reference/dist_anchor.html</loc></url>
 <url><loc>https://reilly-conceptscognitionlab.github.io/SemanticDistance/reference/dist_dialogue.html</loc></url>
+<url><loc>https://reilly-conceptscognitionlab.github.io/SemanticDistance/reference/dist_dialogue_turns.html</loc></url>
 <url><loc>https://reilly-conceptscognitionlab.github.io/SemanticDistance/reference/dist_matrix.html</loc></url>
+<url><loc>https://reilly-conceptscognitionlab.github.io/SemanticDistance/reference/dist_matrix_all.html</loc></url>
 <url><loc>https://reilly-conceptscognitionlab.github.io/SemanticDistance/reference/dist_ngram2ngram.html</loc></url>
 <url><loc>https://reilly-conceptscognitionlab.github.io/SemanticDistance/reference/dist_ngram2word.html</loc></url>
 <url><loc>https://reilly-conceptscognitionlab.github.io/SemanticDistance/reference/index.html</loc></url>
+<url><loc>https://reilly-conceptscognitionlab.github.io/SemanticDistance/reference/viz_mono.html</loc></url>
 </urlset>
 
