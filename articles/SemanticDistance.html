@@ -63,7 +63,7 @@
 <h2 id="install-package-and-load-library">Install package and load library<a class="anchor" aria-label="anchor" href="#install-package-and-load-library"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#install.packages("devtools") #to install devlopment version, run this</span></span>
+<code class="sourceCode R"><span><span class="co">#install.packages("devtools") # to install development version, run this</span></span>
 <span><span class="co">#devtools::install_github("Reilly-ConceptsCognitionLab/ConversationAlign") #installs from github</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance" class="external-link">SemanticDistance</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: replacing previous import 'magrittr::extract' by 'tidyr::extract' when</span></span>
@@ -94,15 +94,15 @@
 <span><span class="co">#&gt; when loading 'SemanticDistance'</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="semantic-distance-what-it-does--">Semantic Distance: What it does..<a class="anchor" aria-label="anchor" href="#semantic-distance-what-it-does--"></a>
+<h2 id="semantic-distance-what-it-does-">Semantic Distance: What it does.<a class="anchor" aria-label="anchor" href="#semantic-distance-what-it-does-"></a>
 </h2>
-<p>Semantic Distance is an empirical measure of similarity/distance
-between two elements (words, ngrams, documents) within an n-dimensional
-semantic space. There are MANY ways to measure semantic distance. The
-SemanticDistance package appends pairwise cosine distance values between
-different chunks of language where those chunk sizes are specified by
-the user (e.g., word-to-word, ngram-to-word). The package derives
-empirical distance values by indexing two large lookup databases
+<p>Semantic distance is an empirical measure of distance between two
+elements (words, ngrams, documents) within an n-dimensional semantic
+space. There are <em>many</em> ways to measure semantic distance. The
+<code>SemanticDistance</code> package appends pairwise cosine distance
+values between different chunks of language where those chunk sizes are
+specified by the user (e.g., word-to-word, ngram-to-word). The package
+derives empirical distance values by indexing two large lookup databases
 embedded within the package. Both databases include fixed semantic
 vectors for many English words. One measure (CosDist_Glo) reflects
 distance between pairwise vectors (Dog:Leash) derived from training a
