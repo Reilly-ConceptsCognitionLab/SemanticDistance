@@ -32,7 +32,11 @@ Imports:
     stringr,
     stringi,
     stats,
-    rlang
+    rlang,
+    MetBrewer,
+    ggplot2,
+    zoo,
+    tidyselect
 Suggests: 
     knitr,
     rmarkdown

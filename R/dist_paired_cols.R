@@ -1,8 +1,8 @@
-#' dist_2cols
+#' dist_paired_cols
 #'
 #' Function takes dataframe cleaned using 'clean_2columns', computes two metrics of semantic distance for each word pair arrayed in Col1 vs. Col2
 #'
-#' @name dist_2cols
+#' @name dist_paired_cols
 #' @param dat a dataframe prepped using clean_2columns' with word pairs arrayed in two columns
 #' @return a dataframe
 #' @importFrom magrittr %>%
@@ -13,9 +13,9 @@
 #' @importFrom rlang sym
 #' @importFrom dplyr rename
 #' @importFrom utils install.packages
-#' @export dist_2cols
+#' @export dist_paired_cols
 
-dist_2cols <- function(dat) {
+dist_paired_cols <- function(dat) {
   # Load required packages
   required_packages <- c("dplyr", "magrittr", "lsa", "rlang", "tidyr", "utils")
   for (pkg in required_packages) {
@@ -35,19 +35,19 @@ dist_2cols <- function(dat) {
   col_1 <- clean_cols[grep("_clean1$", clean_cols)]
   col_2 <- clean_cols[grep("_clean2$", clean_cols)]
 
-  dat_small <- dat %>% dplyr::select(id_orig, !!rlang::sym(col_1), !!rlang::sym(col_2))
+  dat_small <- dat %>% dplyr::select(id_row_orig, !!rlang::sym(col_1), !!rlang::sym(col_2))
   unspooled_txt <- dat_small %>%
     tidyr::pivot_longer(cols = c(!!sym(col_1), !!rlang::sym(col_2)),
                  names_to = "word_type",
                  values_to = "word") %>%
     dplyr::select(-word_type)  # Drop 'word_type' column
 
-  djoin_sd15 <- dplyr::left_join(unspooled_txt, SD15_2025, by = "word")
+  djoin_sd15 <- dplyr::left_join(unspooled_txt, SD15_2025_complete, by = "word")
   djoin_glow <- dplyr::left_join(unspooled_txt, glowca_25, by = 'word')
 
   # Initialize dataframes to store results
-  result_sd15 <- data.frame(id_orig = levels(djoin_sd15$id_orig), CosDist = NA)
-  result_glo <- data.frame(id_orig = levels(djoin_glow$id_orig), CosDist = NA)
+  result_sd15 <- data.frame(id_row_orig = levels(djoin_sd15$id_row_orig), CosDist = NA)
+  result_glo <- data.frame(id_row_orig = levels(djoin_glow$id_row_orig), CosDist = NA)
 
   # Cosine distance function
   cos_dist <- function(row1, row2) {
@@ -61,7 +61,7 @@ dist_2cols <- function(dat) {
   }
 
   # Loop SD15
-  for (group in levels(djoin_sd15$id_orig)) {
+  for (group in levels(djoin_sd15$id_row_orig)) {
     subset_df <- djoin_sd15[djoin_sd15$id_row_orig == group, ]  # Subset data
     if (nrow(subset_df) >= 2) {
       row1 <- subset_df[1, sapply(subset_df, is.numeric)]

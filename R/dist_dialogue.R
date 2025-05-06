@@ -6,18 +6,23 @@
 #' @param dat a dataframe prepped using 'clean_dialogue' fn with talker data and turncount appended
 #' @return a dataframe
 #' @importFrom magrittr %>%
+#' @importFrom dplyr arrange
+#' @importFrom dplyr contains
 #' @importFrom dplyr select
 #' @importFrom dplyr left_join
+#' @importFrom dplyr full_join
 #' @importFrom dplyr mutate
 #' @importFrom dplyr summarize
 #' @importFrom dplyr group_by
 #' @importFrom dplyr rename_with
 #' @importFrom dplyr across
 #' @importFrom dplyr all_of
+#' @importFrom dplyr first
 #' @importFrom lsa cosine
 #' @importFrom purrr map2_dbl
 #' @importFrom purrr transpose
 #' @importFrom purrr map
+#' @importFrom tidyselect everything
 #' @importFrom utils install.packages
 #' @export dist_dialogue
 
@@ -87,7 +92,7 @@ dist_dialogue <- function(dat) {
               1 - lsa::cosine(vec_current, vec_next)
             }, error = function(e) NA_real_)
           }
-        )) %>% dplyr::select(id_turn, contains("cosdist"))
+        )) %>% dplyr::select(id_turn, dplyr::contains("cosdist"))
 
     return(turn_vectors)
   }
@@ -105,7 +110,7 @@ dist_dialogue <- function(dat) {
           n_words = dplyr::n(),
           .groups = "drop"
         ),
-      by = "turn_count") %>% dplyr::select(id_turn, talker, n_words, everything())
+      by = "turn_count") %>% dplyr::select(id_turn, talker, n_words, tidyselect::everything())
 
   return(final_result)
 }

@@ -17,6 +17,7 @@
 #' @importFrom dplyr all_of
 #' @importFrom dplyr last
 #' @importFrom lsa cosine
+#' @importFrom dplyr contains
 #' @importFrom utils install.packages
 #' @export dist_anchor
 
@@ -59,7 +60,7 @@ dist_anchor <- function(dat, anchor_size = 10) {
       }
     )
 
-    return(embed_dat %>% dplyr::select(id_row_postsplit, contains("CosDist")))
+    return(embed_dat %>% dplyr::select(id_row_postsplit, dplyr::contains("CosDist")))
   }
 
   # Calculate distances for both embeddings
