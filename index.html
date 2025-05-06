@@ -201,7 +201,7 @@
 <p><link here for more examples of cleaning word pairs in columns><br></p>
 <p>Output of ‘clean_2columns’ word pairs arrayed in columns</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">Columns1_Clean</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_2cols.html">clean_2cols</a></span><span class="op">(</span><span class="va">WordPairs_Columns</span>, <span class="st">'word1'</span>, <span class="st">'word2'</span>, clean<span class="op">=</span><span class="cn">TRUE</span>, omit_stops<span class="op">=</span><span class="cn">TRUE</span>, lemmatize<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">Columns1_Clean</span> <span class="op">&lt;-</span> <span class="fu">clean_2cols</span><span class="op">(</span><span class="va">WordPairs_Columns</span>, <span class="st">'word1'</span>, <span class="st">'word2'</span>, clean<span class="op">=</span><span class="cn">TRUE</span>, omit_stops<span class="op">=</span><span class="cn">TRUE</span>, lemmatize<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">Columns1_Clean</span>, n<span class="op">=</span><span class="fl">8</span><span class="op">)</span> <span class="co">#view head cleaned data</span></span>
 <span><span class="co">#&gt;   word1     word2 id_row_orig word1_clean1 word2_clean2</span></span>
 <span><span class="co">#&gt; 1   dog   trumpet           1          dog      trumpet</span></span>
@@ -367,7 +367,7 @@
 <p>Arguments to ‘dist_2cols’ are: <br><strong>dat</strong> = dataframe w/ word pairs arrayed in columns cleaned and prepped using ‘clean_2cols’ fn<br></p>
 <p>Output of ‘dist_2cols’ on 2-column arrayed dataframe</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">Columns_Dists1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_2cols.html">dist_2cols</a></span><span class="op">(</span><span class="va">Columns1_Clean</span><span class="op">)</span> <span class="co">#only argument is dataframe</span></span>
+<code class="sourceCode R"><span><span class="va">Columns_Dists1</span> <span class="op">&lt;-</span> <span class="fu">dist_2cols</span><span class="op">(</span><span class="va">Columns1_Clean</span><span class="op">)</span> <span class="co">#only argument is dataframe</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Attaching package: 'rlang'</span></span>
 <span><span class="co">#&gt; The following object is masked from 'package:magrittr':</span></span>
