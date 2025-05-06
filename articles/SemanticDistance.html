@@ -96,6 +96,21 @@
 <div class="section level2">
 <h2 id="semantic-distance-what-it-does--">Semantic Distance: What it does..<a class="anchor" aria-label="anchor" href="#semantic-distance-what-it-does--"></a>
 </h2>
+<p>Semantic Distance is an empirical measure of similarity/distance
+between two elements (words, ngrams, documents) within an n-dimensional
+semantic space. There are MANY ways to measure semantic distance. The
+SemanticDistance package appends pairwise cosine distance values between
+different chunks of language where those chunk sizes are specified by
+the user (e.g., word-to-word, ngram-to-word). The package derives
+empirical distance values by indexing two large lookup databases
+embedded within the package. Both databases include fixed semantic
+vectors for many English words. One measure (CosDist_Glo) reflects
+distance between pairwise vectors (Dog:Leash) derived from training a
+GLOVE word embedding model (300 hyperparameters per word). A
+complementary metric (CodDist_SD15) refects cosine distance between two
+chunks (words, groups of words) characterized across 15 meaningful
+perceptual and affective dimensions (e.g., color, sound, valence).
+<br></p>
 <p>SemanticDistance cleans and formats your target text by applying a
 variety of options (e.g., leave it alone, clean punctuation, omit
 stopwords, lemmatize strings). The package can handle a variety of

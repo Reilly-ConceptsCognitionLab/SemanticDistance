@@ -3,7 +3,7 @@ pkgdown: 2.1.2
 pkgdown_sha: ~
 articles:
   SemanticDistance: SemanticDistance.html
-last_built: 2025-05-06T13:34Z
+last_built: 2025-05-06T14:01Z
 urls:
   reference: https://reilly-conceptscognitionlab.github.io/SemanticDistance/reference
   article: https://reilly-conceptscognitionlab.github.io/SemanticDistance/articles
