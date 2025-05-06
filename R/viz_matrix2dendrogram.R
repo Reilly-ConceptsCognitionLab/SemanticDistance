@@ -5,6 +5,7 @@
 #' @return a plot of a dendrogram
 #' @export viz_matrix2dendrogram
 
-viz_monologue <- function(distmat) {
+viz_matrix2dendrogram <- function(distmat) {
+  return(distmat)
   #Runs viz_kmeans_clustersize takes optimal K value uses to cut dendrogram tree
 }
