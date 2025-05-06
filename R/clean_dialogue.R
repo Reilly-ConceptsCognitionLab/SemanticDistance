@@ -20,7 +20,7 @@
 
 
 clean_dialogue <- function(dat, wordcol, whotalks, clean=TRUE, omit_stops=TRUE, lemmatize = TRUE, split_strings=TRUE) {
-  required_packages <- c("tm", "textstem", "tidyr", "textclean", "magrittr", "stringr", "dplyr", "stringi", "utils")
+  required_packages <- c("tm", "textstem", "tidyr", "textclean", "magrittr", "dplyr", "stringi", "utils")
   for (pkg in required_packages) {
     if (!requireNamespace(pkg, quietly = TRUE)) {
       install.packages(pkg)

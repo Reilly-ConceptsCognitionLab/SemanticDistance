@@ -29,7 +29,6 @@ Imports:
     dplyr,
     utils,
     purrr,
-    stringr,
     stringi,
     stats,
     rlang,

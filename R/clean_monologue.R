@@ -27,7 +27,7 @@
 #' @export clean_monologue
 
 clean_monologue <- function(dat, wordcol, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE, split_strings = TRUE) {
-  my_packages <- c("dplyr", "magrittr", "stringr",  "stringi", "textstem", "tm", "tidyr", "textclean", "utils")
+  my_packages <- c("dplyr", "magrittr", "stringi", "textstem", "tm", "tidyr", "textclean", "utils")
   for (pkg in my_packages) {
     if (!requireNamespace(pkg, quietly = TRUE)) {
       install.packages(pkg)
