@@ -1,0 +1,62 @@
+---
+title: "SemanticDistance"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{SemanticDistance}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Install package and load library
+```{r setup}
+#install.packages("devtools") # to install development version, run this
+#devtools::install_github("Reilly-ConceptsCognitionLab/ConversationAlign") #installs from github
+library(SemanticDistance)
+```
+
+# Semantic Distance: What it does.
+Semantic distance is an empirical measure of distance between two elements (words, ngrams, documents) within an n-dimensional semantic space. There are *many* ways to measure semantic distance. The `SemanticDistance` package appends pairwise cosine distance values between different chunks of language where those chunk sizes are specified by the user (e.g., word-to-word, ngram-to-word). The package derives empirical distance values by indexing two large lookup databases embedded within the package. Both databases include fixed semantic vectors for many English words. One measure (CosDist_Glo) reflects distance between pairwise vectors (Dog:Leash) derived from training a GLOVE word embedding model (300 hyperparameters per word). A complementary metric (CodDist_SD15) refects cosine distance between two chunks (words, groups of words) characterized across 15 meaningful perceptual and affective dimensions (e.g., color, sound, valence). <br/>
+
+SemanticDistance cleans and formats your target text by applying a variety of options (e.g., leave it alone, clean punctuation, omit stopwords, lemmatize strings). The package can handle a variety of dataframe formats, including ordered monologues, word pairs arrayed in columns, unordered word lists, and dialogue transcripts marked by talker information. <br/>
+
+SemanticDistance scans your cleaned/formatted dataframe and computes two different metrics of semantic distance between successive chunks (e.g., ngrams, words, turns). The two semantic distance values reflect pairwise cosine distance (0 to 2) between two different high dimensional semantic spaces. Experiential semantic distance (SD15) reflects pairwise distance between two word vectors (e.g., dog:cat) spanning 15 meaningful semantic dimensions (e.g., color, sound, valence). Embedding-based semantic distances (Glo) are derived by contrasting each word's semantic vector spanning 300 hyperparameters as trained on the GLOVE word embedding model.  <br/>
+
+
+
+# <span style="color: red;">Step 1: Clean and Prep Your Text</span>
+SemanticDistance works on monologues (no talker information), dialogues (two or more speakers), word pairs arrayed in columns, and unstructured word lists (for hierarchical clustering). Cleaning can even handle unstructured text pasted into a single cell of a csv file. However, you MUST run an appropriate cleaning function before you run any distance functions even if you do not apply any of the cleaning options. These functions append unique identifiers that are used in the distance calculations. <br/>
+
+1) Prep your string data (csv or text) and read it into R (e.g., myrawdat). Call your objects and variables anything you like. SemanticDistance will retain your metadata. <br/>
+2) Your data should contain at least one column with some string data in it (e.g., mytext). <br/>
+3) Identify the format of your sample (e.g., monologue, dialogue, columns, unstructured). <br/>
+4) Decide on your cleaning parameters (lemmatize, omit stopwords, omit punctuation). <br/>
+5) Specify the cleaning function and arguments that best fit your aims. <br/>
+
+
+### Monologue Transcript (clean_monologue)
+This could be a story etc. - basically any string where word order matters but you don't care about talker information. Your target text will be split and unlisted into a one word per row format.All other metadata will be retained. Here's a sample monologue with all sorts of junk in a column called 'word'. The 'clean_monologue' function will split and append a unique identifier to each word while retaining empty strings that could be meaningful. Defaults are to omit stopwords and lemmatize. <br/>
+
+
+
+# <span style="color: red;">Step 2: Compute Semantic Distance</span>
+# <span style="color: darkred;">Step 2: Compute Semantic Distance on your Prepped Data</span>
+SemanticDistance will append cosine distance values between each pair of elements specified by the user (e.g., word-to-word, ngram-to-word). These distance values are derived from two large lookup databases in the package with fixed semantic vectors for >70k English words. CosDist_Glo reflects cosine distance between vectors derived from training a GLOVE word embedding model (300 hyperparameters per word). CodDist_SD15 refects cosine distance between two chunks (words, groups of words) characterized across 15 meaningful perceptual and affective dimensions (e.g., color, sound, valence). <br/>
+
+Users specify an ngram window size. This window rolls successively over your language sample to compute a semantic distance value for each new word relative to the n-words (ngram size) before it. This model of compouting distance is illustrated in the figure. The larger your specified ngram size the more smoothed the semantic vector will be over your language sample. Once you settle on a window size and clean your language transcript (works for monologues only), you are ready to roll. Here's the general idea... <br>
+
+
+
+
+## <span style="color: brown;">2.2: Monologues: Ngram-to-Ngram Distance (dist_ngram2ngram)</span>
+<img src="man/figures/Ngram2Ngram_Dist.png" alt="illustrates how semantic distance is derived from chunk to chunk groupings of words" width="50%" />
+
+Joins target transcript to lookup database so each word has a corresponding semantic vector in row form. For example, if interested in 4-word chunks, then dog-cat-milk-banana (Ngram_4) would be the first ngram. We will aggregate the semantic vectors for all four words into a mean vector for that 4-gram then compute the distance to the next 4-gram iterating through the dataframe to the last possible chunk of four words omitting the 'leftovers' (residual/remainder not divisible by the ngram size). For example if there are 22 words and the user is interested in 3-grams, there would be 7 of these with one word left over in the last row.
+
+

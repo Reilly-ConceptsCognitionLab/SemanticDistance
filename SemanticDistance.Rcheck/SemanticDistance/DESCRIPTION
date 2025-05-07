@@ -1,0 +1,36 @@
+Package: SemanticDistance
+Version: 0.1.0
+Type: Package
+Title: Compute and Visualize Pairwise Semantic Distance Relationships
+        in Ordered and Unordered Language Samples
+Date: 2025-05-01
+License: MIT
+Authors@R: c(
+    person("Jamie", "Reilly", 
+           role = c("aut", "cre"), 
+           email = "jamie_reilly@temple.edu",
+           comment = c(ORCID = "0000-0002-0891-438X")),
+    person("Emily B.", "Myers", role = "aut"),
+    person("Hannah R.", "Mechtenberg", role = "aut"),
+    person("Jonathan E.", "Peelle", role = "aut"))
+Description: SemanticDistance cleans and formats language transcripts guided by a series of transformation options (e.g., lemmatize words, omit stopwords, split strings across rows). The package indexes a cleaned and formatted dataframe to compute two distinct metrics of cosine semantic distance (experiential and embedding). These values reflect reflect pairwise cosine distance between different elements or 'chunks' of a language sample. SemanticDistance can process monologues (e.g., stories, ordered text), dialogues (e.g., conversation transcripts), word pairs arrayed in columns, and unordered word lists. Users specify options for how they wish to 'chunk' distance calculations. These options include: rolling ngram-to-word distance (window of n-words to each new word), ngram-to-ngram distance (2-word chunk to the next 2-word chunk), pairwise distance between words arrayed in columns, matrix comparisons (i.e., all possible pairwise distances between words in an unordered list), turn-by-turn distance (talker to talker in a dialogue transcript). SemanticDistance includes visualization options for analyzing distances as time series data and simple semantic network dynamics (e.g., clustering, undirected graph network).
+Encoding: UTF-8
+LazyData: true
+URL: https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance,
+        https://reilly-conceptscognitionlab.github.io/SemanticDistance/
+BugReports: https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/issues
+Depends: R (>= 3.5)
+Imports: cluster, dplyr, ggplot2, lsa, magrittr, MetBrewer, purrr,
+        rlang, textstem, stringi, stats, tidyselect, tm, tidyr,
+        textclean, utils, zoo
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 7.3.2
+NeedsCompilation: no
+Packaged: 2025-05-07 14:56:37 UTC; Jamie
+Author: Jamie Reilly [aut, cre] (<https://orcid.org/0000-0002-0891-438X>),
+  Emily B. Myers [aut],
+  Hannah R. Mechtenberg [aut],
+  Jonathan E. Peelle [aut]
+Maintainer: Jamie Reilly <jamie_reilly@temple.edu>
+Built: R 4.4.2; ; 2025-05-07 14:57:57 UTC; unix

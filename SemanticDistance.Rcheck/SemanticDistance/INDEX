@@ -1,0 +1,23 @@
+Dialogue_Messy          Messy Dialogue Transcript
+Dialogue_Structured     Dialogue Transcript Perfectly Formatted
+Grandfather_Passage     The Grandfather Passage: A Standardized Reading
+                        Passage
+Monologue_Messy         A Sample Messy Monologue Transcript
+Monologue_Structured    A Sample Structured Monologue Transcript
+Semantic_Clusters       Simulated Semantic Category Fluency Data: Word
+                        List Blocked by Semantic Category
+Word_Pairs              Column Arrayed Word Pairs for Pairwise Distance
+clean_dialogue          clean_dialogue
+clean_monologue         clean_monologue
+clean_paired_cols       clean_paired_cols
+clean_unordered         clean_unordered
+dist_anchor             dist_anchor
+dist_dialogue           dist_dialogue
+dist_matrix             dist_matrix
+dist_ngram2ngram        dist_ngram2ngram
+dist_ngram2word         dist_ngram2word
+dist_paired_cols        dist_paired_cols
+viz_kmeans_clustersize
+                        viz_kmeans_clustersize
+viz_matrix2dendrogram   viz_matrix2dendrogram
+viz_monologue           viz_monologue
