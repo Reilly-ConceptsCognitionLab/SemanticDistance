@@ -28,7 +28,7 @@
 
 dist_dialogue <- function(dat) {
   # Load required packages
-  required_packages <- c("purrr", "magrittr",  "dplyr", "lsa", "utils")
+  required_packages <- c("purrr", "magrittr", "dplyr", "lsa", "utils")
   for (pkg in required_packages) {
     if (!requireNamespace(pkg, quietly = TRUE)) {
       install.packages(pkg)
@@ -46,12 +46,12 @@ dist_dialogue <- function(dat) {
   # Prepare data with unique row identifier
   dat <- dat %>%
     dplyr::mutate(
-      row_id = seq_len(nrow(dat)),  # Add unique row identifier
+      row_id = seq_len(nrow(dat)),
       word_clean = tolower(word_clean),
       talker = as.factor(talker),
       turn_count = as.integer(id_turn)
     ) %>%
-    dplyr::select(id_row_postsplit, id_row_orig, talker, id_turn, word_clean)
+    dplyr::select(row_id, id_row_orig, talker, turn_count, word_clean)
 
   # Join with embedding databases
   djoin_glo <- dplyr::left_join(dat, glowca_25, by = c("word_clean" = "word"))
@@ -61,7 +61,7 @@ dist_dialogue <- function(dat) {
   process_turn_embeddings <- function(embed_df, prefix) {
     # Get embedding dimensions
     numeric_cols <- names(embed_df)[sapply(embed_df, is.numeric)]
-    numeric_cols <- setdiff(numeric_cols, c("row_id", "id_row_postsplit", "turn_count"))
+    numeric_cols <- setdiff(numeric_cols, c("row_id", "id_row_orig", "turn_count"))
 
     if (length(numeric_cols) == 0) {
       stop(paste("No numeric embedding columns found in", prefix, "data"))
@@ -69,9 +69,12 @@ dist_dialogue <- function(dat) {
 
     # Compute mean vector for each turn
     turn_vectors <- embed_df %>%
-      dplyr::group_by(id_turn) %>%
-      dplyr::summarize(dplyr::across(all_of(numeric_cols), ~ mean(., na.rm = TRUE)),
-        .groups = "drop") %>% dplyr::arrange(id_turn)
+      dplyr::group_by(turn_count) %>%
+      dplyr::summarise(
+        dplyr::across(all_of(numeric_cols), ~mean(., na.rm = TRUE)),
+        .groups = "drop"
+      ) %>%
+      dplyr::arrange(turn_count)
 
     # Calculate cosine distances between consecutive turns
     turn_vectors <- turn_vectors %>%
@@ -79,20 +82,21 @@ dist_dialogue <- function(dat) {
         "{prefix}_cosdist" := purrr::map_dbl(
           1:n(),
           ~ {
-            if (. == n()) return(NA_real_)  # No next turn for last one
+            if (. == n()) return(NA_real_)
             vec_current <- as.numeric(turn_vectors[., numeric_cols, drop = TRUE])
             vec_next <- as.numeric(turn_vectors[.+1, numeric_cols, drop = TRUE])
 
-            # More robust NA checking
-            if (any(is.na(vec_current))) return(NA_real_)
-            if (any(is.na(vec_next))) return(NA_real_)
-            if (length(vec_current) != length(vec_next)) return(NA_real_)
+            if (any(is.na(vec_current))) { return(NA_real_) }
+            if (any(is.na(vec_next))) { return(NA_real_) }
+            if (length(vec_current) != length(vec_next)) { return(NA_real_) }
 
             tryCatch({
               1 - lsa::cosine(vec_current, vec_next)
             }, error = function(e) NA_real_)
           }
-        )) %>% dplyr::select(id_turn, dplyr::contains("cosdist"))
+        )
+      ) %>%
+      dplyr::select(turn_count, dplyr::contains("cosdist"))
 
     return(turn_vectors)
   }
@@ -103,14 +107,18 @@ dist_dialogue <- function(dat) {
 
   # Combine results and add original metadata
   final_result <- glo_results %>%
-    dplyr::full_join(sd15_results, by = "id_turn") %>%
+    dplyr::full_join(sd15_results, by = "turn_count") %>%
     dplyr::left_join(
-      dat %>% dplyr::group_by(id_turn) %>%
-        dplyr::summarize(talker = dplyr::first(talker),
+      dat %>%
+        dplyr::group_by(turn_count) %>%
+        dplyr::summarise(
+          talker = dplyr::first(talker),
           n_words = dplyr::n(),
           .groups = "drop"
         ),
-      by = "turn_count") %>% dplyr::select(id_turn, talker, n_words, tidyselect::everything())
+      by = "turn_count"
+    ) %>%
+    dplyr::select(turn_count, talker, n_words, tidyselect::everything())
 
   return(final_result)
 }

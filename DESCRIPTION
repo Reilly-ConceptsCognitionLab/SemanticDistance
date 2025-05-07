@@ -20,22 +20,23 @@ BugReports: https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/issu
 Depends:
     R (>= 3.5)
 Imports: 
+    cluster,
+    dplyr,
+    ggplot2,
+    lsa,
     magrittr,
+    MetBrewer,
+    purrr,
+    rlang,
     textstem,
+    stringi,
+    stats,
+    tidyselect,
     tm,
     tidyr,
     textclean,
-    lsa,
-    dplyr,
     utils,
-    purrr,
-    stringi,
-    stats,
-    rlang,
-    MetBrewer,
-    ggplot2,
-    zoo,
-    tidyselect
+    zoo
 Suggests: 
     knitr,
     rmarkdown
