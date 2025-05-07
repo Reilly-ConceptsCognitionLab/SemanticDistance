@@ -6,6 +6,7 @@
 #' @param nboot number of bootstrap samples to determine gap statistic, default is 150
 #' @importFrom cluster clusGap
 #' @importFrom cluster maxSE
+#' @importFrom stats kmeans
 #' @return optimal_k an integer (K) representing optimal cluster size for distance matrix by gap statistic
 #' @export viz_kmeans_clustersize
 

@@ -17,6 +17,7 @@
 #' @importFrom dplyr rename_with
 #' @importFrom dplyr across
 #' @importFrom dplyr all_of
+#' @importFrom dplyr any_of
 #' @importFrom dplyr first
 #' @importFrom lsa cosine
 #' @importFrom purrr map2_dbl
@@ -57,34 +58,42 @@ dist_dialogue <- function(dat) {
   djoin_glo <- dplyr::left_join(dat, glowca_25, by = c("word_clean" = "word"))
   djoin_sd15 <- dplyr::left_join(dat, SD15_2025_complete, by = c("word_clean" = "word"))
 
-  # Function to compute turn-level vectors and distances
   process_turn_embeddings <- function(embed_df, prefix) {
-    # Get embedding dimensions
+    # Get embedding dimensions - safer approach
     numeric_cols <- names(embed_df)[sapply(embed_df, is.numeric)]
     numeric_cols <- setdiff(numeric_cols, c("row_id", "id_row_orig", "turn_count"))
 
+    # Verify we have numeric columns to work with
     if (length(numeric_cols) == 0) {
       stop(paste("No numeric embedding columns found in", prefix, "data"))
     }
 
-    # Compute mean vector for each turn
+    # Ensure all numeric_cols actually exist in the data
+    existing_cols <- numeric_cols[numeric_cols %in% names(embed_df)]
+    if (length(existing_cols) == 0) {
+      stop(paste("None of the identified numeric columns exist in the data:",
+                 paste(numeric_cols, collapse = ", ")))
+    }
+
+    # Compute mean vector for each turn - safer across implementation
     turn_vectors <- embed_df %>%
       dplyr::group_by(turn_count) %>%
-      dplyr::summarise(
-        dplyr::across(all_of(numeric_cols), ~mean(., na.rm = TRUE)),
+      dplyr::summarise(dplyr::across(
+          dplyr::any_of(numeric_cols),  # Use any_of() instead of all_of() to be forgiving
+          ~mean(., na.rm = TRUE)
+        ),
         .groups = "drop"
-      ) %>%
-      dplyr::arrange(turn_count)
+      ) %>% dplyr::arrange(turn_count)
 
+    # Rest of your function remains the same...
     # Calculate cosine distances between consecutive turns
     turn_vectors <- turn_vectors %>%
-      dplyr::mutate(
-        "{prefix}_cosdist" := purrr::map_dbl(
+      dplyr::mutate("{prefix}_cosdist" := purrr::map_dbl(
           1:n(),
           ~ {
             if (. == n()) return(NA_real_)
-            vec_current <- as.numeric(turn_vectors[., numeric_cols, drop = TRUE])
-            vec_next <- as.numeric(turn_vectors[.+1, numeric_cols, drop = TRUE])
+            vec_current <- as.numeric(turn_vectors[., existing_cols, drop = TRUE])
+            vec_next <- as.numeric(turn_vectors[.+1, existing_cols, drop = TRUE])
 
             if (any(is.na(vec_current))) { return(NA_real_) }
             if (any(is.na(vec_next))) { return(NA_real_) }
@@ -100,7 +109,6 @@ dist_dialogue <- function(dat) {
 
     return(turn_vectors)
   }
-
   # Process both embeddings
   glo_results <- process_turn_embeddings(djoin_glo, "glo")
   sd15_results <- process_turn_embeddings(djoin_sd15, "sd15")

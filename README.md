@@ -6,7 +6,13 @@
 
 <!-- badges: start -->
 
+[![GitHub
+release](https://img.shields.io/github/release/username/yourpackage.svg)](https://github.com/username/yourpackage/releases)
 [![R-CMD-check](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/actions/workflows/R-CMD-check.yaml)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/username/yourpackage/graphs/commit-activity)
+[![Lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html)
+[![Depsy](https://img.shields.io/badge/depsy-analyzed-blue.svg)](http://depsy.org/r/yourpackage)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 <!-- badges: end -->
 
 # Data Compatibility
@@ -251,8 +257,17 @@ distance values aggregated by talker and turn (id_turn). <br/>
 dialogue sample cleaned and prepped using ‘clean_dialogue’
 
 ``` r
-#DialogueDists <- dist_dialogue(dat=Dialogue_Cleaned)
-#head(DialogueDists)
+DialogueDists <- dist_dialogue(dat=Dialogue_Cleaned)
+head(DialogueDists)
+#> # A tibble: 6 × 5
+#>   turn_count talker n_words glo_cosdist sd15_cosdist
+#>        <int> <fct>    <int>       <dbl>        <dbl>
+#> 1          1 P1           1       0.993        0.856
+#> 2          2 P2           1       0.933        0.413
+#> 3          3 P1           1       0.732        0.472
+#> 4          4 P2           1       0.927        0.406
+#> 5          5 P1           1       0.809        0.624
+#> 6          6 P2           1       0.772        0.192
 ```
 
 <br/> <br/>
@@ -386,7 +401,7 @@ MyDistMatrix[1:7, 1:7] #Print columns 1:7, rows 1:7 square matrix
 ## Step 3: Distance Matrix to HClust
 
 ``` r
-#TBD
+#TBA semdistmatrix_2clust 
 ```
 
 <br/> <br/>
@@ -456,7 +471,7 @@ Color point by talker
 #TBA
 ```
 
-## Semantic Clusters
+## Cluster Dendrogram
 
 From unordered list, triangle dendrogram
 
@@ -593,8 +608,8 @@ passage, unsplit
 
 ``` r
 GP <- tidyr::separate_rows(Grandfather_Passage, mytext, sep=" ")
-print(GP)
-#> # A tibble: 129 × 1
+head(GP, n=50)
+#> # A tibble: 50 × 1
 #>    mytext      
 #>    <chr>       
 #>  1 You         
@@ -607,5 +622,5 @@ print(GP)
 #>  8 Well,       
 #>  9 he          
 #> 10 is          
-#> # ℹ 119 more rows
+#> # ℹ 40 more rows
 ```
