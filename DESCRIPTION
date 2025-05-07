@@ -3,7 +3,7 @@ Version: 0.1.0
 Type: Package
 Title: Compute and Visualize Pairwise Semantic Distance Relationships in Ordered and Unordered Language Samples
 Date: 2025-05-01
-License: MIT
+License: MIT License
 Authors@R: c(
     person("Jamie", "Reilly", 
            role = c("aut", "cre"), 
