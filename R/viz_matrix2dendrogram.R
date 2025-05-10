@@ -6,6 +6,28 @@
 #' @export viz_matrix2dendrogram
 
 viz_matrix2dendrogram <- function(distmat) {
-  return(distmat)
+  viz_matrix2dendrogram <- function(distmat, triangle = TRUE) {
+    dist_matrix <- as.dist(distmat)  # assumes already distance
+
+    # Determine optimal K using internal function
+    K <- eval_kmeans_clustersize(distmat)
+
+    # Hierarchical clustering
+    hc <- hclust(dist_matrix, method = "complete")  # or "average"/"ward.D2"
+
+    # Convert to dendrogram
+    dend <- as.dendrogram(hc)
+
+    # Apply triangle structure if requested
+    if (triangle) {
+      dend <- hang.dendrogram(dend, hang = -1)  # forces triangle shape
+    }
+
+    # Cut at K clusters (optional: store cluster labels as an attribute)
+    clusters <- cutree(dend, k = K)
+    attr(dend, "k_clusters") <- clusters  # attach cluster assignments
+
+    return(dend)
+  }
   #Runs viz_kmeans_clustersize takes optimal K value uses to cut dendrogram tree
 }
