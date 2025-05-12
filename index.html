@@ -11,8 +11,8 @@
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Compute and Visualize Pairwise Semantic Distance Relationships in Ordered and Unordered Language Samples">
-<meta name="description" content="SemanticDistance cleans and formats language transcripts guided by a series of transformation options (e.g., lemmatize words, omit stopwords, split strings across rows). The package indexes a cleaned and formatted dataframe to compute two distinct metrics of cosine semantic distance (experiential and embedding). These values reflect reflect pairwise cosine distance between different elements or chunks of a language sample. SemanticDistance can process monologues (e.g., stories, ordered text), dialogues (e.g., conversation transcripts), word pairs arrayed in columns, and unordered word lists. Users specify options for how they wish to chunk distance calculations. These options include: rolling ngram-to-word distance (window of n-words to each new word), ngram-to-ngram distance (2-word chunk to the next 2-word chunk), pairwise distance between words arrayed in columns, matrix comparisons (i.e., all possible pairwise distances between words in an unordered list), turn-by-turn distance (talker to talker in a dialogue transcript). SemanticDistance includes visualization options for analyzing distances as time series data and simple semantic network dynamics (e.g., clustering, undirected graph network).">
-<meta property="og:description" content="SemanticDistance cleans and formats language transcripts guided by a series of transformation options (e.g., lemmatize words, omit stopwords, split strings across rows). The package indexes a cleaned and formatted dataframe to compute two distinct metrics of cosine semantic distance (experiential and embedding). These values reflect reflect pairwise cosine distance between different elements or chunks of a language sample. SemanticDistance can process monologues (e.g., stories, ordered text), dialogues (e.g., conversation transcripts), word pairs arrayed in columns, and unordered word lists. Users specify options for how they wish to chunk distance calculations. These options include: rolling ngram-to-word distance (window of n-words to each new word), ngram-to-ngram distance (2-word chunk to the next 2-word chunk), pairwise distance between words arrayed in columns, matrix comparisons (i.e., all possible pairwise distances between words in an unordered list), turn-by-turn distance (talker to talker in a dialogue transcript). SemanticDistance includes visualization options for analyzing distances as time series data and simple semantic network dynamics (e.g., clustering, undirected graph network).">
+<meta name="description" content="SemanticDistance cleans and formats language transcripts guided by a series of transformation options (e.g., lemmatize words, omit stopwords, split strings across rows). SemanticDistance computes two distinct metrics of cosine semantic distance (experiential and embedding). These values reflect reflect pairwise cosine distance between different elements or chunks of a language sample. SemanticDistance can process monologues (e.g., stories, ordered text), dialogues (e.g., conversation transcripts), word pairs arrayed in columns, and unordered word lists. Users specify options for how they wish to chunk distance calculations. These options include: rolling ngram-to-word distance (window of n-words to each new word), ngram-to-ngram distance (2-word chunk to the next 2-word chunk), pairwise distance between words arrayed in columns, matrix comparisons (i.e., all possible pairwise distances between words in an unordered list), turn-by-turn distance (talker to talker in a dialogue transcript). SemanticDistance includes visualization options for analyzing distances as time series data and simple semantic network dynamics (e.g., clustering, undirected graph network).">
+<meta property="og:description" content="SemanticDistance cleans and formats language transcripts guided by a series of transformation options (e.g., lemmatize words, omit stopwords, split strings across rows). SemanticDistance computes two distinct metrics of cosine semantic distance (experiential and embedding). These values reflect reflect pairwise cosine distance between different elements or chunks of a language sample. SemanticDistance can process monologues (e.g., stories, ordered text), dialogues (e.g., conversation transcripts), word pairs arrayed in columns, and unordered word lists. Users specify options for how they wish to chunk distance calculations. These options include: rolling ngram-to-word distance (window of n-words to each new word), ngram-to-ngram distance (2-word chunk to the next 2-word chunk), pairwise distance between words arrayed in columns, matrix comparisons (i.e., all possible pairwise distances between words in an unordered list), turn-by-turn distance (talker to talker in a dialogue transcript). SemanticDistance includes visualization options for analyzing distances as time series data and simple semantic network dynamics (e.g., clustering, undirected graph network).">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -329,19 +329,25 @@
 <span><span class="co">#&gt; knife    0.8766921 0.8880578 0.8349393 0.7856145 0.7351402 0.5440601 0.0000000</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="step-3-distance-matrix-to-hclust">Step 3: Distance Matrix to HClust<a class="anchor" aria-label="anchor" href="#step-3-distance-matrix-to-hclust"></a>
+<h2 id="option-1-matrix-to-dendrogram">Option 1: Matrix to Dendrogram<a class="anchor" aria-label="anchor" href="#option-1-matrix-to-dendrogram"></a>
 </h2>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#MyFirstDendrogram &lt;- viz_matrix2dendrogram(MyDistMatrix, triangle = TRUE)</span></span>
-<span><span class="co">#plot(MyFirstDendrogram)  # plots triangular dendrogram with K clusters</span></span></code></pre></div>
-<p><br><br></p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">MyDistMatrix</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  num [1:20, 1:20] 0 0.572 0.514 0.556 0.552 ...</span></span>
+<span><span class="co">#&gt;  - attr(*, "dimnames")=List of 2</span></span>
+<span><span class="co">#&gt;   ..$ : chr [1:20] "trumpet" "trombone" "flute" "piano" ...</span></span>
+<span><span class="co">#&gt;   ..$ : chr [1:20] "trumpet" "trombone" "flute" "piano" ...</span></span>
+<span><span class="va">MyDendro</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/viz_clusters.html">viz_clusters</a></span><span class="op">(</span><span class="va">MyDistMatrix</span>, type<span class="op">=</span><span class="st">"dendrogram"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-13-1.png" width="100%"></p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># plots triangular dendrogram with K clusters</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="step-4-hclust-to-simple-undirected-graph">Step 4: HClust to Simple Undirected Graph<a class="anchor" aria-label="anchor" href="#step-4-hclust-to-simple-undirected-graph"></a>
+<h2 id="option-2-matrix-to-igraph-network">Option 2: Matrix to iGraph Network<a class="anchor" aria-label="anchor" href="#option-2-matrix-to-igraph-network"></a>
 </h2>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#TBA</span></span></code></pre></div>
-<p><br></p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">MyGraph</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/viz_clusters.html">viz_clusters</a></span><span class="op">(</span><span class="va">MyDistMatrix</span>, type<span class="op">=</span><span class="st">"network"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-14-1.png" width="100%"><br><br></p>
 <hr>
 </div>
 </div>
@@ -354,7 +360,7 @@
 </h2>
 <p>Plots the word id_row as x-axis (a proxy for time) by distance measure (facetted GLO and SD15). Add red line annotation if semantic distance jump is z&gt;3 based on the distribution of that time series, Add options for interpolation and rolling average window, zscore threshold for marking annotation. <br></p>
 <p><strong><span style="color: darkgreen;">Arguments to ‘viz_monologue’: </span></strong> <br><strong>dat</strong> dataframe with CosDist values and row_id_postsplit vars appended <br><strong>interpolate</strong> T/F linear interpolation option across missing observations of row, default is TRUE <br><strong>roll_avg</strong> rolling average window size, default is 0 <br><strong>facet</strong> T/F option to facet by cosine distance type, default is TRUE <br><strong>annotate</strong> T/F option to append annotations (red lines where z&gt;2.5 for distance jump), default is TRUE</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">clusters_clean</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_monologue.html">clean_monologue</a></span><span class="op">(</span>dat<span class="op">=</span><span class="va">Semantic_Clusters</span>, wordcol<span class="op">=</span><span class="st">'mytext'</span>, clean<span class="op">=</span><span class="cn">TRUE</span>, omit_stops<span class="op">=</span><span class="cn">TRUE</span>, split_strings<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">clusters_dist</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_ngram2word.html">dist_ngram2word</a></span><span class="op">(</span>dat<span class="op">=</span><span class="va">clusters_clean</span>, ngram<span class="op">=</span><span class="fl">1</span><span class="op">)</span> </span>
 <span><span class="va">FirstViz</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/viz_monologue.html">viz_monologue</a></span><span class="op">(</span>dat<span class="op">=</span><span class="va">clusters_dist</span>, interpolate<span class="op">=</span><span class="cn">TRUE</span>, roll_avg<span class="op">=</span><span class="fl">0</span>, facet<span class="op">=</span><span class="cn">TRUE</span>, annotate<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
@@ -374,7 +380,7 @@
 <div class="section level2">
 <h2 id="monologue-time-series-dist_anchor">Monologue Time Series: dist_anchor<a class="anchor" aria-label="anchor" href="#monologue-time-series-dist_anchor"></a>
 </h2>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">grandpa_clean</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_monologue.html">clean_monologue</a></span><span class="op">(</span>dat<span class="op">=</span><span class="va">Grandfather_Passage</span>, wordcol<span class="op">=</span><span class="st">'mytext'</span>, clean<span class="op">=</span><span class="cn">TRUE</span>, omit_stops<span class="op">=</span><span class="cn">TRUE</span>, split_strings<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">grandpa_dist</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_anchor.html">dist_anchor</a></span><span class="op">(</span><span class="va">grandpa_clean</span>, anchor_size<span class="op">=</span><span class="fl">8</span><span class="op">)</span> </span>
 <span><span class="va">AnchorViz</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/viz_monologue.html">viz_monologue</a></span><span class="op">(</span>dat<span class="op">=</span><span class="va">grandpa_dist</span>, interpolate<span class="op">=</span><span class="cn">TRUE</span>, roll_avg<span class="op">=</span><span class="fl">0</span>, facet<span class="op">=</span><span class="cn">TRUE</span>, annotate<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
@@ -387,25 +393,10 @@
 <h2 id="time-series-plot-for-dialogues">Time series plot for dialogues<a class="anchor" aria-label="anchor" href="#time-series-plot-for-dialogues"></a>
 </h2>
 <p>Color point by talker</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#TBA</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="cluster-dendrogram">Cluster Dendrogram<a class="anchor" aria-label="anchor" href="#cluster-dendrogram"></a>
-</h2>
-<p>From unordered list, triangle dendrogram</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#dend &lt;- viz_matrix2dendrogram(your_matrix, triangle = TRUE)</span></span>
-<span><span class="co">#plot(dend)  # plots triangular dendrogram with K clusters</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="semantic-network">Semantic network<a class="anchor" aria-label="anchor" href="#semantic-network"></a>
-</h2>
-<p>Simple igraph network (undirected) from unordered list</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#TBA</span></span></code></pre></div>
 <p>#Animate Time Series</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#TBA</span></span></code></pre></div>
 <p><br><br><br></p>
 </div>
@@ -419,7 +410,7 @@
 </h3>
 <p>SemanticDistance contains some sample language transcripts that will automatically load when you call the package. These can be helpful for evaluating and debugging your own own transcripts.<br></p>
 <p><strong>Monologue_Structured:</strong> Dataframe 1-word per row already split no missing observations <br></p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">Monologue_Structured</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   timestamp mytext</span></span>
 <span><span class="co">#&gt; 1         1    the</span></span>
@@ -429,7 +420,7 @@
 <span><span class="co">#&gt; 5         5   the </span></span>
 <span><span class="co">#&gt; 6         6 street</span></span></code></pre></div>
 <p><strong>Monologue_Messy:</strong> Dataframe text arrayed in one column ‘mytext’, missing observations, junk, multiword phrases contains metadata (simulated timestamps <br></p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">Monologue_Messy</span><span class="op">)</span></span>
 <span><span class="co">#&gt;              mytext</span></span>
 <span><span class="co">#&gt; 1  The dog is blue.</span></span>
@@ -439,7 +430,7 @@
 <span><span class="co">#&gt; 5 My name is Frank.</span></span>
 <span><span class="co">#&gt; 6               Dog</span></span></code></pre></div>
 <p><strong>Dialogue_Structured:</strong> Dataframe simulating ‘perfect’ conversation transcript, one word per turn, two talkers</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">Dialogue_Structured</span><span class="op">)</span></span>
 <span><span class="co">#&gt;      mytext speaker</span></span>
 <span><span class="co">#&gt; 1    donkey      P1</span></span>
@@ -449,7 +440,7 @@
 <span><span class="co">#&gt; 5    Pigeon      P1</span></span>
 <span><span class="co">#&gt; 6   Dolphin      P2</span></span></code></pre></div>
 <p><strong>Dialogue_Messy:</strong> Dataframe simulating ‘dirty’ conversation transcript, multiple lines per person, lots of stopwords, missing obervations, stray transcription symbols <br></p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">Dialogue_Messy</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                  word speaker</span></span>
 <span><span class="co">#&gt; 1            Hi Peter    Mary</span></span>
@@ -459,7 +450,7 @@
 <span><span class="co">#&gt; 5              Pigeon    Mary</span></span>
 <span><span class="co">#&gt; 6             Dolphin    Mary</span></span></code></pre></div>
 <p><strong>Word_Pairs:</strong> Dataframe with word pairs arrayed in two columns <br></p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">Word_Pairs</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   word1     word2</span></span>
 <span><span class="co">#&gt; 1   Dog   trumpet</span></span>
@@ -469,7 +460,7 @@
 <span><span class="co">#&gt; 5  bird      bird</span></span>
 <span><span class="co">#&gt; 6 shark     shark</span></span></code></pre></div>
 <p><strong>Semantic_Clusters:</strong> Dataframe ordered simulated semantic fluency data switching between categories every ten words (animals, tools, musical instruments, fruits)</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">Semantic_Clusters</span>, n<span class="op">=</span><span class="fl">20</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    ID_JR     mytext  category</span></span>
 <span><span class="co">#&gt; 1      1    trumpet     music</span></span>
@@ -493,7 +484,7 @@
 <span><span class="co">#&gt; 19    19 melancholy  emotions</span></span>
 <span><span class="co">#&gt; 20    20     joyful  emotions</span></span></code></pre></div>
 <p><strong>Grandfather_Passage:</strong> Grandfather Passage – a standardized reading passage, unsplit</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">GP</span> <span class="op">&lt;-</span> <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate_rows.html" class="external-link">separate_rows</a></span><span class="op">(</span><span class="va">Grandfather_Passage</span>, <span class="va">mytext</span>, sep<span class="op">=</span><span class="st">" "</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">GP</span>, n<span class="op">=</span><span class="fl">50</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 50 × 1</span></span>
@@ -525,7 +516,8 @@
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>
-<a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> License</li>
+<a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
+</li>
 </ul>
 </div>
 
