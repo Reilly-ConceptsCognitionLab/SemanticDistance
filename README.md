@@ -61,7 +61,7 @@ Install the development version of SemanticDistance from
 library(SemanticDistance)
 ```
 
-<br/>
+<br/> <br/>
 
 # Monologues
 
@@ -105,6 +105,8 @@ head(Monologue_Cleaned, n=8)
 #> 8 8           boxer              8 "boxer"                 8
 ```
 
+<br/> <br/>
+
 ## Step 2: Choose Distance Option/Compute Distances
 
 ## <span style="color: darkred;">Option 1: Ngram-to-Word Distance (dist_ngram2word) </span>
@@ -138,6 +140,8 @@ head(Ngram2Word_Dists1)
 #> # ℹ 1 more variable: CosDist_1gram_sd15 <dbl>
 ```
 
+<br/> <br/>
+
 ## <span style="color: darkred;">Option 2: Ngram-to-Ngram Distance (dist_ngram2ngram)</span>
 
 <img src="man/figures/Ngram2Ngram_Dist.png" 
@@ -170,6 +174,8 @@ head(Ngram2Ngram_Dist1)
 #> # ℹ 1 more variable: CosDist_2gram_SD15 <dbl>
 ```
 
+<br/> <br/>
+
 ## <span style="color: darkred;">Option 3: Anchor-to-Word Distance (dist_anchor2word)</span>
 
 <img src="man/figures/AnchorFig.png" 
@@ -199,7 +205,7 @@ head(Anchored_Dists1)
 #> 6                6 street                  0.116              0.0457
 ```
 
-<br/>
+<br/> <br/>
 
 ------------------------------------------------------------------------
 
@@ -242,6 +248,8 @@ head(Dialogue_Cleaned, n=12)
 #> 12 12          tiger      Tiger     P2      P2                   12      12
 ```
 
+<br/> <br/>
+
 ## Step 2: Compute Semantic Distances
 
 ## <span style="color: darkred;"> Dialogue Distance Turn-to-Turn (dist_dialogue)</span>
@@ -274,7 +282,7 @@ head(DialogueDists)
 #> 6          6 P2           1       0.772        0.192
 ```
 
-<br/>
+<br/> <br/>
 
 ------------------------------------------------------------------------
 
@@ -313,6 +321,8 @@ head(WordPairs_Clean, n=12) #view head cleaned data
 #> 12   bed    pillow          12          bed       pillow
 ```
 
+<br/> <br/>
+
 ## <span style="color: darkred;">Step 2: Distance Word Pairs Columns (dist_paired_cols) </span>
 
 Generates semantic distances (Glove and SD15) between word pairs in
@@ -320,8 +330,8 @@ separate columns. Output of ‘dist_paired_cols’ on 2-column arrayed
 dataframe. Arguments to dist_paired_cols: <br/>
 
 **<span style="color: darkgreen;">Arguments to ‘dist_paired_cols’ are:
-</span>** **dat** = dataframe w/ word pairs arrayed in columns cleaned
-and prepped using ‘clean_2cols’ fn
+</span>** <br/> **dat** = dataframe w/ word pairs arrayed in columns
+cleaned and prepped using ‘clean_2cols’ fn
 
 ``` r
 Columns_Dists <- dist_paired_cols(WordPairs_Clean) #only argument is dataframe
@@ -342,7 +352,7 @@ head(Columns_Dists)
 #> 6   0.0000000
 ```
 
-<br/>
+<br/> <br/>
 
 ------------------------------------------------------------------------
 
@@ -376,6 +386,8 @@ head(Clusters_Clean)
 #> 6 6           gun            6 gun      weapon                  6
 ```
 
+<br/> <br/>
+
 ## Step 2: Compute Distance
 
 ## <span style="color: darkred;">Distance Matrix All Word Pairs (dist_matrix)</span>
@@ -403,6 +415,8 @@ MyDistMatrix[1:7, 1:7] #Print columns 1:7, rows 1:7 square matrix
 #> knife    0.8766921 0.8880578 0.8349393 0.7856145 0.7351402 0.5440601 0.0000000
 ```
 
+<br/> <br/>
+
 ## Option 1: Matrix to Dendrogram
 
 ``` r
@@ -419,6 +433,8 @@ MyDendro <- viz_clusters(MyDistMatrix, type="dendrogram")
 ``` r
 # plots triangular dendrogram with K clusters
 ```
+
+<br/> <br/>
 
 ## Option 2: Matrix to iGraph Network
 
@@ -473,6 +489,7 @@ print(FirstViz)
 ```
 
 <img src="man/figures/README-unnamed-chunk-15-1.png" width="100%" />
+<br/> <br/>
 
 ## Monologue Time Series: dist_anchor
 
@@ -486,6 +503,7 @@ print(AnchorViz)
 ```
 
 <img src="man/figures/README-unnamed-chunk-16-1.png" width="100%" />
+<br/> <br/>
 
 ## Time series plot for dialogues
 
@@ -501,7 +519,9 @@ Color point by talker
 #TBA
 ```
 
-<br/> <br/> <br/>
+<br/> <br/>
+
+------------------------------------------------------------------------
 
 # <span style="color: darkred;">—Extras—</span>
 

@@ -46,6 +46,7 @@ Install the development version of SemanticDistance from [GitHub](https://github
 library(SemanticDistance)
 ```
 <br/>
+<br/>
 
 # Monologues
 ## <span style="color: darkred;"> Step 1: Clean Monologue Transcript (clean_monologue) </span>
@@ -62,6 +63,8 @@ Transforms all text to lowercase then optionally cleans (omit stopwords, omit no
 Monologue_Cleaned <- clean_monologue(dat=Monologue_Structured, wordcol='mytext', clean=TRUE, omit_stops=TRUE, split_strings=TRUE)
 head(Monologue_Cleaned, n=8)
 ```
+<br/>
+<br/>
 
 ## Step 2: Choose Distance Option/Compute Distances
 ## <span style="color: darkred;">Option 1: Ngram-to-Word Distance (dist_ngram2word) </span>
@@ -77,6 +80,8 @@ Computes cosine distance for two models (embedding and experiential) using a rol
 Ngram2Word_Dists1 <- dist_ngram2word(dat=Monologue_Cleaned, ngram=1) #distance word-to-word
 head(Ngram2Word_Dists1)
 ```
+<br/>
+<br/>
 
 ## <span style="color: darkred;">Option 2: Ngram-to-Ngram Distance (dist_ngram2ngram)</span>
 <img src="man/figures/Ngram2Ngram_Dist.png" 
@@ -92,6 +97,8 @@ User specifies n-gram size (e.g., ngram=2). Distance computed from each two-word
 Ngram2Ngram_Dist1 <- dist_ngram2ngram(dat=Monologue_Cleaned, ngram=2)
 head(Ngram2Ngram_Dist1)
 ```
+<br/>
+<br/>
 
 ## <span style="color: darkred;">Option 3: Anchor-to-Word Distance (dist_anchor2word)</span>
 <img src="man/figures/AnchorFig.png" 
@@ -106,6 +113,7 @@ Models semantic distance from each successive new word to the average of the sem
 Anchored_Dists1 <- dist_anchor(dat=Monologue_Cleaned, anchor_size=8)
 head(Anchored_Dists1)
 ```
+<br/>
 <br/>
 
 ---
@@ -125,6 +133,8 @@ This could be a conversation transcript or any language sample where you care ab
 Dialogue_Cleaned <- clean_dialogue(dat=Dialogue_Structured, wordcol="mytext", whotalks = "speaker", clean=TRUE, omit_stops=TRUE, lemmatize=TRUE, split_strings=TRUE)
 head(Dialogue_Cleaned, n=12)
 ```
+<br/>
+<br/>
 
 ## Step 2: Compute Semantic Distances 
 ## <span style="color: darkred;"> Dialogue Distance Turn-to-Turn (dist_dialogue)</span>
@@ -136,6 +146,7 @@ Averages the semantic vectors for all content words in a turn then computes the 
 DialogueDists <- dist_dialogue(dat=Dialogue_Cleaned)
 head(DialogueDists)
 ```
+<br/>
 <br/>
 
 ---
@@ -155,16 +166,19 @@ SemanticDistance also computes pairwise distance for data arrayed in columns. Ru
 WordPairs_Clean <- clean_paired_cols(dat=Word_Pairs, wordcol1='word1', wordcol2='word2', clean=TRUE, omit_stops=TRUE, lemmatize=TRUE)
 head(WordPairs_Clean, n=12) #view head cleaned data
 ```
+<br/>
+<br/>
 
 ## <span style="color: darkred;">Step 2: Distance Word Pairs Columns (dist_paired_cols) </span>
 Generates semantic distances (Glove and SD15) between word pairs in separate columns. Output of 'dist_paired_cols' on 2-column arrayed dataframe. Arguments to dist_paired_cols: <br/>
 
-**<span style="color: darkgreen;">Arguments to 'dist_paired_cols' are: </span>** 
+**<span style="color: darkgreen;">Arguments to 'dist_paired_cols' are: </span>** <br/>
 **dat** = dataframe w/ word pairs arrayed in columns cleaned and prepped using 'clean_2cols' fn
 ```{r, message=FALSE}
 Columns_Dists <- dist_paired_cols(WordPairs_Clean) #only argument is dataframe
 head(Columns_Dists)
 ```
+<br/>
 <br/>
 
 ---
@@ -183,6 +197,8 @@ Prep a vector of words for hierarchical clustering or a network visualization. '
 Clusters_Clean <- clean_unordered(dat=Semantic_Clusters, wordcol="mytext", clean=TRUE, omit_stops=TRUE, lemmatize=TRUE)
 head(Clusters_Clean)
 ```
+<br/>
+<br/>
 
 ## Step 2: Compute Distance
 ## <span style="color: darkred;">Distance Matrix All Word Pairs (dist_matrix)</span>
@@ -195,6 +211,8 @@ Returns square matrix where each entry [i,j] is the cosine distance between word
 MyDistMatrix <- dist_matrix(dat=Clusters_Clean, dist_type='embedding')
 MyDistMatrix[1:7, 1:7] #Print columns 1:7, rows 1:7 square matrix
 ```
+<br/>
+<br/>
 
 ## Option 1: Matrix to Dendrogram
 ```{r, message=FALSE}
@@ -202,6 +220,8 @@ str(MyDistMatrix)
 MyDendro <- viz_clusters(MyDistMatrix, type="dendrogram")
 # plots triangular dendrogram with K clusters
 ```
+<br/>
+<br/>
 
 ## Option 2: Matrix to iGraph Network
 ```{r, message=FALSE}
@@ -230,6 +250,8 @@ clusters_dist <- dist_ngram2word(dat=clusters_clean, ngram=1)
 FirstViz <- viz_monologue(dat=clusters_dist, interpolate=TRUE, roll_avg=0, facet=TRUE, annotate=TRUE)
 print(FirstViz)
 ```
+<br/>
+<br/>
 
 ## Monologue Time Series: dist_anchor
 ```{r, message=FALSE}
@@ -238,6 +260,8 @@ grandpa_dist <- dist_anchor(grandpa_clean, anchor_size=8)
 AnchorViz <- viz_monologue(dat=grandpa_dist, interpolate=TRUE, roll_avg=0, facet=TRUE, annotate=TRUE)
 print(AnchorViz)
 ```
+<br/>
+<br/>
 
 ## Time series plot for dialogues
 Color point by talker
@@ -251,7 +275,8 @@ Color point by talker
 ```
 <br/>
 <br/>
-<br/>
+
+---
 
 # <span style="color: darkred;">---Extras---</span>
 ### Sample Language Transcripts 
