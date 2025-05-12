@@ -84,7 +84,7 @@
 <code class="sourceCode R"><span><span class="co">#install.packages("devtools")</span></span>
 <span><span class="co">#devtools::install_github("Reilly-ConceptsCognitionLab/SemanticDistance")</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance" class="external-link">SemanticDistance</a></span><span class="op">)</span></span></code></pre></div>
-<p><br></p>
+<p><br><br></p>
 </div>
 <div class="section level1">
 <h1 id="monologues">Monologues<a class="anchor" aria-label="anchor" href="#monologues"></a>
@@ -109,6 +109,7 @@
 <span><span class="co">#&gt; 6 6           street             6 "street"                6</span></span>
 <span><span class="co">#&gt; 7 7           &lt;NA&gt;               7 "the"                   7</span></span>
 <span><span class="co">#&gt; 8 8           boxer              8 "boxer"                 8</span></span></code></pre></div>
+<p><br><br></p>
 </div>
 <div class="section level2">
 <h2 id="step-2-choose-distance-optioncompute-distances">Step 2: Choose Distance Option/Compute Distances<a class="anchor" aria-label="anchor" href="#step-2-choose-distance-optioncompute-distances"></a>
@@ -133,6 +134,7 @@
 <span><span class="co">#&gt; 5 5           &lt;NA&gt;               5 "the "                  5            NA    </span></span>
 <span><span class="co">#&gt; 6 6           street             6 "street"                6             0.362</span></span>
 <span><span class="co">#&gt; # ℹ 1 more variable: CosDist_1gram_sd15 &lt;dbl&gt;</span></span></code></pre></div>
+<p><br><br></p>
 </div>
 <div class="section level2">
 <h2 id="option-2-ngram-to-ngram-distance-dist_ngram2ngram">
@@ -154,6 +156,7 @@
 <span><span class="co">#&gt; 5 5           &lt;NA&gt;               5 "the "                  5            0.0608</span></span>
 <span><span class="co">#&gt; 6 6           street             6 "street"                6            0.319 </span></span>
 <span><span class="co">#&gt; # ℹ 1 more variable: CosDist_2gram_SD15 &lt;dbl&gt;</span></span></code></pre></div>
+<p><br><br></p>
 </div>
 <div class="section level2">
 <h2 id="option-3-anchor-to-word-distance-dist_anchor2word">
@@ -173,7 +176,7 @@
 <span><span class="co">#&gt; 4                4 down                    0.116              0.275 </span></span>
 <span><span class="co">#&gt; 5                5 &lt;NA&gt;                   NA                 NA     </span></span>
 <span><span class="co">#&gt; 6                6 street                  0.116              0.0457</span></span></code></pre></div>
-<p><br></p>
+<p><br><br></p>
 <hr>
 </div>
 </div>
@@ -204,6 +207,7 @@
 <span><span class="co">#&gt; 10 10          beagle     Beagle    P2      P2                   10      10</span></span>
 <span><span class="co">#&gt; 11 11          cow        Cow       P1      P1                   11      11</span></span>
 <span><span class="co">#&gt; 12 12          tiger      Tiger     P2      P2                   12      12</span></span></code></pre></div>
+<p><br><br></p>
 </div>
 <div class="section level2">
 <h2 id="step-2-compute-semantic-distances">Step 2: Compute Semantic Distances<a class="anchor" aria-label="anchor" href="#step-2-compute-semantic-distances"></a>
@@ -227,7 +231,7 @@
 <span><span class="co">#&gt; 4          4 P2           1       0.927        0.406</span></span>
 <span><span class="co">#&gt; 5          5 P1           1       0.809        0.624</span></span>
 <span><span class="co">#&gt; 6          6 P2           1       0.772        0.192</span></span></code></pre></div>
-<p><br></p>
+<p><br><br></p>
 <hr>
 </div>
 </div>
@@ -256,13 +260,14 @@
 <span><span class="co">#&gt; 10     ^     whale          10         &lt;NA&gt;        whale</span></span>
 <span><span class="co">#&gt; 11 steak    potato          11        steak       potato</span></span>
 <span><span class="co">#&gt; 12   bed    pillow          12          bed       pillow</span></span></code></pre></div>
+<p><br><br></p>
 </div>
 <div class="section level2">
 <h2 id="step-2-distance-word-pairs-columns-dist_paired_cols-">
 <span style="color: darkred;">Step 2: Distance Word Pairs Columns (dist_paired_cols) </span><a class="anchor" aria-label="anchor" href="#step-2-distance-word-pairs-columns-dist_paired_cols-"></a>
 </h2>
 <p>Generates semantic distances (Glove and SD15) between word pairs in separate columns. Output of ‘dist_paired_cols’ on 2-column arrayed dataframe. Arguments to dist_paired_cols: <br></p>
-<p><strong><span style="color: darkgreen;">Arguments to ‘dist_paired_cols’ are: </span></strong> <strong>dat</strong> = dataframe w/ word pairs arrayed in columns cleaned and prepped using ‘clean_2cols’ fn</p>
+<p><strong><span style="color: darkgreen;">Arguments to ‘dist_paired_cols’ are: </span></strong> <br><strong>dat</strong> = dataframe w/ word pairs arrayed in columns cleaned and prepped using ‘clean_2cols’ fn</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Columns_Dists</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_paired_cols.html">dist_paired_cols</a></span><span class="op">(</span><span class="va">WordPairs_Clean</span><span class="op">)</span> <span class="co">#only argument is dataframe</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">Columns_Dists</span><span class="op">)</span></span>
@@ -280,7 +285,7 @@
 <span><span class="co">#&gt; 4          NA</span></span>
 <span><span class="co">#&gt; 5   0.0000000</span></span>
 <span><span class="co">#&gt; 6   0.0000000</span></span></code></pre></div>
-<p><br></p>
+<p><br><br></p>
 <hr>
 </div>
 </div>
@@ -305,6 +310,7 @@
 <span><span class="co">#&gt; 4 4           piano          4 piano    music                   4</span></span>
 <span><span class="co">#&gt; 5 5           guitar         5 guitar   music                   5</span></span>
 <span><span class="co">#&gt; 6 6           gun            6 gun      weapon                  6</span></span></code></pre></div>
+<p><br><br></p>
 </div>
 <div class="section level2">
 <h2 id="step-2-compute-distance">Step 2: Compute Distance<a class="anchor" aria-label="anchor" href="#step-2-compute-distance"></a>
@@ -327,6 +333,7 @@
 <span><span class="co">#&gt; guitar   0.5520448 0.6219389 0.5203509 0.2730333 0.0000000 0.7653835 0.7351402</span></span>
 <span><span class="co">#&gt; gun      0.8668525 0.9475109 0.9288003 0.8374068 0.7653835 0.0000000 0.5440601</span></span>
 <span><span class="co">#&gt; knife    0.8766921 0.8880578 0.8349393 0.7856145 0.7351402 0.5440601 0.0000000</span></span></code></pre></div>
+<p><br><br></p>
 </div>
 <div class="section level2">
 <h2 id="option-1-matrix-to-dendrogram">Option 1: Matrix to Dendrogram<a class="anchor" aria-label="anchor" href="#option-1-matrix-to-dendrogram"></a>
@@ -341,6 +348,7 @@
 <p><img src="reference/figures/README-unnamed-chunk-13-1.png" width="100%"></p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plots triangular dendrogram with K clusters</span></span></code></pre></div>
+<p><br><br></p>
 </div>
 <div class="section level2">
 <h2 id="option-2-matrix-to-igraph-network">Option 2: Matrix to iGraph Network<a class="anchor" aria-label="anchor" href="#option-2-matrix-to-igraph-network"></a>
@@ -375,7 +383,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">FirstViz</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Removed 2 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_line()`).</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-15-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-15-1.png" width="100%"><br><br></p>
 </div>
 <div class="section level2">
 <h2 id="monologue-time-series-dist_anchor">Monologue Time Series: dist_anchor<a class="anchor" aria-label="anchor" href="#monologue-time-series-dist_anchor"></a>
@@ -387,7 +395,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">AnchorViz</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Removed 2 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_line()`).</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-16-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-16-1.png" width="100%"><br><br></p>
 </div>
 <div class="section level2">
 <h2 id="time-series-plot-for-dialogues">Time series plot for dialogues<a class="anchor" aria-label="anchor" href="#time-series-plot-for-dialogues"></a>
@@ -398,7 +406,8 @@
 <p>#Animate Time Series</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#TBA</span></span></code></pre></div>
-<p><br><br><br></p>
+<p><br><br></p>
+<hr>
 </div>
 </div>
 <div class="section level1">
