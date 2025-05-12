@@ -12,15 +12,20 @@
 #' @noRd
 
 eval_kmeans_clustersize <- function(distmat, k.max = 15, nboot = 150) {
-
+  my_packages <- c("cluster", "stats")
+  for (pkg in my_packages) {
+    if (!requireNamespace(pkg, quietly = TRUE)) {
+      install.packages(pkg)
+    }
+    library(pkg, character.only = TRUE)
+  }
   # Calculate gap statistic
-  gap_stat <- cluster::clusGap(
-    distmat, FUN = kmeans, K.max = k.max, B = nboot)
+  gap_stat <- cluster::clusGap(distmat, FUN = kmeans, K.max = k.max, B = nboot)
 
   # Extract optimal K (using Tibshirani's 1-SE method)
   optimal_k <- cluster::maxSE(
-    gap_stat$Tab[, "gap"],
-    gap_stat$Tab[, "SE.sim"],
+   gap_stat$Tab[, "gap"],
+   gap_stat$Tab[, "SE.sim"],
     method = "Tibs2001SEmax")
 
   return(optimal_k)

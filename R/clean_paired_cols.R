@@ -61,7 +61,7 @@ clean_paired_cols <- function(dat, wordcol1, wordcol2, clean = TRUE, omit_stops 
 
     # Stopword removal
     if (omit_stops_flag) {
-      if (!exists("replacements_25") || !exists("reillylab_stopwords25")) {
+      if (!exists("replacements_25") || !exists("Temple_Stopwords25")) {
         warning("Stopword data not found. Skipping stopword removal.")
       } else {
         # Safe encoding conversion for stopwords
@@ -73,7 +73,7 @@ clean_paired_cols <- function(dat, wordcol1, wordcol2, clean = TRUE, omit_stops 
         }
 
         # Process stopwords with encoding protection
-        valid_stopwords <- reillylab_stopwords25 %>%
+        valid_stopwords <- Temple_Stopwords25 %>%
           dplyr::mutate(word = safe_convert(word)) %>%
           dplyr::filter(
             !is.na(word),

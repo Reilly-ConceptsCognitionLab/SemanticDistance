@@ -403,22 +403,31 @@ MyDistMatrix[1:7, 1:7] #Print columns 1:7, rows 1:7 square matrix
 #> knife    0.8766921 0.8880578 0.8349393 0.7856145 0.7351402 0.5440601 0.0000000
 ```
 
-## Step 3: Distance Matrix to HClust
+## Option 1: Matrix to Dendrogram
 
 ``` r
-#MyFirstDendrogram <- viz_matrix2dendrogram(MyDistMatrix, triangle = TRUE)
-#plot(MyFirstDendrogram)  # plots triangular dendrogram with K clusters
+str(MyDistMatrix)
+#>  num [1:20, 1:20] 0 0.572 0.514 0.556 0.552 ...
+#>  - attr(*, "dimnames")=List of 2
+#>   ..$ : chr [1:20] "trumpet" "trombone" "flute" "piano" ...
+#>   ..$ : chr [1:20] "trumpet" "trombone" "flute" "piano" ...
+MyDendro <- viz_clusters(MyDistMatrix, type="dendrogram")
 ```
 
+<img src="man/figures/README-unnamed-chunk-13-1.png" width="100%" />
+
+``` r
+# plots triangular dendrogram with K clusters
+```
+
+## Option 2: Matrix to iGraph Network
+
+``` r
+MyGraph <- viz_clusters(MyDistMatrix, type="network")
+```
+
+<img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" />
 <br/> <br/>
-
-## Step 4: HClust to Simple Undirected Graph
-
-``` r
-#TBA
-```
-
-<br/>
 
 ------------------------------------------------------------------------
 
@@ -481,23 +490,6 @@ print(AnchorViz)
 ## Time series plot for dialogues
 
 Color point by talker
-
-``` r
-#TBA
-```
-
-## Cluster Dendrogram
-
-From unordered list, triangle dendrogram
-
-``` r
-#dend <- viz_matrix2dendrogram(your_matrix, triangle = TRUE)
-#plot(dend)  # plots triangular dendrogram with K clusters
-```
-
-## Semantic network
-
-Simple igraph network (undirected) from unordered list
 
 ``` r
 #TBA

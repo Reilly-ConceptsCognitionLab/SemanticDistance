@@ -196,19 +196,18 @@ MyDistMatrix <- dist_matrix(dat=Clusters_Clean, dist_type='embedding')
 MyDistMatrix[1:7, 1:7] #Print columns 1:7, rows 1:7 square matrix
 ```
 
-## Step 3: Distance Matrix to HClust
-```{r}
-#MyFirstDendrogram <- viz_matrix2dendrogram(MyDistMatrix, triangle = TRUE)
-#plot(MyFirstDendrogram)  # plots triangular dendrogram with K clusters
+## Option 1: Matrix to Dendrogram
+```{r, message=FALSE}
+str(MyDistMatrix)
+MyDendro <- viz_clusters(MyDistMatrix, type="dendrogram")
+# plots triangular dendrogram with K clusters
+```
 
+## Option 2: Matrix to iGraph Network
+```{r, message=FALSE}
+MyGraph <- viz_clusters(MyDistMatrix, type="network")
 ```
 <br/>
-<br/>
-
-## Step 4: HClust to Simple Undirected Graph
-```{r}
-#TBA
-```
 <br/>
 
 ---
@@ -233,29 +232,15 @@ print(FirstViz)
 ```
 
 ## Monologue Time Series: dist_anchor
-```{r}
+```{r, message=FALSE}
 grandpa_clean <- clean_monologue(dat=Grandfather_Passage, wordcol='mytext', clean=TRUE, omit_stops=TRUE, split_strings=TRUE)
 grandpa_dist <- dist_anchor(grandpa_clean, anchor_size=8) 
 AnchorViz <- viz_monologue(dat=grandpa_dist, interpolate=TRUE, roll_avg=0, facet=TRUE, annotate=TRUE)
 print(AnchorViz)
 ```
 
-
 ## Time series plot for dialogues
 Color point by talker
-```{r}
-#TBA
-```
-
-## Cluster Dendrogram
-From unordered list, triangle dendrogram
-```{r}
-#dend <- viz_matrix2dendrogram(your_matrix, triangle = TRUE)
-#plot(dend)  # plots triangular dendrogram with K clusters
-```
-
-## Semantic network
-Simple igraph network (undirected) from unordered list
 ```{r}
 #TBA
 ```
@@ -303,7 +288,7 @@ head(Semantic_Clusters, n=20)
 ```
 
 **Grandfather_Passage:**  Grandfather Passage -- a standardized reading passage, unsplit
-```{r}
+```{r, , message=FALSE}
 GP <- tidyr::separate_rows(Grandfather_Passage, mytext, sep=" ")
 head(GP, n=50)
 ```
