@@ -2,7 +2,7 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 <img src="man/figures/header4readme.png" alt="semantic relations between cat, dog, leash" width="45%" />
-<br/>
+<br>
 
 <!-- badges: start -->
 
@@ -12,7 +12,7 @@ date)](https://img.shields.io/github/v/tag/Reilly-ConceptsCognitionLab/SemanticD
 [![Lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![Depsy](https://img.shields.io/badge/depsy-analyzed-blue.svg)](http://depsy.org/r/yourpackage)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/GNU)
-[![R-CMD-check](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check.yaml](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 # Data Compatibility
@@ -27,41 +27,53 @@ two cells with interlocutor identity and some text; **Word Pairs in
 Columns**: Paired string data arrayed across two columns (e.g.,
 Dog-Leash); **Unordered Word Lists**: Unordered list of words (nominally
 one column, all text in one row) that will be transformed into a
-distance matrix, network model, or dendrogram <br/>
+distance matrix, network model, or dendrogram <br>
 
 # Prep and Analyze Your Data
 
 1)  Store your text and project files within a dedicated
-    folder/directory (e.g., ‘mytexts/’) <br/>
+    folder/directory (e.g., ‘mytexts/’) <br>
 2)  Format your data as CSV or txt. Although SemanticDistance is fairly
     robust to different character encodings, many proograms such as
-    Excel introduce weird hidden characters into strings. <br/>
+    Excel introduce weird hidden characters into strings. <br>
 3)  Label your target text and metadata columns offline however you like
-    (e.g., mytext, word, langoutput) <br/>
+    (e.g., mytext, word, langoutput) <br>
 4)  Import your text and associated metadata (e.g., document_id,
-    timestamps, etc.) as a dataframe. <br/>
+    timestamps, etc.) as a dataframe. <br>
 5)  Identify the format of your sample (e.g., monologue, dialogue,
-    columns, unstructured). <br/>
-6)  Install and load the SemanticDistance package <br/>
+    columns, unstructured). <br>
+6)  Install and load the SemanticDistance package <br>
 7)  Choose a principled set of cleaning parameters (e.g., should I omit
-    stopwords? should I lemmatize?) <br/>
+    stopwords? should I lemmatize?) <br>
 8)  Run the approproate cleaning function that best fits your data
-    stucture and aims <br/>
+    stucture and aims <br>
 9)  Run the appropriate distance function that best fits your data
-    stucture and aims <br/>
+    stucture and aims <br>
 10) Visualize your data using built-in functions or follow-up with your
-    own preferred statistical approach. <br/>
+    own preferred statistical approach. <br>
 
 Install the development version of SemanticDistance from
 [GitHub](https://github.com/) using devtools.
 
 ``` r
-#install.packages("devtools")
-#devtools::install_github("Reilly-ConceptsCognitionLab/SemanticDistance")
+# Check if devtools is installed, if not install it
+if (!require("devtools", quietly = TRUE)) {
+  install.packages("devtools")
+}
+
+# Load devtools
+library(devtools)
+
+# Check if SemanticDistance is installed, if not install from GitHub
+if (!require("SemanticDistance", quietly = TRUE)) {
+  devtools::install_github("Reilly-ConceptsCognitionLab/SemanticDistance")
+}
+
+# Load SemanticDistance
 library(SemanticDistance)
 ```
 
-<br/> <br/>
+<br> <br>
 
 # Monologues
 
@@ -77,17 +89,17 @@ appends several new variables to your original dataframe:
 word or group of words appeared; **’id_row_postsplit** a unique
 identifier marking each word’s ordered position in the dataframe after
 splitting multiword utterances across rows; **word_clean** result of all
-cleaning operations, needed for distance calculations. <br/>
+cleaning operations, needed for distance calculations. <br>
 
 **<span style="color: darkgreen;"> Arguments to ‘clean_monologue’:
-</span>** <br/> **dat** = raw dataframe with at least one column of text
-<br/> **wordcol** = quoted variable column name where your target text
-lives (e.g., ‘mytext’) <br/> **clean** = applies cleaning functions
-(e.g., punct out, lowercase, etc); T/F default is TRUE <br/>
-**omit_stops** = omits stopwords, T/F default is TRUE <br/>
-**lemmatize** = transforms raw word to lemmatized form, T/F default is
-TRUE <br/> **split_strings** = option to split multiword utterances into
-separate rows, T/F default is TRUE
+</span>** <br> **dat** = raw dataframe with at least one column of text
+<br> **wordcol** = quoted variable column name where your target text
+lives (e.g., ‘mytext’) <br> **clean** = applies cleaning functions
+(e.g., punct out, lowercase, etc); T/F default is TRUE <br>
+**omit_stops** = omits stopwords, T/F default is TRUE <br> **lemmatize**
+= transforms raw word to lemmatized form, T/F default is TRUE <br>
+**split_strings** = option to split multiword utterances into separate
+rows, T/F default is TRUE
 
 ``` r
 Monologue_Cleaned <- clean_monologue(dat=Monologue_Structured, wordcol='mytext', clean=TRUE, omit_stops=TRUE, split_strings=TRUE)
@@ -105,7 +117,7 @@ head(Monologue_Cleaned, n=8)
 #> 8 8           boxer              8 "boxer"                 8
 ```
 
-<br/> <br/>
+<br> <br>
 
 ## Step 2: Choose Distance Option/Compute Distances
 
@@ -117,11 +129,11 @@ head(Monologue_Cleaned, n=8)
 Computes cosine distance for two models (embedding and experiential)
 using a rolling ngram approach consisting of groups of words (ngrams) to
 the next word. *IMPORTANT* the function looks backward from the target
-word skipping over NAs until filling the desired ngram size. <br/>
+word skipping over NAs until filling the desired ngram size. <br>
 
 **<span style="color: darkgreen;"> Arguments to
-‘dist_ngram2word’:</span>** <br/> **dat** = dataframe of a monologue
-transcript cleaned and prepped with clean_monologue fn <br/> **ngram** =
+‘dist_ngram2word’:</span>** <br> **dat** = dataframe of a monologue
+transcript cleaned and prepped with clean_monologue fn <br> **ngram** =
 window size preceding each new content word, ngram=1 means each word is
 compared to the word before it
 
@@ -140,7 +152,7 @@ head(Ngram2Word_Dists1)
 #> # ℹ 1 more variable: CosDist_1gram_sd15 <dbl>
 ```
 
-<br/> <br/>
+<br> <br>
 
 ## <span style="color: darkred;">Option 2: Ngram-to-Ngram Distance (dist_ngram2ngram)</span>
 
@@ -152,11 +164,11 @@ User specifies n-gram size (e.g., ngram=2). Distance computed from each
 two-word chunk to the next iterating all the way down the dataframe
 until there are no more words to ‘fill out’ the last ngram. Note this
 distance function **only works on monologue transcripts** where there
-are no speakers delineated and word order matters. <br/>
+are no speakers delineated and word order matters. <br>
 
 **<span style="color: darkgreen;"> Arguments to ‘dist_ngram2ngram’:
-</span>** <br/> **dat** = dataframe w/ a monologue sample cleaned and
-prepped <br/> **ngram** = chunk size (chunk-to-chunk), in this case
+</span>** <br> **dat** = dataframe w/ a monologue sample cleaned and
+prepped <br> **ngram** = chunk size (chunk-to-chunk), in this case
 ngram=2 means chunks of 2 words compared to the next chunk
 
 ``` r
@@ -174,7 +186,7 @@ head(Ngram2Ngram_Dist1)
 #> # ℹ 1 more variable: CosDist_2gram_SD15 <dbl>
 ```
 
-<br/> <br/>
+<br> <br>
 
 ## <span style="color: darkred;">Option 3: Anchor-to-Word Distance (dist_anchor2word)</span>
 
@@ -184,11 +196,11 @@ head(Ngram2Ngram_Dist1)
 Models semantic distance from each successive new word to the average of
 the semantic vectors for the first block of N content words. This
 anchored distance provides a metric of overall semantic drift as a
-language sample unfolds relative to a fixed starting point.<br/>
+language sample unfolds relative to a fixed starting point.<br>
 
 **<span style="color: darkgreen;">Arguments to ‘dist_anchor’: </span>**
-<br/> **dat** = dataframe monologue sample cleaned and prepped using
-‘clean_monologue’ <br/> **anchor_size** = size of the initial chunk of
+<br> **dat** = dataframe monologue sample cleaned and prepped using
+‘clean_monologue’ <br> **anchor_size** = size of the initial chunk of
 words for chunk-to-new-word comparisons fn
 
 ``` r
@@ -205,28 +217,27 @@ head(Anchored_Dists1)
 #> 6                6 street                  0.116              0.0457
 ```
 
-<br/> <br/>
+<br> <br>
 
 ------------------------------------------------------------------------
 
 # Dialogues
 
-## <span style="color: darkred;">Step 1: Clean Dialogue Transcript (clean_dialogue) </span> <br/>
+## <span style="color: darkred;">Step 1: Clean Dialogue Transcript (clean_dialogue) </span> <br>
 
 This could be a conversation transcript or any language sample where you
 care about talker/interlocutor information (e.g., computing semantic
 distance across turns in a conversation). Your dataframe should
-nominally contain a text column and a speaker/talker column. <br/>
+nominally contain a text column and a speaker/talker column. <br>
 
 **<span style="color: darkgreen;">Arguments to ‘clean_dialogue’ are:
-</span>** <br/> **dat** = your raw dataframe with at least one column of
-text AND a talker column <br/> **wordcol** = column name (quoted)
-containing the text you want cleaned <br/> **whotalks** = column name
-(quoted) containing the talker ID (will convert to factor) <br/>
-**clean** = applies cleaning function, T/F default is TRUE <br/>
-**omit_stops** = omits stopwords, T/F default is TRUE <br/>
-**lemmatize** = transforms raw word to lemmatized form, T/F default is
-TRUE
+</span>** <br> **dat** = your raw dataframe with at least one column of
+text AND a talker column <br> **wordcol** = column name (quoted)
+containing the text you want cleaned <br> **whotalks** = column name
+(quoted) containing the talker ID (will convert to factor) <br>
+**clean** = applies cleaning function, T/F default is TRUE <br>
+**omit_stops** = omits stopwords, T/F default is TRUE <br> **lemmatize**
+= transforms raw word to lemmatized form, T/F default is TRUE
 
 ``` r
 Dialogue_Cleaned <- clean_dialogue(dat=Dialogue_Structured, wordcol="mytext", whotalks = "speaker", clean=TRUE, omit_stops=TRUE, lemmatize=TRUE, split_strings=TRUE)
@@ -248,7 +259,7 @@ head(Dialogue_Cleaned, n=12)
 #> 12 12          tiger      Tiger     P2      P2                   12      12
 ```
 
-<br/> <br/>
+<br> <br>
 
 ## Step 2: Compute Semantic Distances
 
@@ -262,10 +273,10 @@ transcripts). It averages across the semantic vectors of all words
 within a turn and then computes cosine distance to all the words in the
 next turn. You just need to feed it a transcript formatted with
 clean_dialogue. ‘dist_dialogue’ will return a summary dataframe that
-distance values aggregated by talker and turn (id_turn). <br/>
+distance values aggregated by talker and turn (id_turn). <br>
 
 **<span style="color: darkgreen;">Arguments to ‘dist_dialogue’ are:
-</span>** <br/> **dat** = dataframe w/ a dialogue sample cleaned and
+</span>** <br> **dat** = dataframe w/ a dialogue sample cleaned and
 prepped using ‘clean_dialogue’
 
 ``` r
@@ -282,7 +293,7 @@ head(DialogueDists)
 #> 6          6 P2           1       0.772        0.192
 ```
 
-<br/> <br/>
+<br> <br>
 
 ------------------------------------------------------------------------
 
@@ -295,12 +306,12 @@ columns. Run the function, the cleaned columns will appear in the
 dataframe.
 
 **<span style="color: darkgreen;">Arguments to ‘clean_paired_cols’ are:
-</span>** <br/> **dat** = your raw dataframe with two columns of paired
-text <br/> **word1** = quoted variable reflecting the column name where
-your first word lives <br/> **word2** = quoted variable reflecting the
-column name where your first word lives <br/> **clean** = applies
-cleaning functions, T/F default is TRUE <br/> **omit_stops** = omits
-stopwords, T/F default is TRUE <br/> **lemmatize** = transforms raw word
+</span>** <br> **dat** = your raw dataframe with two columns of paired
+text <br> **word1** = quoted variable reflecting the column name where
+your first word lives <br> **word2** = quoted variable reflecting the
+column name where your first word lives <br> **clean** = applies
+cleaning functions, T/F default is TRUE <br> **omit_stops** = omits
+stopwords, T/F default is TRUE <br> **lemmatize** = transforms raw word
 to lemmatized form, T/F default is TRUE
 
 ``` r
@@ -321,16 +332,16 @@ head(WordPairs_Clean, n=12) #view head cleaned data
 #> 12   bed    pillow          12          bed       pillow
 ```
 
-<br/> <br/>
+<br> <br>
 
 ## <span style="color: darkred;">Step 2: Distance Word Pairs Columns (dist_paired_cols) </span>
 
 Generates semantic distances (Glove and SD15) between word pairs in
 separate columns. Output of ‘dist_paired_cols’ on 2-column arrayed
-dataframe. Arguments to dist_paired_cols: <br/>
+dataframe. Arguments to dist_paired_cols: <br>
 
 **<span style="color: darkgreen;">Arguments to ‘dist_paired_cols’ are:
-</span>** <br/> **dat** = dataframe w/ word pairs arrayed in columns
+</span>** <br> **dat** = dataframe w/ word pairs arrayed in columns
 cleaned and prepped using ‘clean_2cols’ fn
 
 ``` r
@@ -352,7 +363,7 @@ head(Columns_Dists)
 #> 6   0.0000000
 ```
 
-<br/> <br/>
+<br> <br>
 
 ------------------------------------------------------------------------
 
@@ -362,15 +373,14 @@ head(Columns_Dists)
 
 Prep a vector of words for hierarchical clustering or a network
 visualization. ‘clean_unordered’ will retain only one instance of each
-string (distinct, no duplicates) and no missing values. <br/>
+string (distinct, no duplicates) and no missing values. <br>
 
 **<span style="color: darkgreen;">Arguments to ‘clean_unordered’ are:
-</span>** <br/> **df** = raw dataframe with at least one column of text
-<br/> **wordcol** = quoted variable reflecting where your text lives
-<br/> **clean** = applies cleaning functions, T/F default is TRUE <br/>
-**omit_stops** = omits stopwords, T/F default is TRUE <br/>
-**lemmatize** = transforms raw word to lemmatized form, T/F default is
-TRUE <br/>
+</span>** <br> **df** = raw dataframe with at least one column of text
+<br> **wordcol** = quoted variable reflecting where your text lives <br>
+**clean** = applies cleaning functions, T/F default is TRUE <br>
+**omit_stops** = omits stopwords, T/F default is TRUE <br> **lemmatize**
+= transforms raw word to lemmatized form, T/F default is TRUE <br>
 
 ``` r
 Clusters_Clean <- clean_unordered(dat=Semantic_Clusters, wordcol="mytext", clean=TRUE, omit_stops=TRUE, lemmatize=TRUE)
@@ -386,7 +396,7 @@ head(Clusters_Clean)
 #> 6 6           gun            6 gun      weapon                  6
 ```
 
-<br/> <br/>
+<br> <br>
 
 ## Step 2: Compute Distance
 
@@ -395,12 +405,12 @@ head(Clusters_Clean)
 Returns square matrix where each entry \[i,j\] is the cosine distance
 between word i and word j. Matrix contains original words as both row
 and column names for reference. User specifies whether to return a
-matrix based on embeddings (GLOVE) or experiential norms (SD15). <br/>
+matrix based on embeddings (GLOVE) or experiential norms (SD15). <br>
 
 **<span style="color: darkgreen;">Arguments to ‘dist_matrix’ are:
-</span>** <br/> **dat** = dataframe cleaned and prepped using
-‘clean_unordered4matrix’ fn <br/> **dist_type** = quoted argument
-default is ‘embedding’, other option is “SD15” fn
+</span>** <br> **dat** = dataframe cleaned and prepped using
+‘clean_unordered4matrix’ fn <br> **dist_type** = quoted argument default
+is ‘embedding’, other option is “SD15” fn
 
 ``` r
 MyDistMatrix <- dist_matrix(dat=Clusters_Clean, dist_type='embedding')
@@ -415,7 +425,7 @@ MyDistMatrix[1:7, 1:7] #Print columns 1:7, rows 1:7 square matrix
 #> knife    0.8766921 0.8880578 0.8349393 0.7856145 0.7351402 0.5440601 0.0000000
 ```
 
-<br/> <br/>
+<br> <br>
 
 ## Option 1: Matrix to Dendrogram
 
@@ -434,7 +444,7 @@ MyDendro <- viz_clusters(MyDistMatrix, type="dendrogram")
 # plots triangular dendrogram with K clusters
 ```
 
-<br/> <br/>
+<br> <br>
 
 ## Option 2: Matrix to iGraph Network
 
@@ -443,7 +453,7 @@ MyGraph <- viz_clusters(MyDistMatrix, type="network")
 ```
 
 <img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" />
-<br/> <br/>
+<br> <br>
 
 ------------------------------------------------------------------------
 
@@ -452,7 +462,7 @@ MyGraph <- viz_clusters(MyDistMatrix, type="network")
 Choose the visualization strategy that best fits your data. Are they
 ordered? Is it a monologue? Are you interested in chunk-to-chunk
 distance or distance from each new element to a fixed anchor in the
-beginning? Your three options are explained to follow:<br/>
+beginning? Your three options are explained to follow:<br>
 
 ## Visualize a Monologue Time Series: ngram2word
 
@@ -460,15 +470,15 @@ Plots the word id_row as x-axis (a proxy for time) by distance measure
 (facetted GLO and SD15). Add red line annotation if semantic distance
 jump is z\>3 based on the distribution of that time series, Add options
 for interpolation and rolling average window, zscore threshold for
-marking annotation. <br/>
+marking annotation. <br>
 
 **<span style="color: darkgreen;">Arguments to ‘viz_monologue’:
-</span>** <br/> **dat** dataframe with CosDist values and
-row_id_postsplit vars appended <br/> **interpolate** T/F linear
+</span>** <br> **dat** dataframe with CosDist values and
+row_id_postsplit vars appended <br> **interpolate** T/F linear
 interpolation option across missing observations of row, default is TRUE
-<br/> **roll_avg** rolling average window size, default is 0 <br/>
+<br> **roll_avg** rolling average window size, default is 0 <br>
 **facet** T/F option to facet by cosine distance type, default is TRUE
-<br/> **annotate** T/F option to append annotations (red lines where
+<br> **annotate** T/F option to append annotations (red lines where
 z\>2.5 for distance jump), default is TRUE
 
 ``` r
@@ -489,7 +499,7 @@ print(FirstViz)
 ```
 
 <img src="man/figures/README-unnamed-chunk-15-1.png" width="100%" />
-<br/> <br/>
+<br> <br>
 
 ## Monologue Time Series: dist_anchor
 
@@ -503,7 +513,7 @@ print(AnchorViz)
 ```
 
 <img src="man/figures/README-unnamed-chunk-16-1.png" width="100%" />
-<br/> <br/>
+<br> <br>
 
 ## Time series plot for dialogues
 
@@ -519,7 +529,7 @@ Color point by talker
 #TBA
 ```
 
-<br/> <br/>
+<br> <br>
 
 ------------------------------------------------------------------------
 
@@ -529,10 +539,10 @@ Color point by talker
 
 SemanticDistance contains some sample language transcripts that will
 automatically load when you call the package. These can be helpful for
-evaluating and debugging your own own transcripts.<br/>
+evaluating and debugging your own own transcripts.<br>
 
 **Monologue_Structured:** Dataframe 1-word per row already split no
-missing observations <br/>
+missing observations <br>
 
 ``` r
 head(Monologue_Structured)
@@ -547,7 +557,7 @@ head(Monologue_Structured)
 
 **Monologue_Messy:** Dataframe text arrayed in one column ‘mytext’,
 missing observations, junk, multiword phrases contains metadata
-(simulated timestamps <br/>
+(simulated timestamps <br>
 
 ``` r
 head(Monologue_Messy)
@@ -576,7 +586,7 @@ head(Dialogue_Structured)
 
 **Dialogue_Messy:** Dataframe simulating ‘dirty’ conversation
 transcript, multiple lines per person, lots of stopwords, missing
-obervations, stray transcription symbols <br/>
+obervations, stray transcription symbols <br>
 
 ``` r
 head(Dialogue_Messy)
@@ -589,7 +599,7 @@ head(Dialogue_Messy)
 #> 6             Dolphin    Mary
 ```
 
-**Word_Pairs:** Dataframe with word pairs arrayed in two columns <br/>
+**Word_Pairs:** Dataframe with word pairs arrayed in two columns <br>
 
 ``` r
 head(Word_Pairs)
