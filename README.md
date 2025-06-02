@@ -2,7 +2,7 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 <br> <br>
-<img src="man/figures/header4readme.png" alt="semantic relations between cat, dog, leash" width="45%" />
+<img src="man/figures/HeaderReadMe.png" alt="semantic relations between cat, dog, leash" width="55%" />
 <br>
 
 <!-- badges: start -->
