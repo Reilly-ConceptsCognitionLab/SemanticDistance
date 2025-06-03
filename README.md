@@ -1,9 +1,12 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<br> <br>
-<img src="man/figures/HeaderReadMe.png" alt="semantic relations between cat, dog, leash" width="65%" />
 <br>
+
+<a href="https://reilly-conceptscognitionlab.github.io/SemanticDistance/"><img src="man/figures/logo.png" align="right" height="138" alt="SemanticDistance website" /></a>
+
+<img src="man/figures/HeaderReadMe.png" alt="semantic relations between cat, dog, leash" width="50%" />
+<br> <br>
 
 <!-- badges: start -->
 

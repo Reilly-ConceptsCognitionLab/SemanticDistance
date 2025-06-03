@@ -11,11 +11,15 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%")
 ```
+<br>
 
+<a href="https://reilly-conceptscognitionlab.github.io/SemanticDistance/"><img src="man/figures/logo.png" align="right" height="138" alt="SemanticDistance website" /></a>
+
+<img src="man/figures/HeaderReadMe.png" alt="semantic relations between cat, dog, leash" width="50%" />
 <br>
 <br>
-<img src="man/figures/HeaderReadMe.png" alt="semantic relations between cat, dog, leash" width="65%" />
-<br>
+
+
 
 <!-- badges: start -->
 [![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/Reilly-ConceptsCognitionLab/SemanticDistance?color=blue)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/tags)
