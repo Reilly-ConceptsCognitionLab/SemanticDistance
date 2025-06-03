@@ -1,6 +1,8 @@
 ---
 title: "SemanticDistance"
 output: rmarkdown::html_vignette
+description: >
+  This vignette describes features of the R package, SemanticDistance. In addition to computing empirical measures of conceptual relatedness between words and chunks of words, the package also includes numerous visualization options.
 vignette: >
   %\VignetteIndexEntry{SemanticDistance}
   %\VignetteEngine{knitr::rmarkdown}
@@ -8,55 +10,42 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
+
+# What is semantic distance?
+Semantic distance is a quantitative measure of relatedness between two concepts (e.g., dog-wolf) within an n-dimensional semantic space. This sounds scarier than it really is.  In the simplest case, you could consider the difference in rated scariness between dogs and wolves as a 1-dimension semantic distance. In real life, however, most people model semantic distances using much higher dimensionality. For an extensive treatment of these methods, see: <br>
+<br>
+
+Reilly J, Finley AM, Litovsky C, & Kennett Y (2023) Bigram semantic distance in continuous language narratives: Theory,  method, applications. Journal of Experimental Psychology: General. 152(9), 2578-2590. 
+[https://doi.org/10.1037/xge0001389](https://doi.org/10.1037/xge0001389) <br>
+
+<br>
+The 'SemanticDistance' R package computes two different, but complementary indices of semantic distance. The package contains two embedded lookup databases with multidimensional vectors for many English words. The first database contains crowd-sourced human ratings for 15 dimensions (e.g., color, sound, motor, pleasantness). When you are interested in compouting semantic distance from this 'experiential' semantic space between two words, the program first extracts their respective semantic vectors and then compares them, reported as cosine distance. The vector for 'dog' against itself yields a distance of 0.  The most distant possible cosine value is 2. We label the output of this distance metric as "SD15" since it relflects distance across 15 psychologically meaningful dimensions. <br>
+<br>
+
+The second semantic distance metric is derived from the GLOVE word embedding model. We trained GLOVE on a vast corpus of American English. The result of this training is a lookup database with more than 100k English words characterized across 300 dimensions. These embedding dimensions are not like the psychological dimensions measured in SD15. The embeddings are mathematical constructs (hyperparameters) derived through dimension reduction reflecting co-occurence statistics between each word in the database to all other words in the database.  SemanticDistance computes the second semantic distance value using these embeddings and reports the distance (dog-wolf) as 'GLO_cosdist'.  O is the least distant (most similar) and 2 is the most distant (least similar) index between elements. <br>
+<br>
+
+One interesting feature of multidimensional semantic vectors is that they appear to be additive. That is, it is possible to average the semantic vectors for several words (or ngrams) to obtain a composite vector for a group of words. The SemanticDistance package leverages this property to yield comparisons of local (word-to-word) vs. more global (large blocks of text to word, turn-to-turn) semantic relationships.
+
+# What can SemanticDistance do?
+
+SemanticDistance can compute pairwise semantic distance relationships in ordered and unordered language samples, including: <br>
+1. **Monologues**: Any ordered text sample NOT delineated by a talker/speaker (e.g., stories, narratives). The minimal requirement for a monologue is one row and one column with some text in it. <br>
+2. **Dialogues**: An ordered language sample split by a talker/speaker/interlocutor factor. The minimum requirment is two cells with interlocutor identity and some text. <br>
+3. **Word Pairs in Columns**: Paired string data arrayed across two columns (e.g., Dog-Leash) <br>
+4. **Unordered Word Lists**: Unordered list of words (nominally one column, all text in one row) that will be transformed into a distance matrix, network model, or dendrogram <br>
+
 
 # Install package and load library
 ```{r setup}
-#install.packages("devtools") # to install development version, run this
-#devtools::install_github("Reilly-ConceptsCognitionLab/ConversationAlign") #installs from github
-library(SemanticDistance)
+
 ```
 
 # SemanticDistance: What the package does
-Semantic distance is an empirical measure of distance between two elements (words, ngrams, documents) within an n-dimensional semantic space. There are *many* ways to measure semantic distance. The `SemanticDistance` package appends pairwise cosine distance values between different chunks of language where those chunk sizes are specified by the user (e.g., word-to-word, ngram-to-word). The package derives empirical distance values by indexing two large lookup databases embedded within the package. Both databases include fixed semantic vectors for many English words. One measure (CosDist_Glo) reflects distance between pairwise vectors (Dog:Leash) derived from training a GLOVE word embedding model (300 hyperparameters per word). A complementary metric (CodDist_SD15) refects cosine distance between two chunks (words, groups of words) characterized across 15 meaningful perceptual and affective dimensions (e.g., color, sound, valence). <br/>
-
-SemanticDistance cleans and formats your target text by applying a variety of options (e.g., leave it alone, clean punctuation, omit stopwords, lemmatize strings). The package can handle a variety of dataframe formats, including ordered monologues, word pairs arrayed in columns, unordered word lists, and dialogue transcripts marked by talker information. <br/>
-
-SemanticDistance scans your cleaned/formatted dataframe and computes two different metrics of semantic distance between successive chunks (e.g., ngrams, words, turns). The two semantic distance values reflect pairwise cosine distance (0 to 2) between two different high dimensional semantic spaces. Experiential semantic distance (SD15) reflects pairwise distance between two word vectors (e.g., dog:cat) spanning 15 meaningful semantic dimensions (e.g., color, sound, valence). Embedding-based semantic distances (Glo) are derived by contrasting each word's semantic vector spanning 300 hyperparameters as trained on the GLOVE word embedding model.  <br/>
 
 
-
-# <span style="color: red;">Step 1: Clean and Prep Your Text</span>
-SemanticDistance works on monologues (no talker information), dialogues (two or more speakers), word pairs arrayed in columns, and unstructured word lists (for hierarchical clustering). Cleaning can even handle unstructured text pasted into a single cell of a csv file. However, you MUST run an appropriate cleaning function before you run any distance functions even if you do not apply any of the cleaning options. These functions append unique identifiers that are used in the distance calculations. <br/>
-
-1) Prep your string data (csv or text) and read it into R (e.g., myrawdat). Call your objects and variables anything you like. SemanticDistance will retain your metadata. <br/>
-2) Your data should contain at least one column with some string data in it (e.g., mytext). <br/>
-3) Identify the format of your sample (e.g., monologue, dialogue, columns, unstructured). <br/>
-4) Decide on your cleaning parameters (lemmatize, omit stopwords, omit punctuation). <br/>
-5) Specify the cleaning function and arguments that best fit your aims. <br/>
-
-
-### Monologue Transcript (clean_monologue)
-This could be a story etc. - basically any string where word order matters but you don't care about talker information. Your target text will be split and unlisted into a one word per row format.All other metadata will be retained. Here's a sample monologue with all sorts of junk in a column called 'word'. The 'clean_monologue' function will split and append a unique identifier to each word while retaining empty strings that could be meaningful. Defaults are to omit stopwords and lemmatize. <br/>
-
-
-
-# <span style="color: red;">Step 2: Compute Semantic Distance</span>
-# <span style="color: darkred;">Step 2: Compute Semantic Distance on your Prepped Data</span>
-SemanticDistance will append cosine distance values between each pair of elements specified by the user (e.g., word-to-word, ngram-to-word). These distance values are derived from two large lookup databases in the package with fixed semantic vectors for >70k English words. CosDist_Glo reflects cosine distance between vectors derived from training a GLOVE word embedding model (300 hyperparameters per word). CodDist_SD15 refects cosine distance between two chunks (words, groups of words) characterized across 15 meaningful perceptual and affective dimensions (e.g., color, sound, valence). <br/>
-
-Users specify an ngram window size. This window rolls successively over your language sample to compute a semantic distance value for each new word relative to the n-words (ngram size) before it. This model of compouting distance is illustrated in the figure. The larger your specified ngram size the more smoothed the semantic vector will be over your language sample. Once you settle on a window size and clean your language transcript (works for monologues only), you are ready to roll. Here's the general idea... <br>
-
-
-
-
-## <span style="color: brown;">2.2: Monologues: Ngram-to-Ngram Distance (dist_ngram2ngram)</span>
-<img src="man/figures/Ngram2Ngram_Dist.png" alt="illustrates how semantic distance is derived from chunk to chunk groupings of words" width="50%" />
-
-Joins target transcript to lookup database so each word has a corresponding semantic vector in row form. For example, if interested in 4-word chunks, then dog-cat-milk-banana (Ngram_4) would be the first ngram. We will aggregate the semantic vectors for all four words into a mean vector for that 4-gram then compute the distance to the next 4-gram iterating through the dataframe to the last possible chunk of four words omitting the 'leftovers' (residual/remainder not divisible by the ngram size). For example if there are 22 words and the user is interested in 3-grams, there would be 7 of these with one word left over in the last row.
+SemanticDistance cleans and formats your target text by applying a variety of options (e.g., leave it alone, clean punctuation, omit stopwords, lemmatize strings). SemanticDistance scans your cleaned/formatted dataframe and computes two different metrics of semantic distance between successive chunks (e.g., ngrams, words, turns). The two semantic distance values reflect pairwise cosine distance (0 to 2) between two different high dimensional semantic spaces. 
 
 
