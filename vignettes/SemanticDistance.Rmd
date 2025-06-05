@@ -68,7 +68,7 @@ library(SemanticDistance)
 ```
 
 # Read your data into R
-Get your data into R. Many user will import data from CSV or txt files. It doesn't matter how you get your data into R, but there are some formatting considerations to keep in mind. Excel is dangerous in terms of adding hidden characters and other nonsense (e.g., formulae) that you don't want in your dataframe. Remain vigilant and check whether the data imported into R matches your original. SemanticDistance will retain all your metadata (e.g., timestamps, speaker codes).  
+Get your data into R. Many users will import data from CSV or text files. It doesn't matter how you get your data into R, but there are some formatting considerations to keep in mind. In particular, Excel is dangerous in terms of adding hidden characters and other nonsense (e.g., formulae) that you don't want in your dataframe. Remain vigilant and check whether the data imported into R matches your original. SemanticDistance will retain all your metadata (e.g., timestamps, speaker codes).  
 
 
 
