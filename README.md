@@ -19,19 +19,26 @@ date)](https://img.shields.io/github/v/tag/Reilly-ConceptsCognitionLab/SemanticD
 [![R-CMD-check.yaml](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
+## Bug Reports & Feature Requests
+
+Thank you for using our package! If you encounter any bugs or have
+feature requests, please let us know by clicking here [GitHub
+Issues](https://reilly-conceptscognitionlab/Reilly-ConceptsCognitionLab/SemanticDistance/issues).
+
 # Data Compatibility
 
 SemanticDistance can compute pairwise semantic distance relationships in
-ordered and unordered language samples, including: **Monologues**: Any
-ordered text sample NOT delineated by a talker/speaker (e.g., stories,
-narratives). The minimal requirement for a monologue is one row and one
-column with some text in it.; **Dialogues**: An ordered language sample
-split by a talker/speaker/interlocutor factor. The minimum requirment is
-two cells with interlocutor identity and some text; **Word Pairs in
-Columns**: Paired string data arrayed across two columns (e.g.,
-Dog-Leash); **Unordered Word Lists**: Unordered list of words (nominally
-one column, all text in one row) that will be transformed into a
-distance matrix, network model, or dendrogram <br>
+ordered and unordered language samples, including: <br> **Monologues**:
+Any ordered text sample NOT delineated by a talker/speaker (e.g.,
+stories, narratives). The minimal requirement for a monologue is one row
+and one column with some text in it. <br> **Dialogues**: An ordered
+language sample split by a talker/speaker/interlocutor factor. The
+minimum requirment is two cells with interlocutor identity and some
+text. <br> **Word Pairs in Columns**: Paired string data arrayed across
+two columns (e.g., Dog-Leash). <br> **Unordered Word Lists**: Unordered
+list of words (nominally one column, all text in one row) that will be
+transformed into a distance matrix, network model, or dendrogram <br>
+<br>
 
 # Prep and Analyze Your Data
 
