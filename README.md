@@ -6,7 +6,6 @@
 <a href="https://reilly-conceptscognitionlab.github.io/SemanticDistance/"><img src="man/figures/logo.png" align="right" height="138" alt="SemanticDistance website" /></a>
 
 <img src="man/figures/HeaderReadMe.png" alt="semantic relations between cat, dog, leash" width="50%" />
-<br> <br>
 
 <!-- badges: start -->
 
@@ -19,11 +18,31 @@ date)](https://img.shields.io/github/v/tag/Reilly-ConceptsCognitionLab/SemanticD
 [![R-CMD-check.yaml](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-## Bug Reports & Feature Requests
+# Getting Help
 
-Thank you for using our package! If you encounter any bugs or have
-feature requests, please let us know by clicking here [GitHub
-Issues](https://reilly-conceptscognitionlab/Reilly-ConceptsCognitionLab/SemanticDistance/issues).
+Thank you for using SemanticDistance. For bugs, feature requests, and
+general questions please reach out via one of the following options:
+<br>
+<ul style="list-style-type: none; padding-left: 0;">
+
+<li>
+
+<strong>Bugs/Features:</strong><br>[Open an
+Issue](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/issues)
+</li>
+
+<li>
+
+<strong>Questions:</strong><br>[Join
+Discussion](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/discussions)
+</li>
+
+<li>
+
+<strong>Urgent:</strong><br>Email <code><jamie.reilly@temple.edu></code>
+</li>
+
+</ul>
 
 # Data Compatibility
 
@@ -38,9 +57,8 @@ text. <br> **Word Pairs in Columns**: Paired string data arrayed across
 two columns (e.g., Dog-Leash). <br> **Unordered Word Lists**: Unordered
 list of words (nominally one column, all text in one row) that will be
 transformed into a distance matrix, network model, or dendrogram <br>
-<br>
 
-# Prep and Analyze Your Data
+# Prep Data Outside the Package
 
 1)  Store your text and project files within a dedicated
     folder/directory (e.g., ‘mytexts/’) <br>
@@ -56,12 +74,8 @@ transformed into a distance matrix, network model, or dendrogram <br>
 6)  Install and load the SemanticDistance package <br>
 7)  Choose a principled set of cleaning parameters (e.g., should I omit
     stopwords? should I lemmatize?) <br>
-8)  Run the approproate cleaning function that best fits your data
-    stucture and aims <br>
-9)  Run the appropriate distance function that best fits your data
-    stucture and aims <br>
-10) Visualize your data using built-in functions or follow-up with your
-    own preferred statistical approach. <br>
+
+# Install and Load the Package
 
 Install the development version of SemanticDistance from
 [GitHub](https://github.com/) using devtools.
@@ -84,7 +98,7 @@ if (!require("SemanticDistance", quietly = TRUE)) {
 library(SemanticDistance)
 ```
 
-<br> <br>
+<br>
 
 # Monologues
 
@@ -128,7 +142,7 @@ head(Monologue_Cleaned, n=8)
 #> 8 8           boxer              8 "boxer"                 8
 ```
 
-<br> <br>
+<br>
 
 ## Step 2: Choose Distance Option/Compute Distances
 
@@ -163,7 +177,7 @@ head(Ngram2Word_Dists1)
 #> # ℹ 1 more variable: CosDist_1gram_sd15 <dbl>
 ```
 
-<br> <br>
+<br>
 
 ## <span style="color: darkred;">Option 2: Ngram-to-Ngram Distance (dist_ngram2ngram)</span>
 
@@ -197,7 +211,7 @@ head(Ngram2Ngram_Dist1)
 #> # ℹ 1 more variable: CosDist_2gram_SD15 <dbl>
 ```
 
-<br> <br>
+<br>
 
 ## <span style="color: darkred;">Option 3: Anchor-to-Word Distance (dist_anchor2word)</span>
 
@@ -228,9 +242,7 @@ head(Anchored_Dists1)
 #> 6                6 street                  0.116              0.0457
 ```
 
-<br> <br>
-
-------------------------------------------------------------------------
+<br>
 
 # Dialogues
 
@@ -270,8 +282,6 @@ head(Dialogue_Cleaned, n=12)
 #> 12 12          tiger      Tiger     P2      P2                   12      12
 ```
 
-<br> <br>
-
 ## Step 2: Compute Semantic Distances
 
 ## <span style="color: darkred;"> Dialogue Distance Turn-to-Turn (dist_dialogue)</span>
@@ -304,9 +314,7 @@ head(DialogueDists)
 #> 6          6 P2           1       0.772        0.192
 ```
 
-<br> <br>
-
-------------------------------------------------------------------------
+<br>
 
 # Word Pairs in Columns
 
@@ -343,7 +351,7 @@ head(WordPairs_Clean, n=12) #view head cleaned data
 #> 12   bed    pillow          12          bed       pillow
 ```
 
-<br> <br>
+<br>
 
 ## <span style="color: darkred;">Step 2: Distance Word Pairs Columns (dist_paired_cols) </span>
 
@@ -374,9 +382,7 @@ head(Columns_Dists)
 #> 6   0.0000000
 ```
 
-<br> <br>
-
-------------------------------------------------------------------------
+<br>
 
 # -Unordered Word Lists-
 
@@ -407,7 +413,7 @@ head(Clusters_Clean)
 #> 6 6           gun            6 gun      weapon                  6
 ```
 
-<br> <br>
+<br>
 
 ## Step 2: Compute Distance
 
@@ -436,7 +442,7 @@ MyDistMatrix[1:7, 1:7] #Print columns 1:7, rows 1:7 square matrix
 #> knife    0.8766921 0.8880578 0.8349393 0.7856145 0.7351402 0.5440601 0.0000000
 ```
 
-<br> <br>
+<br>
 
 ## Option 1: Matrix to Dendrogram
 
@@ -455,7 +461,7 @@ MyDendro <- viz_clusters(MyDistMatrix, type="dendrogram")
 # plots triangular dendrogram with K clusters
 ```
 
-<br> <br>
+<br>
 
 ## Option 2: Matrix to iGraph Network
 
@@ -464,9 +470,7 @@ MyGraph <- viz_clusters(MyDistMatrix, type="network")
 ```
 
 <img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" />
-<br> <br>
-
-------------------------------------------------------------------------
+<br>
 
 # Data Visualization Options
 

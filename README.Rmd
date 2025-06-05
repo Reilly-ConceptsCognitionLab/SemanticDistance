@@ -16,10 +16,6 @@ knitr::opts_chunk$set(
 <a href="https://reilly-conceptscognitionlab.github.io/SemanticDistance/"><img src="man/figures/logo.png" align="right" height="138" alt="SemanticDistance website" /></a>
 
 <img src="man/figures/HeaderReadMe.png" alt="semantic relations between cat, dog, leash" width="50%" />
-<br>
-<br>
-
-
 
 <!-- badges: start -->
 [![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/Reilly-ConceptsCognitionLab/SemanticDistance?color=blue)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/tags)
@@ -30,8 +26,13 @@ knitr::opts_chunk$set(
 [![R-CMD-check.yaml](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-## Bug Reports & Feature Requests
-Thank you for using our package! If you encounter any bugs or have feature requests, please let us know by clicking here [GitHub Issues](https://reilly-conceptscognitionlab/Reilly-ConceptsCognitionLab/SemanticDistance/issues).
+# Getting Help
+Thank you for using SemanticDistance. For bugs, feature requests, and general questions please reach out via one of the following options: <br>
+<ul style="list-style-type: none; padding-left: 0;">
+  <li><strong>Bugs/Features:</strong><br>[Open an Issue](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/issues)</li>
+  <li><strong>Questions:</strong><br>[Join Discussion](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/discussions)</li>
+  <li><strong>Urgent:</strong><br>Email <code>jamie.reilly@temple.edu</code></li>
+</ul>
 
 # Data Compatibility
 SemanticDistance can compute pairwise semantic distance relationships in ordered and unordered language samples, including: <br>
@@ -39,9 +40,8 @@ SemanticDistance can compute pairwise semantic distance relationships in ordered
 **Dialogues**: An ordered language sample split by a talker/speaker/interlocutor factor. The minimum requirment is two cells with interlocutor identity and some text. <br>
 **Word Pairs in Columns**: Paired string data arrayed across two columns (e.g., Dog-Leash). <br>
 **Unordered Word Lists**: Unordered list of words (nominally one column, all text in one row) that will be transformed into a distance matrix, network model, or dendrogram <br>
-<br>
 
-# Prep and Analyze Your Data
+# Prep Data Outside the Package
 1) Store your text and project files within a dedicated folder/directory (e.g., 'mytexts/') <br>
 2) Format your data as CSV or txt. Although SemanticDistance is fairly robust to different character encodings, many proograms such as Excel introduce weird hidden characters into strings. <br>
 3) Label your target text and metadata columns offline however you like (e.g., mytext, word, langoutput) <br>
@@ -49,10 +49,8 @@ SemanticDistance can compute pairwise semantic distance relationships in ordered
 5) Identify the format of your sample (e.g., monologue, dialogue, columns, unstructured). <br>
 6) Install and load the SemanticDistance package <br>
 7) Choose a principled set of cleaning parameters (e.g., should I omit stopwords? should I lemmatize?) <br>
-8) Run the approproate cleaning function that best fits your data stucture and aims <br>
-9) Run the appropriate distance function that best fits your data stucture and aims <br>
-10) Visualize your data using built-in functions or follow-up with your own preferred statistical approach. <br> 
 
+# Install and Load the Package
 Install the development version of SemanticDistance from [GitHub](https://github.com/) using devtools.
 ```{r, message=FALSE, warning=F}
 # Check if devtools is installed, if not install it
@@ -72,7 +70,6 @@ if (!require("SemanticDistance", quietly = TRUE)) {
 library(SemanticDistance)
 ```
 <br>
-<br>
 
 # Monologues
 ## <span style="color: darkred;"> Step 1: Clean Monologue Transcript (clean_monologue) </span>
@@ -90,7 +87,6 @@ Monologue_Cleaned <- clean_monologue(dat=Monologue_Structured, wordcol='mytext',
 head(Monologue_Cleaned, n=8)
 ```
 <br>
-<br>
 
 ## Step 2: Choose Distance Option/Compute Distances
 ## <span style="color: darkred;">Option 1: Ngram-to-Word Distance (dist_ngram2word) </span>
@@ -106,7 +102,6 @@ Computes cosine distance for two models (embedding and experiential) using a rol
 Ngram2Word_Dists1 <- dist_ngram2word(dat=Monologue_Cleaned, ngram=1) #distance word-to-word
 head(Ngram2Word_Dists1)
 ```
-<br>
 <br>
 
 ## <span style="color: darkred;">Option 2: Ngram-to-Ngram Distance (dist_ngram2ngram)</span>
@@ -124,7 +119,6 @@ Ngram2Ngram_Dist1 <- dist_ngram2ngram(dat=Monologue_Cleaned, ngram=2)
 head(Ngram2Ngram_Dist1)
 ```
 <br>
-<br>
 
 ## <span style="color: darkred;">Option 3: Anchor-to-Word Distance (dist_anchor2word)</span>
 <img src="man/figures/AnchorFig.png" 
@@ -140,9 +134,6 @@ Anchored_Dists1 <- dist_anchor(dat=Monologue_Cleaned, anchor_size=8)
 head(Anchored_Dists1)
 ```
 <br>
-<br>
-
----
 
 # Dialogues
 ## <span style="color: darkred;">Step 1: Clean Dialogue Transcript (clean_dialogue) </span> <br>
@@ -159,8 +150,6 @@ This could be a conversation transcript or any language sample where you care ab
 Dialogue_Cleaned <- clean_dialogue(dat=Dialogue_Structured, wordcol="mytext", whotalks = "speaker", clean=TRUE, omit_stops=TRUE, lemmatize=TRUE, split_strings=TRUE)
 head(Dialogue_Cleaned, n=12)
 ```
-<br>
-<br>
 
 ## Step 2: Compute Semantic Distances 
 ## <span style="color: darkred;"> Dialogue Distance Turn-to-Turn (dist_dialogue)</span>
@@ -173,9 +162,6 @@ DialogueDists <- dist_dialogue(dat=Dialogue_Cleaned)
 head(DialogueDists)
 ```
 <br>
-<br>
-
----
 
 # Word Pairs in Columns
 ## <span style="color: darkred;"> Step 1 Clean Word Pairs (clean_paired_cols) </span>
@@ -193,7 +179,6 @@ WordPairs_Clean <- clean_paired_cols(dat=Word_Pairs, wordcol1='word1', wordcol2=
 head(WordPairs_Clean, n=12) #view head cleaned data
 ```
 <br>
-<br>
 
 ## <span style="color: darkred;">Step 2: Distance Word Pairs Columns (dist_paired_cols) </span>
 Generates semantic distances (Glove and SD15) between word pairs in separate columns. Output of 'dist_paired_cols' on 2-column arrayed dataframe. Arguments to dist_paired_cols: <br>
@@ -205,9 +190,6 @@ Columns_Dists <- dist_paired_cols(WordPairs_Clean) #only argument is dataframe
 head(Columns_Dists)
 ```
 <br>
-<br>
-
----
 
 # -Unordered Word Lists-
 ## <span style="color: darkred;">Step 1: Clean unordered word list (clean_unordered)</span>
@@ -224,7 +206,6 @@ Clusters_Clean <- clean_unordered(dat=Semantic_Clusters, wordcol="mytext", clean
 head(Clusters_Clean)
 ```
 <br>
-<br>
 
 ## Step 2: Compute Distance
 ## <span style="color: darkred;">Distance Matrix All Word Pairs (dist_matrix)</span>
@@ -238,7 +219,6 @@ MyDistMatrix <- dist_matrix(dat=Clusters_Clean, dist_type='embedding')
 MyDistMatrix[1:7, 1:7] #Print columns 1:7, rows 1:7 square matrix
 ```
 <br>
-<br>
 
 ## Option 1: Matrix to Dendrogram
 ```{r, message=FALSE}
@@ -247,16 +227,12 @@ MyDendro <- viz_clusters(MyDistMatrix, type="dendrogram")
 # plots triangular dendrogram with K clusters
 ```
 <br>
-<br>
 
 ## Option 2: Matrix to iGraph Network
 ```{r, message=FALSE}
 MyGraph <- viz_clusters(MyDistMatrix, type="network")
 ```
 <br>
-<br>
-
----
 
 # Data Visualization Options
 Choose the visualization strategy that best fits your data. Are they ordered? Is it a monologue? Are you interested in chunk-to-chunk distance or distance from each new element to a fixed anchor in the beginning? Your three options are explained to follow:<br>
