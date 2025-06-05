@@ -49,23 +49,33 @@
 <div class="row">
   <main id="main" class="col-md-9"><p><br></p>
 <p><a href="https://reilly-conceptscognitionlab.github.io/SemanticDistance/"><img src="reference/figures/logo.png" align="right" height="138" alt="SemanticDistance website"></a></p>
-<p><img src="reference/figures/HeaderReadMe.png" alt="semantic relations between cat, dog, leash" width="50%"><br><br></p>
+<p><img src="reference/figures/HeaderReadMe.png" alt="semantic relations between cat, dog, leash" width="50%"></p>
 <!-- badges: start -->
 
-<div class="section level2">
-<h2 id="bug-reports--feature-requests">Bug Reports &amp; Feature Requests<a class="anchor" aria-label="anchor" href="#bug-reports--feature-requests"></a>
-</h2>
-<p>Thank you for using our package! If you encounter any bugs or have feature requests, please let us know by clicking here <a href="https://reilly-conceptscognitionlab/Reilly-ConceptsCognitionLab/SemanticDistance/issues" class="external-link">GitHub Issues</a>.</p>
-</div>
 <div class="section level1">
 <div class="page-header">
-<img src="logo.png" class="logo" alt=""><h1 id="data-compatibility">Data Compatibility<a class="anchor" aria-label="anchor" href="#data-compatibility"></a>
+<img src="logo.png" class="logo" alt=""><h1 id="getting-help">Getting Help<a class="anchor" aria-label="anchor" href="#getting-help"></a>
 </h1>
 </div>
-<p>SemanticDistance can compute pairwise semantic distance relationships in ordered and unordered language samples, including: <br><strong>Monologues</strong>: Any ordered text sample NOT delineated by a talker/speaker (e.g., stories, narratives). The minimal requirement for a monologue is one row and one column with some text in it. <br><strong>Dialogues</strong>: An ordered language sample split by a talker/speaker/interlocutor factor. The minimum requirment is two cells with interlocutor identity and some text. <br><strong>Word Pairs in Columns</strong>: Paired string data arrayed across two columns (e.g., Dog-Leash). <br><strong>Unordered Word Lists</strong>: Unordered list of words (nominally one column, all text in one row) that will be transformed into a distance matrix, network model, or dendrogram <br><br></p>
+Thank you for using SemanticDistance. For bugs, feature requests, and general questions please reach out via one of the following options: <br><ul style="list-style-type: none; padding-left: 0;">
+<li>
+<strong>Bugs/Features:</strong><br><a href="https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/issues" class="external-link">Open an Issue</a>
+</li>
+<li>
+<strong>Questions:</strong><br><a href="https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/discussions" class="external-link">Join Discussion</a>
+</li>
+<li>
+<strong>Urgent:</strong><br>Email <code><a href="mailto:jamie.reilly@temple.edu" class="email">jamie.reilly@temple.edu</a></code>
+</li>
+</ul>
 </div>
 <div class="section level1">
-<h1 id="prep-and-analyze-your-data">Prep and Analyze Your Data<a class="anchor" aria-label="anchor" href="#prep-and-analyze-your-data"></a>
+<h1 id="data-compatibility">Data Compatibility<a class="anchor" aria-label="anchor" href="#data-compatibility"></a>
+</h1>
+<p>SemanticDistance can compute pairwise semantic distance relationships in ordered and unordered language samples, including: <br><strong>Monologues</strong>: Any ordered text sample NOT delineated by a talker/speaker (e.g., stories, narratives). The minimal requirement for a monologue is one row and one column with some text in it. <br><strong>Dialogues</strong>: An ordered language sample split by a talker/speaker/interlocutor factor. The minimum requirment is two cells with interlocutor identity and some text. <br><strong>Word Pairs in Columns</strong>: Paired string data arrayed across two columns (e.g., Dog-Leash). <br><strong>Unordered Word Lists</strong>: Unordered list of words (nominally one column, all text in one row) that will be transformed into a distance matrix, network model, or dendrogram <br></p>
+</div>
+<div class="section level1">
+<h1 id="prep-data-outside-the-package">Prep Data Outside the Package<a class="anchor" aria-label="anchor" href="#prep-data-outside-the-package"></a>
 </h1>
 <ol style="list-style-type: decimal">
 <li>Store your text and project files within a dedicated folder/directory (e.g., ‘mytexts/’) <br>
@@ -82,13 +92,11 @@
 </li>
 <li>Choose a principled set of cleaning parameters (e.g., should I omit stopwords? should I lemmatize?) <br>
 </li>
-<li>Run the approproate cleaning function that best fits your data stucture and aims <br>
-</li>
-<li>Run the appropriate distance function that best fits your data stucture and aims <br>
-</li>
-<li>Visualize your data using built-in functions or follow-up with your own preferred statistical approach. <br>
-</li>
 </ol>
+</div>
+<div class="section level1">
+<h1 id="install-and-load-the-package">Install and Load the Package<a class="anchor" aria-label="anchor" href="#install-and-load-the-package"></a>
+</h1>
 <p>Install the development version of SemanticDistance from <a href="https://github.com/" class="external-link">GitHub</a> using devtools.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Check if devtools is installed, if not install it</span></span>
@@ -106,7 +114,7 @@
 <span></span>
 <span><span class="co"># Load SemanticDistance</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance" class="external-link">SemanticDistance</a></span><span class="op">)</span></span></code></pre></div>
-<p><br><br></p>
+<p><br></p>
 </div>
 <div class="section level1">
 <h1 id="monologues">Monologues<a class="anchor" aria-label="anchor" href="#monologues"></a>
@@ -131,7 +139,7 @@
 <span><span class="co">#&gt; 6 6           street             6 "street"                6</span></span>
 <span><span class="co">#&gt; 7 7           &lt;NA&gt;               7 "the"                   7</span></span>
 <span><span class="co">#&gt; 8 8           boxer              8 "boxer"                 8</span></span></code></pre></div>
-<p><br><br></p>
+<p><br></p>
 </div>
 <div class="section level2">
 <h2 id="step-2-choose-distance-optioncompute-distances">Step 2: Choose Distance Option/Compute Distances<a class="anchor" aria-label="anchor" href="#step-2-choose-distance-optioncompute-distances"></a>
@@ -156,7 +164,7 @@
 <span><span class="co">#&gt; 5 5           &lt;NA&gt;               5 "the "                  5            NA    </span></span>
 <span><span class="co">#&gt; 6 6           street             6 "street"                6             0.362</span></span>
 <span><span class="co">#&gt; # ℹ 1 more variable: CosDist_1gram_sd15 &lt;dbl&gt;</span></span></code></pre></div>
-<p><br><br></p>
+<p><br></p>
 </div>
 <div class="section level2">
 <h2 id="option-2-ngram-to-ngram-distance-dist_ngram2ngram">
@@ -178,7 +186,7 @@
 <span><span class="co">#&gt; 5 5           &lt;NA&gt;               5 "the "                  5            0.0608</span></span>
 <span><span class="co">#&gt; 6 6           street             6 "street"                6            0.319 </span></span>
 <span><span class="co">#&gt; # ℹ 1 more variable: CosDist_2gram_SD15 &lt;dbl&gt;</span></span></code></pre></div>
-<p><br><br></p>
+<p><br></p>
 </div>
 <div class="section level2">
 <h2 id="option-3-anchor-to-word-distance-dist_anchor2word">
@@ -198,8 +206,7 @@
 <span><span class="co">#&gt; 4                4 down                    0.116              0.275 </span></span>
 <span><span class="co">#&gt; 5                5 &lt;NA&gt;                   NA                 NA     </span></span>
 <span><span class="co">#&gt; 6                6 street                  0.116              0.0457</span></span></code></pre></div>
-<p><br><br></p>
-<hr>
+<p><br></p>
 </div>
 </div>
 <div class="section level1">
@@ -229,7 +236,6 @@
 <span><span class="co">#&gt; 10 10          beagle     Beagle    P2      P2                   10      10</span></span>
 <span><span class="co">#&gt; 11 11          cow        Cow       P1      P1                   11      11</span></span>
 <span><span class="co">#&gt; 12 12          tiger      Tiger     P2      P2                   12      12</span></span></code></pre></div>
-<p><br><br></p>
 </div>
 <div class="section level2">
 <h2 id="step-2-compute-semantic-distances">Step 2: Compute Semantic Distances<a class="anchor" aria-label="anchor" href="#step-2-compute-semantic-distances"></a>
@@ -253,8 +259,7 @@
 <span><span class="co">#&gt; 4          4 P2           1       0.927        0.406</span></span>
 <span><span class="co">#&gt; 5          5 P1           1       0.809        0.624</span></span>
 <span><span class="co">#&gt; 6          6 P2           1       0.772        0.192</span></span></code></pre></div>
-<p><br><br></p>
-<hr>
+<p><br></p>
 </div>
 </div>
 <div class="section level1">
@@ -282,7 +287,7 @@
 <span><span class="co">#&gt; 10     ^     whale          10         &lt;NA&gt;        whale</span></span>
 <span><span class="co">#&gt; 11 steak    potato          11        steak       potato</span></span>
 <span><span class="co">#&gt; 12   bed    pillow          12          bed       pillow</span></span></code></pre></div>
-<p><br><br></p>
+<p><br></p>
 </div>
 <div class="section level2">
 <h2 id="step-2-distance-word-pairs-columns-dist_paired_cols-">
@@ -307,8 +312,7 @@
 <span><span class="co">#&gt; 4          NA</span></span>
 <span><span class="co">#&gt; 5   0.0000000</span></span>
 <span><span class="co">#&gt; 6   0.0000000</span></span></code></pre></div>
-<p><br><br></p>
-<hr>
+<p><br></p>
 </div>
 </div>
 <div class="section level1">
@@ -332,7 +336,7 @@
 <span><span class="co">#&gt; 4 4           piano          4 piano    music                   4</span></span>
 <span><span class="co">#&gt; 5 5           guitar         5 guitar   music                   5</span></span>
 <span><span class="co">#&gt; 6 6           gun            6 gun      weapon                  6</span></span></code></pre></div>
-<p><br><br></p>
+<p><br></p>
 </div>
 <div class="section level2">
 <h2 id="step-2-compute-distance">Step 2: Compute Distance<a class="anchor" aria-label="anchor" href="#step-2-compute-distance"></a>
@@ -355,7 +359,7 @@
 <span><span class="co">#&gt; guitar   0.5520448 0.6219389 0.5203509 0.2730333 0.0000000 0.7653835 0.7351402</span></span>
 <span><span class="co">#&gt; gun      0.8668525 0.9475109 0.9288003 0.8374068 0.7653835 0.0000000 0.5440601</span></span>
 <span><span class="co">#&gt; knife    0.8766921 0.8880578 0.8349393 0.7856145 0.7351402 0.5440601 0.0000000</span></span></code></pre></div>
-<p><br><br></p>
+<p><br></p>
 </div>
 <div class="section level2">
 <h2 id="option-1-matrix-to-dendrogram">Option 1: Matrix to Dendrogram<a class="anchor" aria-label="anchor" href="#option-1-matrix-to-dendrogram"></a>
@@ -370,15 +374,14 @@
 <p><img src="reference/figures/README-unnamed-chunk-13-1.png" width="100%"></p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plots triangular dendrogram with K clusters</span></span></code></pre></div>
-<p><br><br></p>
+<p><br></p>
 </div>
 <div class="section level2">
 <h2 id="option-2-matrix-to-igraph-network">Option 2: Matrix to iGraph Network<a class="anchor" aria-label="anchor" href="#option-2-matrix-to-igraph-network"></a>
 </h2>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">MyGraph</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/viz_clusters.html">viz_clusters</a></span><span class="op">(</span><span class="va">MyDistMatrix</span>, type<span class="op">=</span><span class="st">"network"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-14-1.png" width="100%"><br><br></p>
-<hr>
+<p><img src="reference/figures/README-unnamed-chunk-14-1.png" width="100%"><br></p>
 </div>
 </div>
 <div class="section level1">
