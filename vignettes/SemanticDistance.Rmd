@@ -52,7 +52,7 @@ For now, install SemanticDistance from github using the `devtools` package
 ```{r, message=FALSE, warning=F}
 # Check if devtools is installed, if not install it
 if (!require("devtools", quietly = TRUE)) {
-  install.packages("devtools")
+  install.packages("devtools", repos = "http://cran.us.r-project.org")
 }
 
 # Load devtools
