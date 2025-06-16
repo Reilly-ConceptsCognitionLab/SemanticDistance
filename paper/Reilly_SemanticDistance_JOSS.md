@@ -45,7 +45,7 @@ affiliations:
   - name: Department of Psychology, Northeastern University, United States
     index: 7
 
-date: "13 June 2025"
+date: "16 June 2025"
 bibliography: paper.bib
 
 output: rticles::joss_article
@@ -54,6 +54,8 @@ journal: JOSS
 
 
 ---
+
+
 
 
 # Summary
@@ -70,28 +72,28 @@ One of the specific things listeners do in the process of understanding a conver
 
 # Description
 
-The `SemanticDistance` package is available from:
+The `SemanticDistance` R package is available from:
 
 https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance
 
-Consider, for example, a researcher interested in quantifying the distance between *wolf* and *dog* in a unidimensional semantic space constrained by perceived threat. A simple subtraction of the respective threat ratings for wolf and dog would yield an empirical index of the distance between these two concepts in 'threat' space. In practice, most researchers interested in modeling semantic relationships do so using  multidimensional semantic spaces. This approach involves quantifying the salience of target words across many unique psychological dimensions (e.g., color, sound, threat, etc.) or in the case of word embedding models across a series of hyperparameters.
+Consider, for example, a researcher interested in quantifying the distance between *wolf* and *dog* in a unidimensional semantic space constrained by perceived threat. A simple subtraction of the respective threat ratings for *wolf* and *dog* would yield an empirical index of the distance between these two concepts in 'threat' space. In practice, most researchers interested in modeling semantic relationships do so using  multidimensional semantic spaces. This approach involves quantifying the salience of target words across many unique psychological dimensions (e.g., color, sound, threat, etc.) or in the case of word embedding models across a series of hyperparameters.
 
-`SemanticDistance` will append distance values between each pair of elements specified by the user (e.g., word-to-word, ngram-to-word). These distance values are derived from two large lookup databases in the package with fixed semantic vectors for >70k English words. `CosDist_Glo` reflects cosine distance between vectors derived from training a GLOVE word embedding model (300 hyperparameters per word) [@Pennington2014]. `CodDist_SD15` refects cosine distance between two chunks (words, groups of words) characterized across 15 meaningful perceptual and affective dimensions (e.g., color, sound, valence).
+`SemanticDistance` appenda distance values between each pair of elements specified by the user (e.g., word-to-word, ngram-to-word, ngram-to-ngram). These distance values are derived from two large lookup databases in the package with fixed semantic vectors for >70k English words. `CosDist_Glo` reflects cosine distance between vectors derived from training a GLOVE word embedding model (300 hyperparameters per word) [@Pennington2014]. `CodDist_SD15` refects cosine distance between two chunks (words, groups of words) characterized across 15 meaningful perceptual and affective dimensions (e.g., color, sound, valence).
 
 Users specify an ngram window size. This window rolls successively over a language sample to compute a semantic distance value for each new word relative to the n-words (ngram size) before it. A 1-gram distance computes the distance from word-to-word; a 2-gram would compute the distance from a pair of words to the next pair, and so on.
-
-This model of computing distance is illustrated in the figure. The larger the specified ngram size, the smoother the semantic vector will be over the provided language sample.
 
 
 ## Preparation of text
 
-Before using `SemanticDistance`, figure out what format your transcript is in and what you want to measure. `SemanticDistance` offers many possible options with some default arguments. For example, the package requires users to clean and prepare the data. You can choose to omit stopwords, lemmatize, split strings, and so on. Or, you can decide to leave your data alone and split the transcript into a one-word-per-row format. The prepared dataframe should nominally contain a text column and a speaker/talker column.
+Before using `SemanticDistance`, users need to decide what format their text is in and what they want to measure. `SemanticDistance` offers many possible options with some default arguments. For example, the package requires users to clean and prepare the data. Useres can choose to omit stopwords, lemmatize, split strings, and so on. Or, users can decide to leave their data alone and split the transcript into a one-word-per-row format. The prepared dataframe should minimally contain a text column and a speaker/talker column.
 
 
 ``` r
 library(SemanticDistance)
 
-Monologue_Cleaned <- clean_monologue(dat=Monologue_Structured, wordcol='mytext', clean=TRUE, omit_stops=TRUE, split_strings=TRUE)
+Monologue_Cleaned <- clean_monologue(dat=Monologue_Structured,
+                                     wordcol='mytext', clean=TRUE,
+                                     omit_stops=TRUE, split_strings=TRUE)
 head(Monologue_Cleaned, n=8)
 ```
 
@@ -112,7 +114,7 @@ head(Monologue_Cleaned, n=8)
 
 ## Semantic distance estimates
 
-Included function average the semantic vectors for all content words in a turn then computes the distance to the average of the semantic vectors of the content words in the subsequent turn. It averages across the semantic vectors of all words within a turn and then computes cosine distance to all the words in the next turn. A user simply needs to feed it a transcript formatted with `clean_dialogue`. `dist_dialogue` will return a summary dataframe that distance values aggregated by talker and turn (`id_turn`).
+Included function average the semantic vectors for all content words in a turn then computes the distance to the average of the semantic vectors of the content words in the subsequent turn. It averages across the semantic vectors of all words within a turn and then computes cosine distance to all the words in the next turn. A user simply needs to feed it a transcript formatted with `clean_dialogue`. The function `dist_dialogue` returns a summary dataframe that distance values aggregated by talker and turn (`id_turn`).
 
 
 
@@ -138,7 +140,10 @@ head(Ngram2Ngram_Dist1)
 
 ## Visualization
 
-`SemanticDistance` allows several visualizations of the data...
+`SemanticDistance` allows several visualizations of the data. These include cluster and dendrogram visualizations of how words in a text sample relate to one another.
+
+
+<!-- ![This description will be the figure caption.](figures/cluster.png) -->
 
 
 
