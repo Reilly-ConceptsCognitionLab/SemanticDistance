@@ -1,0 +1,50 @@
+---
+title: "SemanticDistance Word Pairs"
+author: "Jamie Reilly, Hannah Mechtanberg, Emily Myers, Jonathan E. Peelle"
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{SemanticDistance Word Pairs}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+output: 
+  html_document:
+    toc: true
+---
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+```{r, message=FALSE, echo=F, warning=F}
+# Load SemanticDistance
+library(SemanticDistance)
+```
+
+# Word Pairs
+Sample dataframe included in package. Word pairs are arrayed in columns. Columns need not be immediately adjacent within your dataframe.
+```{r, eval=T, message=F, warning=F, echo=F}
+knitr::kable(head(Word_Pairs, 5), format = "simple")
+```
+
+## Clean Word Pairs in Columns Transcript 
+Arguments to `clean_paired_cols` are:  <br>
+`dat` your raw dataframe with two columns of paired text <br>
+`word1` quoted variable reflecting the column name where your first word lives <br>
+`word2` quoted variable reflecting the column name where your first word lives <br>
+`clean` applies cleaning functions, T/F default is TRUE <br>
+`omit_stops` omits stopwords, T/F default is TRUE <br>
+`lemmatize` transforms raw word to lemmatized form, T/F default is TRUE 
+```{r, message=FALSE}
+WordPairs_Clean <- clean_paired_cols(dat=Word_Pairs, wordcol1='word1', wordcol2='word2', clean=TRUE, omit_stops=TRUE, lemmatize=TRUE)
+knitr::kable(head(WordPairs_Clean, 6), format = "simple", digits=2) 
+```
+
+## Word Pairs Semantic Distance 
+Generates semantic distances (Glove and SD15) between word pairs in separate columns. Output of 'dist_paired_cols' on 2-column arrayed dataframe. Argument to `dist_paired_cols`: 
+`dat` = dataframe with word pairs arrayed in columns cleaned and prepped using 'clean_2cols' fn
+```{r, message=FALSE}
+Columns_Dists <- dist_paired_cols(dat=WordPairs_Clean) 
+knitr::kable(head(Columns_Dists, 6), format = "simple", digits=2) 
+```
+
