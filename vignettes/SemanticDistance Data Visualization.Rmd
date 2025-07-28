@@ -1,0 +1,23 @@
+---
+title: "SemanticDistance Data Visualization"
+author: "Jamie Reilly, Hannah Mechtanberg, Emily Myers, Jonathan E. Peelle"
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{SemanticDistance Data Visualization}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+output: 
+  html_document:
+    toc: true
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+```{r, message=FALSE, echo=F, warning=F}
+# Load SemanticDistance
+library(SemanticDistance)
+```
+
+# Data Visualization Options
