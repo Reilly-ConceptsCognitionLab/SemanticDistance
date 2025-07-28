@@ -17,8 +17,7 @@ NULL
   pkg_env <- asNamespace(pkgname)
 
   # Critical datasets download from SemanticDistance_Data/data repo
-  critical_datasets <- c('Monologue_Messy', 'Monologue_Structured',
-  'Dialogue_Messy', 'Dialogue_Structured', 'Semantic_Clusters',
+  critical_datasets <- c('Monologue_Typical', 'Dialogue_Typical',  'Unordered_List',
   'Word_Pairs', 'Grandfather_Passage', 'glowca_25', 'SD15_2025_complete',
   'Temple_stops25')
 
@@ -61,8 +60,7 @@ NULL
 
 .onAttach <- function(libname, pkgname) {
   pkg_env <- asNamespace(pkgname)
-  critical_datasets <- c('Monologue_Messy', 'Monologue_Structured',
-                         'Dialogue_Messy', 'Dialogue_Structured', 'Semantic_Clusters',
+  critical_datasets <- c('Monologue_Typical', 'Dialogue_Typical', 'Unordered_List',
                          'Word_Pairs', 'Grandfather_Passage', 'glowca_25', 'SD15_2025_complete',
                          'Temple_stops25')
 
