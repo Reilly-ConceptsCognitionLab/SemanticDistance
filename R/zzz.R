@@ -17,11 +17,11 @@ NULL
   pkg_env <- asNamespace(pkgname)
 
   # Critical datasets download from SemanticDistance_Data/data repo
-  critical_datasets <- c('Monologue_Typical', 'Dialogue_Typical',  'Unordered_List',
-  'Word_Pairs', 'Grandfather_Passage', 'glowca_25', 'SD15_2025_complete',
-  'Temple_stops25')
+  critical_datasets <- c('Monologue_Typical', 'Dialogue_Typical', 'Unordered_List',
+                         'Word_Pairs', 'Grandfather_Passage', 'glowca_25', 'SD15_2025_complete',
+                         'Temple_stops25')
 
-  #load from GitHub repo
+  # Load from GitHub repo
   loaded_from <- tryCatch({
     repo_url <- "https://raw.githubusercontent.com/Reilly-ConceptsCognitionLab/SemanticDistance_Data/main/data/"
     temp_dir <- tempdir()
@@ -34,7 +34,20 @@ NULL
         mode = "wb",
         quiet = TRUE
       )
-      load(temp_file, envir = pkg_env)
+
+      # Create a temporary environment to load into first
+      temp_env <- new.env()
+      load(temp_file, envir = temp_env)
+
+      # Get the loaded object (assuming it has same name as file)
+      loaded_data <- get(ds, envir = temp_env)
+
+      # Assign to package namespace
+      assign(ds, loaded_data, envir = pkg_env)
+
+      # Also export to package environment
+      assign(ds, loaded_data, envir = parent.env(pkg_env))
+
       unlink(temp_file)
     }
     "github"
@@ -46,7 +59,12 @@ NULL
     available <- file.exists(cached_files)
     if(any(available)) {
       for(cf in cached_files[available]) {
-        load(cf, envir = pkg_env)
+        temp_env <- new.env()
+        load(cf, envir = temp_env)
+        ds <- sub("\\.rda$", "", basename(cf))
+        loaded_data <- get(ds, envir = temp_env)
+        assign(ds, loaded_data, envir = pkg_env)
+        assign(ds, loaded_data, envir = parent.env(pkg_env))
       }
       "cache"
     } else {
@@ -55,37 +73,12 @@ NULL
   })
 
   # Set package option
-  options(ConversationAlign.data_source = loaded_from)
-}
+  options(SemanticDistance.data_source = loaded_from)
 
-.onAttach <- function(libname, pkgname) {
-  pkg_env <- asNamespace(pkgname)
-  critical_datasets <- c('Monologue_Typical', 'Dialogue_Typical', 'Unordered_List',
-                         'Word_Pairs', 'Grandfather_Passage', 'glowca_25', 'SD15_2025_complete',
-                         'Temple_stops25')
-
-  still_missing <- setdiff(critical_datasets, ls(envir = pkg_env))
-
-  if(length(still_missing) > 0) {
-    loaded_from <- getOption("ConversationAlign.data_source", default = "none")
-
-    msg_type <- if(loaded_from == "none") "error" else "warning"
-    msg <- switch(
-      msg_type,
-      "error" = paste(
-        "Critical data missing:", paste(still_missing, collapse = ", "),
-        "\nPlease use refresh_data() or contact maintainers"
-      ),
-      "warning" = paste(
-        "Using cached data (missing:", paste(still_missing, collapse = ", "), ")",
-        "\nSome features unavailable - try refresh_data()"
-      )
-    )
-
-    if(msg_type == "error") {
-      warning(msg, call. = FALSE, immediate. = TRUE)
-    } else {
-      packageStartupMessage(msg)
+  # Explicitly export the datasets
+  for(ds in critical_datasets) {
+    if(exists(ds, envir = pkg_env)) {
+      assign(ds, get(ds, envir = pkg_env), envir = parent.env(pkg_env))
     }
   }
 }

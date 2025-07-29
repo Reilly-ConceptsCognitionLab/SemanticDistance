@@ -42,20 +42,18 @@
 
 
 
-#' Simulated Semantic Category Fluency Data: Word List Blocked by Semantic Category
+#' Unordered_List
 #'
 #' No talker delineated. Vector of 20 words, 5 from each of 4 categories, Good for examining clustering
 #'
 #'
-#' @format ## "Semantic_Clusters"
+#' @format ## "Unordered_List"
 #' A data frame with 20 rows and 3 columns:
 #' \describe{
 #'   \item{ID_JR}{a sequential numeric identifier}
 #'   \item{word}{target text}
-#'   \item{category}{semantic category of the target word}
-#'   ...
 #' }
-'Semantic_Clusters'
+'Unordered_List'
 
 
 
