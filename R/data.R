@@ -114,3 +114,19 @@
 #' }
 'SD15_2025_complete'
 
+
+#' Stopword List
+#'
+#' List of stopwords
+#'
+#' @format ## "Temple_stops25"
+#' A data frame with 829 observations of 4 variables
+#' \describe{
+#'   \item{id_orig}{numeric identifier}
+#'   \item{word}{stopword target}
+#'   \item{length}{length in words}
+#'   \item{pos}{universal part-of-speech tag}
+#'   ...
+#' }
+'Temple_stops25'
+
