@@ -27,6 +27,7 @@ Imports:
     dplyr,
     ggplot2,
     graphics,
+    httr,
     igraph,
     lsa,
     magrittr,
@@ -40,6 +41,7 @@ Imports:
     tm,
     tidyr,
     textclean,
+    tools,
     utils,
     wesanderson,
     zoo
