@@ -3,7 +3,7 @@
 \docType{data}
 \name{Word_Pairs}
 \alias{Word_Pairs}
-\title{Column Arrayed Word Pairs for Pairwise Distance}
+\title{Word Pairs in Columns}
 \format{
 ## "Word_Pairs"
 A data frame with 27 rows and 2 columns:
