@@ -1,6 +1,6 @@
 ---
 title: "SemanticDistance Unordered List"
-author: "Jamie Reilly, Hannah Mechtanberg, Emily Myers, Jonathan E. Peelle"
+author: "Jamie Reilly, Hannah Mechtenberg, Emily Myers, Jonathan E. Peelle"
 date: "`r Sys.Date()`"
 vignette: >
   %\VignetteIndexEntry{SemanticDistance Unordered List}

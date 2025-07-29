@@ -23,8 +23,7 @@ library(SemanticDistance)
 ```
 
 ```{r, echo=F}
-#print first ten rows of Monologue_Structured
-knitr::kable(head(Monologue_Structured, 6), format = "pipe")
+knitr::kable(head(Monologue_Typical, 1), format = "pipe")
 ```
 
 # Step 1: Clean Monologue Transcript (clean_monologue)
@@ -38,50 +37,44 @@ Arguments to `clean_monologue` are:** <br>
 `lemmatize` transforms raw word to lemmatized form, T/F default is TRUE <br>
 `split_strings` option to split multiword utterances into separate rows, T/F default is TRUE
 ```{r, message=FALSE}
-Monologue_Cleaned <- clean_monologue(dat=Monologue_Structured, wordcol='mytext', clean=TRUE, omit_stops=TRUE, split_strings=TRUE)
-head(Monologue_Cleaned, n=6)
+Monologue_Cleaned <- clean_monologue(dat=Monologue_Typical, wordcol='mytext', clean=TRUE, omit_stops=TRUE, split_strings=TRUE)
+knitr::kable(head(Monologue_Cleaned, 6), format = "pipe", digits=2)
 ```
 
 # Step 2: Choose Distance Option/Compute Distances
 ## Option 1: Ngram-to-Word Distance (dist_ngram2word)
-<img src="man/figures/RollingNgramIllustrate.png" 
-     alt="window rolls from group of words to next word" 
-     style="float: right; width: 40%; margin-left: 20px; margin-bottom: 10px;" />
 Computes cosine distance for two models (embedding and experiential) using a rolling ngram approach consisting of groups of words (ngrams) to the next word. *IMPORTANT* the function looks backward from the target word skipping over NAs until filling the desired ngram size. <br>
-<br>
-**Arguments to 'dist_ngram2word' are:** <br>
-**dat** = dataframe of a monologue transcript cleaned and prepped with clean_monologue fn <br>
-**ngram** = window size preceding each new content word, ngram=1 means each word is compared to the word before it
+
+![rolling groupings of words](man/figures/RollingNgramIllustrate.png){width=60%}
+
+Arguments to `dist_ngram2word` are:<br>
+`dat` dataframe of a monologue transcript cleaned and prepped with clean_monologue fn <br>
+`ngram` window size preceding each new content word, ngram=1 means each word is compared to the word before it
 ```{r, message=FALSE}
 Ngram2Word_Dists1 <- dist_ngram2word(dat=Monologue_Cleaned, ngram=1) #distance word-to-word
 head(Ngram2Word_Dists1)
 ```
 
-## <span style="color: darkred;">Option 2: Ngram-to-Ngram Distance (dist_ngram2ngram)</span>
-<img src="man/figures/Ngram2Ngram_Dist.png" 
-     alt="semantic distance is derived from chunk to chunk groupings of words" 
-     style="float: right; width: 40%; margin-left: 20px; margin-bottom: 10px;" />
-
+## Option 2: Ngram-to-Ngram Distance (dist_ngram2ngram)
 User specifies n-gram size (e.g., ngram=2). Distance computed from each two-word chunk to the next iterating all the way down the dataframe until there are no more words to 'fill out' the last ngram. Note this distance function **only works on monologue transcripts** where there are no speakers delineated and word order matters. <br>
-<br>
-**Arguments to 'dist_ngram2ngram' are:** <br>
-**dat** = dataframe w/ a monologue sample cleaned and prepped <br>
-**ngram** = chunk size (chunk-to-chunk), in this case ngram=2 means chunks of 2 words compared to the next chunk
+
+![chunk-to-chunk groupings of words](man/figures/Ngram2Ngram_Dist.png){width=60%}
+
+Arguments to `dist_ngram2ngram` are: <br>
+`dat` dataframe w/ a monologue sample cleaned and prepped <br>
+`ngram` chunk size (chunk-to-chunk), in this case ngram=2 means chunks of 2 words compared to the next chunk
 ```{r, message=FALSE}
 Ngram2Ngram_Dist1 <- dist_ngram2ngram(dat=Monologue_Cleaned, ngram=2)
 head(Ngram2Ngram_Dist1)
 ```
 
-## <span style="color: darkred;">Option 3: Anchor-to-Word Distance (dist_anchor2word)</span>
-<img src="man/figures/AnchorFig.png" 
-     alt="illustrates distance from each new word of a language sample to an initial chunk of nwords" 
-     style="float: right; width: 40%; margin-left: 20px; margin-bottom: 10px;" />
+## Option 3: Anchor-to-Word Distance (dist_anchor2word)
 Models semantic distance from each successive new word to the average of the semantic vectors for the first block of N content words. This anchored distance provides a metric of overall semantic drift as a language sample unfolds relative to a fixed starting point.<br>
-<br>
 
-**Arguments to 'dist_anchor' are:**  <br>
-**dat** = dataframe monologue sample cleaned and prepped using 'clean_monologue' <br>
-**anchor_size** = size of the initial chunk of words for chunk-to-new-word comparisons fn
+![fixed initial chunk of words to each new word or ngram](man/figures/Anchor2Word_Dist.png){width=60%}
+Arguments to `dist_anchor` are: <br>
+`dat` dataframe monologue sample cleaned and prepped using 'clean_monologue' <br>
+`anchor_size` = size of the initial chunk of words for chunk-to-new-word comparisons fn
 ```{r, message=FALSE}
 Anchored_Dists1 <- dist_anchor(dat=Monologue_Cleaned, anchor_size=8)
 head(Anchored_Dists1)
