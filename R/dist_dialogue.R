@@ -25,18 +25,9 @@
 #' @importFrom purrr map
 #' @importFrom tidyselect everything
 #' @importFrom utils install.packages
-#' @export dist_dialogue
+#' @export
 
 dist_dialogue <- function(dat) {
-  # Load required packages
-  required_packages <- c("purrr", "magrittr", "dplyr", "lsa", "utils")
-  for (pkg in required_packages) {
-    if (!requireNamespace(pkg, quietly = TRUE)) {
-      install.packages(pkg)
-    }
-    library(pkg, character.only = TRUE)
-  }
-
   # Check if required columns exist in input data
   required_cols <- c("id_row_orig", "talker", "id_turn", "word_clean")
   if (!all(required_cols %in% names(dat))) {

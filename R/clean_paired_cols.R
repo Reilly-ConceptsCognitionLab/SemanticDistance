@@ -19,11 +19,12 @@
 #' @importFrom stringi stri_enc_isutf8
 #' @importFrom stringi stri_replace_all_fixed
 #' @importFrom stringi stri_replace_all_regex
+#' @importFrom stringr str_squish
 #' @importFrom textstem lemmatize_strings
 #' @importFrom tm removeWords
 #' @importFrom textclean replace_white
 #' @importFrom utils install.packages
-#' @export clean_paired_cols
+#' @export
 
 clean_paired_cols <- function(dat, wordcol1, wordcol2, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE, split_strings = TRUE) {
   # Input validation
@@ -59,7 +60,7 @@ clean_paired_cols <- function(dat, wordcol1, wordcol2, clean = TRUE, omit_stops 
 
   # Define cleaning steps for a column
   clean_column <- function(dat, colname, clean, omit_stops, lemmatize, split_strings) {
-    col_clean <- paste0(colname, "_clean")
+    col_clean <- paste0("word_clean", substr(colname, nchar(colname), nchar(colname)))  # Changed to match initial naming
     col_stop <- paste0("is_stopword", substr(colname, nchar(colname), nchar(colname)))
 
     if (clean) {
@@ -69,10 +70,8 @@ clean_paired_cols <- function(dat, wordcol1, wordcol2, clean = TRUE, omit_stops 
                                                                    "[\u2018\u2019\u02BC\u201B\uFF07\u0092\u0091\u0060\u00B4\u2032\u2035]", "'")) %>%
         # Remove non-alphabetic characters except apostrophes
         mutate(!!sym(col_clean) := stringi::stri_replace_all_regex(!!sym(col_clean), "[^a-zA-Z']", " ")) %>%
-
         # Clean whitespace
-        mutate(!!sym(col_clean) := str_squish(gsub("\\s+", " ", !!sym(col_clean)))) %>%
-
+        mutate(!!sym(col_clean) := stringr::str_squish(gsub("\\s+", " ", !!sym(col_clean)))) %>%
   # Clean text
   mutate(!!sym(col_clean) := stringi::stri_replace_all_regex(!!sym(col_clean), "[^a-z']", "")) %>%
   # ASCII conversion
@@ -114,9 +113,9 @@ clean_paired_cols <- function(dat, wordcol1, wordcol2, clean = TRUE, omit_stops 
     return(dat)
   }
 
-  # Apply cleaning to both columns
-  dat_prep <- clean_column(dat_prep, "word1", clean, omit_stops, lemmatize, split_strings)
-  dat_prep <- clean_column(dat_prep, "word2", clean, omit_stops, lemmatize, split_strings)
+  # Apply cleaning to both columns - changed to use "1" and "2" instead of "word1"/"word2"
+  dat_prep <- clean_column(dat_prep, "1", clean, omit_stops, lemmatize, split_strings)
+  dat_prep <- clean_column(dat_prep, "2", clean, omit_stops, lemmatize, split_strings)
 
   # Rename columns to match input column names
   dat_prep <- dat_prep %>%

@@ -13,18 +13,9 @@
 #' @importFrom rlang sym
 #' @importFrom dplyr rename
 #' @importFrom utils install.packages
-#' @export dist_paired_cols
+#' @export
 
 dist_paired_cols <- function(dat) {
-  # Load required packages
-  required_packages <- c("dplyr", "magrittr", "lsa", "rlang", "tidyr", "utils")
-  for (pkg in required_packages) {
-    if (!requireNamespace(pkg, quietly = TRUE)) {
-      install.packages(pkg)
-    }
-    library(pkg, character.only = TRUE)
-  }
-
   # Find columns ending with _clean1 and _clean2
   clean_cols <- grep("_clean1$|_clean2$", names(dat), value = TRUE)
 

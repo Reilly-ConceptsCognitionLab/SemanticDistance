@@ -19,18 +19,9 @@
 #' @importFrom lsa cosine
 #' @importFrom dplyr contains
 #' @importFrom utils install.packages
-#' @export dist_anchor
+#' @export
 
 dist_anchor <- function(dat, anchor_size = 10) {
-  # Load required packages
-  required_packages <- c("magrittr",  "dplyr", "lsa", "utils")
-  for (pkg in required_packages) {
-    if (!requireNamespace(pkg, quietly = TRUE)) {
-      install.packages(pkg)
-    }
-    library(pkg, character.only = TRUE)
-  }
-
   # Prepare data with unique row identifier
   dat <- dat %>% dplyr::select(id_row_postsplit, word_clean)
 

@@ -18,17 +18,9 @@
 #' @importFrom lsa cosine
 #' @importFrom stats complete.cases
 #' @importFrom utils install.packages
-#' @export dist_ngram2ngram
+#' @export
 
 dist_ngram2ngram <- function(dat, ngram) {
-  my_packages <- c("dplyr", "lsa", "magrittr", "utils", "stats")
-  for (pkg in my_packages) {
-    if (!requireNamespace(pkg, quietly = TRUE)) {
-      install.packages(pkg)
-    }
-    library(pkg, character.only = TRUE)
-  }
-
   # Store original columns to preserve them in output
   orig_cols <- names(dat)
 

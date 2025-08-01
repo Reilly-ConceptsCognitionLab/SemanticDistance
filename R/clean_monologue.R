@@ -23,7 +23,7 @@
 #' @importFrom textclean replace_white
 #' @importFrom tidyr separate_rows
 #' @importFrom utils install.packages
-#' @export clean_monologue
+#' @export
 
 clean_monologue <- function(dat, wordcol, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE, split_strings = TRUE) {
   # Input validation
