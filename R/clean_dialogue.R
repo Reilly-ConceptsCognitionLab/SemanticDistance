@@ -19,18 +19,19 @@
 #' @export clean_dialogue
 
 
-clean_dialogue <- function(dat, wordcol, whotalks, clean=TRUE, omit_stops=TRUE, lemmatize = TRUE, split_strings=TRUE) {
-  required_packages <- c("tm", "textstem", "tidyr", "textclean", "magrittr", "dplyr", "stringi", "utils")
-  for (pkg in required_packages) {
-    if (!requireNamespace(pkg, quietly = TRUE)) {
-      install.packages(pkg)
-    }
-    library(pkg, character.only = TRUE)
+clean_dialogue <- function(dat, wordcol, whotalks, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE, split_strings = TRUE) {
+  # Input validation
+  if (!wordcol %in% names(dat)) {
+    stop(paste("Column", wordcol, "not found in dataframe"))
+  }
+  if (!whotalks %in% names(dat)) {
+    stop(paste("Column", whotalks, "not found in dataframe"))
   }
 
   # Create working copy with robust encoding handling
-  dat <- dat %>%
-    dplyr::mutate(id_row_orig = factor(seq_len(nrow(dat))),
+  dat_prep <- dat %>%
+    dplyr::mutate(
+      id_row_orig = factor(seq_len(nrow(dat))),
       word_clean = tryCatch(
         stringi::stri_enc_toutf8(as.character(.[[wordcol]]), is_unknown_8bit = TRUE, validate = TRUE),
         error = function(e) stringi::stri_encode(as.character(.[[wordcol]]), to = "UTF-8")
@@ -39,88 +40,69 @@ clean_dialogue <- function(dat, wordcol, whotalks, clean=TRUE, omit_stops=TRUE, 
     ) %>%
     dplyr::mutate(
       word_clean = tolower(word_clean),
-      is_stopword = FALSE  # Initialize stopword flag
-    )
+      is_stopword = FALSE,  # Initialize stopword flag
+      talker = factor(.[[whotalks]]))  # Create talker factor variable
 
-  # Create talker factor variable from whotalks column
-  dat$talker <- factor(dat[[whotalks]])
-  x <- dat[[wordcol]]
+      if (clean) {
+        # Standardize apostrophes
+        dat_prep <- dat_prep %>%
+          mutate(word_clean = stringi::stri_replace_all_regex(word_clean, "[\u2018\u2019\u02BC\u201B\uFF07\u0092\u0091\u0060\u00B4\u2032\u2035]", "'"))
 
-  # Text cleaning pipeline (preserve apostrophes)
-  if (clean) {
-    dat <- dat %>%
-      dplyr::mutate(
-        # Convert backticks to apostrophes
-        word_clean = stringi::stri_replace_all_fixed(word_clean, "`", "'"),
-        # Keep apostrophes and letters (remove other punctuation)
-        word_clean = stringi::stri_replace_all_regex(word_clean, "[^a-zA-Z']", " "),
-        # Remove single letters
-        word_clean = stringi::stri_replace_all_regex(word_clean, "\\b[a-z]\\b", ""),
+        # Remove non-alphabetic characters except apostrophes
+        dat_prep <- dat_prep %>%
+          mutate(word_clean = stringi::stri_replace_all_regex(word_clean, "[^a-zA-Z']", " "))
+
         # Clean whitespace
-        word_clean = textclean::replace_white(word_clean),
-        # Lemmatization (preserves apostrophes)
-        word_clean = if (lemmatize) textstem::lemmatize_strings(word_clean) else word_clean,
-        # Mark empty strings as NA
-        word_clean = ifelse(stringi::stri_isempty(word_clean), NA, word_clean)
-      )
-  }
+        dat_prep <- dat_prep %>%
+          mutate(word_clean = str_squish(gsub("\\s+", " ", word_clean)))
 
-  # Remove apostrophes BEFORE splitting (helps with stopword matching)
-  dat <- dat %>%
-    dplyr::mutate(
-      word_clean = stringi::stri_replace_all_fixed(word_clean, "'", "")
-    )
+        # Clean text
+        dat_prep <- dat_prep %>%
+          mutate(word_clean = stringi::stri_replace_all_regex(word_clean, "[^a-z']", ""))
 
-  # String splitting - only if split_strings=TRUE
-  if (isTRUE(split_strings)) {
-    dat <- dat %>%
-      tidyr::separate_rows(word_clean, sep = "\\s+") %>%
-      dplyr::filter(
-        !is.na(word_clean) | is_stopword,  # Keep NAs that are stopwords
-        !stringi::stri_isempty(word_clean) | is_stopword
-      )
-  }
-
-  # Stopword removal (works whether strings are split or not)
-  if (omit_stops) {
-    if (!exists("replacements_25") || !exists("Temple_Stopwords25")) {
-      warning("Stopword data not found. Skipping stopword removal.")
-    } else {
-      # Safe encoding conversion for stopwords
-      safe_convert <- function(x) {
-        tryCatch(
-          stringi::stri_enc_toutf8(as.character(x), is_unknown_8bit = TRUE, validate = TRUE),
-          error = function(e) stringi::stri_encode(as.character(x), to = "UTF-8")
-        )
+        # ASCII conversion
+        dat_prep <- dat_prep %>%
+          mutate(
+            word_clean = iconv(word_clean, to = "ASCII//TRANSLIT", sub = ""),
+            word_clean = stringi::stri_replace_all_regex(word_clean, "[^[:alnum:]']", "")
+          )
       }
 
-      # Process stopwords with encoding protection
-      valid_stopwords <- Temple_Stopwords25 %>%
-        dplyr::mutate(word = safe_convert(word)) %>%
-        dplyr::filter(!is.na(word),
-          !stringi::stri_isempty(word),
-          stringi::stri_enc_isutf8(word)
-        )
+      # Apply contractions replacement
+      dat_prep <- replacements_25(dat = dat_prep, wordcol = "word_clean")
 
-      if (nrow(valid_stopwords) > 0) {
-        dat <- dat %>%
-          dplyr::mutate(
-            is_stopword = word_clean %in% valid_stopwords$word,
+      # String splitting if requested
+      if (split_strings) {
+        dat_prep <- dat_prep %>%
+          tidyr::separate_rows(word_clean, sep = "[[:space:]]+") %>%
+          dplyr::filter(
+            !is.na(word_clean) | is_stopword,
+            !stringi::stri_isempty(word_clean) | is_stopword
+          )
+      }
+
+      # Lemmatization if requested
+      if (lemmatize) {
+        dat_prep <- dat_prep %>%
+          mutate(word_clean = textstem::lemmatize_strings(word_clean))
+      }
+
+      # Stopword removal if requested
+      if (omit_stops) {
+        stopwords <- Temple_stops25$word
+        dat_prep <- dat_prep %>%
+          mutate(
+            is_stopword = word_clean %in% stopwords,
             word_clean = ifelse(is_stopword, NA, word_clean)
           )
       }
-    }
-  }
 
-  # Add post-split ID and clean up
-  dat <- dat %>%
-    dplyr::mutate(
-      id_row_postsplit = seq_len(nrow(dat)),
-      is_stopword = NULL  # Remove the temporary stopword flag
-    )
+      # Create turncount variable when talker level changes
+      dat_prep <- dat_prep %>%
+        group_by(talker) %>%
+        mutate(id_turn = cumsum(c(1, diff(as.numeric(talker)) != 0))) %>%
+                 ungroup()
 
-  # Create turncount variable when talker level changes
-  dat$id_turn <- cumsum(c(1, diff(as.numeric(dat$talker)) != 0))
-  rownames(dat) <- NULL
-  return(dat)
+               rownames(dat_prep) <- NULL
+               return(dat_prep)
 }

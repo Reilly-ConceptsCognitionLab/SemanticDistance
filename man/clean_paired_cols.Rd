@@ -10,7 +10,8 @@ clean_paired_cols(
   wordcol2,
   clean = TRUE,
   omit_stops = TRUE,
-  lemmatize = TRUE
+  lemmatize = TRUE,
+  split_strings = TRUE
 )
 }
 \arguments{

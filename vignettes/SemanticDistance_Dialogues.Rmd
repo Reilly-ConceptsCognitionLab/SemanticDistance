@@ -1,0 +1,55 @@
+---
+title: "SemanticDistance Dialogues"
+author: "Jamie Reilly, Hannah R. Mechtenberg, Emily B. Myers, Jonathan E. Peelle"
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{SemanticDistance Dialogues}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+vignetteBuilder: knitr
+output:
+  rmarkdown::html_vignette:
+    toc: yes
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+```{r, message=FALSE, echo=F, warning=F}
+# Load SemanticDistance
+library(SemanticDistance)
+```
+
+# Dialogues
+This could be a conversation transcript or any language sample where you care about talker/interlocutor information (e.g., computing semantic distance across turns in a conversation). Your dataframe should nominally contain a text column and a speaker/talker column. 
+
+<span style="color: darkred;">sample dialogue transcript included in the package</span> 
+```{r, eval=T, message=F, warning=F}
+knitr::kable(head(Dialogue_Typical, 6), format = "pipe")
+```
+
+# Step 1: Clean Dialogue Transcript (clean_dialogue)
+Decide on your cleaning parameters (e.g., stopwords? lemmatization?). Specify these in the argument(s) to your function calls. <br>
+
+Arguments to `clean_dialogue()` are:<br>
+`dat` your raw dataframe with at least one column of text AND a talker column <br>
+`wordcol` column name (quoted) containing the text you want cleaned <br>
+`whotalks` column name (quoted) containing the talker ID (will convert to factor) <br>
+`clean` applies cleaning function, T/F default is TRUE <br>
+`omit_stops` omits stopwords, T/F default is TRUE <br>
+`lemmatize` transforms raw word to lemmatized form, T/F default is TRUE
+```{r, message=FALSE}
+Dialogue_Cleaned <- clean_dialogue(dat=Dialogue_Typical, wordcol="text", whotalks = "speaker", clean=TRUE, omit_stops=TRUE, lemmatize=TRUE, split_strings=TRUE)
+knitr::kable(head(Dialogue_Cleaned, 12), format = "pipe")
+```
+
+## Step 2: Compute Semantic Distances 
+## <span style="color: darkred;"> Dialogue Distance Turn-to-Turn (dist_dialogue)</span>
+Averages the semantic vectors for all content words in a turn then computes the cosine distance to the average of the semantic vectors of the content words in the subsequent turn.  Note: this function only works on dialogue samples marked by a talker variable (e.g., conversation transcripts). It averages across the semantic vectors of all words within a turn and then computes cosine distance to all the words in the next turn. You just need to feed it a transcript formatted with clean_dialogue. 'dist_dialogue' will return a summary dataframe that distance values aggregated by talker and turn (id_turn). Arguments to `dist_dialogue` are: <br>
+`dat` = dataframe w/ a dialogue sample cleaned and prepped using 'clean_dialogue'
+```{r, message=FALSE}
+DialogueDists <- dist_dialogue(dat=Dialogue_Cleaned)
+knitr::kable(head(DialogueDists, 12), format = "pipe", digits=2)
+```
+
