@@ -21,14 +21,7 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 library(SemanticDistance)
 ```
 
-# Unordered Lists
-An unordered word list is just a bag-of-words. You might be interested in applying kmeans, hierarchical clustering, or graph metrics to elucidate a structure. In all of these instances, you will pass R a vector of words in no particular order. Here's a sample dataframe with exemplars by semantic category. Let's see if this function can find order in chaos!
 
-<span style="color: darkred;">Sample unordered word list included in the package</span> 
-```{r, eval=T, message=F, warning=F}
-#print first ten rows of header
-knitr::kable(head(Unordered_List, 1), format = "pipe")
-```
 
 ## Clean Unordered List 
 Prep a vector of words for hierarchical clustering or a network visualization. `clean_unordered` will retain only one instance of each string (distinct, no duplicates) and no missing values. <br>

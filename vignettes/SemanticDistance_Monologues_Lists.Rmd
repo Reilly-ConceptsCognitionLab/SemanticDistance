@@ -1,9 +1,9 @@
 ---
-title: "SemanticDistance Monologues"
+title: "SemanticDistance Monologues and Unordered Lists"
 author: "Jamie Reilly, Hannah R. Mechtenberg, Emily B. Myers, Jonathan E. Peelle"
 date: "`r Sys.Date()`"
 vignette: >
-  %\VignetteIndexEntry{SemanticDistance Monologues}
+  %\VignetteIndexEntry{SemanticDistance_Monologues_Lists}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 vignetteBuilder: knitr
@@ -16,16 +16,25 @@ output:
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-For our purposes, a monologue is a ordered language sample that does not contain turns and/or speaker information. Monologues consist of narratives, stories, etc. `SemanticDistance` comes bundled with two calibration monologue transcripts, `Monologue_Structured` and `Monologue_Messy`.
+For our purposes a monologue is a ordered language sample that does not contain turns and/or speaker information. Monologues consist of narratives, stories, etc. An unordered list is a bag-of-words where word order no longer matters. You might be interested in applying kmeans, hierarchical clustering, or graph metrics to elucidate structure within a list of words. Alternatively, you might be interested in evaluating distances as ordered time series. Whatever your goal, the vignette to follow will illustrate how to prep and clean your text data using `SemanticDistance`. 
 
 ```{r, message=FALSE, echo=F, warning=F}
 # Load SemanticDistance
 library(SemanticDistance)
 ```
 
+# A typical monologue transcript
+Included in the package
 ```{r, echo=F}
 knitr::kable(head(Monologue_Typical, 1), format = "pipe")
 ```
+
+# A typical unordered word list
+Included in the package
+```{r, echo=F}
+knitr::kable(head(Monologue_Typical, 1), format = "pipe")
+```
+
 
 # Step 1: Clean Monologue Transcript (clean_monologue)
 Transforms all text to lowercase then optionally cleans (omit stopwords, omit non-alphabetic chars), lemmatizes (transforms morphological derivatives of words to their standard dictionary entries), and splits multiword utterances into a one-word-per row format. You can generally leave split_strings in its default state (TRUE).  `clean_monologue` appends several new variables to your original dataframe:  **id_row_orig** a numeric identifier marking the original row where a word or group of words appeared; **'id_row_postsplit** a unique identifier marking each word's ordered position in the dataframe after splitting multiword utterances across rows; **word_clean** result of all cleaning operations, needed for distance calculations. <br>
