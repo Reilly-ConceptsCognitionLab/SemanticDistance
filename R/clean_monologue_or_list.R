@@ -1,8 +1,8 @@
-#' clean_monologue
+#' clean_monologue_or_list
 #'
 #' Cleans and formats text. User specifies the dataframe and column name where target text is stored as arguments to the function. Default option is to lemmatize strings. Function splits and unlists text so that the output is in a one-row-per-word format marked by a unique numeric identifier (i.e., 'id_orig')
 #'
-#' @name clean_monologue
+#' @name clean_monologue_or_list
 #' @param dat a dataframe with at least one target column of string data
 #' @param wordcol quoted column name storing the strings that will be cleaned and split
 #' @param clean apply cleaning functions (lowercase etc) default is TRUE
@@ -25,7 +25,7 @@
 #' @importFrom utils install.packages
 #' @export
 
-clean_monologue <- function(dat, wordcol, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE, split_strings = TRUE) {
+clean_monologue_or_list <- function(dat, wordcol, clean = TRUE, omit_stops = TRUE, lemmatize = TRUE, split_strings = TRUE) {
   # Input validation
   if (!wordcol %in% names(dat)) {
     stop(paste("Column", wordcol, "not found in dataframe"))
