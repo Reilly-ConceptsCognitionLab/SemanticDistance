@@ -16,6 +16,15 @@ output:
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
+# Overarching functions of the package
+`SemanticDistance` does the following operations:
+- cleans and formats ordered text (monologues and dialogues)
+- cleans and formats unordered word lists (e.g., bags-of-words)
+- cleans and formats word pairs in columns
+- computes two complementary pairwise semantic distance metrics using numerous chunking options
+- finds clustering solutions and creates simple semantic networks from given word list vectors. 
+It's a good idea to do some background reading on what the different metrics of semantic distance mean and how the package derives these numbers. Before jumping in, make  make sure you understand some of the package's operations (e.g., what is a stopword? when should I remove them?). The vignettes are a great place to start.
+
 ## What is semantic distance?
 <p style="text-indent: 2em;"> Semantic distance is a quantitative measure of relatedness between two concepts (e.g., dog-wolf) within an n-dimensional semantic space. This sounds scarier than it really is.  In the simplest case, you could consider the difference in rated scariness between dogs and wolves as a 1-dimension semantic distance. In real life, however, most people model semantic distances using much higher dimensionality.</p> 
 

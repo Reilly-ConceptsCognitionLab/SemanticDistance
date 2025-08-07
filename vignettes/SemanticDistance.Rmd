@@ -1,0 +1,74 @@
+---
+title: "SemanticDistance"
+output: rmarkdown::html_vignette
+description: >
+  This vignette describes features of the R package, SemanticDistance. In addition to computing empirical measures of conceptual relatedness between words and chunks of words, the package also includes numerous visualization options.
+vignette: >
+  %\VignetteIndexEntry{SemanticDistance}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+# Overview
+## What is semantic distance?
+<p style="text-indent: 2em;"> Semantic distance is a quantitative measure of relatedness between two concepts (e.g., dog-wolf) within an n-dimensional semantic space. This sounds scarier than it really is.  In the simplest case, you could consider the difference in rated scariness between dogs and wolves as a 1-dimension semantic distance. In real life, however, most people model semantic distances using much higher dimensionality. For an extensive treatment of these methods, see:</p>
+
+<div style="padding-left: 5em">
+Reilly J, Finley AM, Litovsky C, & Kennett Y (2023) Bigram semantic distance in continuous language narratives: Theory, method, applications. Journal of Experimental Psychology: General. 152(9), 2578-2590.
+<a href="https://doi.org/10.1037/xge0001389" style="color: darkblue;">https://doi.org/10.1037/xge0001389</a>
+</div>
+
+<p style="text-indent: 2em;"> The 'SemanticDistance' R package computes two different, but complementary indices of semantic distance. The package contains two embedded lookup databases with multidimensional vectors for many English words. The first database contains crowd-sourced human ratings for 15 dimensions (e.g., color, sound, motor, pleasantness). When you are interested in compouting semantic distance from this 'experiential' semantic space between two words, the program first extracts their respective semantic vectors and then compares them, reported as cosine distance. The vector for 'dog' against itself yields a distance of 0.  The most distant possible cosine value is 2. We label the output of this distance metric as "SD15" since it relflects distance across 15 psychologically meaningful dimensions.</p> 
+
+<p style="text-indent: 2em;"> The second semantic distance metric is derived from the GLOVE word embedding model. We trained GLOVE on a vast corpus of American English. The result of this training is a lookup database with more than 100k English words characterized across 300 dimensions. These embedding dimensions are not like the psychological dimensions measured in SD15. The embeddings are mathematical constructs (hyperparameters) derived through dimension reduction reflecting co-occurence statistics between each word in the database to all other words in the database.  SemanticDistance computes the second semantic distance value using these embeddings and reports the distance (dog-wolf) as 'GLO_cosdist'.  O is the least distant (most similar) and 2 is the most distant (least similar) index between elements. </p>
+
+<p style="text-indent: 2em;"> One interesting and convenient feature of multidimensional semantic vectors for words is that they appear to be additive. That is, it is possible to average the semantic vectors for several words (or ngrams) to obtain a composite vector for a group of words. The SemanticDistance package leverages this property to yield comparisons of local (word-to-word) vs. more global (large blocks of text to word, turn-to-turn) semantic relationships.</p> 
+
+## What can SemanticDistance do?
+SemanticDistance can compute pairwise semantic distance relationships in ordered and unordered language samples: <br>
+1. **Monologues**: Any ordered text sample NOT delineated by a talker/speaker (e.g., stories, narratives). The minimal requirement for a monologue is one row and one column with some text in it. <br>
+2. **Dialogues**: An ordered language sample split by a talker/speaker/interlocutor factor. The minimum requirment is two cells with interlocutor identity and some text. <br>
+3. **Word Pairs in Columns**: Paired string data arrayed across two columns (e.g., Dog-Leash) <br>
+4. **Unordered Word Lists**: Unordered list of words (nominally one column, all text in one row) that will be transformed into a distance matrix, network model, or dendrogram <br>
+<br>
+
+## What kinds of questions can SemanticDistance answer?
+1. What is the semantic distance from each word to the next across an ordered story? <br>
+2. What is the semantic distance turn-to-turn across two partners engaged in a conversation? <br>
+3. What are the semantic distanceces between all possible pairs of a bag-of-words? <br>
+4. What is the semantic distance from each new word to the first block of n-words in the sample? <br>
+5. What are the semantic distances correponding to my word pairs of interest? <br>
+6. What are the semantic distances corresponding to each new word relative to the previous n-words in a language sample? <br>
+
+## Prepping my language sample for SemanticDistance
+Before using the package, figure out what format your language transcript is in and what you want to measure. SemanticDistance offers many possible options with some default arguments that you need to understand. For example, the package requires users to clean and prep the data. You can choose to omit stopwords, lemmatize, split strings, etc. -- or just tell R to leave your data alone and just split the transcript into a one word per row format. <br>
+
+# Install package and load library
+For now, install SemanticDistance from github using the `devtools` package
+```{r, message=FALSE, warning=F}
+# Check if devtools is installed, if not install it
+if (!require("devtools", quietly = TRUE)) {
+  install.packages("devtools")
+}
+
+# Load devtools
+library(devtools)
+
+# Check if SemanticDistance is installed, if not install from GitHub
+if (!require("SemanticDistance", quietly = TRUE)) {
+  devtools::install_github("Reilly-ConceptsCognitionLab/SemanticDistance")
+}
+
+# Load SemanticDistance
+library(SemanticDistance)
+```
+
+# Read your data into R
+Get your data into R. Many user will import data from CSV or txt files. It doesn't matter how you get your data into R, but there are some formatting considerations to keep in mind. Excel is dangerous in terms of adding hidden characters and other nonsense (e.g., formulae) that you don't want in your dataframe. Remain vigilant and check whether the data imported into R matches your original. SemanticDistance will retain all your metadata (e.g., timestamps, speaker codes).  
+
+
+
