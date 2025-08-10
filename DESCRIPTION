@@ -51,12 +51,15 @@ Imports:
 Suggests: 
     devtools,
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 RoxygenNote: 7.3.2
 Collate: 
+    'Untitled.R'
+    'backup.R'
     'clean_dialogue.R'
-    'clean_monologue.R'
+    'clean_monologue_or_list.R'
     'clean_paired_cols.R'
     'data.R'
     'dist_anchor.R'
@@ -69,5 +72,6 @@ Collate:
     'reexports.R'
     'replacements_25.R'
     'utils.R'
-    'words_to_network.R'
+    'wordlist_to_network.R'
     'zzz.R'
+Config/testthat/edition: 3
