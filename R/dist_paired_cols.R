@@ -16,21 +16,19 @@
 #' @export
 
 dist_paired_cols <- function(dat) {
-  # Find columns ending with _clean1 and _clean2
-  clean_cols <- grep("_clean1$|_clean2$", names(dat), value = TRUE)
-
-  if (length(clean_cols) != 2) {
-    stop("Could not find exactly two columns ending with '_clean1' and '_clean2'")
+  # Check if required columns exist
+  required_cols <- c("word1_clean", "word2_clean")
+  if (!all(required_cols %in% names(dat))) {
+    stop("Dataframe must contain both 'word1_clean' and 'word2_clean' columns")
   }
 
-  col_1 <- clean_cols[grep("_clean1$", clean_cols)]
-  col_2 <- clean_cols[grep("_clean2$", clean_cols)]
+  dat_small <- dat %>%
+    dplyr::select(id_row_orig, word1_clean, word2_clean)
 
-  dat_small <- dat %>% dplyr::select(id_row_orig, !!rlang::sym(col_1), !!rlang::sym(col_2))
   unspooled_txt <- dat_small %>%
-    tidyr::pivot_longer(cols = c(!!sym(col_1), !!rlang::sym(col_2)),
-                 names_to = "word_type",
-                 values_to = "word") %>%
+    tidyr::pivot_longer(cols = c(word1_clean, word2_clean),
+                        names_to = "word_type",
+                        values_to = "word") %>%
     dplyr::select(-word_type)  # Drop 'word_type' column
 
   djoin_sd15 <- dplyr::left_join(unspooled_txt, SD15_2025_complete, by = "word")
