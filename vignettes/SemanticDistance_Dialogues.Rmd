@@ -35,12 +35,11 @@ Decide on your cleaning parameters (e.g., stopwords? lemmatization?). Specify th
 Arguments to `clean_dialogue()` are:<br>
 `dat` your raw dataframe with at least one column of text AND a talker column <br>
 `wordcol` column name (quoted) containing the text you want cleaned <br>
-`whotalks` column name (quoted) containing the talker ID (will convert to factor) <br>
-`clean` applies cleaning function, T/F default is TRUE <br>
+`who_talk` column name (quoted) containing the talker ID (will convert to factor) <br>
 `omit_stops` omits stopwords, T/F default is TRUE <br>
 `lemmatize` transforms raw word to lemmatized form, T/F default is TRUE
 ```{r, message=FALSE}
-Dialogue_Cleaned <- clean_dialogue(dat=Dialogue_Typical, wordcol="text", whotalks = "speaker", clean=TRUE, omit_stops=TRUE, lemmatize=TRUE, split_strings=TRUE)
+Dialogue_Cleaned <- clean_dialogue(dat=Dialogue_Typical, wordcol="text", who_talking="speaker", omit_stops=TRUE, lemmatize=TRUE)
 knitr::kable(head(Dialogue_Cleaned, 12), format = "pipe")
 ```
 
@@ -49,7 +48,7 @@ knitr::kable(head(Dialogue_Cleaned, 12), format = "pipe")
 Averages the semantic vectors for all content words in a turn then computes the cosine distance to the average of the semantic vectors of the content words in the subsequent turn.  Note: this function only works on dialogue samples marked by a talker variable (e.g., conversation transcripts). It averages across the semantic vectors of all words within a turn and then computes cosine distance to all the words in the next turn. You just need to feed it a transcript formatted with clean_dialogue. 'dist_dialogue' will return a summary dataframe that distance values aggregated by talker and turn (id_turn). Arguments to `dist_dialogue` are: <br>
 `dat` = dataframe w/ a dialogue sample cleaned and prepped using 'clean_dialogue'
 ```{r, message=FALSE}
-DialogueDists <- dist_dialogue(dat=Dialogue_Cleaned)
+DialogueDists <- dist_dialogue(dat=Dialogue_Cleaned, who_talking="speaker")
 knitr::kable(head(DialogueDists, 12), format = "pipe", digits=2)
 ```
 

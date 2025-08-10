@@ -33,11 +33,9 @@ Arguments to `clean_paired_cols` are:  <br>
 `dat` your raw dataframe with two columns of paired text <br>
 `word1` quoted variable reflecting the column name where your first word lives <br>
 `word2` quoted variable reflecting the column name where your first word lives <br>
-`clean` applies cleaning functions, T/F default is TRUE <br>
-`omit_stops` omits stopwords, T/F default is TRUE <br>
 `lemmatize` transforms raw word to lemmatized form, T/F default is TRUE 
 ```{r, message=FALSE}
-WordPairs_Clean <- clean_paired_cols(dat=Word_Pairs, wordcol1='word1', wordcol2='word2', clean=TRUE, omit_stops=TRUE, lemmatize=TRUE)
+WordPairs_Clean <- clean_paired_cols(dat=Word_Pairs, wordcol1='word1', wordcol2='word2', lemmatize=TRUE)
 knitr::kable(head(WordPairs_Clean, 6), format = "simple", digits=2) 
 ```
 

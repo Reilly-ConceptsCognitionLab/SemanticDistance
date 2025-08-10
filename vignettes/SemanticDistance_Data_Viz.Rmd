@@ -24,24 +24,36 @@ library(SemanticDistance)
 # Data Visualization Options
 `SemanticDistance` contains two primary visualization options. Most users will be able to plot monologue distances as continuously changing time series using simple approaches like `ggline`, specializing bells and whistles to their own unique needs.  The visualization funtions we have included are used for gleaning structure(s) from lists of words.  At present, these options include hierarchical cluster analysis (producing a triangle dendrogram) and network analysis (producing a simple undirected graph network). Each of these approaches uses simple machine learning algorithms (kmeans) to determine optimal cluster sizes.
 
-## Hierarchical Cluster Dendrogram: viz_dendrogram()
-Words on any vector of words but only makes sense for unordered word lists! Produces a dendogram from a vector of words. First pulls words, then creates a square matrix with cosine distances for all possible word pairs: d[i,j]. Then converts semantic distance matrix to Euclidean distance. Then plots a hierchcial clustering solution moving words closer together in proximity based on their distance. Works best for unordred word lists cleaned with clean_monologues(). Arguments:
-`dat` dataframe processed using `clean_monologue()`
-`dist_type` quoted argument, which distance norms would you like? default is "embedding", alt is 'SD15'
-
+# STEP 1: CLEAN AND FORMAT YOUR MONOLOGUE OR LIST
 ```{r, message=FALSE}
 #Start from 
-MyDendro <- viz_dendrogram(Monologue_Typical)
-plot(MyDendro)
+MyCleanList <- clean_monologue_or_list(Unordered_List, wordcol='mytext')
+knitr::kable(head(MyCleanList, 10), format = "pipe")
 ```
 
-## iGraph network: viz_network()
-Produces a dendogram from a vector of words. First pulls words, then creates a square matrix with cosine distances for all possible word pairs: d[i,j]. Then converts semantic distance matrix to Euclidean distance. Then plots a hierchcial clustering solution moving words closer together in proximity based on their distance. Works best for unordred word lists cleaned with clean_monologues(). Arguments:
-`dat` dataframe processed using `clean_monologue()`
-`dist_type` quoted argument, which distance norms would you like? default is "embedding", alt is 'SD15'
+# STEP 2: CREATE DENDROGRAM or NETWORK
+From your cleaned and formatted list, visualize relations between words
+
+## Option 1: Hierarchical Cluster Dendrogram
+Words on any vector of words but only makes sense for unordered word lists! Produces a dendogram from a vector of words. First pulls words, then creates a square matrix with cosine distances for all possible word pairs: d[i,j]. Then converts semantic distance matrix to Euclidean distance. Then plots a hierchcial clustering solution moving words closer together in proximity based on their distance.  <br>
+
+Arguments: <br>
+`dat` dataframe processed using `clean_monologue_or_list()` <br>
+`output` quoted argument `dendrogram` or `network` default is `dendrogram` <br>
+`dist_type` quoted argument, which distance norms would you like? default is `embedding` alt is 'SD15'
+```{r}
+mydendro <- wordlist_to_network(MyCleanList, output='dendrogram', dist_type='embedding')
+print(mydendro)
+```
+
+## Option 2: iGraph network
+Takes hclust properties from dendrogram steps and creates a simple igraph object. <br>
+`dat` dataframe cleaned using `clean_monologue_or_list` <br>
+`output` quoted argument `dendrogram` or `network` default is `dendrogram` <br>
+`dist_type` default is 'embedding', alt is 'SD15'
 ```{r, message=FALSE, warning=FALSE}
-MyNetwork <- viz_network(dat=Monologue_Cleaned)
-plot(MyNetwork)
+mynetwork <- wordlist_to_network(MyCleanList, output='network', dist_type='embedding')
+print(mynetwork)
 ```
 
 
