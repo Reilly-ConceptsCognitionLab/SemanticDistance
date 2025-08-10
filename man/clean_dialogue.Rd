@@ -4,34 +4,29 @@
 \alias{clean_dialogue}
 \title{clean_dialogue}
 \usage{
-clean_dialogue(
-  dat,
-  wordcol,
-  whotalks,
-  clean = TRUE,
-  omit_stops = TRUE,
-  lemmatize = TRUE,
-  split_strings = TRUE
-)
+clean_dialogue(dat, wordcol, who_talking, omit_stops = TRUE, lemmatize = TRUE)
 }
 \arguments{
 \item{dat}{a datataframe with at least one target column of string data}
 
 \item{wordcol}{quoted column name storing the strings that will be cleaned and split}
 
-\item{whotalks}{quoted column name with speaker/talker identities will be factorized}
-
-\item{clean}{T/F apply cleaning transformations (default is TRUE)}
+\item{who_talking}{quoted column name with speaker/talker identities will be factorized}
 
 \item{omit_stops}{T/F user wishes to remove stopwords (default is TRUE)}
 
 \item{lemmatize}{T/F user wishes to lemmatize each string (default is TRUE)}
-
-\item{split_strings}{option T/F (default T) split multiword contractions into separate rows}
 }
 \value{
 a dataframe
 }
 \description{
-Cleans a transcript where there are two or more talkers. User specifies the dataframe and column name where target text is stored as arguments to the function. Default option is to lemmatize strings. Function splits and unlists text so that the output is in a one-row-per-word format marked by a unique numeric identifier (i.e., 'id_orig')
+Cleans a transcript where there are two or more talkers. User specifies the dataframe and
+column name where target text is stored in addition a factor variable corresponding to the
+identity of the person producing corresponding text. Users also specify cleaning parameters
+for stopword removal and lemmatization (both defaulting to TRUE). Function splits and unlists text
+so that the output is in a one-row-per-word format marked by a unique numeric identifier (i.e., 'id_orig').
+Function appends a turn_count sequence used for aggregating all the words within each turn.
+If a speaker generates no complete observations because of stopword removal, the turn counter
+will not increment until a talker switch AND a complete observation is observed.
 }

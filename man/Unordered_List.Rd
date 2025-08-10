@@ -6,16 +6,15 @@
 \title{Unordered_List}
 \format{
 ## "Unordered_List"
-A data frame with 20 rows and 3 columns:
+A data frame with 1 rows and 1 columns:
 \describe{
-  \item{ID_JR}{a sequential numeric identifier}
-  \item{word}{target text}
+  \item{mytext}{unsplit list of words containing musical instruments, weapongs, fruits, emotions}
 }
 }
 \usage{
 Unordered_List
 }
 \description{
-No talker delineated. Vector of 20 words, 5 from each of 4 categories, Good for examining clustering
+No talker delineated. List of 17 words spanning 4 semantic categories, Good for examining clustering
 }
 \keyword{datasets}

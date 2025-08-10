@@ -4,10 +4,12 @@
 \alias{dist_dialogue}
 \title{dist_dialogue}
 \usage{
-dist_dialogue(dat)
+dist_dialogue(dat, who_talking)
 }
 \arguments{
 \item{dat}{a dataframe prepped using 'clean_dialogue' fn with talker data and turncount appended}
+
+\item{who_talking}{factor variable with two levels specifying an ID for the person producing the text in `word_clean`}
 }
 \value{
 a dataframe

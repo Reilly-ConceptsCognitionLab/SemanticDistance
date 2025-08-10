@@ -4,15 +4,7 @@
 \alias{clean_paired_cols}
 \title{clean_paired_cols}
 \usage{
-clean_paired_cols(
-  dat,
-  wordcol1,
-  wordcol2,
-  clean = TRUE,
-  omit_stops = TRUE,
-  lemmatize = TRUE,
-  split_strings = TRUE
-)
+clean_paired_cols(dat, wordcol1, wordcol2, lemmatize = TRUE)
 }
 \arguments{
 \item{dat}{a dataframe with two columns of words you want pairwise distance for}
@@ -20,10 +12,6 @@ clean_paired_cols(
 \item{wordcol1}{quoted column name storing the first string for comparison}
 
 \item{wordcol2}{quoted column name storing the second string for comparison}
-
-\item{clean}{T/F default is T specifies whether to apply cleaning transformations or leave data alone}
-
-\item{omit_stops}{T/F user wishes to remove stopwords (default is TRUE)}
 
 \item{lemmatize}{T/F user wishes to lemmatize each string (default is TRUE)}
 }
