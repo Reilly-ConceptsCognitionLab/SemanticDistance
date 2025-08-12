@@ -12,3 +12,4 @@ README.Rmd
 =======
 ^paper$
 >>>>>>> origin/main
+^LICENSE\.md$

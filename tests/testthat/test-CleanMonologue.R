@@ -1,6 +1,6 @@
 test_that("clean_monologue_or_list produces 'word_clean' column", {
   # Apply cleaning function (ensure Monologue_Typical exists in environment)
-  cleaned_data <- clean_monologue_or_list(Monologue_Typical)
+  cleaned_data <- clean_monologue_or_list(Monologue_Typical, wordcol='mytext')
 
   # Test 1: Check column exists
   expect_true("word_clean" %in% names(cleaned_data))
