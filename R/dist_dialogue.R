@@ -31,7 +31,7 @@
 #' @export
 
 dist_dialogue <- function(dat, who_talking) {
-  # Check if required columns exist, including user-specified 'who_talking'
+  # Check if required columns exist
   required_cols <- c("id_row_orig", "turn_count", "word_clean", who_talking)
   if (!all(required_cols %in% names(dat))) {
     missing_cols <- setdiff(required_cols, names(dat))
@@ -41,7 +41,7 @@ dist_dialogue <- function(dat, who_talking) {
   # Prepare data with unique row identifier
   dat <- dat %>%
     dplyr::mutate(
-      row_id = seq_len(nrow(dat)),
+      row_id = dplyr::row_number(),
       word_clean = tolower(word_clean),
       talker = as.factor(.data[[who_talking]]),  # Use dynamic column name
       turn_count = as.integer(turn_count)
@@ -61,34 +61,42 @@ dist_dialogue <- function(dat, who_talking) {
       stop(paste("No numeric embedding columns found in", prefix, "data"))
     }
 
-    # Compute mean vector for each turn
-    turn_vectors <- embed_df %>% dplyr::group_by(turn_count) %>%
-      dplyr::summarise(dplyr::across(dplyr::any_of(numeric_cols),
-        ~mean(., na.rm = TRUE),
-        .groups = "drop")) %>%
-         dplyr::arrange(turn_count)
+    # Compute mean vector for each turn - Handle all-NA cases
+    turn_vectors <- embed_df %>%
+      dplyr::group_by(turn_count) %>%
+      dplyr::summarise(
+        dplyr::across(
+          .cols = dplyr::any_of(numeric_cols),
+          .fns = ~ if (all(is.na(.))) NA_real_ else mean(., na.rm = TRUE)
+        ),
+        .groups = "drop"
+      ) %>%
+      dplyr::arrange(turn_count)
 
-      # Calculate cosine distances between consecutive turns
-      turn_vectors <- turn_vectors %>%
-        dplyr::mutate("{prefix}_cosdist" := purrr::map_dbl(
-          1:n(),
+    # Calculate cosine distances between consecutive turns
+    turn_vectors <- turn_vectors %>%
+      dplyr::mutate(
+        "{prefix}_cosdist" := purrr::map_dbl(
+          1:dplyr::n(),
           ~ {
-            if (. == n()) return(NA_real_)
-            vec_current <- as.numeric(turn_vectors[., numeric_cols, drop = TRUE])
-            vec_next <- as.numeric(turn_vectors[.+1, numeric_cols, drop = TRUE])
+            if (.x == dplyr::n()) return(NA_real_)
+            vec_current <- unlist(turn_vectors[.x, numeric_cols])
+            vec_next <- unlist(turn_vectors[.x + 1, numeric_cols])
 
+            # Return NA if either vector has any NA
             if (any(is.na(vec_current)) || any(is.na(vec_next))) return(NA_real_)
             if (length(vec_current) != length(vec_next)) return(NA_real_)
 
-            tryCatch({
-              1 - lsa::cosine(vec_current, vec_next)
-            }, error = function(e) NA_real_)
+            tryCatch(
+              lsa::cosine(vec_current, vec_next),
+              error = function(e) NA_real_
+            )
           }
         )
-        ) %>%
-        dplyr::select(turn_count, dplyr::contains("cosdist"))
+      ) %>%
+      dplyr::select(turn_count, dplyr::contains("cosdist"))
 
-      return(turn_vectors)
+    return(turn_vectors)
   }
 
   # Process both embeddings
@@ -102,13 +110,12 @@ dist_dialogue <- function(dat, who_talking) {
       dat %>%
         dplyr::group_by(turn_count) %>%
         dplyr::summarise(
-          talker = dplyr::first(talker),  # Uses internal 'talker' column
-          n_words = dplyr::n(),
+          talker = dplyr::first(talker),
+          n_words = sum(!is.na(word_clean)),  # Count actual words
           .groups = "drop"
         ),
       by = "turn_count"
     ) %>%
-    # Rename internal 'talker' back to user's column name
     dplyr::rename(!!who_talking := talker) %>%
     dplyr::select(turn_count, !!who_talking, n_words, tidyselect::everything())
 

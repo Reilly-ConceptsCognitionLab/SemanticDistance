@@ -4,16 +4,21 @@
 \alias{wordlist_to_network}
 \title{wordlist_to_network}
 \usage{
-wordlist_to_network(dat, output = "dendrogram", dist_type = "embedding")
+wordlist_to_network(
+  dat,
+  wordcol,
+  output = "dendrogram",
+  dist_type = "embedding"
+)
 }
 \arguments{
 \item{dat}{dataframe with text in it (cleaned using clean_monologue_or_list function}
 
+\item{wordcol}{quoted argument identifying column in dataframe with target text}
+
 \item{output}{quoted argument for type of output default is 'dendrogram', alternate is 'network'}
 
 \item{dist_type}{quoted argument semantic norms for running distance matrix on default='embedding', other is 'SD15'}
-
-\item{wordcol}{quoted argument identifying column in dataframe with target text}
 
 \item{...}{additional arguments passed to internal functions}
 }

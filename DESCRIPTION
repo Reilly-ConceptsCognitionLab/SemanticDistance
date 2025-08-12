@@ -21,25 +21,21 @@ BugReports: https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/issu
 Depends:
     R (>= 3.5)
 Imports:
-    devtools,
-    ragg,
-    pkgdown,
     ape,
     cluster,
     dendextend,
     dplyr,
-    ggplot2,
     graphics,
     httr,
     igraph,
     lsa,
     magrittr,
-    MetBrewer,
     purrr,
     rlang,
-    textstem,
-    stringi,
     stats,
+    stringi,
+    stringr,
+    textstem,
     tidyselect,
     tm,
     tidyr,
@@ -47,9 +43,7 @@ Imports:
     tools,
     utils,
     wesanderson,
-    zoo
 Suggests: 
-    devtools,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)

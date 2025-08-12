@@ -35,7 +35,7 @@
 #' @return a plot of a dendrogram or an igraph network AND a cosine distance matrix
 #' @export
 
-wordlist_to_network <- function(dat, output = 'dendrogram', dist_type = "embedding") {
+wordlist_to_network <- function(dat, wordcol, output = 'dendrogram', dist_type = "embedding") {
   # Check if 'word_clean' exists in the dataframe
   if (!"word_clean" %in% names(dat)) {
     stop("Column 'word_clean' not found in dataframe. Please ensure your dataframe has a column named 'word_clean'.
