@@ -19,8 +19,6 @@ wordlist_to_network(
 \item{output}{quoted argument for type of output default is 'dendrogram', alternate is 'network'}
 
 \item{dist_type}{quoted argument semantic norms for running distance matrix on default='embedding', other is 'SD15'}
-
-\item{...}{additional arguments passed to internal functions}
 }
 \value{
 a plot of a dendrogram or an igraph network AND a cosine distance matrix

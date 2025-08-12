@@ -8,7 +8,6 @@
 #' @param wordcol quoted argument identifying column in dataframe with target text
 #' @param dist_type quoted argument semantic norms for running distance matrix on default='embedding', other is 'SD15'
 #' @param output quoted argument for type of output default is 'dendrogram', alternate is 'network'
-#' @param ... additional arguments passed to internal functions
 #' @details This function internally calls eval_kmeans_clustersize for
 #' cluster evaluation. The dendrogram visualization is based on hierarchical
 #' clustering of semantic distances.
