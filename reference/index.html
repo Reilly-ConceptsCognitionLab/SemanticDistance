@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">SemanticDistance</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,8 +15,16 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/SemanticDistance.html">Get started</a></li>
-<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/SemanticDistance_Data_Viz.html">SemanticDistance_Data_Viz</a></li>
+    <li><a class="dropdown-item" href="../articles/SemanticDistance_Dialogues.html">SemanticDistance Dialogues</a></li>
+    <li><a class="dropdown-item" href="../articles/SemanticDistance_Intro.html">SemanticDistance_Intro</a></li>
+    <li><a class="dropdown-item" href="../articles/SemanticDistance_Monologues_Lists.html">SemanticDistance_Monologues_Lists</a></li>
+    <li><a class="dropdown-item" href="../articles/SemanticDistance_Word_Pairs.html">SemanticDistance_Word_Pairs</a></li>
+  </ul></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
@@ -43,16 +51,10 @@
 
       <dl><dt>
 
-          <code><a href="Dialogue_Messy.html">Dialogue_Messy</a></code>
+          <code><a href="Dialogue_Typical.html">Dialogue_Typical</a></code>
 
         </dt>
-        <dd>Messy Dialogue Transcript</dd>
-      </dl><dl><dt>
-
-          <code><a href="Dialogue_Structured.html">Dialogue_Structured</a></code>
-
-        </dt>
-        <dd>Dialogue Transcript Perfectly Formatted</dd>
+        <dd>A Typical Dialogue Transcript</dd>
       </dl><dl><dt>
 
           <code><a href="Grandfather_Passage.html">Grandfather_Passage</a></code>
@@ -61,28 +63,34 @@
         <dd>The Grandfather Passage: A Standardized Reading Passage</dd>
       </dl><dl><dt>
 
-          <code><a href="Monologue_Messy.html">Monologue_Messy</a></code>
+          <code><a href="Monologue_Typical.html">Monologue_Typical</a></code>
 
         </dt>
-        <dd>A Sample Messy Monologue Transcript</dd>
+        <dd>A Typical Monologue Transcript</dd>
       </dl><dl><dt>
 
-          <code><a href="Monologue_Structured.html">Monologue_Structured</a></code>
+          <code><a href="SD15_2025_complete.html">SD15_2025_complete</a></code>
 
         </dt>
-        <dd>A Sample Structured Monologue Transcript</dd>
+        <dd>SD15_2025_complete Experiential Semantic Distance Values</dd>
       </dl><dl><dt>
 
-          <code><a href="Semantic_Clusters.html">Semantic_Clusters</a></code>
+          <code><a href="Temple_stops25.html">Temple_stops25</a></code>
 
         </dt>
-        <dd>Simulated Semantic Category Fluency Data: Word List Blocked by Semantic Category</dd>
+        <dd>Stopword List</dd>
+      </dl><dl><dt>
+
+          <code><a href="Unordered_List.html">Unordered_List</a></code>
+
+        </dt>
+        <dd>Unordered_List</dd>
       </dl><dl><dt>
 
           <code><a href="Word_Pairs.html">Word_Pairs</a></code>
 
         </dt>
-        <dd>Column Arrayed Word Pairs for Pairwise Distance</dd>
+        <dd>Word Pairs in Columns</dd>
       </dl><dl><dt>
 
           <code><a href="clean_dialogue.html">clean_dialogue()</a></code>
@@ -91,22 +99,16 @@
         <dd>clean_dialogue</dd>
       </dl><dl><dt>
 
-          <code><a href="clean_monologue.html">clean_monologue()</a></code>
+          <code><a href="clean_monologue_or_list.html">clean_monologue_or_list()</a></code>
 
         </dt>
-        <dd>clean_monologue</dd>
+        <dd>clean_monologue_or_list</dd>
       </dl><dl><dt>
 
           <code><a href="clean_paired_cols.html">clean_paired_cols()</a></code>
 
         </dt>
         <dd>clean_paired_cols</dd>
-      </dl><dl><dt>
-
-          <code><a href="clean_unordered.html">clean_unordered()</a></code>
-
-        </dt>
-        <dd>clean_unordered</dd>
       </dl><dl><dt>
 
           <code><a href="dist_anchor.html">dist_anchor()</a></code>
@@ -119,12 +121,6 @@
 
         </dt>
         <dd>dist_dialogue</dd>
-      </dl><dl><dt>
-
-          <code><a href="dist_matrix.html">dist_matrix()</a></code>
-
-        </dt>
-        <dd>dist_matrix</dd>
       </dl><dl><dt>
 
           <code><a href="dist_ngram2ngram.html">dist_ngram2ngram()</a></code>
@@ -145,16 +141,22 @@
         <dd>dist_paired_cols</dd>
       </dl><dl><dt>
 
-          <code><a href="viz_clusters.html">viz_clusters()</a></code>
+          <code><a href="glowca_25.html">glowca_25</a></code>
 
         </dt>
-        <dd>viz_clusters</dd>
+        <dd>Glove Semantic Embeddings</dd>
       </dl><dl><dt>
 
-          <code><a href="viz_monologue.html">viz_monologue()</a></code>
+          <code><a href="load_github_data.html">load_github_data()</a></code>
 
         </dt>
-        <dd>viz_monologue</dd>
+        <dd>Load all .rda files from a GitHub data folder into the package environment</dd>
+      </dl><dl><dt>
+
+          <code><a href="wordlist_to_network.html">wordlist_to_network()</a></code>
+
+        </dt>
+        <dd>wordlist_to_network</dd>
       </dl></div>
   </main></div>
 
