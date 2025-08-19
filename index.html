@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Compute and Visualize Pairwise Semantic Distance Relationships in Ordered and Unordered Language Samples • SemanticDistance</title>
+<title>Clean Text, Compute, and Visualize Pairwise Semantic Distance Relationships in Ordered and Unordered Language Samples • SemanticDistance</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Compute and Visualize Pairwise Semantic Distance Relationships in Ordered and Unordered Language Samples">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Clean Text, Compute, and Visualize Pairwise Semantic Distance Relationships in Ordered and Unordered Language Samples">
 <meta name="description" content="Cleans and formats language transcripts guided by a series of transformation options (e.g., lemmatize words, omit stopwords, split strings across rows). SemanticDistance computes two distinct metrics of cosine semantic distance (experiential and embedding). These values reflect pairwise cosine distance between different elements or chunks of a language sample. SemanticDistance can process monologues (e.g., stories, ordered text), dialogues (e.g., conversation transcripts), word pairs arrayed in columns, and unordered word lists. Users specify options for how they wish to chunk distance calculations. These options include: rolling ngram-to-word distance (window of n-words to each new word), ngram-to-ngram distance (2-word chunk to the next 2-word chunk), pairwise distance between words arrayed in columns, matrix comparisons (i.e., all possible pairwise distances between words in an unordered list), turn-by-turn distance (talker to talker in a dialogue transcript). SemanticDistance includes visualization options for analyzing distances as time series data and simple semantic network dynamics (e.g., clustering, undirected graph network).">
 <meta property="og:description" content="Cleans and formats language transcripts guided by a series of transformation options (e.g., lemmatize words, omit stopwords, split strings across rows). SemanticDistance computes two distinct metrics of cosine semantic distance (experiential and embedding). These values reflect pairwise cosine distance between different elements or chunks of a language sample. SemanticDistance can process monologues (e.g., stories, ordered text), dialogues (e.g., conversation transcripts), word pairs arrayed in columns, and unordered word lists. Users specify options for how they wish to chunk distance calculations. These options include: rolling ngram-to-word distance (window of n-words to each new word), ngram-to-ngram distance (2-word chunk to the next 2-word chunk), pairwise distance between words arrayed in columns, matrix comparisons (i.e., all possible pairwise distances between words in an unordered list), turn-by-turn distance (talker to talker in a dialogue transcript). SemanticDistance includes visualization options for analyzing distances as time series data and simple semantic network dynamics (e.g., clustering, undirected graph network).">
 <meta property="og:image" content="https://reilly-conceptscognitionlab.github.io/SemanticDistance/logo.png">
@@ -90,13 +90,11 @@ SemanticDistance
 <h1 id="step-1-identify-your-data-structure">
 <span style="color: #8B0000; font-size: 1.1em; font-weight: bold;">Step 1: Identify Your Data Structure</span><a class="anchor" aria-label="anchor" href="#step-1-identify-your-data-structure"></a>
 </h1>
-<p><code>SemanticDistance</code> contains specialized functions for processing the following text formats. To learn more about the specific options for cleaning, computing distances, and visualizing output for each of these formats, visit its corresponding vigbnette. <br></p>
+<p><code>SemanticDistance</code> contains specialized functions for processing the text formats delineated to follow. To learn more about the specific options for string cleaning, computing distances, and visualizing output for each of these formats, visit its corresponding vigbnette. <br></p>
 <div class="section level2">
-<h2 id="monologues">Monologues<a class="anchor" aria-label="anchor" href="#monologues"></a>
+<h2 id="monologue-example">Monologue (example)<a class="anchor" aria-label="anchor" href="#monologue-example"></a>
 </h2>
-<div class="section level3" style="float: right; width: 55%; margin-left: 25px; margin-bottom: 15px; padding-left: 15px; border-left: 1px solid #eee;">
-<h3 id="monologue-continuous">Monologue (continuous)<a class="anchor" aria-label="anchor" href="#monologue-continuous"></a>
-</h3>
+<div style="float: right; width: 55%; margin-left: 25px; margin-bottom: 15px; padding-left: 15px; border-left: 1px solid #eee;">
 <table class="table">
 <colgroup><col width="100%"></colgroup>
 <thead><tr class="header">
@@ -107,14 +105,13 @@ SemanticDistance
 </tr></tbody>
 </table>
 </div>
-<p>Any block of text NOT delineated by a talker/speaker. This includes ordered texts like stories or narratives, or unordered lists (i.e., bags of words). The minimum requirement for a monologue is one row and one column with some text in it. <br></p>
-<p>Here’s a sample monologue. If your data consist of monologues and you want to learn more about processing this specific format, visit our <a href="URL%20HERE">SemanticDistance Monologue Vignette</a>.</p>
+<p>A monologue for our pourposes consists of any block of text NOT delineated by a talker/speaker. This includes ordered texts like stories or narratives, or unordered lists (i.e., bags of words). The minimum requirement for a monologue is one row and one column with some text in it. Here’s a sample monologue. <br></p>
 <div style="clear: both; margin-bottom: 20px;">
 
 </div>
 </div>
 <div class="section level2">
-<h2 id="dialogues">Dialogues<a class="anchor" aria-label="anchor" href="#dialogues"></a>
+<h2 id="dialogue-example">Dialogue (example)<a class="anchor" aria-label="anchor" href="#dialogue-example"></a>
 </h2>
 <div style="float: right; width: 55%; margin-left: 25px; margin-bottom: 15px; padding-left: 15px; border-left: 1px solid #eee;">
 <table class="table">
@@ -146,13 +143,13 @@ SemanticDistance
 </tbody>
 </table>
 </div>
-<p>An ordered language sample split by a talker/speaker/interlocutor factor. The minimum requirment is two columns delineated by a speaker id (e.g., name, speaker, talker) and the speaker’s corresponding text output.Here’s a sample dialogue formatted correctly for all proceeding steps of <code>SemanticDistance</code>. If your data consist of a dialogue and you want to learn more about processing this specific format, visit our <a href="URL%20HERE">SemanticDistance Dialogue Vignette</a>.</p>
+<p>A dialogue is an ordered language sample split by a talker/speaker/interlocutor factor. The minimum requirement for formatting dialogues is to supply a dataframe with two columns. One column is delineated by a speaker_id (e.g., name, speaker, talker) and the second column should contain the speaker’s corresponding text output. Above you will see a sample dialogue formatted correctly for all proceeding steps of <code>SemanticDistance</code>.</p>
 <div style="clear: both; margin-bottom: 20px;">
 
 </div>
 </div>
 <div class="section level2">
-<h2 id="word-pairs-in-columns">Word Pairs in Columns<a class="anchor" aria-label="anchor" href="#word-pairs-in-columns"></a>
+<h2 id="word-pairs-in-columns-example">Word Pairs in Columns (example)<a class="anchor" aria-label="anchor" href="#word-pairs-in-columns-example"></a>
 </h2>
 <div style="float: right; width: 55%; margin-left: 25px; margin-bottom: 15px; padding-left: 15px; border-left: 1px solid #eee;">
 <table class="table">
@@ -188,14 +185,14 @@ SemanticDistance
 </tbody>
 </table>
 </div>
-<p>Word pairs arrayed as vectors within columns. The minimum requirment is two columns with at least one row of paired data (e.g., dog, leash). Here’s a sample dataframe of word pairs formatted correctly for all proceeding steps of <code>SemanticDistance</code>. If your data consist of word pairs and you want to learn more about processing this specific format, visit our <a href="URL%20HERE">SemanticDistance Word Pairs Vignette</a>.</p>
+<p>Word pairs arrayed as vectors within columns. The minimum requirment is two columns with at least one row of paired data (e.g., dog, leash). Here’s a sample dataframe of word pairs formatted correctly for all proceeding steps of <code>SemanticDistance</code>.</p>
 <div style="clear: both; margin-bottom: 30px;">
 
 </div>
 <p><br></p>
 </div>
 <div class="section level2">
-<h2 id="unordered-word-list">Unordered Word List<a class="anchor" aria-label="anchor" href="#unordered-word-list"></a>
+<h2 id="unordered-word-list-example">Unordered Word List (example)<a class="anchor" aria-label="anchor" href="#unordered-word-list-example"></a>
 </h2>
 <div style="float: right; width: 55%; margin-left: 25px; margin-bottom: 15px; padding-left: 15px; border-left: 1px solid #eee;">
 <table class="table">
@@ -221,10 +218,14 @@ SemanticDistance
 </h1>
 <p>Transforms text to lowercase then optionally clean (omit stopwords, omit non-alphabetic chars), lemmatize (transforms morphological derivatives of words to their standard dictionary entries), and split multiword utterances into a one-word-per row format.</p>
 <div class="section level2">
-<h2 id="cleanformat-monologue-or-unordered-word-list-transcript-clean_monologue_or_list">Clean/Format Monologue or Unordered Word List Transcript: <code>clean_monologue_or_list</code>
-<a class="anchor" aria-label="anchor" href="#cleanformat-monologue-or-unordered-word-list-transcript-clean_monologue_or_list"></a>
+<h2 id="clean-monologue-or-unordered-word-list">Clean Monologue or Unordered Word List<a class="anchor" aria-label="anchor" href="#clean-monologue-or-unordered-word-list"></a>
 </h2>
-<p><span style="color: #006400;">Function Arguments:</span><br><code>dat</code> raw dataframe with at least one column of text <br><code>wordcol</code> quoted variable column name where your target text lives (e.g., ‘mytext’) <br><code>omit_stops</code> omits stopwords, T/F default is TRUE <br><code>lemmatize</code> transforms raw word to lemmatized form, T/F default is TRUE <br></p>
+</div>
+<div class="section level2">
+<h2 id="clean_monologue_or_list">
+<code>clean_monologue_or_list</code><a class="anchor" aria-label="anchor" href="#clean_monologue_or_list"></a>
+</h2>
+<p><span style="color: #006400;">Arguments to <code>clean_monologue_or_list</code></span><br> -<code>dat</code> raw dataframe with at least one column of text. <br> -<code>wordcol</code> quoted variable column name where your target text lives (e.g., ‘mytext’) <br> -<code>omit_stops</code> omits stopwords, T/F default is TRUE. <br> -<code>lemmatize</code> transforms raw word to lemmatized form, T/F default is TRUE. <br></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Monologue_Cleaned</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_monologue_or_list.html">clean_monologue_or_list</a></span><span class="op">(</span>dat<span class="op">=</span><span class="va">Monologue_Typical</span>, wordcol<span class="op">=</span><span class="st">'mytext'</span>, omit_stops<span class="op">=</span><span class="cn">TRUE</span>, lemmatize<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">Monologue_Cleaned</span>, <span class="fl">12</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"pipe"</span>, digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
@@ -312,10 +313,14 @@ SemanticDistance
 </table>
 </div>
 <div class="section level2">
-<h2 id="cleanformat-dialogue-transcript-clean_dialogue">Clean/Format Dialogue Transcript: <code>clean_dialogue</code>
-<a class="anchor" aria-label="anchor" href="#cleanformat-dialogue-transcript-clean_dialogue"></a>
+<h2 id="clean-dialogue-transcripts">Clean Dialogue Transcripts<a class="anchor" aria-label="anchor" href="#clean-dialogue-transcripts"></a>
 </h2>
-<p><span style="color: #006400;">Function Arguments:</span><br><code>dat</code> your raw dataframe with at least one column of text AND a talker column <br><code>wordcol</code> column name (quoted) containing the text you want cleaned <br><code>whotalks</code> column name (quoted) containing the talker ID (will convert to factor) <br><code>omit_stops</code> omits stopwords, T/F default is TRUE <br><code>lemmatize</code> transforms raw word to lemmatized form, T/F default is TRUE</p>
+</div>
+<div class="section level2">
+<h2 id="clean_dialogue">
+<code>clean_dialogue</code><a class="anchor" aria-label="anchor" href="#clean_dialogue"></a>
+</h2>
+<p><span style="color: #006400;">Arguments to <code>clean_dialogue</code></span><br> -<code>dat</code> your raw dataframe with at least one column of text AND a talker column. <br> -<code>wordcol</code> column name (quoted) containing the text you want cleaned. <br> -<code>whotalks</code> column name (quoted) containing the talker ID (will convert to factor). <br> -<code>omit_stops</code> omits stopwords, T/F default is TRUE. <br> -<code>lemmatize</code> transforms raw word to lemmatized form, T/F default is TRUE.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Dialogue_Cleaned</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_dialogue.html">clean_dialogue</a></span><span class="op">(</span>dat<span class="op">=</span><span class="va">Dialogue_Typical</span>, wordcol<span class="op">=</span><span class="st">"text"</span>, who_talking <span class="op">=</span> <span class="st">"speaker"</span>, omit_stops<span class="op">=</span><span class="cn">TRUE</span>, lemmatize<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">Dialogue_Cleaned</span>, <span class="fl">12</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"pipe"</span>, digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
@@ -437,11 +442,15 @@ SemanticDistance
 </table>
 </div>
 <div class="section level2">
-<h2 id="cleanformat-word-pairs-in-columns-clean_paired_cols">Clean/Format Word Pairs in Columns: <code>clean_paired_cols</code>
-<a class="anchor" aria-label="anchor" href="#cleanformat-word-pairs-in-columns-clean_paired_cols"></a>
+<h2 id="cleanformat-word-pairs-in-columns">Clean/Format Word Pairs in Columns<a class="anchor" aria-label="anchor" href="#cleanformat-word-pairs-in-columns"></a>
+</h2>
+</div>
+<div class="section level2">
+<h2 id="clean_paired_cols">
+<code>clean_paired_cols</code><a class="anchor" aria-label="anchor" href="#clean_paired_cols"></a>
 </h2>
 <p>Your data for computing pairwise semantic distance are arrayed in two paired columns in a dataframe. These columns need not be adjacent. You will specify their variable names in the function call. <br></p>
-<p><span style="color: #006400;">Function Arguments:</span><br><code>dat</code> your raw dataframe with two columns of paired text <br><code>word1</code> quoted variable reflecting the column name where your first word lives <br><code>word2</code> quoted variable reflecting the column name where your first word lives <br><code>lemmatize</code> transforms raw word to lemmatized form, T/F default is TRUE</p>
+<p><span style="color: #006400;">Arguments to <code>clean_paired_cols</code></span><br> -<code>dat</code> your raw dataframe with two columns of paired text. <br> -<code>word1</code> quoted variable reflecting the column name where your first word lives. <br> -<code>word2</code> quoted variable reflecting the column name where your first word lives. <br> -<code>lemmatize</code> transforms raw word to lemmatized form, T/F default is TRUE. <br></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">WordPairs_Clean</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_paired_cols.html">clean_paired_cols</a></span><span class="op">(</span>dat<span class="op">=</span><span class="va">Word_Pairs</span>, wordcol1<span class="op">=</span><span class="st">'word1'</span>, wordcol2<span class="op">=</span><span class="st">'word2'</span>, lemmatize<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">WordPairs_Clean</span>, <span class="fl">6</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"simple"</span>, digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span> </span></code></pre></div>
@@ -507,11 +516,15 @@ SemanticDistance
 </h1>
 <p>Now compute semantic distance for your selected format from one of the options below. <br></p>
 <div class="section level2">
-<h2 id="ngram-to-word-distance-dist_ngram2word">Ngram-to-Word Distance: <code>dist_ngram2word</code>
-<a class="anchor" aria-label="anchor" href="#ngram-to-word-distance-dist_ngram2word"></a>
+<h2 id="ngram-to-word-distance">Ngram-to-Word Distance<a class="anchor" aria-label="anchor" href="#ngram-to-word-distance"></a>
+</h2>
+</div>
+<div class="section level2">
+<h2 id="dist_ngram2word">
+<code>dist_ngram2word</code><a class="anchor" aria-label="anchor" href="#dist_ngram2word"></a>
 </h2>
 <p>This function works on monologues (continuous ordered samples) only! Computes cosine distance using a rolling ngram approach consisting of groups of words (ngrams) to the next word. <em>IMPORTANT</em> the function looks backward from the target word skipping over NAs until filling the desired ngram size.<br></p>
-<p><span style="color: #006400;">Function Arguments:</span><br><code>dat</code> dataframe of a monologue transcript cleaned and prepped with clean_monologue fn <br><code>ngram</code> window size preceding each new content word, ngram=1 means each word is compared to the word before it</p>
+<p><span style="color: #006400;">Arguments to <code>dist_ngram2word</code>:</span><br> -<code>dat</code> dataframe of a monologue transcript cleaned and prepped. <br> -<code>ngram</code> window size preceding each new content word. <br></p>
 <figure><img src="reference/figures/RollingNgramIllustrate.png" style="width:60.0%" alt="rolling groupings of words"><figcaption aria-hidden="true">
 rolling groupings of words
 </figcaption></figure><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -604,11 +617,15 @@ rolling groupings of words
 <p><br><br></p>
 </div>
 <div class="section level2">
-<h2 id="ngram-to-ngram-distance-dist_ngram2ngram">Ngram-to-Ngram Distance: <code>dist_ngram2ngram</code>
-<a class="anchor" aria-label="anchor" href="#ngram-to-ngram-distance-dist_ngram2ngram"></a>
+<h2 id="ngram-to-ngram-distance">Ngram-to-Ngram Distance<a class="anchor" aria-label="anchor" href="#ngram-to-ngram-distance"></a>
+</h2>
+</div>
+<div class="section level2">
+<h2 id="dist_ngram2ngram">
+<code>dist_ngram2ngram</code><a class="anchor" aria-label="anchor" href="#dist_ngram2ngram"></a>
 </h2>
 <p>This function works on monologues (continuous ordered samples) only. User specifies n-gram size (e.g., ngram=2). Distance computed from each two-word chunk to the next iterating all the way down the dataframe until there are no more words to ‘fill out’ the last ngram. <br></p>
-<p><span style="color: #006400;">Function Arguments:</span><br><code>dat</code> = dataframe w/ a monologue sample cleaned and prepped <br><code>ngram</code> = chunk size (chunk-to-chunk), in this case ngram=2 means chunks of 2 words compared to the next chunk</p>
+<p><span style="color: #006400;">Arguments to <code>dist_ngram2ngram</code></span><br> -<code>dat</code> dataframe w/ a monologue sample cleaned and prepped <br> -<code>ngram</code> chunk size (chunk-to-chunk), (e.g., ngram=2 means chunks of 2 words compared to the next chunk of two words). <br></p>
 <figure><img src="reference/figures/Ngram2Ngram_Dist.png" style="width:60.0%" alt="chunk-to-chunk groupings of words"><figcaption aria-hidden="true">
 chunk-to-chunk groupings of words
 </figcaption></figure><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -701,11 +718,15 @@ chunk-to-chunk groupings of words
 <p><br><br></p>
 </div>
 <div class="section level2">
-<h2 id="anchor-to-word-distance-dist_anchor">Anchor-to-Word Distance: <code>dist_anchor</code>
-<a class="anchor" aria-label="anchor" href="#anchor-to-word-distance-dist_anchor"></a>
+<h2 id="anchor-to-word-distance">Anchor-to-Word Distance<a class="anchor" aria-label="anchor" href="#anchor-to-word-distance"></a>
+</h2>
+</div>
+<div class="section level2">
+<h2 id="dist_anchor">
+<code>dist_anchor</code><a class="anchor" aria-label="anchor" href="#dist_anchor"></a>
 </h2>
 <p>This function works on monologues (continuous ordered samples) only! Models semantic distance from each successive new word to the average of the semantic vectors for the first block of N content words. This anchored distance provides a metric of overall semantic drift as a language sample unfolds relative to a fixed starting point.<br></p>
-<p><span style="color: #006400;">Function Arguments:</span><br><code>dat</code> dataframe monologue sample cleaned and prepped using ‘clean_monologue’ <br><code>anchor_size</code> size of the initial chunk of words for chunk-to-new-word comparisons fn <br></p>
+<p><span style="color: #006400;">Arguments to <code>dist_anchor</code></span><br> -<code>dat</code> dataframe monologue sample cleaned and prepped using <code>clean_monologue</code>. <br> -<code>anchor_size</code> size of the initial chunk of words for chunk-to-new-word comparisons. <br></p>
 <figure><img src="reference/figures/Anchor2Word_Dist.png" style="width:60.0%" alt="fixed initial chunk of words to each new word or ngram"><figcaption aria-hidden="true">
 fixed initial chunk of words to each new word or ngram
 </figcaption></figure><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -754,11 +775,15 @@ fixed initial chunk of words to each new word or ngram
 <p><br></p>
 </div>
 <div class="section level2">
-<h2 id="turn-to-turn-distance-dist_dialogue">Turn-to-Turn Distance: <code>dist_dialogue</code>
-<a class="anchor" aria-label="anchor" href="#turn-to-turn-distance-dist_dialogue"></a>
+<h2 id="turn-to-turn-distance">Turn-to-Turn Distance<a class="anchor" aria-label="anchor" href="#turn-to-turn-distance"></a>
+</h2>
+</div>
+<div class="section level2">
+<h2 id="dist_dialogue">
+<code>dist_dialogue</code><a class="anchor" aria-label="anchor" href="#dist_dialogue"></a>
 </h2>
 <p>This function works on dialogue transcripts only!!! Averages semantic vectors for all content words in each speaker’s turn then computes the cosine distance to the average of the semantic vectors of the content words in the subsequent turn. <br></p>
-<p><span style="color: #006400;">Function Arguments:</span><br><code>dat</code> dataframe w/ a dialogue sample cleaned and prepped using <code>clean_dialogue</code> <code>who_talking</code> quoted argument specifying 2-level factor variable name for person producing giveen text.</p>
+<p><span style="color: #006400;">Arguments to <code>dist_dialogue</code>:</span> <br> -<code>dat</code> dataframe w/ a dialogue sample cleaned and prepped using <code>clean_dialogue</code>. <br> -<code>who_talking</code> quoted argument specifying 2-level factor variable name for person producing given text. <br></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">DialogueDists</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_dialogue.html">dist_dialogue</a></span><span class="op">(</span>dat<span class="op">=</span><span class="va">Dialogue_Cleaned</span>, who_talking<span class="op">=</span><span class="st">'speaker'</span><span class="op">)</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">DialogueDists</span>, <span class="fl">4</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"pipe"</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
@@ -804,11 +829,15 @@ fixed initial chunk of words to each new word or ngram
 <p><br></p>
 </div>
 <div class="section level2">
-<h2 id="word-pair-distance-dist_paired_cols">Word Pair Distance: <code>dist_paired_cols</code>
-<a class="anchor" aria-label="anchor" href="#word-pair-distance-dist_paired_cols"></a>
+<h2 id="word-pair-distance">Word Pair Distance<a class="anchor" aria-label="anchor" href="#word-pair-distance"></a>
 </h2>
-<p>This function works on word pairs in columns only!!! Output of ‘dist_paired_cols’ on 2-column arrayed dataframe. <br></p>
-<p><span style="color: #006400;">Function Arguments:</span><br><code>dat</code> dataframe w/ word pairs arrayed in columns cleaned and prepped using <code>clean_2cols</code> fn</p>
+</div>
+<div class="section level2">
+<h2 id="dist_paired_cols">
+<code>dist_paired_cols</code><a class="anchor" aria-label="anchor" href="#dist_paired_cols"></a>
+</h2>
+<p>This function works on word pairs in columns only!!! Output of <code>dist_paired_cols</code> on 2-column arrayed dataframe. <br></p>
+<p><span style="color: #006400;">Arguments to <code>dist_paired_cols</code></span> <br> -<code>dat</code> dataframe w/ word pairs arrayed in columns cleaned and prepped.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Columns_Dists</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dist_paired_cols.html">dist_paired_cols</a></span><span class="op">(</span><span class="va">WordPairs_Clean</span><span class="op">)</span> <span class="co">#only argument is dataframe</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">Columns_Dists</span>, <span class="fl">6</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"pipe"</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
@@ -888,13 +917,24 @@ fixed initial chunk of words to each new word or ngram
 </tr>
 </tbody>
 </table>
-<p><br><br><br> # <span style="color: #8B0000; font-size: 1.1em; font-weight: bold;">Data Visualization Options for Semantic Networks</span> Choose your visualization option based on the nature of your data. An temporally ordered text such as a story can be plotted like a time series. This would not make sense for Unordered lists (bags-of-words). However, with word lists you might be interested in using scaling procedures to find latent structure or similarities. <code>SemanticDistance</code> has two options for computing clustering and network properties for a vector of words, i.e., hierarchical clustering and simple network visualization. The function also returns a square matrix with all pairwise semantic distance values for a word list. <br></p>
+<p><br><br><br></p>
 </div>
+</div>
+<div class="section level1">
+<h1 id="data-visualization-options-for-semantic-networks">
+<span style="color: #8B0000; font-size: 1.1em; font-weight: bold;">Data Visualization Options for Semantic Networks</span><a class="anchor" aria-label="anchor" href="#data-visualization-options-for-semantic-networks"></a>
+</h1>
+<p>Choose your visualization option based on the nature of your data. An temporally ordered text such as a story can be plotted like a time series. This would not make sense for Unordered lists (bags-of-words). However, with word lists you might be interested in using scaling procedures to find latent structure or similarities. <code>SemanticDistance</code> has two options for computing clustering and network properties for a vector of words, i.e., hierarchical clustering and simple network visualization. The function also returns a square matrix with all pairwise semantic distance values for a word list. <br></p>
 <div class="section level2">
 <h2 id="hierarchical-cluster-dendrogram">Hierarchical Cluster Dendrogram<a class="anchor" aria-label="anchor" href="#hierarchical-cluster-dendrogram"></a>
 </h2>
+</div>
+<div class="section level2">
+<h2 id="wordlist_to_network">
+<code>wordlist_to_network</code><a class="anchor" aria-label="anchor" href="#wordlist_to_network"></a>
+</h2>
 <p>Produces a dendogram from a vector of words. First pulls words, then creates a square matrix with cosine distances for all possible word pairs: d[i,j]. Then converts semantic distance matrix to Euclidean distance. Then plots a hierchcial clustering solution moving words closer together in proximity based on their distance. Works best for unordered word lists. <br></p>
-<p><span style="color: #006400;">Function Arguments:</span><br><code>dat</code> dataframe processed using <code><a href="reference/clean_monologue_or_list.html">clean_monologue_or_list()</a></code> <code>output</code> quoted argument <code>dendrogram</code> or <code>network</code> default is <code>dendrogram</code> <code>dist_type</code> quoted argument, which distance norms would you like? default is <code>embedding</code> alt is ‘SD15’</p>
+<p><span style="color: #006400;">Arguments to <code>wordlist_to_network</code>:</span><br> -<code>dat</code> dataframe processed using <code><a href="reference/clean_monologue_or_list.html">clean_monologue_or_list()</a></code> <br> -<code>output</code> quoted argument <code>dendrogram</code> or <code>network</code> default is <code>dendrogram</code>. <br> -<code>dist_type</code> quoted argument, which distance norms would you like? default is <code>embedding</code> alternative is <code>SD15</code>. <br></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">MyCleanList</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_monologue_or_list.html">clean_monologue_or_list</a></span><span class="op">(</span>dat<span class="op">=</span><span class="va">Unordered_List</span>, wordcol<span class="op">=</span><span class="st">'mytext'</span><span class="op">)</span></span>
 <span><span class="va">mydendro</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/wordlist_to_network.html">wordlist_to_network</a></span><span class="op">(</span><span class="va">MyCleanList</span>, output<span class="op">=</span><span class="st">'dendrogram'</span>, dist_type<span class="op">=</span><span class="st">'embedding'</span><span class="op">)</span></span></code></pre></div>
@@ -906,19 +946,24 @@ fixed initial chunk of words to each new word or ngram
 <div class="section level2">
 <h2 id="igraph-network-graph-plot">iGraph network (graph plot)<a class="anchor" aria-label="anchor" href="#igraph-network-graph-plot"></a>
 </h2>
+</div>
+<div class="section level2">
+<h2 id="clean_monologue_or_list-1">
+<code>clean_monologue_or_list</code><a class="anchor" aria-label="anchor" href="#clean_monologue_or_list-1"></a>
+</h2>
 <p>Produces a dendogram from a vector of words. First pulls words, then creates a square matrix with cosine distances for all possible word pairs: d[i,j]. Then converts semantic distance matrix to Euclidean distance. Then plots a hierchcial clustering solution moving words closer together in proximity based on their distance. Works best for unordred word lists cleaned with clean_monologues(). <br></p>
-<p><span style="color: #006400;">Function Arguments:</span><br><code>dat</code> dataframe processed using <code><a href="reference/clean_monologue_or_list.html">clean_monologue_or_list()</a></code> <br><code>dist_type</code> quoted argument distance option, default is “embedding”, alt is ‘SD15’</p>
+<p><span style="color: #006400;">Arguments to <code>clean_monologue_or_list</code></span> <br> - dat<code>input formatted dataframe. &lt;br&gt; -</code>dist_type<code>quoted argument distance option, default is "embedding", alt is</code>SD15`. <br></p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">MyCleanList</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_monologue_or_list.html">clean_monologue_or_list</a></span><span class="op">(</span>dat<span class="op">=</span><span class="va">Unordered_List</span>, wordcol<span class="op">=</span><span class="st">'mytext'</span><span class="op">)</span></span>
 <span><span class="va">mynetwork</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/wordlist_to_network.html">wordlist_to_network</a></span><span class="op">(</span><span class="va">MyCleanList</span>, output<span class="op">=</span><span class="st">'network'</span>, dist_type<span class="op">=</span><span class="st">'embedding'</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-17-1.png" width="100%"></p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mynetwork</span><span class="op">)</span></span>
-<span><span class="co">#&gt; IGRAPH b98df6e UNW- 17 68 -- </span></span>
+<span><span class="co">#&gt; IGRAPH a1647c3 UNW- 17 68 -- </span></span>
 <span><span class="co">#&gt; + attr: name (v/c), cluster (v/n), color (v/c), size (v/n), label</span></span>
 <span><span class="co">#&gt; | (v/c), label.color (v/c), label.cex (v/n), weight (e/n), color (e/c),</span></span>
 <span><span class="co">#&gt; | width (e/n)</span></span>
-<span><span class="co">#&gt; + edges from b98df6e (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from a1647c3 (vertex names):</span></span>
 <span><span class="co">#&gt;  [1] trombone--missile trombone--gun     trombone--bullet  trombone--knife  </span></span>
 <span><span class="co">#&gt;  [5] trombone--spear   trombone--apple   trombone--banana  trombone--tomato </span></span>
 <span><span class="co">#&gt;  [9] trombone--disgust trombone--angry   trombone--sad     trombone--happy  </span></span>
@@ -931,7 +976,8 @@ fixed initial chunk of words to each new word or ngram
 <div class="section level1">
 <h1 id="getting-help">Getting Help<a class="anchor" aria-label="anchor" href="#getting-help"></a>
 </h1>
-<p>Click on one of the following links to <a href="https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/issues" class="external-link">report bugs</a>, <a href="https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/discussions" class="external-link">view discussions</a>, or <a href="https://https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/blob/main/NEWS.md" class="external-link">read news and release notes</a>. If none of these options do the trick, email [Jamie Reilly (<a href="mailto:reillyj@temple.edu" class="email">reillyj@temple.edu</a>)] for assistance.</p>
+<p>For bugs, feature requests, and general questions, reach out via one of the following options: <br> 1. <a href="https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/issues" class="external-link">Report Bugs</a> <br> 2. <a href="https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/discussions" class="external-link">View Discussions</a> <br> 3. <a href="/https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/blob/main/NEWS.html" class="external-link">Read News and Release Notes</a>. <br><br></p>
+<p>If none of these options do the trick, please email the package maintainer, <a href="mailto:reillyj@temple.edu">Jamie Reilly</a> for assistance.</p>
 </div>
 
   </main><aside class="col-md-3"><div class="links">
