@@ -489,11 +489,11 @@ mynetwork <- wordlist_to_network(MyCleanList, output='network', dist_type='embed
 
 ``` r
 print(mynetwork)
-#> IGRAPH a1647c3 UNW- 17 68 -- 
+#> IGRAPH 8f8b1f9 UNW- 17 68 -- 
 #> + attr: name (v/c), cluster (v/n), color (v/c), size (v/n), label
 #> | (v/c), label.color (v/c), label.cex (v/n), weight (e/n), color (e/c),
 #> | width (e/n)
-#> + edges from a1647c3 (vertex names):
+#> + edges from 8f8b1f9 (vertex names):
 #>  [1] trombone--missile trombone--gun     trombone--bullet  trombone--knife  
 #>  [5] trombone--spear   trombone--apple   trombone--banana  trombone--tomato 
 #>  [9] trombone--disgust trombone--angry   trombone--sad     trombone--happy  
@@ -511,7 +511,7 @@ Bugs](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/issues)
 <br> 2. [View
 Discussions](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/discussions)
 <br> 3. [Read News and Release
-Notes](/https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/blob/main/NEWS.md).
+Notes](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/blob/main/NEWS.md).
 <br> <br>
 
 If none of these options do the trick, please email the package

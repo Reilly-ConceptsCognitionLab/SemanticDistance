@@ -261,7 +261,7 @@ print(mynetwork)
 For bugs, feature requests, and general questions, reach out via one of the following options: <br>
 1. [Report Bugs](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/issues) <br>
 2. [View Discussions](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/discussions) <br>
-3. [Read News and Release Notes](/https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/blob/main/NEWS.md). <br>
+3. [Read News and Release Notes](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/blob/main/NEWS.md). <br>
 <br>
 
 If none of these options do the trick, please email the package maintainer, [Jamie Reilly](mailto:reillyj@temple.edu) for assistance.
