@@ -1,12 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<br>
-
-<h1 style="color: #8B0000;">
-
-SemanticDistance
-</h1>
+<br> <br> <br>
 
 # <a href="https://reilly-conceptscognitionlab.github.io/SemanticDistance/"><img src="man/figures/logo.png" align="right" height="138" alt="SemanticDistance website" /></a>
 
@@ -489,11 +484,11 @@ mynetwork <- wordlist_to_network(MyCleanList, output='network', dist_type='embed
 
 ``` r
 print(mynetwork)
-#> IGRAPH 8f8b1f9 UNW- 17 68 -- 
+#> IGRAPH a2ffa13 UNW- 17 68 -- 
 #> + attr: name (v/c), cluster (v/n), color (v/c), size (v/n), label
 #> | (v/c), label.color (v/c), label.cex (v/n), weight (e/n), color (e/c),
 #> | width (e/n)
-#> + edges from 8f8b1f9 (vertex names):
+#> + edges from a2ffa13 (vertex names):
 #>  [1] trombone--missile trombone--gun     trombone--bullet  trombone--knife  
 #>  [5] trombone--spear   trombone--apple   trombone--banana  trombone--tomato 
 #>  [9] trombone--disgust trombone--angry   trombone--sad     trombone--happy  
