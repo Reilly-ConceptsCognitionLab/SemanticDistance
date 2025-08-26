@@ -145,7 +145,6 @@ wordlist_to_network <- function(dat, wordcol, output = 'dendrogram', dist_type =
     }, error = function(e) stop("Network conversion failed: ", e$message))
 
     # Plot network
-    graphics::par(mar = c(1, 1, 1, 1))
     plot(g,
          layout = igraph::layout_with_fr(g),
          vertex.frame.color = "white",

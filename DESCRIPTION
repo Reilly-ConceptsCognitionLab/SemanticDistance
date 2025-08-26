@@ -1,7 +1,7 @@
 Package: SemanticDistance
 Type: Package
 Version: 0.1.1
-Title: Clean Text, Compute, and Visualize Pairwise Semantic Distance Relationships in Ordered and Unordered Language Samples
+Title: Compute Semantic Distance between Text Constituents
 Authors@R: c(
     person("Jamie", "Reilly", 
            role = c("aut", "cre"), 
