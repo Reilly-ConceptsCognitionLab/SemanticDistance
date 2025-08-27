@@ -1,7 +1,7 @@
 Package: SemanticDistance
 Type: Package
 Version: 0.1.1
-Title: Compute Semantic Distance between Text Constituents
+Title: Compute Semantic Distance Between Text Constituents
 Authors@R: c(
     person("Jamie", "Reilly", 
            role = c("aut", "cre"), 
