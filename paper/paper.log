@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.6.25)  12 AUG 2025 12:26
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.6.25)  2 SEP 2025 09:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -913,6 +913,16 @@ Package hyperref Warning: Suppressing link with empty target on input line 292.
 Package hyperref Warning: Suppressing link with empty target on input line 292.
 
 
+Underfull \hbox (badness 1762) in paragraph at lines 322--338
+[]\TU/lmtt/m/n/10 SemanticDistance \TU/lmr/m/n/10 computes two complementary (but different) distance metrics
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 322--338
+
+ []
+
+
 
 File: /Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.5/aarch64-apple-darwin20/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
 </Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.5/aarch64-apple-darwin20/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
@@ -928,19 +938,29 @@ LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <8> not available
 [1
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 344--355
+Underfull \hbox (badness 10000) in paragraph at lines 339--344
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 359--366
+Underfull \hbox (badness 10000) in paragraph at lines 345--356
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 360--362
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 365--372
 
  []
 
 File: ngram-word.png Graphic file (type bmp)
 <ngram-word.png>
 
-Underfull \hbox (badness 10000) in paragraph at lines 367--369
+Underfull \hbox (badness 10000) in paragraph at lines 373--375
 
  []
 
@@ -956,31 +976,26 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 374--378
+Underfull \hbox (badness 10000) in paragraph at lines 380--384
 
  []
 
 File: ngram-ngram.png Graphic file (type bmp)
 <ngram-ngram.png>
 
-Underfull \hbox (badness 10000) in paragraph at lines 379--381
+Underfull \hbox (badness 10000) in paragraph at lines 385--387
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 391--397
 
  []
 
 File: anchor.png Graphic file (type bmp)
 <anchor.png>
 
-Underfull \hbox (badness 10000) in paragraph at lines 392--394
-
- []
-
-
-Underfull \hbox (badness 1917) in paragraph at lines 396--396
-|\TU/lmss/bx/n/14.4 Turn-by-Turn Distance (2-person Dyads, Conversation
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 398--405
+Underfull \hbox (badness 10000) in paragraph at lines 398--400
 
  []
 
@@ -996,26 +1011,29 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 409--413
+Underfull \hbox (badness 1917) in paragraph at lines 402--402
+|\TU/lmss/bx/n/14.4 Turn-by-Turn Distance (2-person Dyads, Conversation
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 404--411
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 417--424
+Underfull \hbox (badness 10000) in paragraph at lines 415--419
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 423--430
 
  []
 
 File: dendro.png Graphic file (type bmp)
 <dendro.png>
 
-Underfull \hbox (badness 10000) in paragraph at lines 425--427
-
- []
-
-File: cluster.png Graphic file (type bmp)
-<cluster.png>
-
-Underfull \hbox (badness 10000) in paragraph at lines 428--430
+Underfull \hbox (badness 10000) in paragraph at lines 431--433
 
  []
 
@@ -1031,6 +1049,14 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [4]
+File: cluster.png Graphic file (type bmp)
+<cluster.png>
+
+Underfull \hbox (badness 10000) in paragraph at lines 434--436
+
+ []
+
+
 
 File: /Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.5/aarch64-apple-darwin20/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
 </Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.5/aarch64-apple-darwin20/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
@@ -1041,24 +1067,35 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
-[5] (./paper.aux)
+[5]
+
+File: /Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.5/aarch64-apple-darwin20/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
+</Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.5/aarch64-apple-darwin20/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
+
+Package fancyhdr Warning: \headheight is too small (62.59596pt): 
+(fancyhdr)                Make it at least 63.55022pt, for example:
+(fancyhdr)                \setlength{\headheight}{63.55022pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
+
+[6] (./paper.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-05-26>
  ***********
 Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: 056F771D3AD38C013D4295C85F0104BF;2641.
+(rerunfilecheck)             Checksum: 5387503D94F9B3A526550F42535E4D8E;2799.
 Package logreq Info: Writing requests to 'paper.run.xml'.
 \openout1 = `paper.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 34510 strings out of 470543
- 710786 string characters out of 5492584
- 1578956 words of memory out of 5000000
- 62261 multiletter control sequences out of 15000+600000
+ 34511 strings out of 470543
+ 710810 string characters out of 5492584
+ 1579175 words of memory out of 5000000
+ 62262 multiletter control sequences out of 15000+600000
  633697 words of font info for 88 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  84i,12n,87p,694b,850s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on paper.pdf (5 pages).
+Output written on paper.pdf (6 pages).

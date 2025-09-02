@@ -21,7 +21,7 @@ authors:
     corresponding: false
     affiliation: "3, 4"
     
-  - name: Hannah R. Mechtenberg
+  - name: Hannah Mechtenberg
     orcid: 0000-0003-1436-1846
     equal-contrib: false
     corresponding: false
@@ -55,7 +55,7 @@ affiliations:
   - name: Department of Psychology, Northeastern University, United States
     index: 7
 
-date: "12 August 2025"
+date: " 2 September 2025"
 bibliography: paper.bib
 correspondence: jamie_reilly@temple.edu
 abstract: |
@@ -83,28 +83,28 @@ Although numerous R and Python packages process word embeddings, none to our kno
 # Description
 There are many ways to assess similarity between two concepts (represented as words) [@malt_words_2020]. Consider, for example, the case of a wildlife biologist interested in quantifying the distance between *wolf* and *dog* in terms of perceived threat to humans. How might she quantify this distance? One common approach might involve querying a representative sample of people and asking them to rate perceived threat of dogs and wolves via a Likert scale. The absolute value of the difference in threat ratings between dog vs wolf represents its distance within a one-dimensional semantic space constrained by threat. Although the true dimensionality of human semantic memory is unknowable, most contemporary approaches to modeling word meaning use high dimensional semantic spaces [@Landauer_LSA_1997,  @reilly_what_2025, @Pennington2014]. <br>
 
-`SemanticDistance` computes two complementary (but different) distance metrics between pairs of constituents (e.g., words, ngrams, turns) as delineated by the user in optional arguments to the package's functions. These distance values are derived from two large databases containing  semantic vectors for >70k English words. `CosDist_Glo` reflects cosine distance between vectors derived from training a GLOVE word embedding model (300 hyperparameters per word) [@Pennington2014]. `CodDist_SD15` refects cosine distanceas derived from 15 dimension space reflecting meaninful salience across different sensorimotor and affective properties (e.g., color, sound, valence) [@Reilly2023]. Before using `SemanticDistance`, users should do some background reading on what the distance metrics mean and how the functions should be optimized to produce the desired. `SemanticDistance` processes distance relationships between lexical constituents within the following text formats: <br>
+`SemanticDistance` computes two complementary (but different) distance metrics between pairs of constituents (e.g., words, ngrams, turns) as delineated by the user in optional arguments to the package's functions. These distance values are derived from two large databases containing  semantic vectors for >70k English words. `CosDist_Glo` reflects cosine distance between vectors derived from training a GLOVE word embedding model (300 hyperparameters per word) [@Pennington2014]. `CodDist_SD15` refects cosine distances derived from 15 dimension space reflecting meaningful salience across different sensorimotor and affective properties (e.g., How colorful is this?, How pleasant is this?, How loud is this?) [@Reilly2023]. Before using `SemanticDistance`, we recommend that doing some background research on what the distance metrics mean and how the functions should be optimized to produce the desired outcome. `SemanticDistance` processes distance relationships between lexical constituents within the following text formats: \newline
 
-1: **monologues** stories, narratives, and structured text where order matters <br>
-2: **dialogues** two-person conversation transcripts <br>
-3: **word pairs in columns** dog and leash arrayed in two columns <br>
-4: **unordered lists** bags-of-words where order is irrelevant. <br>
+1: **monologues**: stories, narratives, and structured text where order matters. \newline
+2: **dialogues**: two-person conversation transcripts. \newline
+3: **word pairs in columns**: dog and leash arrayed in two columns. \newline
+4: **unordered lists**: bags-of-words where order is irrelevant.  \newline
 
-One advantage of the `SemanticDistance` package is that bundles text cleaning and formatting options (e.g., stopword removal, lemmatization) with distance and network visualization options. Another useful feature of `SemanticDistance` is that it generates rolling measures of semantic distance within structured text. In structured texts like monologues (stories, narratives) and dialogues (two-person conversation transcripts), word order matters.  In contrast, unordered word lists can be thought of as non-continuous bags-of-words (e.g., a grocery list). `SemanticDistance` can run distance metrics on both of these formats with options for chunk size guided by the user. These various options are illustrated in the section to follow. <br>
-\newline
+One advantage of the `SemanticDistance` package is that it bundles text cleaning and formatting options (e.g., stopword removal, lemmatization) with distance and network visualization options. Another useful feature of `SemanticDistance` is that it generates rolling measures of semantic distance within structured text. In structured texts like monologues (stories, narratives) and dialogues (two-person conversation transcripts), word order matters.  In contrast, unordered word lists can be thought of as non-continuous bags-of-words (e.g., a grocery list). `SemanticDistance` can run distance metrics on both of these formats with options for chunk size guided by the user. These various options are illustrated in the section to follow. \newline
+
 
 # Examples of Distance Functions and Possible Applications
-<br>
-# Ngram-to-Word Distance (monologues, stories, continuous structured language) 
-Computes a rolling measure of semantic distance ngram-to-word across an ordered language sample (see Figure 1). This metric may be used to iteratively examine larger integrative chunks from each word to its prior local or global context. We recently used this measure to examine brain sensitivity to distance jumps during real-time narrative comprehension using fMRI [@mechtenberg_measuring_2025]. <br>
-\newline
+`SemanticDistance` features some of the following core functions. \newline
+
+# Ngram-to-Word Distance 
+Computes a rolling measure of semantic distance ngram-to-word across an ordered language sample (e.g.,monologues, stories, continuous structured language) (see Figure 1). This metric may be used to iteratively examine larger integrative chunks from each word to its prior local or global context. We recently used this measure to examine brain sensitivity to distance jumps during real-time narrative comprehension using fMRI [@mechtenberg_measuring_2025]. \newline
 
 ![Figure 1: Rolling ngram-to-word distance\label{fig:demo}](ngram-word.png){width=70%}
 \vspace*{-0.5cm}
 \newline
 
 # Ngram-to-Ngram Distance (monologues, stories, continuous structured language) 
-Computes a rolling measure of semantic distance ngram-to-ngram across an ordered language sample (see Figure 2). This metric may be used to examine semantic cohesion between smaller vs. larger chunks of words within linear narrative discourse. <br>
+Computes a rolling measure of semantic distance ngram-to-ngram across an ordered language sample (see Figure 2). This metric may be used to examine semantic cohesion between smaller vs. larger chunks of words within linear narrative discourse. 
 \newline
 
 ![Figure 2. Rolling ngram-to-ngram distance\label{fig:demo}](ngram-ngram.png){width=70%}
@@ -112,16 +112,16 @@ Computes a rolling measure of semantic distance ngram-to-ngram across an ordered
 \newline
 
 # Anchored Distance (monologues, stories, continuous structured language) 
-Computes semantic distance iteratively for each new word in an ordered language sample (e.g., story, narrative) relative to the initial block of *n* content words (see Figure 3). Anchored distance can provide an empirical measure of semantic drift or topic varoability over the course of a sample (e.g., started with sports, jumped to baking, then to politics). <br>
-<br>
-<br>
+Computes semantic distance iteratively for each new word in an ordered language sample (e.g., story, narrative) relative to the initial block of *n* content words (see Figure 3). Anchored distance can provide an empirical measure of semantic drift or topic variability over the course of a sample (e.g., started with sports, jumped to baking, then to politics). 
+\newline
+
 
 ![Figure 3. Anchored distance first chunk to each new word or ngram\label{fig:demo}](anchor.png){width=70%}
 \vspace*{-0.5cm}
 \newline
 
 # Turn-by-Turn Distance (2-person Dyads, Conversation Tramscripts)
-Computes a rolling measure of semantic distance turn-to-turn in a conversation/dialogue transcript. Semantic vectors for all content words within one turn are averaged and grouped by speaker identity. The function then computes cosine distance between each speaker at each turn, yielding a fluctuating time series of distance changes by speaker. This measure could be used to assess lexical-semantic comprehension and alignment in naturalistic conversations.<br>
+Computes a rolling measure of semantic distance turn-to-turn in a conversation/dialogue transcript. Semantic vectors for all content words within one turn are averaged and grouped by speaker identity. The function then computes cosine distance between each speaker at each turn, yielding a fluctuating time series of distance changes by speaker. This measure could be used to assess lexical-semantic comprehension and alignment in naturalistic conversations.
 \newline
 
 # Word Pair Distance (user arrayed word pairs in columns)
@@ -129,7 +129,7 @@ Computes pairwise distance metrics row-wise between two specified target columns
 \newline
 
 # Finding structure in the chaos of an unstructured word list
-`SemanticDistance` also includes several visualization options designed to elucidate structure within unstructured lists. The `wordlist_to_network` function takes a word list as an argument and derives cluster dendrograms (see Figure 4) or network plots (see Figure 5). For example, here's how it uses a simple machine learning algoirthm to compute distances and cluster an unordered list of words. <br>
+`SemanticDistance` also includes several visualization options designed to elucidate structure within unstructured lists. The `wordlist_to_network` function takes a word list as an argument and derives cluster dendrograms (see Figure 4) or network plots (see Figure 5). For example, here's how it uses a simple machine learning algorithm to compute distances and cluster an unordered list of words. <br>
 \newline
 
 ![Figure 4. Dendrogram from unordered list\label{fig:demo}](dendro.png){width=90%} 
