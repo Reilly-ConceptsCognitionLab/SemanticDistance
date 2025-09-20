@@ -77,7 +77,7 @@ journal: JOSS
 
 
 
-# Statment of Need
+# Statment of need
 `SemanticDistance` is unique in its capacity to compute semantic distance metrics within running language samples (e.g., word-to-word, bigram-to-word) and to produce semantic network visualizations. This user-friendly application will allow researchers to model the flow of meaning in naturalistic language samples.
 
 # Description
