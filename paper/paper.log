@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.6.25)  2 SEP 2025 09:59
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.6.25)  19 SEP 2025 20:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -904,28 +904,28 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 254.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 
-Package hyperref Warning: Suppressing link with empty target on input line 292.
+Package hyperref Warning: Suppressing link with empty target on input line 291.
 
 
-Package hyperref Warning: Suppressing link with empty target on input line 292.
+Package hyperref Warning: Suppressing link with empty target on input line 291.
 
 
-Package hyperref Warning: Suppressing link with empty target on input line 292.
+Package hyperref Warning: Suppressing link with empty target on input line 291.
 
 
-Underfull \hbox (badness 1762) in paragraph at lines 322--338
-[]\TU/lmtt/m/n/10 SemanticDistance \TU/lmr/m/n/10 computes two complementary (but different) distance metrics
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 322--338
+Underfull \hbox (badness 10000) in paragraph at lines 303--312
 
  []
 
 
+Underfull \hbox (badness 10000) in paragraph at lines 313--323
 
-File: /Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.5/aarch64-apple-darwin20/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
-</Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.5/aarch64-apple-darwin20/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
+ []
+
+
+
+File: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
+</Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
 
 Package fancyhdr Warning: \headheight is too small (62.59596pt): 
 (fancyhdr)                Make it at least 63.55022pt, for example:
@@ -934,40 +934,40 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <8> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 338.
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 323.
 [1
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 339--344
+Underfull \hbox (badness 10000) in paragraph at lines 324--328
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 345--356
+Underfull \hbox (badness 10000) in paragraph at lines 329--339
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 360--362
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 365--372
+Underfull \hbox (badness 10000) in paragraph at lines 345--348
 
  []
 
 File: ngram-word.png Graphic file (type bmp)
 <ngram-word.png>
 
-Underfull \hbox (badness 10000) in paragraph at lines 373--375
+Underfull \hbox (badness 10000) in paragraph at lines 349--351
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 356--360
 
  []
 
 
 
-File: /Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.5/aarch64-apple-darwin20/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
-</Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.5/aarch64-apple-darwin20/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
+File: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
+</Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
 
 Package fancyhdr Warning: \headheight is too small (62.59596pt): 
 (fancyhdr)                Make it at least 63.55022pt, for example:
@@ -976,33 +976,44 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 380--384
-
- []
-
 File: ngram-ngram.png Graphic file (type bmp)
 <ngram-ngram.png>
 
-Underfull \hbox (badness 10000) in paragraph at lines 385--387
+Underfull \hbox (badness 10000) in paragraph at lines 361--363
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 391--397
+Underfull \hbox (badness 10000) in paragraph at lines 367--373
 
  []
 
 File: anchor.png Graphic file (type bmp)
 <anchor.png>
 
-Underfull \hbox (badness 10000) in paragraph at lines 398--400
+Underfull \hbox (badness 10000) in paragraph at lines 374--376
+
+ []
+
+
+Underfull \hbox (badness 1917) in paragraph at lines 378--378
+|\TU/lmss/bx/n/14.4 Turn-by-Turn Distance (2-person Dyads, Conversation
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 380--387
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 391--395
 
  []
 
 
 
-File: /Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.5/aarch64-apple-darwin20/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
-</Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.5/aarch64-apple-darwin20/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
+File: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
+</Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
 
 Package fancyhdr Warning: \headheight is too small (62.59596pt): 
 (fancyhdr)                Make it at least 63.55022pt, for example:
@@ -1011,36 +1022,28 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [3]
-Underfull \hbox (badness 1917) in paragraph at lines 402--402
-|\TU/lmss/bx/n/14.4 Turn-by-Turn Distance (2-person Dyads, Conversation
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 404--411
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 415--419
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 423--430
+Underfull \hbox (badness 10000) in paragraph at lines 399--403
 
  []
 
 File: dendro.png Graphic file (type bmp)
 <dendro.png>
 
-Underfull \hbox (badness 10000) in paragraph at lines 431--433
+Underfull \hbox (badness 10000) in paragraph at lines 404--406
+
+ []
+
+File: cluster.png Graphic file (type bmp)
+<cluster.png>
+
+Underfull \hbox (badness 10000) in paragraph at lines 407--409
 
  []
 
 
 
-File: /Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.5/aarch64-apple-darwin20/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
-</Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.5/aarch64-apple-darwin20/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
+File: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
+</Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
 
 Package fancyhdr Warning: \headheight is too small (62.59596pt): 
 (fancyhdr)                Make it at least 63.55022pt, for example:
@@ -1049,17 +1052,9 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [4]
-File: cluster.png Graphic file (type bmp)
-<cluster.png>
 
-Underfull \hbox (badness 10000) in paragraph at lines 434--436
-
- []
-
-
-
-File: /Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.5/aarch64-apple-darwin20/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
-</Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.5/aarch64-apple-darwin20/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
+File: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
+</Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/library/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
 
 Package fancyhdr Warning: \headheight is too small (62.59596pt): 
 (fancyhdr)                Make it at least 63.55022pt, for example:
@@ -1067,18 +1062,7 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
-[5]
-
-File: /Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.5/aarch64-apple-darwin20/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
-</Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.5/aarch64-apple-darwin20/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
-
-Package fancyhdr Warning: \headheight is too small (62.59596pt): 
-(fancyhdr)                Make it at least 63.55022pt, for example:
-(fancyhdr)                \setlength{\headheight}{63.55022pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
-
-[6] (./paper.aux)
+[5] (./paper.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-05-26>
@@ -1090,12 +1074,12 @@ Package logreq Info: Writing requests to 'paper.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 34511 strings out of 470543
- 710810 string characters out of 5492584
- 1579175 words of memory out of 5000000
- 62262 multiletter control sequences out of 15000+600000
+ 34510 strings out of 470543
+ 710130 string characters out of 5492584
+ 1575979 words of memory out of 5000000
+ 62261 multiletter control sequences out of 15000+600000
  633697 words of font info for 88 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 84i,12n,87p,694b,850s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,13n,87p,694b,850s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on paper.pdf (6 pages).
+Output written on paper.pdf (5 pages).
