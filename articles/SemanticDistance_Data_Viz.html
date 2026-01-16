@@ -63,7 +63,7 @@
                         <h4 data-toc-skip class="author">Jamie Reilly,
 Hannah R. Mechtenberg, Emily B. Myers, Jonathan E. Peelle</h4>
             
-            <h4 data-toc-skip class="date">2025-09-20</h4>
+            <h4 data-toc-skip class="date">2026-01-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/blob/main/vignettes/SemanticDistance_Data_Viz.Rmd" class="external-link"><code>vignettes/SemanticDistance_Data_Viz.Rmd</code></a></small>
       <div class="d-none name"><code>SemanticDistance_Data_Viz.Rmd</code></div>
@@ -185,7 +185,7 @@ which distance norms would you like? default is <code>embedding</code>
 alt is ‘SD15’</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mydendro</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wordlist_to_network.html">wordlist_to_network</a></span><span class="op">(</span><span class="va">MyCleanList</span>, output<span class="op">=</span><span class="st">'dendrogram'</span>, dist_type<span class="op">=</span><span class="st">'embedding'</span><span class="op">)</span></span></code></pre></div>
-<p><img src="SemanticDistance_Data_Viz_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p><img src="SemanticDistance_Data_Viz_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="" width="700"></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mydendro</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 'dendrogram' with 2 branches and 17 members total, at height 5.168642</span></span></code></pre></div>
@@ -201,14 +201,14 @@ argument <code>dendrogram</code> or <code>network</code> default is
 ‘embedding’, alt is ‘SD15’</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mynetwork</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wordlist_to_network.html">wordlist_to_network</a></span><span class="op">(</span><span class="va">MyCleanList</span>, output<span class="op">=</span><span class="st">'network'</span>, dist_type<span class="op">=</span><span class="st">'embedding'</span><span class="op">)</span></span></code></pre></div>
-<p><img src="SemanticDistance_Data_Viz_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<p><img src="SemanticDistance_Data_Viz_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="" width="700"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mynetwork</span><span class="op">)</span></span>
-<span><span class="co">#&gt; IGRAPH ec69da5 UNW- 17 68 -- </span></span>
+<span><span class="co">#&gt; IGRAPH ce25555 UNW- 17 68 -- </span></span>
 <span><span class="co">#&gt; + attr: name (v/c), cluster (v/n), color (v/c), size (v/n), label</span></span>
 <span><span class="co">#&gt; | (v/c), label.color (v/c), label.cex (v/n), weight (e/n), color (e/c),</span></span>
 <span><span class="co">#&gt; | width (e/n)</span></span>
-<span><span class="co">#&gt; + edges from ec69da5 (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from ce25555 (vertex names):</span></span>
 <span><span class="co">#&gt;  [1] trombone--missile trombone--gun     trombone--bullet  trombone--knife  </span></span>
 <span><span class="co">#&gt;  [5] trombone--spear   trombone--apple   trombone--banana  trombone--tomato </span></span>
 <span><span class="co">#&gt;  [9] trombone--disgust trombone--angry   trombone--sad     trombone--happy  </span></span>
@@ -229,7 +229,7 @@ argument <code>dendrogram</code> or <code>network</code> default is
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
