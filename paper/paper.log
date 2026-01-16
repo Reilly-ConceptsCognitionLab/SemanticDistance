@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.6.25)  19 SEP 2025 20:41
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.6.25)  16 JAN 2026 11:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -805,40 +805,38 @@ File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 \c@eu@i=\count484
 \c@mkern=\count485
 )
-Package hyperref Info: Option `unicode' set `true' on input line 155.
-Package hyperref Info: Option `breaklinks' set `true' on input line 155.
+Package hyperref Info: Option `unicode' set `true' on input line 153.
+Package hyperref Info: Option `breaklinks' set `true' on input line 153.
 (/Users/Jamie/Library/TinyTeX/texmf-dist/tex/latex/grffile/grffile.sty
 Package: grffile 2019/11/11 v2.1 Extended file name support for graphics (legacy)
 Package grffile Info: This package is an empty stub for compatibility on input line 40.
 )
-\cslhangindent=\skip98
-\csllabelwidth=\skip99
 \@quotelevel=\count486
 \@quotereset=\count487
 (./paper.aux)
 \openout1 = `paper.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 253.
-LaTeX Font Info:    ... okay on input line 253.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 253.
-LaTeX Font Info:    ... okay on input line 253.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 253.
-LaTeX Font Info:    ... okay on input line 253.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 253.
-LaTeX Font Info:    ... okay on input line 253.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 253.
-LaTeX Font Info:    ... okay on input line 253.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 253.
-LaTeX Font Info:    ... okay on input line 253.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 253.
-LaTeX Font Info:    ... okay on input line 253.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 253.
-LaTeX Font Info:    ... okay on input line 253.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 253.
-LaTeX Font Info:    ... okay on input line 253.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 253.
-LaTeX Font Info:    ... okay on input line 253.
-Package hyperref Info: Link coloring ON on input line 253.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 216.
+LaTeX Font Info:    ... okay on input line 216.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 216.
+LaTeX Font Info:    ... okay on input line 216.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 216.
+LaTeX Font Info:    ... okay on input line 216.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 216.
+LaTeX Font Info:    ... okay on input line 216.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 216.
+LaTeX Font Info:    ... okay on input line 216.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 216.
+LaTeX Font Info:    ... okay on input line 216.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 216.
+LaTeX Font Info:    ... okay on input line 216.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 216.
+LaTeX Font Info:    ... okay on input line 216.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 216.
+LaTeX Font Info:    ... okay on input line 216.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 216.
+LaTeX Font Info:    ... okay on input line 216.
+Package hyperref Info: Link coloring ON on input line 216.
 (./paper.out) (./paper.out)
 \@outlinefile=\write5
 \openout5 = `paper.out'.
@@ -859,8 +857,8 @@ Package biblatex Info: Automatic encoding selection.
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'paper.bbl' not found.
 No file paper.bbl.
-Package biblatex Info: Reference section=0 on input line 253.
-Package biblatex Info: Reference segment=0 on input line 253.
+Package biblatex Info: Reference section=0 on input line 216.
+Package biblatex Info: Reference segment=0 on input line 216.
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
 *geometry* verbose mode - [ preamble ] result:
@@ -895,32 +893,22 @@ Package biblatex Info: Reference segment=0 on input line 253.
 * \@reversemargintrue
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 254.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 217.
 (/Users/Jamie/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 254.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 217.
 (/Users/Jamie/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 
-Package hyperref Warning: Suppressing link with empty target on input line 291.
+Package hyperref Warning: Suppressing link with empty target on input line 243.
 
 
-Package hyperref Warning: Suppressing link with empty target on input line 291.
+Package hyperref Warning: Suppressing link with empty target on input line 243.
 
 
-Package hyperref Warning: Suppressing link with empty target on input line 291.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 303--312
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 313--323
-
- []
+Package hyperref Warning: Suppressing link with empty target on input line 243.
 
 
 
@@ -934,33 +922,16 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <8> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 323.
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 283.
 [1
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 324--328
+Underfull \hbox (badness 10000) in paragraph at lines 286--290
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 329--339
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 345--348
-
- []
-
-File: ngram-word.png Graphic file (type bmp)
-<ngram-word.png>
-
-Underfull \hbox (badness 10000) in paragraph at lines 349--351
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 356--360
+Underfull \hbox (badness 10000) in paragraph at lines 291--304
 
  []
 
@@ -975,111 +946,24 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
-[2]
-File: ngram-ngram.png Graphic file (type bmp)
-<ngram-ngram.png>
-
-Underfull \hbox (badness 10000) in paragraph at lines 361--363
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 367--373
-
- []
-
-File: anchor.png Graphic file (type bmp)
-<anchor.png>
-
-Underfull \hbox (badness 10000) in paragraph at lines 374--376
-
- []
-
-
-Underfull \hbox (badness 1917) in paragraph at lines 378--378
-|\TU/lmss/bx/n/14.4 Turn-by-Turn Distance (2-person Dyads, Conversation
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 380--387
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 391--395
-
- []
-
-
-
-File: /Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.5/aarch64-apple-darwin20/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
-</Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.5/aarch64-apple-darwin20/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
-
-Package fancyhdr Warning: \headheight is too small (62.59596pt): 
-(fancyhdr)                Make it at least 63.55022pt, for example:
-(fancyhdr)                \setlength{\headheight}{63.55022pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
-
-[3]
-Underfull \hbox (badness 10000) in paragraph at lines 399--403
-
- []
-
-File: dendro.png Graphic file (type bmp)
-<dendro.png>
-
-Underfull \hbox (badness 10000) in paragraph at lines 404--406
-
- []
-
-File: cluster.png Graphic file (type bmp)
-<cluster.png>
-
-Underfull \hbox (badness 10000) in paragraph at lines 407--409
-
- []
-
-
-
-File: /Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.5/aarch64-apple-darwin20/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
-</Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.5/aarch64-apple-darwin20/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
-
-Package fancyhdr Warning: \headheight is too small (62.59596pt): 
-(fancyhdr)                Make it at least 63.55022pt, for example:
-(fancyhdr)                \setlength{\headheight}{63.55022pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
-
-[4]
-
-File: /Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.5/aarch64-apple-darwin20/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
-</Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.5/aarch64-apple-darwin20/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
-
-Package fancyhdr Warning: \headheight is too small (62.59596pt): 
-(fancyhdr)                Make it at least 63.55022pt, for example:
-(fancyhdr)                \setlength{\headheight}{63.55022pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
-
-[5] (./paper.aux)
+[2] (./paper.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-05-26>
  ***********
 Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: 3DACE98230D398545D9DFEB2F0BD80E3;2799.
+(rerunfilecheck)             Checksum: 2FF5AA4561477C34422CCA74DBBD51AE;786.
 Package logreq Info: Writing requests to 'paper.run.xml'.
 \openout1 = `paper.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 34510 strings out of 470543
- 710778 string characters out of 5492584
- 1576123 words of memory out of 5000000
- 62261 multiletter control sequences out of 15000+600000
- 633697 words of font info for 88 fonts, out of 8000000 for 9000
+ 34417 strings out of 470543
+ 708830 string characters out of 5492584
+ 1569908 words of memory out of 5000000
+ 62180 multiletter control sequences out of 15000+600000
+ 631974 words of font info for 77 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 84i,13n,87p,694b,850s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,12n,87p,694b,850s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on paper.pdf (5 pages).
+Output written on paper.pdf (2 pages).

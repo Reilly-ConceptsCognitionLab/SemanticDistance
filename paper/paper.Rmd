@@ -57,21 +57,9 @@ affiliations:
 
 date: "`r format(Sys.Date(), '%e %B %Y')`"
 bibliography: paper.bib
-correspondence: jamie_reilly@temple.edu
-abstract: |
- `SemanticDistance` computes pairwise distance between constituents (e.g., word-to-word, ngram-to-word, turn-to-turn) in both structured language samples and unstructured word lists. `SemanticDistance` has cleaning and formatting options including stopword removal and lemmatization. The package computes two complementary cosine distance indices for each pairwise contrast of interest. `SemanticDistance` can also be used to examine clustering properties within unstructured word lists, generating dendrograms and simple igraph network plots.  
-keywords: |
-  conversation analysis; discourse; language processing; alignment
-authorcontributions: |
-  JR, HM, EM, and JP conceived the software. All authors drafted and edited the paper.
 funding: |
-   This work was supported in part by grants R01 DC013063, R01 DC013064, and R01 DC019507 from the US National Institutes of Health. 
-conflictsofinterest: |
-  We have no known conflicts of interest.
+  R01 DC013063, R01 DC013064, R01 DC019507 from the US National Institutes of Health
 output: rticles::joss_article 
-keep_tex: true
-csl: apa-single-spaced.csl
-journal: JOSS
 ---
 
 ```{r, include=FALSE}
@@ -79,66 +67,25 @@ options(tinytex.verbose = TRUE)
 ```
 
 
+# Summary
+ `SemanticDistance` computes pairwise distance between units of language (e.g., word-to-word, ngram-to-word, turn-to-turn) in both structured language samples and unstructured word lists. `SemanticDistance` has cleaning and formatting options including stopword removal and lemmatization. The package computes two complementary cosine distance indices for each pairwise contrast of interest. `SemanticDistance` can also be used to examine clustering properties within unstructured word lists, generating dendrograms and simple igraph network plots.  
+ 
+# Software Design
+ `SemanticDistance` was is an open-source R package designed to accommodate a wide range of user expertise (e.g., neuroscience, linguistics, computer science). The software does not leverage artificial intelligence or use any proprietary dependencies. The package instead indexes an internal lookup database containing publicly available lexical norms.
+
 # Statment of need
-`SemanticDistance` is unique in its capacity to compute semantic distance metrics within running language samples (e.g., word-to-word, bigram-to-word) and to produce semantic network visualizations. This user-friendly application will allow researchers to model the flow of meaning in naturalistic language samples.
+`SemanticDistance` is unique in its capacity to compute semantic distance metrics within running language samples (e.g., word-to-word, bigram-to-word) and to produce semantic network visualizations. The package also provides complementary (but different) semantic distance metrics (experiential vs. embedding) computed over the same stimuli. This package will support novel insights into the flow of meaning within naturalistic language samples.
 
+# Research Impact Statement
+ `SemanticDistance` has supported one peer-reviewed publication to date in the journal, `Cortex` [@Mechtenberg:2026] along with one refereed conference presentation at the annual conference of the Society for the Neurobiology of Language. The software is new, and broader impacts have yet to be realized.
+ 
 # Description
-There are many ways to assess similarity between concepts [@malt_words_2020]. Consider, for example, a wildlife biologist interested in quantifying distance between *wolf* and *dog* in terms of perceived threat to humans. How would she do this? One approach might involve asking people to explicitly rate perceived threat of dogs and wolves. The difference in threat ratings (dog vs. wolf) represents a simple form of semantic distance in a one-dimensional semantic space constrained by threat (for higher dimensional approaches see [@Landauer_LSA_1997,  @reilly_what_2025, @Pennington2014]). \newline
+`SemanticDistance` computes two complementary distance metrics between pairs of language chunks (e.g., words, ngrams, turns). Distance values are derived from two custom lookup databases containing semantic vectors for many English words.  \newline
 
-`SemanticDistance` computes two complementary distance metrics between pairs of constituents (e.g., words, ngrams, turns). Distance values are derived from two custom lookup databases containing semantic vectors for >70k English words. `CosDist_Glo` reflects cosine distance between vectors derived from training a GLOVE word embedding model [@Pennington2014], whereas `CosDist_SD15` refects cosine distances derived from a 15 dimension sensorimotor and affective space [@Reilly2023]. `SemanticDistance` processes distance relationships between lexical constituents within the following text formats: \newline
+`SemanticDistance` bundles text cleaning and formatting options (e.g., stopword removal, lemmatization) with distance and network visualization options. `SemanticDistance` is capable of generating rolling measures of semantic distance within stories or narratives where word order is conserved. The package is also capable of computing semantic distance turn-by-turn across speaker shifts within dyadic conversation transcripts. In addition to these ordered language formats, `SemanticDistance` is capable of producing distance metrics between word pairs arrayed in columns or between all pairs of words in an undifferentiated list. The package offers network visualization options (e.g., cluster dendrograms, igraph networks) that may prove useful in evaluating the structure and integrity of semantic networks as revealed by language  \newline
 
-1: **monologues**: stories, narratives, and structured text \newline
-2: **dialogues**: two-person conversation transcripts. \newline
-3: **word pairs in columns**:  word pairs \newline
-4: **unordered lists**: bags-of-words  \newline
-
-`SemanticDistance` bundles text cleaning and formatting options (e.g., stopword removal, lemmatization) with distance and network visualization options. `SemanticDistance` also generates rolling measures of semantic distance within structured text. In monologues (stories, narratives) and dialogues (two-person conversation transcripts), word order matters. Unordered word lists (e.g., a grocery list) are different and can be thought of as non-continuous bags-of-words. `SemanticDistance` can run distance metrics on both of these formats with options for chunk size guided by the user.  \newline
-
-# Examples of Distance Functions and Possible Applications
-
-# Ngram-to-Word Distance 
-Computes rolling distance across ordered language samples (see Figure 1). This metric may be used to examine larger chunks from each word to its prior context.  \newline
-
-![Figure 1: Rolling ngram-to-word distance\label{fig:demo}](ngram-word.png){width=70%}
-\vspace*{-0.5cm}
-\newline
-
-# Ngram-to-Ngram Distance (monologues, stories, continuous structured language) 
-Computes a rolling measure of semantic distance ngram-to-ngram across an ordered language sample (see Figure 2). This metric may be used to examine semantic cohesion between smaller vs. larger chunks of words within linear narrative discourse. 
-\newline
-
-![Figure 2. Rolling ngram-to-ngram distance\label{fig:demo}](ngram-ngram.png){width=70%}
-\vspace*{-0.5cm}
-\newline
-
-# Anchored Distance (monologues, stories, continuous structured language) 
-Computes semantic distance iteratively for each new word in an ordered language sample (e.g., story, narrative) relative to the initial block of *n* content words (see Figure 3). Anchored distance can provide an empirical measure of semantic drift or topic variability over the course of a sample (e.g., started with sports, jumped to baking, then to politics). 
-\newline
-
-
-![Figure 3. Anchored distance first chunk to each new word or ngram\label{fig:demo}](anchor.png){width=70%}
-\vspace*{-0.5cm}
-\newline
-
-# Turn-by-Turn Distance (2-person Dyads, Conversation Tramscripts)
-Computes a rolling measure of semantic distance turn-to-turn in a conversation/dialogue transcript. Semantic vectors for all content words within one turn are averaged and grouped by speaker identity. The function then computes cosine distance between each speaker at each turn, yielding a fluctuating time series of distance changes by speaker. This measure could be used to assess lexical-semantic comprehension and alignment in naturalistic conversations.
-\newline
-
-# Word Pair Distance (user arrayed word pairs in columns)
-Computes pairwise distance metrics row-wise between two specified target columns in a dataframe, This function is useful for stimulus norming or deriving distances for a specified set of non-continuous word pairs. 
-\newline
-
-# Finding structure in the chaos of an unstructured word list
-`SemanticDistance` includes visualization options. The `wordlist_to_network` function takes a word list as an argument and derives cluster dendrograms (see Figure 4) or network plots (see Figure 5). 
-\newline
-
-![Figure 4. Dendrogram from unordered list\label{fig:demo}](dendro.png){width=90%} 
-\vspace*{-0.5cm}
-\newline
-
-![Figure 5. Semantic network of word list\label{fig:demo}](cluster.png){width=100%}
-\vspace*{-0.5cm}
-\newline
+# AI Usage
+`SemanticDistance` uses an internal database composed of many words with a fixed set of embeddings. The software does not use AI or rely on proprietary package dependencies. We did use GPT-4.0 (OpenAI) to troubleshoot R coding errors and assist with generating complex regular expressions (regex) used for cleaning text data. 
 
 # References
 
