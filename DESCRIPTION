@@ -48,7 +48,7 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Collate: 
     'backup.R'
     'clean_dialogue.R'

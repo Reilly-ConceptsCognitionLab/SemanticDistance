@@ -10,9 +10,6 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%")
 ```
-<br>
-<br>
-<br>
 
 # <a href="https://reilly-conceptscognitionlab.github.io/SemanticDistance/"><img src="man/figures/logo.png" align="right" height="138" alt="SemanticDistance website" /></a>
 
@@ -45,11 +42,11 @@ cat('</div>')  # Close flex container
 ```
 
 # Overview
-`SemanticDistance` does the following operations:
-- cleans and formats ordered text (monologues and dialogues)
-- cleans and formats unordered word lists (e.g., bags-of-words)
-- computes pairwise semantic distance metrics using numerous chunking options
-- finds clustering solutions and creates simple semantic networks from given word list vectors. <br>
+`SemanticDistance` does the following operations: <br>
+1) cleans and formats ordered text (monologues and dialogues) <br>
+2) cleans and formats unordered word lists (e.g., bags-of-words)
+3) computes pairwise semantic distance metrics using numerous chunking options
+4) finds clustering solutions and creates simple semantic networks from given word list vectors. <br>
 
 # Install & Load Package
 Install the development version of `SemanticDistance` using the `devtools` package. <br>
