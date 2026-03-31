@@ -1,9 +1,5 @@
 # 
 
-  
-  
-  
-
 [![GitHub
 release](https://img.shields.io/github/v/release/Reilly-ConceptsCognitionLab/SemanticDistance?color=blue&include_prereleases&label=Release)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/releases)[![GitHub
 tag (latest by
@@ -18,11 +14,12 @@ v3+](https://img.shields.io/badge/License-GPL%20v3+-blue.svg)](https://www.gnu.o
 
 # Overview
 
-`SemanticDistance` does the following operations: - cleans and formats
-ordered text (monologues and dialogues) - cleans and formats unordered
-word lists (e.g., bags-of-words) - computes pairwise semantic distance
-metrics using numerous chunking options - finds clustering solutions and
-creates simple semantic networks from given word list vectors.  
+`SemanticDistance` does the following operations:  
+1) cleans and formats ordered text (monologues and dialogues)  
+2) cleans and formats unordered word lists (e.g., bags-of-words) 3)
+computes pairwise semantic distance metrics using numerous chunking
+options 4) finds clustering solutions and creates simple semantic
+networks from given word list vectors.  
 
 # Install & Load Package
 
@@ -448,11 +445,11 @@ mynetwork <- wordlist_to_network(MyCleanList, output='network', dist_type='embed
 
 ``` r
 print(mynetwork)
-#> IGRAPH a2ffa13 UNW- 17 68 -- 
+#> IGRAPH 9f59e6d UNW- 17 68 -- 
 #> + attr: name (v/c), cluster (v/n), color (v/c), size (v/n), label
 #> | (v/c), label.color (v/c), label.cex (v/n), weight (e/n), color (e/c),
 #> | width (e/n)
-#> + edges from a2ffa13 (vertex names):
+#> + edges from 9f59e6d (vertex names):
 #>  [1] trombone--missile trombone--gun     trombone--bullet  trombone--knife  
 #>  [5] trombone--spear   trombone--apple   trombone--banana  trombone--tomato 
 #>  [9] trombone--disgust trombone--angry   trombone--sad     trombone--happy  

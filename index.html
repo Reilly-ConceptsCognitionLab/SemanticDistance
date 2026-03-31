@@ -57,8 +57,7 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9"><p><br><br><br></p>
-<div class="section level1">
+  <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header">
 <img src="logo.png" class="logo" alt=""><h1 id="section"><a class="anchor" aria-label="anchor" href="#section"></a></h1>
 </div>
@@ -73,7 +72,7 @@
 <div class="section level1">
 <h1 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h1>
-<p><code>SemanticDistance</code> does the following operations: - cleans and formats ordered text (monologues and dialogues) - cleans and formats unordered word lists (e.g., bags-of-words) - computes pairwise semantic distance metrics using numerous chunking options - finds clustering solutions and creates simple semantic networks from given word list vectors. <br></p>
+<p><code>SemanticDistance</code> does the following operations: <br> 1) cleans and formats ordered text (monologues and dialogues) <br> 2) cleans and formats unordered word lists (e.g., bags-of-words) 3) computes pairwise semantic distance metrics using numerous chunking options 4) finds clustering solutions and creates simple semantic networks from given word list vectors. <br></p>
 </div>
 <div class="section level1">
 <h1 id="install--load-package">Install &amp; Load Package<a class="anchor" aria-label="anchor" href="#install--load-package"></a>
@@ -935,7 +934,7 @@ fixed initial chunk of words to each new word or ngram
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">MyCleanList</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_monologue_or_list.html">clean_monologue_or_list</a></span><span class="op">(</span>dat<span class="op">=</span><span class="va">Unordered_List</span>, wordcol<span class="op">=</span><span class="st">'mytext'</span><span class="op">)</span></span>
 <span><span class="va">mydendro</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/wordlist_to_network.html">wordlist_to_network</a></span><span class="op">(</span><span class="va">MyCleanList</span>, output<span class="op">=</span><span class="st">'dendrogram'</span>, dist_type<span class="op">=</span><span class="st">'embedding'</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-16-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-16-1.png" alt="" width="100%"></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mydendro</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 'dendrogram' with 2 branches and 17 members total, at height 5.168642</span></span></code></pre></div>
@@ -953,14 +952,14 @@ fixed initial chunk of words to each new word or ngram
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">MyCleanList</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_monologue_or_list.html">clean_monologue_or_list</a></span><span class="op">(</span>dat<span class="op">=</span><span class="va">Unordered_List</span>, wordcol<span class="op">=</span><span class="st">'mytext'</span><span class="op">)</span></span>
 <span><span class="va">mynetwork</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/wordlist_to_network.html">wordlist_to_network</a></span><span class="op">(</span><span class="va">MyCleanList</span>, output<span class="op">=</span><span class="st">'network'</span>, dist_type<span class="op">=</span><span class="st">'embedding'</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-17-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-17-1.png" alt="" width="100%"></p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mynetwork</span><span class="op">)</span></span>
-<span><span class="co">#&gt; IGRAPH a2ffa13 UNW- 17 68 -- </span></span>
+<span><span class="co">#&gt; IGRAPH 9f59e6d UNW- 17 68 -- </span></span>
 <span><span class="co">#&gt; + attr: name (v/c), cluster (v/n), color (v/c), size (v/n), label</span></span>
 <span><span class="co">#&gt; | (v/c), label.color (v/c), label.cex (v/n), weight (e/n), color (e/c),</span></span>
 <span><span class="co">#&gt; | width (e/n)</span></span>
-<span><span class="co">#&gt; + edges from a2ffa13 (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from 9f59e6d (vertex names):</span></span>
 <span><span class="co">#&gt;  [1] trombone--missile trombone--gun     trombone--bullet  trombone--knife  </span></span>
 <span><span class="co">#&gt;  [5] trombone--spear   trombone--apple   trombone--banana  trombone--tomato </span></span>
 <span><span class="co">#&gt;  [9] trombone--disgust trombone--angry   trombone--sad     trombone--happy  </span></span>
