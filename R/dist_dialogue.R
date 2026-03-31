@@ -52,7 +52,7 @@ dist_dialogue <- function(dat, who_talking) {
   djoin_glo <- dplyr::left_join(dat, glowca_25, by = c("word_clean" = "word"))
   djoin_sd15 <- dplyr::left_join(dat, SD15_2025_complete, by = c("word_clean" = "word"))
 
-  process_turn_embeddings <- function(embed_df, prefix) {
+process_turn_embeddings <- function(embed_df, prefix) {
     # Get embedding dimensions
     numeric_cols <- names(embed_df)[sapply(embed_df, is.numeric)]
     numeric_cols <- setdiff(numeric_cols, c("row_id", "id_row_orig", "turn_count"))
@@ -72,6 +72,7 @@ dist_dialogue <- function(dat, who_talking) {
         .groups = "drop"
       ) %>%
       dplyr::arrange(turn_count)
+
 
     # Calculate cosine distances between consecutive turns
     turn_vectors <- turn_vectors %>%
@@ -97,7 +98,8 @@ dist_dialogue <- function(dat, who_talking) {
       dplyr::select(turn_count, dplyr::contains("cosdist"))
 
     return(turn_vectors)
-  }
+}
+
 
   # Process both embeddings
   glo_results <- process_turn_embeddings(djoin_glo, "glo")
@@ -121,3 +123,4 @@ dist_dialogue <- function(dat, who_talking) {
 
   return(final_result)
 }
+
