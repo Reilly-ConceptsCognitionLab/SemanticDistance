@@ -11,7 +11,7 @@ This is a minor release involving optimization of functions and improved organiz
 -   Software license now LGPL 3.0
 -   JOSS journal paper submission for review
 -   Added two helper functions for reading/loading data externally (SemanticDistance_Data)
--   Companion public data repository ((SemanticDistance_Data)
+-   Companion public data repository (SemanticDistance_Data)
 
 ### Modified
 -   Omitted prior MIT software license

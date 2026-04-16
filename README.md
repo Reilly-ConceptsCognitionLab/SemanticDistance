@@ -1,7 +1,14 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# <a href="https://reilly-conceptscognitionlab.github.io/SemanticDistance/"><img src="man/figures/logo.png" align="right" height="138" alt="SemanticDistance website" /></a>
+<br> <br> <br>
+
+<h1 style="color: #8B0000;">
+
+SemanticDistance
+</h1>
+
+# <a href="https://reilly-conceptscognitionlab.github.io/SemanticDistance/"><img src="man/figures/logo.png" align="right" height="138" alt="SemanticDistance" /></a>
 
 <div style="clear: both; margin-top: 30px;">
 
@@ -12,14 +19,10 @@
 [![GitHub
 release](https://img.shields.io/github/v/release/Reilly-ConceptsCognitionLab/SemanticDistance?color=blue&include_prereleases&label=Release)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/releases)[![GitHub
 tag (latest by
-date)](https://img.shields.io/github/v/tag/Reilly-ConceptsCognitionLab/SemanticDistance?color=blue)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/tags)
-[![GitHub
-stars](https://img.shields.io/github/stars/Reilly-ConceptsCognitionLab/ConversationAlign?style=social)](https://github.com/Reilly-ConceptsCognitionLab/ConversationAlign/stargazers)
-
+date)](https://img.shields.io/github/v/tag/Reilly-ConceptsCognitionLab/SemanticDistance?color=blue)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/tags)[![status](https://joss.theoj.org/papers/839ab720504a5c966b4b2893f78ec2b2/status.svg)](https://joss.theoj.org/papers/839ab720504a5c966b4b2893f78ec2b2)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/Reilly-ConceptsCognitionLab/ConversationAlign/graphs/commit-activity)
 [![License: GPL
 v3+](https://img.shields.io/badge/License-GPL%20v3+-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![R-CMD-check](https://github.com/Reilly-ConceptsCognitionLab/ConversationAlign/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/actions/workflows/R-CMD-check.yaml)
 
 </div>
 
@@ -483,11 +486,11 @@ mynetwork <- wordlist_to_network(MyCleanList, output='network', dist_type='embed
 
 ``` r
 print(mynetwork)
-#> IGRAPH 9f59e6d UNW- 17 68 -- 
+#> IGRAPH d78291e UNW- 17 68 -- 
 #> + attr: name (v/c), cluster (v/n), color (v/c), size (v/n), label
 #> | (v/c), label.color (v/c), label.cex (v/n), weight (e/n), color (e/c),
 #> | width (e/n)
-#> + edges from 9f59e6d (vertex names):
+#> + edges from d78291e (vertex names):
 #>  [1] trombone--missile trombone--gun     trombone--bullet  trombone--knife  
 #>  [5] trombone--spear   trombone--apple   trombone--banana  trombone--tomato 
 #>  [9] trombone--disgust trombone--angry   trombone--sad     trombone--happy  

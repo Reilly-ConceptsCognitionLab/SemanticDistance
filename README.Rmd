@@ -10,8 +10,13 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%")
 ```
+<br>
+<br>
+<br>
 
-# <a href="https://reilly-conceptscognitionlab.github.io/SemanticDistance/"><img src="man/figures/logo.png" align="right" height="138" alt="SemanticDistance website" /></a>
+<h1 style="color: #8B0000;">SemanticDistance</h1>
+
+# <a href="https://reilly-conceptscognitionlab.github.io/SemanticDistance/"><img src="man/figures/logo.png" align="right" height="138" alt="SemanticDistance" /></a>
 
 <div style="clear: both; margin-top: 30px;"></div>
 
@@ -24,21 +29,16 @@ cat('[![GitHub release](https://img.shields.io/github/v/release/Reilly-ConceptsC
 
 cat('[![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/Reilly-ConceptsCognitionLab/SemanticDistance?color=blue)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/tags)')
 
+#JOSS submission badge
+cat('[![status](https://joss.theoj.org/papers/839ab720504a5c966b4b2893f78ec2b2/status.svg)](https://joss.theoj.org/papers/839ab720504a5c966b4b2893f78ec2b2)')
 
-# GitHub Stars badge
 cat('
-[![GitHub stars](https://img.shields.io/github/stars/Reilly-ConceptsCognitionLab/ConversationAlign?style=social)](https://github.com/Reilly-ConceptsCognitionLab/ConversationAlign/stargazers)
-')
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/Reilly-ConceptsCognitionLab/ConversationAlign/graphs/commit-activity)')
 
-# Other badges
 cat('
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/Reilly-ConceptsCognitionLab/ConversationAlign/graphs/commit-activity)
-[![License: GPL v3+](https://img.shields.io/badge/License-GPL%20v3+-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![R-CMD-check](https://github.com/Reilly-ConceptsCognitionLab/ConversationAlign/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/actions/workflows/R-CMD-check.yaml)
-')
+[![License: GPL v3+](https://img.shields.io/badge/License-GPL%20v3+-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)')
 
 cat('</div>')  # Close flex container
-
 ```
 
 # Overview
