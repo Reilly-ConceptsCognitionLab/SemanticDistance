@@ -50,7 +50,6 @@ Suggests:
 VignetteBuilder: knitr
 RoxygenNote: 7.3.3
 Collate: 
-    'backup.R'
     'clean_dialogue.R'
     'clean_monologue_or_list.R'
     'clean_paired_cols.R'
@@ -60,7 +59,6 @@ Collate:
     'dist_ngram2ngram.R'
     'dist_ngram2word.R'
     'dist_paired_cols.R'
-    'eval_kmeans_clustersize.R'
     'globals.R'
     'reexports.R'
     'replacements_25.R'
