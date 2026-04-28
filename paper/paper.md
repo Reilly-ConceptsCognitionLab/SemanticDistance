@@ -65,7 +65,7 @@ bibliography: paper.bib
 # Summary
  `SemanticDistance` computes pairwise distance between units of language (e.g., word-to-word, ngram-to-word, turn-to-turn) in both structured language samples and unstructured word lists. `SemanticDistance` has cleaning and formatting options including stopword removal and lemmatization. The package computes two complementary cosine distance indices for each pairwise contrast of interest. `SemanticDistance` can also be used to examine clustering properties within unstructured word lists, generating dendrograms and simple igraph network plots.  
  
-# Statment of need
+# Statement of need
 There are many compelling theoretical and clinical applications for measuring conceptual similarity between words and larger chunks of language (e.g., detection of subtle semantic impairments based on naturalistic language sampling, designing controlled word pair stimuli for language experiments). Although word embeddings such as Word2Vec (@Mikolov:2013), LSA (@Landauer:1998), and GloVE (@Pennington:2014) are widely available, `SemanticDistance` is unique in its capacity to produce distance metrics in situ within running discourse samples while also offering text cleaning and visualization options. 
  
 # State of the field
