@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2026.1.19)  24 AUG 2026 10:48
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2026.1.19)  24 AUG 2026 13:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -923,31 +923,26 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <8> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 320.
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 324.
 [1
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 323--331
+Underfull \hbox (badness 10000) in paragraph at lines 327--334
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 334--346
+Underfull \hbox (badness 10000) in paragraph at lines 337--349
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 347--353
+Underfull \hbox (badness 10000) in paragraph at lines 350--356
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 354--369
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 370--380
+Underfull \hbox (badness 10000) in paragraph at lines 357--372
 
  []
 
@@ -961,12 +956,17 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 381--384
+Underfull \hbox (badness 10000) in paragraph at lines 373--383
 
  []
 
 
-Overfull \hbox (19.45137pt too wide) in paragraph at lines 410--415
+Underfull \hbox (badness 10000) in paragraph at lines 384--387
+
+ []
+
+
+Overfull \hbox (19.45137pt too wide) in paragraph at lines 413--418
 [][][][][] [] [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]$[][]\TU/lmr/m/n/10 . 
  []
 
@@ -993,7 +993,7 @@ Package logreq Info: Writing requests to 'paper.run.xml'.
 Here is how much of TeX's memory you used:
  34553 strings out of 470189
  712494 string characters out of 5478015
- 1581729 words of memory out of 5000000
+ 1582729 words of memory out of 5000000
  62665 multiletter control sequences out of 15000+600000
  634577 words of font info for 86 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
