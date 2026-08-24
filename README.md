@@ -472,7 +472,7 @@ creates a square matrix with cosine distances for all possible word
 pairs: d\[i,j\]. Then converts semantic distance matrix to Euclidean
 distance. Then plots a hierchcial clustering solution moving words
 closer together in proximity based on their distance. Works best for
-unordred word lists cleaned with clean_monologues(). <br>
+unordred word lists cleaned with clean_monologues().<br>
 
 <span style="color: #006400;">Arguments to
 `clean_monologue_or_list`</span> <br> -
@@ -490,11 +490,11 @@ mynetwork <- wordlist_to_network(MyCleanList, output='network', dist_type='embed
 
 ``` r
 print(mynetwork)
-#> IGRAPH a3450d9 UNW- 17 68 -- 
+#> IGRAPH 94c416d UNW- 17 68 -- 
 #> + attr: name (v/c), cluster (v/n), color (v/c), size (v/n), label
 #> | (v/c), label.color (v/c), label.cex (v/n), weight (e/n), color (e/c),
 #> | width (e/n)
-#> + edges from a3450d9 (vertex names):
+#> + edges from 94c416d (vertex names):
 #>  [1] trombone--missile trombone--gun     trombone--bullet  trombone--knife  
 #>  [5] trombone--spear   trombone--apple   trombone--banana  trombone--tomato 
 #>  [9] trombone--disgust trombone--angry   trombone--sad     trombone--happy  

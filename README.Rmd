@@ -236,7 +236,7 @@ print(mydendro)
 
 ## iGraph network (graph plot)
 ## `clean_monologue_or_list`
-Produces a dendogram from a vector of words. First pulls words, then creates a square matrix with cosine distances for all possible word pairs: d[i,j]. Then converts semantic distance matrix to Euclidean distance. Then plots a hierchcial clustering solution moving words closer together in proximity based on their distance. Works best for unordred word lists cleaned with clean_monologues(). <br>
+Produces a dendogram from a vector of words. First pulls words, then creates a square matrix with cosine distances for all possible word pairs: d[i,j]. Then converts semantic distance matrix to Euclidean distance. Then plots a hierchcial clustering solution moving words closer together in proximity based on their distance. Works best for unordred word lists cleaned with clean_monologues().<br>
 
 <span style="color: #006400;">Arguments to `clean_monologue_or_list`</span> <br>
 - dat` input formatted dataframe. <br>
