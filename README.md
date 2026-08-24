@@ -8,6 +8,9 @@
 SemanticDistance
 </h1>
 
+Compute Semantic Relatedness between Constituents of Sequential
+Continuous Text
+
 # <a href="https://reilly-conceptscognitionlab.github.io/SemanticDistance/"><img src="man/figures/logo.png" align="right" height="138" alt="SemanticDistance" /></a>
 
 <div style="clear: both; margin-top: 30px;">
@@ -20,7 +23,6 @@ SemanticDistance
 release](https://img.shields.io/github/v/release/Reilly-ConceptsCognitionLab/SemanticDistance?color=blue&include_prereleases&label=Release)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/releases)[![GitHub
 tag (latest by
 date)](https://img.shields.io/github/v/tag/Reilly-ConceptsCognitionLab/SemanticDistance?color=blue)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/tags)[![status](https://joss.theoj.org/papers/839ab720504a5c966b4b2893f78ec2b2/status.svg)](https://joss.theoj.org/papers/839ab720504a5c966b4b2893f78ec2b2)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/Reilly-ConceptsCognitionLab/ConversationAlign/graphs/commit-activity)
 [![License: GPL
 v3+](https://img.shields.io/badge/License-GPL%20v3+-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
@@ -50,7 +52,7 @@ library(SemanticDistance)
 `SemanticDistance` contains specialized functions for processing the
 text formats delineated to follow. To learn more about the specific
 options for string cleaning, computing distances, and visualizing output
-for each of these formats, visit its corresponding vigbnette. <br>
+for each of these formats, visit its corresponding vignette. <br>
 
 ## Monologue (example)
 
@@ -62,7 +64,7 @@ for each of these formats, visit its corresponding vigbnette. <br>
 
 </div>
 
-A monologue for our pourposes consists of any block of text NOT
+A monologue for our purposes consists of any block of text NOT
 delineated by a talker/speaker. This includes ordered texts like stories
 or narratives, or unordered lists (i.e., bags of words). The minimum
 requirement for a monologue is one row and one column with some text in
@@ -454,7 +456,7 @@ MyCleanList <- clean_monologue_or_list(dat=Unordered_List, wordcol='mytext')
 mydendro <- wordlist_to_network(MyCleanList, output='dendrogram', dist_type='embedding')
 ```
 
-<img src="man/figures/README-unnamed-chunk-16-1.png" alt="" width="100%" />
+<img src="man/figures/unnamed-chunk-16-1.png" alt="" width="100%" style="display: block; margin: auto auto auto 0;" />
 
 ``` r
 print(mydendro)
@@ -482,15 +484,15 @@ MyCleanList <- clean_monologue_or_list(dat=Unordered_List, wordcol='mytext')
 mynetwork <- wordlist_to_network(MyCleanList, output='network', dist_type='embedding')
 ```
 
-<img src="man/figures/README-unnamed-chunk-17-1.png" alt="" width="100%" />
+<img src="man/figures/unnamed-chunk-17-1.png" alt="" width="100%" style="display: block; margin: auto auto auto 0;" />
 
 ``` r
 print(mynetwork)
-#> IGRAPH d78291e UNW- 17 68 -- 
+#> IGRAPH 0a60b02 UNW- 17 68 -- 
 #> + attr: name (v/c), cluster (v/n), color (v/c), size (v/n), label
 #> | (v/c), label.color (v/c), label.cex (v/n), weight (e/n), color (e/c),
 #> | width (e/n)
-#> + edges from d78291e (vertex names):
+#> + edges from 0a60b02 (vertex names):
 #>  [1] trombone--missile trombone--gun     trombone--bullet  trombone--knife  
 #>  [5] trombone--spear   trombone--apple   trombone--banana  trombone--tomato 
 #>  [9] trombone--disgust trombone--angry   trombone--sad     trombone--happy  

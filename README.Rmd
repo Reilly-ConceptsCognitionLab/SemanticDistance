@@ -7,14 +7,17 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%")
+  fig.path = "man/figures/",
+  out.width = "100%",
+  fig.align='left'
+)
 ```
 <br>
 <br>
 <br>
 
 <h1 style="color: #8B0000;">SemanticDistance</h1>
+Compute Semantic Relatedness between Constituents of Sequential Continuous Text
 
 # <a href="https://reilly-conceptscognitionlab.github.io/SemanticDistance/"><img src="man/figures/logo.png" align="right" height="138" alt="SemanticDistance" /></a>
 
@@ -24,16 +27,13 @@ knitr::opts_chunk$set(
 # Generate badges with HTML wrapper for horizontal layout
 cat('<div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px;">')
 
-# Simplified GitHub Release badge (let Shields.io auto-detect version)
+# Simplified GitHub Release badge
 cat('[![GitHub release](https://img.shields.io/github/v/release/Reilly-ConceptsCognitionLab/SemanticDistance?color=blue&include_prereleases&label=Release)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/releases)')
 
 cat('[![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/Reilly-ConceptsCognitionLab/SemanticDistance?color=blue)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/tags)')
 
 #JOSS submission badge
 cat('[![status](https://joss.theoj.org/papers/839ab720504a5c966b4b2893f78ec2b2/status.svg)](https://joss.theoj.org/papers/839ab720504a5c966b4b2893f78ec2b2)')
-
-cat('
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/Reilly-ConceptsCognitionLab/ConversationAlign/graphs/commit-activity)')
 
 cat('
 [![License: GPL v3+](https://img.shields.io/badge/License-GPL%20v3+-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)')
@@ -56,7 +56,7 @@ library(SemanticDistance)
 ```
 
 # <span style="color: #8B0000; font-size: 1.1em; font-weight: bold;">Step 1: Identify Your Data Structure</span>
-`SemanticDistance` contains specialized functions for processing the text formats delineated to follow. To learn more about the specific options for string cleaning, computing distances, and visualizing output for each of these formats, visit its corresponding vigbnette. <br>
+`SemanticDistance` contains specialized functions for processing the text formats delineated to follow. To learn more about the specific options for string cleaning, computing distances, and visualizing output for each of these formats, visit its corresponding vignette. <br>
 
 ## Monologue (example)
 <div style="float: right; width: 55%; margin-left: 25px; margin-bottom: 15px; padding-left: 15px; border-left: 1px solid #eee;">
@@ -65,7 +65,7 @@ knitr::kable(head(Monologue_Typical, 3), format = "pipe")
 ```
 
 </div>
-A monologue for our pourposes consists of any block of text NOT delineated by a talker/speaker. This includes ordered texts like stories or narratives, or unordered lists (i.e., bags of words). The minimum requirement for a monologue is one row and one column with some text in it. Here's a sample monologue. <br>
+A monologue for our purposes consists of any block of text NOT delineated by a talker/speaker. This includes ordered texts like stories or narratives, or unordered lists (i.e., bags of words). The minimum requirement for a monologue is one row and one column with some text in it. Here's a sample monologue. <br>
 <div style="clear: both; margin-bottom: 20px;"></div>
 
 ## Dialogue (example)
