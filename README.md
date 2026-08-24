@@ -30,12 +30,12 @@ v3+](https://img.shields.io/badge/License-GPL%20v3+-blue.svg)](https://www.gnu.o
 
 # Overview
 
-`SemanticDistance` does the following operations: <br> 1) cleans and
+`SemanticDistance` executes the following operations: <br> 1) cleans and
 formats ordered text (monologues and dialogues) <br> 2) cleans and
-formats unordered word lists (e.g., bags-of-words) 3) computes pairwise
-semantic distance metrics using numerous chunking options 4) finds
-clustering solutions and creates simple semantic networks from given
-word list vectors. <br>
+formats unordered word lists (e.g., bags-of-words) <br> 3) computes
+pairwise semantic distance metrics using numerous chunking options <br>
+4) finds clustering solutions and creates simple semantic networks from
+given word list vectors. <br>
 
 # Install & Load Package
 
@@ -454,6 +454,8 @@ is `SD15`. <br>
 ``` r
 MyCleanList <- clean_monologue_or_list(dat=Unordered_List, wordcol='mytext')
 mydendro <- wordlist_to_network(MyCleanList, output='dendrogram', dist_type='embedding')
+#> [1] "Length of words: 17"
+#> [1] "my_kmax: 10"
 ```
 
 <img src="man/figures/unnamed-chunk-16-1.png" alt="" width="100%" style="display: block; margin: auto auto auto 0;" />
@@ -482,17 +484,19 @@ dat`input formatted dataframe. <br> -`dist_type`quoted argument distance option,
 ``` r
 MyCleanList <- clean_monologue_or_list(dat=Unordered_List, wordcol='mytext')
 mynetwork <- wordlist_to_network(MyCleanList, output='network', dist_type='embedding')
+#> [1] "Length of words: 17"
+#> [1] "my_kmax: 10"
 ```
 
 <img src="man/figures/unnamed-chunk-17-1.png" alt="" width="100%" style="display: block; margin: auto auto auto 0;" />
 
 ``` r
 print(mynetwork)
-#> IGRAPH 0a60b02 UNW- 17 68 -- 
+#> IGRAPH 4c13663 UNW- 17 68 -- 
 #> + attr: name (v/c), cluster (v/n), color (v/c), size (v/n), label
 #> | (v/c), label.color (v/c), label.cex (v/n), weight (e/n), color (e/c),
 #> | width (e/n)
-#> + edges from 0a60b02 (vertex names):
+#> + edges from 4c13663 (vertex names):
 #>  [1] trombone--missile trombone--gun     trombone--bullet  trombone--knife  
 #>  [5] trombone--spear   trombone--apple   trombone--banana  trombone--tomato 
 #>  [9] trombone--disgust trombone--angry   trombone--sad     trombone--happy  

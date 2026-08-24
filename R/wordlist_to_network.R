@@ -54,7 +54,19 @@ wordlist_to_network <- function(dat, wordcol, output = 'dendrogram', dist_type =
     dplyr::pull(!!sym(wordcol))
 
   words <- unique_words
-  my_kmax <- nrow(words)
+
+  # Ensure my_kmax is within a sensible range
+  num_words <- length(words)
+  my_kmax <- ifelse(num_words > 1, min(num_words, 10), 1)
+
+  # Debug output
+  print(paste("Length of words:", num_words))
+  print(paste("my_kmax:", my_kmax))
+
+  # Ensure 'words' is not empty before proceeding further
+  if (length(words) == 0) {
+    stop("No unique words found. Check your input data.")
+  }
 
 
   # Get appropriate embeddings

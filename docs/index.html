@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="favicon.ico">
 <link rel="manifest" href="site.webmanifest">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Compute Semantic Distance Between Text Constituents">
 <meta name="description" content="Cleans and formats language transcripts guided by a series of transformation options (e.g., lemmatize words, omit stopwords, split strings across rows). SemanticDistance computes two distinct metrics of cosine semantic distance (experiential and embedding). These values reflect pairwise cosine distance between different elements or chunks of a language sample. SemanticDistance can process monologues (e.g., stories, ordered text), dialogues (e.g., conversation transcripts), word pairs arrayed in columns, and unordered word lists. Users specify options for how they wish to chunk distance calculations. These options include: rolling ngram-to-word distance (window of n-words to each new word), ngram-to-ngram distance (2-word chunk to the next 2-word chunk), pairwise distance between words arrayed in columns, matrix comparisons (i.e., all possible pairwise distances between words in an unordered list), turn-by-turn distance (talker to talker in a dialogue transcript). SemanticDistance includes visualization options for analyzing distances as time series data and simple semantic network dynamics (e.g., clustering, undirected graph network).">
@@ -68,19 +68,20 @@
 SemanticDistance
 </h1>
 </div>
+<p>Compute Semantic Relatedness between Constituents of Sequential Continuous Text</p>
 <div class="section level1">
 <h1 id="section"><a class="anchor" aria-label="anchor" href="#section"></a></h1>
 <div style="clear: both; margin-top: 30px;">
 
 </div>
 <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px;">
-<p><a href="https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/releases" class="external-link"><img src="https://img.shields.io/github/v/release/Reilly-ConceptsCognitionLab/SemanticDistance?color=blue&amp;include_prereleases&amp;label=Release" alt="GitHub release"></a><a href="https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/tags" class="external-link"><img src="https://img.shields.io/github/v/tag/Reilly-ConceptsCognitionLab/SemanticDistance?color=blue" alt="GitHub tag (latest by date)"></a><a href="https://joss.theoj.org/papers/839ab720504a5c966b4b2893f78ec2b2" class="external-link"><img src="https://joss.theoj.org/papers/839ab720504a5c966b4b2893f78ec2b2/status.svg" alt="status"></a> <a href="https://github.com/Reilly-ConceptsCognitionLab/ConversationAlign/graphs/commit-activity" class="external-link"><img src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" alt="Maintenance"></a> <a href="https://www.gnu.org/licenses/gpl-3.0" class="external-link"><img src="https://img.shields.io/badge/License-GPL%20v3+-blue.svg" alt="License: GPL v3+"></a></p>
+<p><a href="https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/releases" class="external-link"><img src="https://img.shields.io/github/v/release/Reilly-ConceptsCognitionLab/SemanticDistance?color=blue&amp;include_prereleases&amp;label=Release" alt="GitHub release"></a><a href="https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/tags" class="external-link"><img src="https://img.shields.io/github/v/tag/Reilly-ConceptsCognitionLab/SemanticDistance?color=blue" alt="GitHub tag (latest by date)"></a><a href="https://joss.theoj.org/papers/839ab720504a5c966b4b2893f78ec2b2" class="external-link"><img src="https://joss.theoj.org/papers/839ab720504a5c966b4b2893f78ec2b2/status.svg" alt="status"></a> <a href="https://www.gnu.org/licenses/gpl-3.0" class="external-link"><img src="https://img.shields.io/badge/License-GPL%20v3+-blue.svg" alt="License: GPL v3+"></a></p>
 </div>
 </div>
 <div class="section level1">
 <h1 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h1>
-<p><code>SemanticDistance</code> does the following operations: <br> 1) cleans and formats ordered text (monologues and dialogues) <br> 2) cleans and formats unordered word lists (e.g., bags-of-words) 3) computes pairwise semantic distance metrics using numerous chunking options 4) finds clustering solutions and creates simple semantic networks from given word list vectors. <br></p>
+<p><code>SemanticDistance</code> executes the following operations: <br> 1) cleans and formats ordered text (monologues and dialogues) <br> 2) cleans and formats unordered word lists (e.g., bags-of-words) <br> 3) computes pairwise semantic distance metrics using numerous chunking options <br> 4) finds clustering solutions and creates simple semantic networks from given word list vectors. <br></p>
 </div>
 <div class="section level1">
 <h1 id="install--load-package">Install &amp; Load Package<a class="anchor" aria-label="anchor" href="#install--load-package"></a>
@@ -94,7 +95,7 @@ SemanticDistance
 <h1 id="step-1-identify-your-data-structure">
 <span style="color: #8B0000; font-size: 1.1em; font-weight: bold;">Step 1: Identify Your Data Structure</span><a class="anchor" aria-label="anchor" href="#step-1-identify-your-data-structure"></a>
 </h1>
-<p><code>SemanticDistance</code> contains specialized functions for processing the text formats delineated to follow. To learn more about the specific options for string cleaning, computing distances, and visualizing output for each of these formats, visit its corresponding vigbnette. <br></p>
+<p><code>SemanticDistance</code> contains specialized functions for processing the text formats delineated to follow. To learn more about the specific options for string cleaning, computing distances, and visualizing output for each of these formats, visit its corresponding vignette. <br></p>
 <div class="section level2">
 <h2 id="monologue-example">Monologue (example)<a class="anchor" aria-label="anchor" href="#monologue-example"></a>
 </h2>
@@ -109,7 +110,7 @@ SemanticDistance
 </tr></tbody>
 </table>
 </div>
-<p>A monologue for our pourposes consists of any block of text NOT delineated by a talker/speaker. This includes ordered texts like stories or narratives, or unordered lists (i.e., bags of words). The minimum requirement for a monologue is one row and one column with some text in it. Here’s a sample monologue. <br></p>
+<p>A monologue for our purposes consists of any block of text NOT delineated by a talker/speaker. This includes ordered texts like stories or narratives, or unordered lists (i.e., bags of words). The minimum requirement for a monologue is one row and one column with some text in it. Here’s a sample monologue. <br></p>
 <div style="clear: both; margin-bottom: 20px;">
 
 </div>
@@ -941,8 +942,10 @@ fixed initial chunk of words to each new word or ngram
 <p><span style="color: #006400;">Arguments to <code>wordlist_to_network</code>:</span><br> -<code>dat</code> dataframe processed using <code><a href="reference/clean_monologue_or_list.html">clean_monologue_or_list()</a></code> <br> -<code>output</code> quoted argument <code>dendrogram</code> or <code>network</code> default is <code>dendrogram</code>. <br> -<code>dist_type</code> quoted argument, which distance norms would you like? default is <code>embedding</code> alternative is <code>SD15</code>. <br></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">MyCleanList</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_monologue_or_list.html">clean_monologue_or_list</a></span><span class="op">(</span>dat<span class="op">=</span><span class="va">Unordered_List</span>, wordcol<span class="op">=</span><span class="st">'mytext'</span><span class="op">)</span></span>
-<span><span class="va">mydendro</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/wordlist_to_network.html">wordlist_to_network</a></span><span class="op">(</span><span class="va">MyCleanList</span>, output<span class="op">=</span><span class="st">'dendrogram'</span>, dist_type<span class="op">=</span><span class="st">'embedding'</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-16-1.png" alt="" width="100%"></p>
+<span><span class="va">mydendro</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/wordlist_to_network.html">wordlist_to_network</a></span><span class="op">(</span><span class="va">MyCleanList</span>, output<span class="op">=</span><span class="st">'dendrogram'</span>, dist_type<span class="op">=</span><span class="st">'embedding'</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Length of words: 17"</span></span>
+<span><span class="co">#&gt; [1] "my_kmax: 10"</span></span></code></pre></div>
+<p><img src="reference/figures/unnamed-chunk-16-1.png" alt="" width="100%" style="display: block; margin: auto auto auto 0;"></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mydendro</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 'dendrogram' with 2 branches and 17 members total, at height 5.168642</span></span></code></pre></div>
@@ -959,15 +962,17 @@ fixed initial chunk of words to each new word or ngram
 <p><span style="color: #006400;">Arguments to <code>clean_monologue_or_list</code></span> <br> - dat<code>input formatted dataframe. &lt;br&gt; -</code>dist_type<code>quoted argument distance option, default is "embedding", alt is</code>SD15`. <br></p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">MyCleanList</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clean_monologue_or_list.html">clean_monologue_or_list</a></span><span class="op">(</span>dat<span class="op">=</span><span class="va">Unordered_List</span>, wordcol<span class="op">=</span><span class="st">'mytext'</span><span class="op">)</span></span>
-<span><span class="va">mynetwork</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/wordlist_to_network.html">wordlist_to_network</a></span><span class="op">(</span><span class="va">MyCleanList</span>, output<span class="op">=</span><span class="st">'network'</span>, dist_type<span class="op">=</span><span class="st">'embedding'</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-17-1.png" alt="" width="100%"></p>
+<span><span class="va">mynetwork</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/wordlist_to_network.html">wordlist_to_network</a></span><span class="op">(</span><span class="va">MyCleanList</span>, output<span class="op">=</span><span class="st">'network'</span>, dist_type<span class="op">=</span><span class="st">'embedding'</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Length of words: 17"</span></span>
+<span><span class="co">#&gt; [1] "my_kmax: 10"</span></span></code></pre></div>
+<p><img src="reference/figures/unnamed-chunk-17-1.png" alt="" width="100%" style="display: block; margin: auto auto auto 0;"></p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mynetwork</span><span class="op">)</span></span>
-<span><span class="co">#&gt; IGRAPH d78291e UNW- 17 68 -- </span></span>
+<span><span class="co">#&gt; IGRAPH 4c13663 UNW- 17 68 -- </span></span>
 <span><span class="co">#&gt; + attr: name (v/c), cluster (v/n), color (v/c), size (v/n), label</span></span>
 <span><span class="co">#&gt; | (v/c), label.color (v/c), label.cex (v/n), weight (e/n), color (e/c),</span></span>
 <span><span class="co">#&gt; | width (e/n)</span></span>
-<span><span class="co">#&gt; + edges from d78291e (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from 4c13663 (vertex names):</span></span>
 <span><span class="co">#&gt;  [1] trombone--missile trombone--gun     trombone--bullet  trombone--knife  </span></span>
 <span><span class="co">#&gt;  [5] trombone--spear   trombone--apple   trombone--banana  trombone--tomato </span></span>
 <span><span class="co">#&gt;  [9] trombone--disgust trombone--angry   trombone--sad     trombone--happy  </span></span>
@@ -1030,7 +1035,7 @@ fixed initial chunk of words to each new word or ngram
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

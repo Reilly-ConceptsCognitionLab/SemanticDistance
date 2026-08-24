@@ -42,10 +42,10 @@ cat('</div>')  # Close flex container
 ```
 
 # Overview
-`SemanticDistance` does the following operations: <br>
+`SemanticDistance` executes the following operations: <br>
 1) cleans and formats ordered text (monologues and dialogues) <br>
-2) cleans and formats unordered word lists (e.g., bags-of-words)
-3) computes pairwise semantic distance metrics using numerous chunking options
+2) cleans and formats unordered word lists (e.g., bags-of-words) <br>
+3) computes pairwise semantic distance metrics using numerous chunking options <br>
 4) finds clustering solutions and creates simple semantic networks from given word list vectors. <br>
 
 # Install & Load Package
