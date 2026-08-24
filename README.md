@@ -20,9 +20,7 @@ Continuous Text
 <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px;">
 
 [![GitHub
-release](https://img.shields.io/github/v/release/Reilly-ConceptsCognitionLab/SemanticDistance?color=blue&include_prereleases&label=Release)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/releases)[![GitHub
-tag (latest by
-date)](https://img.shields.io/github/v/tag/Reilly-ConceptsCognitionLab/SemanticDistance?color=blue)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/tags)[![status](https://joss.theoj.org/papers/839ab720504a5c966b4b2893f78ec2b2/status.svg)](https://joss.theoj.org/papers/839ab720504a5c966b4b2893f78ec2b2)
+release](https://img.shields.io/github/v/release/Reilly-ConceptsCognitionLab/SemanticDistance?color=blue&include_prereleases&label=Release)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/releases)
 [![License: GPL
 v3+](https://img.shields.io/badge/License-GPL%20v3+-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
@@ -492,11 +490,11 @@ mynetwork <- wordlist_to_network(MyCleanList, output='network', dist_type='embed
 
 ``` r
 print(mynetwork)
-#> IGRAPH 4c13663 UNW- 17 68 -- 
+#> IGRAPH ad5f728 UNW- 17 68 -- 
 #> + attr: name (v/c), cluster (v/n), color (v/c), size (v/n), label
 #> | (v/c), label.color (v/c), label.cex (v/n), weight (e/n), color (e/c),
 #> | width (e/n)
-#> + edges from 4c13663 (vertex names):
+#> + edges from ad5f728 (vertex names):
 #>  [1] trombone--missile trombone--gun     trombone--bullet  trombone--knife  
 #>  [5] trombone--spear   trombone--apple   trombone--banana  trombone--tomato 
 #>  [9] trombone--disgust trombone--angry   trombone--sad     trombone--happy  

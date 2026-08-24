@@ -30,11 +30,6 @@ cat('<div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px;
 # Simplified GitHub Release badge
 cat('[![GitHub release](https://img.shields.io/github/v/release/Reilly-ConceptsCognitionLab/SemanticDistance?color=blue&include_prereleases&label=Release)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/releases)')
 
-cat('[![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/Reilly-ConceptsCognitionLab/SemanticDistance?color=blue)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/tags)')
-
-#JOSS submission badge
-cat('[![status](https://joss.theoj.org/papers/839ab720504a5c966b4b2893f78ec2b2/status.svg)](https://joss.theoj.org/papers/839ab720504a5c966b4b2893f78ec2b2)')
-
 cat('
 [![License: GPL v3+](https://img.shields.io/badge/License-GPL%20v3+-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)')
 
