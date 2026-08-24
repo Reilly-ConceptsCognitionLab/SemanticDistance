@@ -50,7 +50,7 @@ library(SemanticDistance)
 `SemanticDistance` contains specialized functions for processing the
 text formats delineated to follow. To learn more about the specific
 options for string cleaning, computing distances, and visualizing output
-for each of these formats, visit its corresponding vigbnette. <br>
+for each of these formats, visit its corresponding vignette. <br>
 
 ## Monologue (example)
 
@@ -62,7 +62,7 @@ for each of these formats, visit its corresponding vigbnette. <br>
 
 </div>
 
-A monologue for our pourposes consists of any block of text NOT
+A monologue for our purposes consists of any block of text NOT
 delineated by a talker/speaker. This includes ordered texts like stories
 or narratives, or unordered lists (i.e., bags of words). The minimum
 requirement for a monologue is one row and one column with some text in
