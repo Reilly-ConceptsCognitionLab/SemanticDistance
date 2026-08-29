@@ -32,8 +32,18 @@ v3+](https://img.shields.io/badge/License-GPL%20v3+-blue.svg)](https://www.gnu.o
 formats ordered text (monologues and dialogues) <br> 2) cleans and
 formats unordered word lists (e.g., bags-of-words) <br> 3) computes
 pairwise semantic distance metrics using numerous chunking options <br>
-4) finds clustering solutions and creates simple semantic networks from
-given word list vectors. <br>
+4) computes clustering solutions and creates simple semantic networks
+from given word list vectors. <br>
+
+Numerous software packages exist for computing different metrics of
+semantic distance. However, the `SemanticDistance` package is unique in
+its capacity to compute rolling measures of semantic distance (e.g., one
+word to the previous word in continuous text) using qualitatively
+different sources (e.g., experiential norms vs. embeddings) in addition
+to executing text cleaning within the package itself. `SemanticDistance`
+is also capable of producing network visualizations from word lists,
+offering a potentially useful tool for visualizing structure and
+relatedness.
 
 # Install & Load Package
 
@@ -490,11 +500,11 @@ mynetwork <- wordlist_to_network(MyCleanList, output='network', dist_type='embed
 
 ``` r
 print(mynetwork)
-#> IGRAPH 94c416d UNW- 17 68 -- 
+#> IGRAPH c6d2286 UNW- 17 68 -- 
 #> + attr: name (v/c), cluster (v/n), color (v/c), size (v/n), label
 #> | (v/c), label.color (v/c), label.cex (v/n), weight (e/n), color (e/c),
 #> | width (e/n)
-#> + edges from 94c416d (vertex names):
+#> + edges from c6d2286 (vertex names):
 #>  [1] trombone--missile trombone--gun     trombone--bullet  trombone--knife  
 #>  [5] trombone--spear   trombone--apple   trombone--banana  trombone--tomato 
 #>  [9] trombone--disgust trombone--angry   trombone--sad     trombone--happy  

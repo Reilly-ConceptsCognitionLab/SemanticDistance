@@ -41,7 +41,9 @@ cat('</div>')  # Close flex container
 1) cleans and formats ordered text (monologues and dialogues) <br>
 2) cleans and formats unordered word lists (e.g., bags-of-words) <br>
 3) computes pairwise semantic distance metrics using numerous chunking options <br>
-4) finds clustering solutions and creates simple semantic networks from given word list vectors. <br>
+4) computes clustering solutions and creates simple semantic networks from given word list vectors. <br>
+
+Numerous software packages exist for computing different metrics of semantic distance. However, the `SemanticDistance` package is unique in its capacity to compute rolling measures of semantic distance (e.g., one word to the previous word in continuous text) using qualitatively different sources (e.g., experiential norms vs. embeddings) in addition to executing text cleaning within the package itself. `SemanticDistance` is also capable of producing network visualizations from word lists, offering a potentially useful tool for visualizing structure and relatedness.
 
 # Install & Load Package
 Install the development version of `SemanticDistance` using the `devtools` package. <br>
