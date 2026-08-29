@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2026.1.19)  29 AUG 2026 17:12
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2026.1.19)  29 AUG 2026 17:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -957,7 +957,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 359--365
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 366--378
+Underfull \hbox (badness 10000) in paragraph at lines 366--381
 
  []
 
@@ -971,22 +971,22 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 379--382
+Underfull \hbox (badness 10000) in paragraph at lines 382--385
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 383--393
+Underfull \hbox (badness 10000) in paragraph at lines 386--396
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 394--397
+Underfull \hbox (badness 10000) in paragraph at lines 397--400
 
  []
 
 
-Overfull \hbox (19.45137pt too wide) in paragraph at lines 423--428
+Overfull \hbox (19.45137pt too wide) in paragraph at lines 426--431
 [][][][][] [] [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]$[][]\TU/lmr/m/n/10 . 
  []
 
