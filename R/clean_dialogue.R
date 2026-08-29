@@ -114,7 +114,7 @@ clean_dialogue <- function(dat, wordcol, who_talking, omit_stops = TRUE, lemmati
         NA_character_,
         word_clean
       ),
-      id_row_postsplit = seq_len(dplyr::n())
+      id_row_postsplit = factor(seq_len(dplyr::n()))
     )
 
   # Lemmatization if requested

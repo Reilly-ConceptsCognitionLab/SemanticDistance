@@ -111,7 +111,7 @@ clean_monologue_or_list <- function(dat, wordcol, omit_stops = TRUE, lemmatize =
         NA_character_,
         word_clean
       ),
-      id_row_postsplit = seq_len(dplyr::n())  # Fixed this line
+      id_row_postsplit = factor(seq_len(dplyr::n()))
     )
 
   # Lemmatization if requested (only for non-NA values)
