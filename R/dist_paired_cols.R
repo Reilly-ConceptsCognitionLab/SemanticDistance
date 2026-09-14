@@ -1,9 +1,9 @@
 #' dist_paired_cols
 #'
-#' Function takes dataframe cleaned using 'clean_2columns', computes two metrics of semantic distance for each word pair arrayed in Col1 vs. Col2
+#' Function takes dataframe cleaned using `clean_paired_columns`, computes two metrics of semantic distance for each word pair arrayed in Col1 vs. Col2
 #'
 #' @name dist_paired_cols
-#' @param dat a dataframe prepped using clean_2columns' with word pairs arrayed in two columns
+#' @param dat a dataframe prepped using `clean__paired_columns` with word pairs arrayed in two columns
 #' @return a dataframe
 #' @importFrom magrittr %>%
 #' @importFrom dplyr select
@@ -17,11 +17,7 @@
 
 dist_paired_cols <- function(dat) {
   # Check if required columns exist
-  required_cols <- c("word1_clean", "word2_clean")
-  if (!all(required_cols %in% names(dat))) {
-    stop("Dataframe must contain both 'word1_clean' and 'word2_clean' columns")
-  }
-
+  required_cols <- c("_clean1", "_clean2")
   dat_small <- dat %>%
     dplyr::select(id_row_orig, word1_clean, word2_clean)
 

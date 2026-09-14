@@ -25,6 +25,10 @@
 #' @export
 
 clean_paired_cols <- function(dat, wordcol1, wordcol2, lemmatize = TRUE) {
+  # Create new column names by appending "_clean1" and "_clean2"
+  wordcol1_clean1 <- paste0(wordcol1, "_clean1")
+  wordcol2_clean2 <- paste0(wordcol2, "_clean2")
+
   # Input validation
   if (!wordcol1 %in% names(dat)) {
     stop(paste("Column", wordcol1, "not found in dataframe"))
@@ -38,7 +42,7 @@ clean_paired_cols <- function(dat, wordcol1, wordcol2, lemmatize = TRUE) {
     dplyr::mutate(
       id_row_orig = factor(seq_len(nrow(dat))),
       # Process first column
-      word_clean1 = tryCatch(
+      !!sym(wordcol1_clean) := tryCatch(
         stringi::stri_enc_toutf8(as.character(.[[wordcol1]]),
                                  is_unknown_8bit = TRUE,
                                  validate = TRUE),
@@ -46,7 +50,7 @@ clean_paired_cols <- function(dat, wordcol1, wordcol2, lemmatize = TRUE) {
                                                  to = "UTF-8")
       ),
       # Process second column
-      word_clean2 = tryCatch(
+      !!sym(wordcol2_clean) := tryCatch(
         stringi::stri_enc_toutf8(as.character(.[[wordcol2]]),
                                  is_unknown_8bit = TRUE,
                                  validate = TRUE),
@@ -56,9 +60,48 @@ clean_paired_cols <- function(dat, wordcol1, wordcol2, lemmatize = TRUE) {
       .before = 1
     ) %>%
     dplyr::mutate(
-      word_clean1 = tolower(word_clean1),
-      word_clean2 = tolower(word_clean2)
+      !!sym(wordcol1_clean) := tolower(!!sym(wordcol1_clean)),
+      !!sym(wordcol2_clean) := tolower(!!sym(wordcol2_clean))
     )
+
+  # Define cleaning steps for a column
+  clean_column <- function(dat, col_clean, lemmatize) {
+    # Apply all cleaning steps
+    dat <- dat %>%
+      # Remove non-alphabetic characters
+      mutate(!!sym(col_clean) := stringi::stri_replace_all_regex(
+        !!sym(col_clean), "[^a-zA-Z]", " ")) %>%
+      # Clean whitespace
+      mutate(!!sym(col_clean) := stringr::str_squish(
+        gsub("\\s+", " ", !!sym(col_clean)))) %>%
+      # Clean text
+      mutate(!!sym(col_clean) := stringi::stri_replace_all_regex(
+        !!sym(col_clean), "[^a-z']", "")) %>%
+      # ASCII conversion
+      mutate(
+        !!sym(col_clean) := iconv(!!sym(col_clean), to = "ASCII//TRANSLIT", sub = ""),
+        !!sym(col_clean) := stringi::stri_replace_all_regex(
+          !!sym(col_clean), "[^[:alnum:]']", "")
+      ) %>%
+      # Filter out empty strings
+      filter(!!sym(col_clean) != "")
+
+    # Lemmatization if requested
+    if (lemmatize) {
+      dat <- dat %>%
+        mutate(!!sym(col_clean) := textstem::lemmatize_strings(!!sym(col_clean)))
+    }
+
+    return(dat)
+  }
+
+  # Apply cleaning to both columns
+  dat_prep <- clean_column(dat_prep, wordcol1_clean, lemmatize)
+  dat_prep <- clean_column(dat_prep, wordcol2_clean, lemmatize)
+
+  # Return the cleaned data
+  return(dat_prep)
+}
 
   # Define cleaning steps for a column (all cleaning steps now compulsory)
   clean_column <- function(dat, colname, lemmatize) {
