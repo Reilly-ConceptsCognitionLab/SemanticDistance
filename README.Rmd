@@ -14,7 +14,6 @@ knitr::opts_chunk$set(
 ```
 <br>
 <br>
-<br>
 
 <h1 style="color: #8B0000;">SemanticDistance</h1>
 Compute Semantic Relatedness between Constituents of Sequential Continuous Text
