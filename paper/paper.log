@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2026.1.19)  14 SEP 2026 10:05
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2026.1.19)  14 SEP 2026 10:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -919,7 +919,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 292--307
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 310--316
+Underfull \hbox (badness 1360) in paragraph at lines 310--322
+\TU/lmr/m/n/10 Many of the text cleaning, formatting, and pairwise distance operations within
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 310--322
 
  []
 
@@ -933,31 +938,26 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <8> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 317.
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 322.
 [1
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 319--329
+Underfull \hbox (badness 10000) in paragraph at lines 325--335
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 332--339
+Underfull \hbox (badness 10000) in paragraph at lines 338--345
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 342--358
+Underfull \hbox (badness 10000) in paragraph at lines 348--364
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 359--365
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 366--378
+Underfull \hbox (badness 10000) in paragraph at lines 365--371
 
  []
 
@@ -971,23 +971,23 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 379--382
+Underfull \hbox (badness 10000) in paragraph at lines 372--384
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 383--393
+Underfull \hbox (badness 10000) in paragraph at lines 385--388
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 394--397
+Underfull \hbox (badness 10000) in paragraph at lines 389--399
 
  []
 
 
-Overfull \hbox (19.45137pt too wide) in paragraph at lines 423--428
-[][][][][] [] [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]$[][]\TU/lmr/m/n/10 . 
+Underfull \hbox (badness 10000) in paragraph at lines 400--403
+
  []
 
 File: /Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.6/aarch64-apple-darwin23/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
@@ -1000,6 +1000,10 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [3]
+Overfull \hbox (19.45137pt too wide) in paragraph at lines 447--452
+[][][][][] [] [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]$[][]\TU/lmr/m/n/10 . 
+ []
+
 File: /Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.6/aarch64-apple-darwin23/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
 </Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.6/aarch64-apple-darwin23/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
 
@@ -1021,10 +1025,10 @@ Package logreq Info: Writing requests to 'paper.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 34554 strings out of 470189
- 712515 string characters out of 5478015
- 1582770 words of memory out of 5000000
- 62666 multiletter control sequences out of 15000+600000
+ 34558 strings out of 470189
+ 712602 string characters out of 5478015
+ 1583937 words of memory out of 5000000
+ 62670 multiletter control sequences out of 15000+600000
  634577 words of font info for 86 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  84i,12n,94p,694b,850s stack positions out of 10000i,1000n,20000p,200000b,200000s
