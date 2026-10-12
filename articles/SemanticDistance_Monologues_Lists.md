@@ -14,16 +14,16 @@ follow will illustrate how to prep and clean your text data using
 
 Included in the package
 
-| mytext                                                                                                            |
-|:------------------------------------------------------------------------------------------------------------------|
+| mytext |
+|:---|
 | The girl walked down the street. The wrestler punched the boxer. I could not open the door. 95 dogs jumped on me. |
 
 ## A typical unordered word list
 
 Included in the package
 
-| mytext                                                                                                           |
-|:-----------------------------------------------------------------------------------------------------------------|
+| mytext |
+|:---|
 | trumpet trombone flute piano guitar gun knife missile bullet spear apple banana tomato sad angry happy disgusted |
 
 ## Step 1: Clean Monologue or List: `clean_monologue_or_list`
@@ -49,24 +49,25 @@ Function Arguments:
 TRUE  
 
 ``` r
+
 Monologue_Cleaned <- clean_monologue_or_list(dat=Monologue_Typical, wordcol='mytext', omit_stops=TRUE, lemmatize=TRUE)
 knitr::kable(head(Monologue_Cleaned, 12), format = "pipe", digits=2)
 ```
 
 | id_row_orig | text_initialsplit | word_clean | id_row_postsplit |
-|:------------|:------------------|:-----------|-----------------:|
-| 1           | the               | NA         |                1 |
-| 1           | girl              | girl       |                2 |
-| 1           | walked            | walk       |                3 |
-| 1           | down              | down       |                4 |
-| 1           | the               | NA         |                5 |
-| 1           | street.           | street     |                6 |
-| 1           | the               | NA         |                7 |
-| 1           | wrestler          | wrestler   |                8 |
-| 1           | punched           | punch      |                9 |
-| 1           | the               | NA         |               10 |
-| 1           | boxer.            | boxer      |               11 |
-| 1           | i                 | NA         |               12 |
+|:------------|:------------------|:-----------|:-----------------|
+| 1           | the               | NA         | 1                |
+| 1           | girl              | girl       | 2                |
+| 1           | walked            | walk       | 3                |
+| 1           | down              | down       | 4                |
+| 1           | the               | NA         | 5                |
+| 1           | street.           | street     | 6                |
+| 1           | the               | NA         | 7                |
+| 1           | wrestler          | wrestler   | 8                |
+| 1           | punched           | punch      | 9                |
+| 1           | the               | NA         | 10               |
+| 1           | boxer.            | boxer      | 11               |
+| 1           | i                 | NA         | 12               |
 
 ## Step 2: Choose Distance Option/Compute Distances
 
@@ -84,17 +85,18 @@ clean_monologue fn
 word is compared to the word before it.
 
 ``` r
+
 Ngram2Word_Dists1 <- dist_ngram2word(dat=Monologue_Cleaned, ngram=1) #distance word-to-word
 head(Ngram2Word_Dists1)
 #> # A tibble: 6 × 6
 #>   id_row_orig text_initialsplit word_clean id_row_postsplit CosDist_1gram_glo
-#>   <fct>       <chr>             <chr>                 <int>             <dbl>
-#> 1 1           the               NA                        1            NA    
-#> 2 1           girl              girl                      2            NA    
-#> 3 1           walked            walk                      3             0.470
-#> 4 1           down              down                      4             0.283
-#> 5 1           the               NA                        5            NA    
-#> 6 1           street.           street                    6             0.362
+#>   <fct>       <chr>             <chr>      <fct>                        <dbl>
+#> 1 1           the               NA         1                           NA    
+#> 2 1           girl              girl       2                           NA    
+#> 3 1           walked            walk       3                            0.470
+#> 4 1           down              down       4                            0.283
+#> 5 1           the               NA         5                           NA    
+#> 6 1           street.           street     6                            0.362
 #> # ℹ 1 more variable: CosDist_1gram_sd15 <dbl>
 ```
 
@@ -112,17 +114,18 @@ Function Arguments:
 of 2 words compared to the next chunk
 
 ``` r
+
 Ngram2Ngram_Dist1 <- dist_ngram2ngram(dat=Monologue_Cleaned, ngram=2)
 head(Ngram2Ngram_Dist1)
 #> # A tibble: 6 × 6
 #>   id_row_orig text_initialsplit word_clean id_row_postsplit CosDist_2gram_GLO
-#>   <fct>       <chr>             <chr>                 <int>             <dbl>
-#> 1 1           the               NA                        1           NA     
-#> 2 1           girl              girl                      2           NA     
-#> 3 1           walked            walk                      3           NA     
-#> 4 1           down              down                      4            0.141 
-#> 5 1           the               NA                        5            0.0608
-#> 6 1           street.           street                    6            0.319 
+#>   <fct>       <chr>             <chr>      <fct>                        <dbl>
+#> 1 1           the               NA         1                          NA     
+#> 2 1           girl              girl       2                          NA     
+#> 3 1           walked            walk       3                          NA     
+#> 4 1           down              down       4                           0.141 
+#> 5 1           the               NA         5                           0.0608
+#> 6 1           street.           street     6                           0.319 
 #> # ℹ 1 more variable: CosDist_2gram_SD15 <dbl>
 ```
 
@@ -140,15 +143,16 @@ Function Arguments:
 comparisons fn
 
 ``` r
+
 Anchored_Dists1 <- dist_anchor(dat=Monologue_Cleaned, anchor_size=4)
 head(Anchored_Dists1)
 #> # A tibble: 6 × 4
 #>   id_row_postsplit word_clean CosDist_Anchor_GLO CosDist_Anchor_SD15
-#>              <int> <chr>                   <dbl>               <dbl>
-#> 1                1 NA                    NA                   NA    
-#> 2                2 girl                   0.164                0.433
-#> 3                3 walk                   0.112                0.167
-#> 4                4 down                   0.0822               0.206
-#> 5                5 NA                    NA                   NA    
-#> 6                6 street                 0.259                0.170
+#>   <fct>            <chr>                   <dbl>               <dbl>
+#> 1 1                NA                    NA                   NA    
+#> 2 2                girl                   0.182                0.588
+#> 3 3                walk                   0.139                0.476
+#> 4 4                down                   0.0996               0.423
+#> 5 5                NA                    NA                   NA    
+#> 6 6                street                 0.320                0.645
 ```

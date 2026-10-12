@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="SemanticDistance_Word_Pairs">
 </head>
@@ -68,7 +68,7 @@
                         <h4 data-toc-skip class="author">Jamie Reilly,
 Hannah Mechtenberg, Emily Myers, Jonathan E. Peelle</h4>
             
-            <h4 data-toc-skip class="date">2026-04-16</h4>
+            <h4 data-toc-skip class="date">2026-10-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/blob/main/vignettes/SemanticDistance_Word_Pairs.Rmd" class="external-link"><code>vignettes/SemanticDistance_Word_Pairs.Rmd</code></a></small>
       <div class="d-none name"><code>SemanticDistance_Word_Pairs.Rmd</code></div>
@@ -122,54 +122,54 @@ transforms raw word to lemmatized form, T/F default is TRUE</p>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">WordPairs_Clean</span>, <span class="fl">6</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"simple"</span>, digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span> </span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
+<th align="left">word1</th>
+<th align="left">word2</th>
 <th align="left">id_row_orig</th>
 <th align="left">word1_clean</th>
 <th align="left">word2_clean</th>
-<th align="left">word1</th>
-<th align="left">word2</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
+<td align="left">Dog</td>
+<td align="left">trumpet</td>
 <td align="left">1</td>
 <td align="left">dog</td>
 <td align="left">trumpet</td>
-<td align="left">Dog</td>
-<td align="left">trumpet</td>
 </tr>
 <tr class="even">
+<td align="left">the</td>
+<td align="left">BANANA</td>
 <td align="left">2</td>
 <td align="left">the</td>
 <td align="left">banana</td>
-<td align="left">the</td>
-<td align="left">BANANA</td>
 </tr>
 <tr class="odd">
+<td align="left">rat</td>
+<td align="left">astronaut</td>
 <td align="left">3</td>
 <td align="left">rat</td>
 <td align="left">astronaut</td>
-<td align="left">rat</td>
-<td align="left">astronaut</td>
 </tr>
 <tr class="even">
+<td align="left">*&amp;^%</td>
+<td align="left">lizard</td>
+<td align="left">4</td>
+<td align="left"></td>
+<td align="left">lizard</td>
+</tr>
+<tr class="odd">
+<td align="left">bird</td>
+<td align="left">bird</td>
 <td align="left">5</td>
 <td align="left">bird</td>
 <td align="left">bird</td>
-<td align="left">bird</td>
-<td align="left">bird</td>
 </tr>
-<tr class="odd">
+<tr class="even">
+<td align="left">shark</td>
+<td align="left">shark</td>
 <td align="left">6</td>
 <td align="left">shark</td>
 <td align="left">shark</td>
-<td align="left">shark</td>
-<td align="left">shark</td>
-</tr>
-<tr class="even">
-<td align="left">8</td>
-<td align="left">dog</td>
-<td align="left">leash</td>
-<td align="left">Dog</td>
-<td align="left">leash</td>
 </tr>
 </tbody>
 </table>
@@ -187,68 +187,68 @@ dataframe with word pairs arrayed in columns cleaned and prepped using
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">Columns_Dists</span>, <span class="fl">6</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"simple"</span>, digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span> </span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
+<th align="left">word1</th>
+<th align="left">word2</th>
 <th align="left">id_row_orig</th>
 <th align="left">word1_clean</th>
 <th align="left">word2_clean</th>
-<th align="left">word1</th>
-<th align="left">word2</th>
 <th align="right">CosDist_SD15</th>
 <th align="right">CosDist_GLO</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
+<td align="left">Dog</td>
+<td align="left">trumpet</td>
 <td align="left">1</td>
 <td align="left">dog</td>
-<td align="left">trumpet</td>
-<td align="left">Dog</td>
 <td align="left">trumpet</td>
 <td align="right">0.45</td>
 <td align="right">0.84</td>
 </tr>
 <tr class="even">
+<td align="left">the</td>
+<td align="left">BANANA</td>
 <td align="left">2</td>
 <td align="left">the</td>
 <td align="left">banana</td>
-<td align="left">the</td>
-<td align="left">BANANA</td>
 <td align="right">1.18</td>
 <td align="right">0.77</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
 <td align="left">rat</td>
 <td align="left">astronaut</td>
+<td align="left">3</td>
 <td align="left">rat</td>
 <td align="left">astronaut</td>
 <td align="right">1.22</td>
 <td align="right">0.93</td>
 </tr>
 <tr class="even">
+<td align="left">*&amp;^%</td>
+<td align="left">lizard</td>
+<td align="left">4</td>
+<td align="left"></td>
+<td align="left">lizard</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">bird</td>
+<td align="left">bird</td>
 <td align="left">5</td>
 <td align="left">bird</td>
 <td align="left">bird</td>
-<td align="left">bird</td>
-<td align="left">bird</td>
-<td align="right">0.00</td>
-<td align="right">0.00</td>
-</tr>
-<tr class="odd">
-<td align="left">6</td>
-<td align="left">shark</td>
-<td align="left">shark</td>
-<td align="left">shark</td>
-<td align="left">shark</td>
 <td align="right">0.00</td>
 <td align="right">0.00</td>
 </tr>
 <tr class="even">
-<td align="left">8</td>
-<td align="left">dog</td>
-<td align="left">leash</td>
-<td align="left">Dog</td>
-<td align="left">leash</td>
-<td align="right">0.68</td>
-<td align="right">0.50</td>
+<td align="left">shark</td>
+<td align="left">shark</td>
+<td align="left">6</td>
+<td align="left">shark</td>
+<td align="left">shark</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
 </tr>
 </tbody>
 </table>
@@ -265,7 +265,7 @@ dataframe with word pairs arrayed in columns cleaned and prepped using
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

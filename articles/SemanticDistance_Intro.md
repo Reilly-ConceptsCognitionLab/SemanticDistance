@@ -53,13 +53,13 @@ embedding model. We trained GLOVE on a vast corpus of American English.
 The result of this training is a lookup database with more than 100k
 English words characterized across 300 dimensions. These embedding
 dimensions are not like the psychological dimensions measured in SD15.
-The embeddings are mathematical constructs (hyperparameters) derived
-through dimension reduction reflecting co-occurence statistics between
-each word in the database to all other words in the database.
-SemanticDistance computes the second semantic distance value using these
-embeddings and reports the distance (dog-wolf) as ‘GLO_cosdist’. An
-adjusted cosine value of zero is the least distant (most similar) and
-two is the most distant (least similar) index between elements.
+The embeddings are mathematical constructs (parameters) derived through
+dimension reduction reflecting co-occurence statistics between each word
+in the database to all other words in the database. `SemanticDistance`
+computes the second semantic distance value using these embeddings and
+reports the distance (dog-wolf) as `GLO_cosdist`. An adjusted cosine
+value of zero is the least distant (most similar) and two is the most
+distant (least similar) index between elements.
 
 ### What kinds of questions can SemanticDistance answer?
 
@@ -137,6 +137,7 @@ github using the `devtools` package.
 `devtools::install_github("Reilly-ConceptsCognitionLab/SemanticDistance")`
 
 ``` r
+
 # Load SemanticDistance
 library(SemanticDistance)
 ```

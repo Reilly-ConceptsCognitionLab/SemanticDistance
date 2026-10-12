@@ -15,23 +15,24 @@ learning algorithms (kmeans) to determine optimal cluster sizes.
 ## STEP 1: CLEAN AND FORMAT YOUR MONOLOGUE OR LIST
 
 ``` r
+
 #Start from 
 MyCleanList <- clean_monologue_or_list(Unordered_List, wordcol='mytext')
 knitr::kable(head(MyCleanList, 10), format = "pipe")
 ```
 
 | id_row_orig | text_initialsplit | word_clean | id_row_postsplit |
-|:------------|:------------------|:-----------|-----------------:|
-| 1           | trumpet           | trumpet    |                1 |
-| 1           | trombone          | trombone   |                2 |
-| 1           | flute             | flute      |                3 |
-| 1           | piano             | piano      |                4 |
-| 1           | guitar            | guitar     |                5 |
-| 1           | gun               | gun        |                6 |
-| 1           | knife             | knife      |                7 |
-| 1           | missile           | missile    |                8 |
-| 1           | bullet            | bullet     |                9 |
-| 1           | spear             | spear      |               10 |
+|:------------|:------------------|:-----------|:-----------------|
+| 1           | trumpet           | trumpet    | 1                |
+| 1           | trombone          | trombone   | 2                |
+| 1           | flute             | flute      | 3                |
+| 1           | piano             | piano      | 4                |
+| 1           | guitar            | guitar     | 5                |
+| 1           | gun               | gun        | 6                |
+| 1           | knife             | knife      | 7                |
+| 1           | missile           | missile    | 8                |
+| 1           | bullet            | bullet     | 9                |
+| 1           | spear             | spear      | 10               |
 
 ## STEP 2: CREATE DENDROGRAM or NETWORK
 
@@ -55,12 +56,16 @@ Arguments:
 default is `embedding` alt is ‘SD15’
 
 ``` r
+
 mydendro <- wordlist_to_network(MyCleanList, output='dendrogram', dist_type='embedding')
+#> [1] "Length of words: 17"
+#> [1] "my_kmax: 10"
 ```
 
 ![](SemanticDistance_Data_Viz_files/figure-html/unnamed-chunk-4-1.png)
 
 ``` r
+
 print(mydendro)
 #> 'dendrogram' with 2 branches and 17 members total, at height 5.168642
 ```
@@ -75,18 +80,22 @@ igraph object.
 `dist_type` default is ‘embedding’, alt is ‘SD15’
 
 ``` r
+
 mynetwork <- wordlist_to_network(MyCleanList, output='network', dist_type='embedding')
+#> [1] "Length of words: 17"
+#> [1] "my_kmax: 10"
 ```
 
 ![](SemanticDistance_Data_Viz_files/figure-html/unnamed-chunk-5-1.png)
 
 ``` r
+
 print(mynetwork)
-#> IGRAPH 04be038 UNW- 17 68 -- 
+#> IGRAPH 9c44752 UNW- 17 68 -- 
 #> + attr: name (v/c), cluster (v/n), color (v/c), size (v/n), label
 #> | (v/c), label.color (v/c), label.cex (v/n), weight (e/n), color (e/c),
 #> | width (e/n)
-#> + edges from 04be038 (vertex names):
+#> + edges from 9c44752 (vertex names):
 #>  [1] trombone--missile trombone--gun     trombone--bullet  trombone--knife  
 #>  [5] trombone--spear   trombone--apple   trombone--banana  trombone--tomato 
 #>  [9] trombone--disgust trombone--angry   trombone--sad     trombone--happy  

@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="SemanticDistance_Data_Viz">
 </head>
@@ -68,7 +68,7 @@
                         <h4 data-toc-skip class="author">Jamie Reilly,
 Hannah R. Mechtenberg, Emily B. Myers, Jonathan E. Peelle</h4>
             
-            <h4 data-toc-skip class="date">2026-04-16</h4>
+            <h4 data-toc-skip class="date">2026-10-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/blob/main/vignettes/SemanticDistance_Data_Viz.Rmd" class="external-link"><code>vignettes/SemanticDistance_Data_Viz.Rmd</code></a></small>
       <div class="d-none name"><code>SemanticDistance_Data_Viz.Rmd</code></div>
@@ -102,68 +102,68 @@ determine optimal cluster sizes.</p>
 <th align="left">id_row_orig</th>
 <th align="left">text_initialsplit</th>
 <th align="left">word_clean</th>
-<th align="right">id_row_postsplit</th>
+<th align="left">id_row_postsplit</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">trumpet</td>
 <td align="left">trumpet</td>
-<td align="right">1</td>
+<td align="left">1</td>
 </tr>
 <tr class="even">
 <td align="left">1</td>
 <td align="left">trombone</td>
 <td align="left">trombone</td>
-<td align="right">2</td>
+<td align="left">2</td>
 </tr>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">flute</td>
 <td align="left">flute</td>
-<td align="right">3</td>
+<td align="left">3</td>
 </tr>
 <tr class="even">
 <td align="left">1</td>
 <td align="left">piano</td>
 <td align="left">piano</td>
-<td align="right">4</td>
+<td align="left">4</td>
 </tr>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">guitar</td>
 <td align="left">guitar</td>
-<td align="right">5</td>
+<td align="left">5</td>
 </tr>
 <tr class="even">
 <td align="left">1</td>
 <td align="left">gun</td>
 <td align="left">gun</td>
-<td align="right">6</td>
+<td align="left">6</td>
 </tr>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">knife</td>
 <td align="left">knife</td>
-<td align="right">7</td>
+<td align="left">7</td>
 </tr>
 <tr class="even">
 <td align="left">1</td>
 <td align="left">missile</td>
 <td align="left">missile</td>
-<td align="right">8</td>
+<td align="left">8</td>
 </tr>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">bullet</td>
 <td align="left">bullet</td>
-<td align="right">9</td>
+<td align="left">9</td>
 </tr>
 <tr class="even">
 <td align="left">1</td>
 <td align="left">spear</td>
 <td align="left">spear</td>
-<td align="right">10</td>
+<td align="left">10</td>
 </tr>
 </tbody>
 </table>
@@ -189,7 +189,9 @@ argument <code>dendrogram</code> or <code>network</code> default is
 which distance norms would you like? default is <code>embedding</code>
 alt is ‘SD15’</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mydendro</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wordlist_to_network.html">wordlist_to_network</a></span><span class="op">(</span><span class="va">MyCleanList</span>, output<span class="op">=</span><span class="st">'dendrogram'</span>, dist_type<span class="op">=</span><span class="st">'embedding'</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mydendro</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wordlist_to_network.html">wordlist_to_network</a></span><span class="op">(</span><span class="va">MyCleanList</span>, output<span class="op">=</span><span class="st">'dendrogram'</span>, dist_type<span class="op">=</span><span class="st">'embedding'</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Length of words: 17"</span></span>
+<span><span class="co">#&gt; [1] "my_kmax: 10"</span></span></code></pre></div>
 <p><img src="SemanticDistance_Data_Viz_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="" width="700"></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mydendro</span><span class="op">)</span></span>
@@ -205,15 +207,17 @@ argument <code>dendrogram</code> or <code>network</code> default is
 <code>dendrogram</code> <br><code>dist_type</code> default is
 ‘embedding’, alt is ‘SD15’</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mynetwork</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wordlist_to_network.html">wordlist_to_network</a></span><span class="op">(</span><span class="va">MyCleanList</span>, output<span class="op">=</span><span class="st">'network'</span>, dist_type<span class="op">=</span><span class="st">'embedding'</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mynetwork</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wordlist_to_network.html">wordlist_to_network</a></span><span class="op">(</span><span class="va">MyCleanList</span>, output<span class="op">=</span><span class="st">'network'</span>, dist_type<span class="op">=</span><span class="st">'embedding'</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Length of words: 17"</span></span>
+<span><span class="co">#&gt; [1] "my_kmax: 10"</span></span></code></pre></div>
 <p><img src="SemanticDistance_Data_Viz_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="" width="700"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mynetwork</span><span class="op">)</span></span>
-<span><span class="co">#&gt; IGRAPH 04be038 UNW- 17 68 -- </span></span>
+<span><span class="co">#&gt; IGRAPH 9c44752 UNW- 17 68 -- </span></span>
 <span><span class="co">#&gt; + attr: name (v/c), cluster (v/n), color (v/c), size (v/n), label</span></span>
 <span><span class="co">#&gt; | (v/c), label.color (v/c), label.cex (v/n), weight (e/n), color (e/c),</span></span>
 <span><span class="co">#&gt; | width (e/n)</span></span>
-<span><span class="co">#&gt; + edges from 04be038 (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from 9c44752 (vertex names):</span></span>
 <span><span class="co">#&gt;  [1] trombone--missile trombone--gun     trombone--bullet  trombone--knife  </span></span>
 <span><span class="co">#&gt;  [5] trombone--spear   trombone--apple   trombone--banana  trombone--tomato </span></span>
 <span><span class="co">#&gt;  [9] trombone--disgust trombone--angry   trombone--sad     trombone--happy  </span></span>
@@ -234,7 +238,7 @@ argument <code>dendrogram</code> or <code>network</code> default is
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

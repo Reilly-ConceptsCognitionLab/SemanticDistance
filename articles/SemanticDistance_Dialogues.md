@@ -10,6 +10,7 @@ nominally contain a text column and a speaker/talker column.
 sample dialogue transcript included in the package
 
 ``` r
+
 knitr::kable(head(Dialogue_Typical, 6), format = "pipe")
 ```
 
@@ -38,24 +39,25 @@ to factor)
 `lemmatize` transforms raw word to lemmatized form, T/F default is TRUE
 
 ``` r
+
 Dialogue_Cleaned <- clean_dialogue(dat=Dialogue_Typical, wordcol="text", who_talking="speaker", omit_stops=TRUE, lemmatize=TRUE)
 knitr::kable(head(Dialogue_Cleaned, 12), format = "pipe")
 ```
 
 | id_row_orig | text_initialsplit | speaker | word_clean | id_row_postsplit | turn_count |
-|:------------|:------------------|:--------|:-----------|-----------------:|-----------:|
-| 1           | hi                | Mary    | NA         |                1 |          1 |
-| 1           | peter             | Mary    | peter      |                2 |          1 |
-| 1           | its               | Mary    | NA         |                3 |          1 |
-| 1           | its               | Mary    | NA         |                4 |          1 |
-| 1           | nice              | Mary    | nice       |                5 |          1 |
-| 1           | to                | Mary    | NA         |                6 |          1 |
-| 1           | see               | Mary    | see        |                7 |          1 |
-| 1           | you               | Mary    | NA         |                8 |          1 |
-| 2           | hi                | Peter   | NA         |                9 |          2 |
-| 2           | mary              | Peter   | mary       |               10 |          2 |
-| 2           | hot               | Peter   | hot        |               11 |          2 |
-| 2           | out               | Peter   | out        |               12 |          2 |
+|:------------|:------------------|:--------|:-----------|:-----------------|-----------:|
+| 1           | hi                | Mary    | NA         | 1                |          1 |
+| 1           | peter             | Mary    | peter      | 2                |          1 |
+| 1           | its               | Mary    | NA         | 3                |          1 |
+| 1           | its               | Mary    | NA         | 4                |          1 |
+| 1           | nice              | Mary    | nice       | 5                |          1 |
+| 1           | to                | Mary    | NA         | 6                |          1 |
+| 1           | see               | Mary    | see        | 7                |          1 |
+| 1           | you               | Mary    | NA         | 8                |          1 |
+| 2           | hi                | Peter   | NA         | 9                |          2 |
+| 2           | mary              | Peter   | mary       | 10               |          2 |
+| 2           | hot               | Peter   | hot        | 11               |          2 |
+| 2           | out               | Peter   | out        | 12               |          2 |
 
 ### Step 2: Compute Semantic Distances
 
@@ -75,6 +77,7 @@ distance values aggregated by talker and turn (id_turn). Arguments to
 ‘clean_dialogue’
 
 ``` r
+
 DialogueDists <- dist_dialogue(dat=Dialogue_Cleaned, who_talking="speaker")
 knitr::kable(head(DialogueDists, 12), format = "pipe", digits=2)
 ```

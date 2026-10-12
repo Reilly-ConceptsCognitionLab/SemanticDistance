@@ -4,24 +4,35 @@
   
   
 
+Compute Semantic Relatedness between Constituents of Sequential
+Continuous Text
+
 # 
 
 [![GitHub
-release](https://img.shields.io/github/v/release/Reilly-ConceptsCognitionLab/SemanticDistance?color=blue&include_prereleases&label=Release)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/releases)[![GitHub
-tag (latest by
-date)](https://img.shields.io/github/v/tag/Reilly-ConceptsCognitionLab/SemanticDistance?color=blue)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/tags)[![status](https://joss.theoj.org/papers/839ab720504a5c966b4b2893f78ec2b2/status.svg)](https://joss.theoj.org/papers/839ab720504a5c966b4b2893f78ec2b2)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/Reilly-ConceptsCognitionLab/ConversationAlign/graphs/commit-activity)
+release](https://img.shields.io/github/v/release/Reilly-ConceptsCognitionLab/SemanticDistance?color=blue&include_prereleases&label=Release)](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/releases)
 [![License: GPL
 v3+](https://img.shields.io/badge/License-GPL%20v3+-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 # Overview
 
-`SemanticDistance` does the following operations:  
+`SemanticDistance` executes the following operations:  
 1) cleans and formats ordered text (monologues and dialogues)  
-2) cleans and formats unordered word lists (e.g., bags-of-words) 3)
-computes pairwise semantic distance metrics using numerous chunking
-options 4) finds clustering solutions and creates simple semantic
-networks from given word list vectors.  
+2) cleans and formats unordered word lists (e.g., bags-of-words)  
+3) computes pairwise semantic distance metrics using numerous chunking
+options  
+4) computes clustering solutions and creates simple semantic networks
+from given word list vectors.  
+
+Numerous software packages exist for computing different metrics of
+semantic distance. However, the `SemanticDistance` package is unique in
+its capacity to compute rolling measures of semantic distance (e.g., one
+word to the previous word in continuous text) using qualitatively
+different sources (e.g., experiential norms vs. embeddings) in addition
+to executing text cleaning within the package itself. `SemanticDistance`
+is also capable of producing network visualizations from word lists,
+offering a potentially useful tool for visualizing structure and
+relatedness.
 
 # Install & Load Package
 
@@ -29,6 +40,7 @@ Install the development version of `SemanticDistance` using the
 `devtools` package.  
 
 ``` r
+
 #devtools::install_github("Reilly-ConceptsCognitionLab/SemanticDistance")
 library(SemanticDistance)
 ```
@@ -38,15 +50,15 @@ library(SemanticDistance)
 `SemanticDistance` contains specialized functions for processing the
 text formats delineated to follow. To learn more about the specific
 options for string cleaning, computing distances, and visualizing output
-for each of these formats, visit its corresponding vigbnette.  
+for each of these formats, visit its corresponding vignette.  
 
 ## Monologue (example)
 
-| mytext                                                                                                            |
-|:------------------------------------------------------------------------------------------------------------------|
+| mytext |
+|:---|
 | The girl walked down the street. The wrestler punched the boxer. I could not open the door. 95 dogs jumped on me. |
 
-A monologue for our pourposes consists of any block of text NOT
+A monologue for our purposes consists of any block of text NOT
 delineated by a talker/speaker. This includes ordered texts like stories
 or narratives, or unordered lists (i.e., bags of words). The minimum
 requirement for a monologue is one row and one column with some text in
@@ -90,8 +102,8 @@ proceeding steps of `SemanticDistance`.
 
 ## Unordered Word List (example)
 
-| mytext                                                                                                           |
-|:-----------------------------------------------------------------------------------------------------------------|
+| mytext |
+|:---|
 | trumpet trombone flute piano guitar gun knife missile bullet spear apple banana tomato sad angry happy disgusted |
 
 An unordered bag of words. You needn’t split your text but okay if you
@@ -120,6 +132,7 @@ Arguments to `clean_monologue_or_list`
 TRUE.  
 
 ``` r
+
 Monologue_Cleaned <- clean_monologue_or_list(dat=Monologue_Typical, wordcol='mytext', omit_stops=TRUE, lemmatize=TRUE)
 knitr::kable(head(Monologue_Cleaned, 12), format = "pipe", digits=2)
 ```
@@ -154,6 +167,7 @@ to factor).
 TRUE.
 
 ``` r
+
 Dialogue_Cleaned <- clean_dialogue(dat=Dialogue_Typical, wordcol="text", who_talking = "speaker", omit_stops=TRUE, lemmatize=TRUE)
 knitr::kable(head(Dialogue_Cleaned, 12), format = "pipe", digits=2)
 ```
@@ -191,6 +205,7 @@ word lives.
 TRUE.  
 
 ``` r
+
 WordPairs_Clean <- clean_paired_cols(dat=Word_Pairs, wordcol1='word1', wordcol2='word2', lemmatize=TRUE)
 knitr::kable(head(WordPairs_Clean, 6), format = "simple", digits=2) 
 ```
@@ -232,20 +247,21 @@ words](reference/figures/RollingNgramIllustrate.png)
 rolling groupings of words
 
 ``` r
+
 Ngram2Word_Dists1 <- dist_ngram2word(dat=Monologue_Cleaned, ngram=1) #distance word-to-word
 knitr::kable(head(Ngram2Word_Dists1, 8), format = "pipe", digits = 2)
 ```
 
 | id_row_orig | text_initialsplit | word_clean | id_row_postsplit | CosDist_1gram_glo | CosDist_1gram_sd15 |
-|:------------|:------------------|:-----------|-----------------:|------------------:|-------------------:|
-| 1           | the               | NA         |                1 |                NA |                 NA |
-| 1           | girl              | girl       |                2 |                NA |                 NA |
-| 1           | walked            | walk       |                3 |              0.47 |               1.06 |
-| 1           | down              | down       |                4 |              0.28 |               0.80 |
-| 1           | the               | NA         |                5 |                NA |                 NA |
-| 1           | street.           | street     |                6 |              0.36 |               0.87 |
-| 1           | the               | NA         |                7 |                NA |                 NA |
-| 1           | wrestler          | wrestler   |                8 |              0.97 |               0.63 |
+|:---|:---|:---|---:|---:|---:|
+| 1 | the | NA | 1 | NA | NA |
+| 1 | girl | girl | 2 | NA | NA |
+| 1 | walked | walk | 3 | 0.47 | 1.06 |
+| 1 | down | down | 4 | 0.28 | 0.80 |
+| 1 | the | NA | 5 | NA | NA |
+| 1 | street. | street | 6 | 0.36 | 0.87 |
+| 1 | the | NA | 7 | NA | NA |
+| 1 | wrestler | wrestler | 8 | 0.97 | 0.63 |
 
   
   
@@ -270,20 +286,21 @@ words](reference/figures/Ngram2Ngram_Dist.png)
 chunk-to-chunk groupings of words
 
 ``` r
+
 Ngram2Ngram_Dist1 <- dist_ngram2ngram(dat=Monologue_Cleaned, ngram=2)
 knitr::kable(head(Ngram2Ngram_Dist1, 8), format = "pipe", digits = 2)
 ```
 
 | id_row_orig | text_initialsplit | word_clean | id_row_postsplit | CosDist_2gram_GLO | CosDist_2gram_SD15 |
-|:------------|:------------------|:-----------|-----------------:|------------------:|-------------------:|
-| 1           | the               | NA         |                1 |                NA |                 NA |
-| 1           | girl              | girl       |                2 |                NA |                 NA |
-| 1           | walked            | walk       |                3 |                NA |                 NA |
-| 1           | down              | down       |                4 |              0.14 |               1.05 |
-| 1           | the               | NA         |                5 |              0.06 |               0.09 |
-| 1           | street.           | street     |                6 |              0.32 |               0.94 |
-| 1           | the               | NA         |                7 |              0.32 |               0.94 |
-| 1           | wrestler          | wrestler   |                8 |              0.93 |               1.18 |
+|:---|:---|:---|---:|---:|---:|
+| 1 | the | NA | 1 | NA | NA |
+| 1 | girl | girl | 2 | NA | NA |
+| 1 | walked | walk | 3 | NA | NA |
+| 1 | down | down | 4 | 0.14 | 1.05 |
+| 1 | the | NA | 5 | 0.06 | 0.09 |
+| 1 | street. | street | 6 | 0.32 | 0.94 |
+| 1 | the | NA | 7 | 0.32 | 0.94 |
+| 1 | wrestler | wrestler | 8 | 0.93 | 1.18 |
 
   
   
@@ -310,6 +327,7 @@ ngram](reference/figures/Anchor2Word_Dist.png)
 fixed initial chunk of words to each new word or ngram
 
 ``` r
+
 Anchored_Dists1 <- dist_anchor(dat=Monologue_Cleaned, anchor_size=8)
 knitr::kable(head(Anchored_Dists1, 4), format = "pipe", digits = 2)
 ```
@@ -339,6 +357,7 @@ Arguments to `dist_dialogue`:
 for person producing given text.  
 
 ``` r
+
 DialogueDists <- dist_dialogue(dat=Dialogue_Cleaned, who_talking='speaker')
 knitr::kable(head(DialogueDists, 4), format = "pipe", digits = 2)
 ```
@@ -363,6 +382,7 @@ Arguments to `dist_paired_cols`
 -`dat` dataframe w/ word pairs arrayed in columns cleaned and prepped.
 
 ``` r
+
 Columns_Dists <- dist_paired_cols(WordPairs_Clean) #only argument is dataframe
 knitr::kable(head(Columns_Dists, 6), format = "pipe", digits = 2)
 ```
@@ -412,13 +432,17 @@ Arguments to `wordlist_to_network`:
 default is `embedding` alternative is `SD15`.  
 
 ``` r
+
 MyCleanList <- clean_monologue_or_list(dat=Unordered_List, wordcol='mytext')
 mydendro <- wordlist_to_network(MyCleanList, output='dendrogram', dist_type='embedding')
+#> [1] "Length of words: 17"
+#> [1] "my_kmax: 10"
 ```
 
-![](reference/figures/README-unnamed-chunk-16-1.png)
+![](reference/figures/unnamed-chunk-16-1.png)
 
 ``` r
+
 print(mydendro)
 #> 'dendrogram' with 2 branches and 17 members total, at height 5.168642
 ```
@@ -439,19 +463,23 @@ Arguments to `clean_monologue_or_list`
 dat`input formatted dataframe. <br> -`dist_type`quoted argument distance option, default is "embedding", alt is`SD15\`.  
 
 ``` r
+
 MyCleanList <- clean_monologue_or_list(dat=Unordered_List, wordcol='mytext')
 mynetwork <- wordlist_to_network(MyCleanList, output='network', dist_type='embedding')
+#> [1] "Length of words: 17"
+#> [1] "my_kmax: 10"
 ```
 
-![](reference/figures/README-unnamed-chunk-17-1.png)
+![](reference/figures/unnamed-chunk-17-1.png)
 
 ``` r
+
 print(mynetwork)
-#> IGRAPH d78291e UNW- 17 68 -- 
+#> IGRAPH 08987c1 UNW- 17 68 -- 
 #> + attr: name (v/c), cluster (v/n), color (v/c), size (v/n), label
 #> | (v/c), label.color (v/c), label.cex (v/n), weight (e/n), color (e/c),
 #> | width (e/n)
-#> + edges from d78291e (vertex names):
+#> + edges from 08987c1 (vertex names):
 #>  [1] trombone--missile trombone--gun     trombone--bullet  trombone--knife  
 #>  [5] trombone--spear   trombone--apple   trombone--banana  trombone--tomato 
 #>  [9] trombone--disgust trombone--angry   trombone--sad     trombone--happy  

@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="SemanticDistance_Intro">
 </head>
@@ -68,7 +68,7 @@
                         <h4 data-toc-skip class="author">Jamie Reilly,
 Hannah R. Mechtenberg, Emily B. Myers, and Jonathan E. Peelle</h4>
             
-            <h4 data-toc-skip class="date">2026-04-16</h4>
+            <h4 data-toc-skip class="date">2026-10-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/blob/main/vignettes/SemanticDistance_Intro.Rmd" class="external-link"><code>vignettes/SemanticDistance_Intro.Rmd</code></a></small>
       <div class="d-none name"><code>SemanticDistance_Intro.Rmd</code></div>
@@ -138,13 +138,14 @@ embedding model. We trained GLOVE on a vast corpus of American English.
 The result of this training is a lookup database with more than 100k
 English words characterized across 300 dimensions. These embedding
 dimensions are not like the psychological dimensions measured in SD15.
-The embeddings are mathematical constructs (hyperparameters) derived
-through dimension reduction reflecting co-occurence statistics between
-each word in the database to all other words in the database.
-SemanticDistance computes the second semantic distance value using these
-embeddings and reports the distance (dog-wolf) as ‘GLO_cosdist’. An
-adjusted cosine value of zero is the least distant (most similar) and
-two is the most distant (least similar) index between elements.
+The embeddings are mathematical constructs (parameters) derived through
+dimension reduction reflecting co-occurence statistics between each word
+in the database to all other words in the database.
+<code>SemanticDistance</code> computes the second semantic distance
+value using these embeddings and reports the distance (dog-wolf) as
+<code>GLO_cosdist</code>. An adjusted cosine value of zero is the least
+distant (most similar) and two is the most distant (least similar) index
+between elements.
 </p>
 </div>
 <div class="section level3">
@@ -275,7 +276,7 @@ interest.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>
