@@ -42,7 +42,7 @@ clean_paired_cols <- function(dat, wordcol1, wordcol2, lemmatize = TRUE) {
     dplyr::mutate(
       id_row_orig = factor(seq_len(nrow(dat))),
       # Process first column
-      !!sym(wordcol1_clean) := tryCatch(
+      !!sym(wordcol1_clean1) := tryCatch(
         stringi::stri_enc_toutf8(as.character(.[[wordcol1]]),
                                  is_unknown_8bit = TRUE,
                                  validate = TRUE),
@@ -50,18 +50,17 @@ clean_paired_cols <- function(dat, wordcol1, wordcol2, lemmatize = TRUE) {
                                                  to = "UTF-8")
       ),
       # Process second column
-      !!sym(wordcol2_clean) := tryCatch(
+      !!sym(wordcol2_clean2) := tryCatch(
         stringi::stri_enc_toutf8(as.character(.[[wordcol2]]),
                                  is_unknown_8bit = TRUE,
                                  validate = TRUE),
         error = function(e) stringi::stri_encode(as.character(.[[wordcol2]]),
                                                  to = "UTF-8")
-      ),
-      .before = 1
+      )
     ) %>%
     dplyr::mutate(
-      !!sym(wordcol1_clean) := tolower(!!sym(wordcol1_clean)),
-      !!sym(wordcol2_clean) := tolower(!!sym(wordcol2_clean))
+      !!sym(wordcol1_clean1) := tolower(!!sym(wordcol1_clean1)),
+      !!sym(wordcol2_clean2) := tolower(!!sym(wordcol2_clean2))
     )
 
   # Define cleaning steps for a column
@@ -82,9 +81,7 @@ clean_paired_cols <- function(dat, wordcol1, wordcol2, lemmatize = TRUE) {
         !!sym(col_clean) := iconv(!!sym(col_clean), to = "ASCII//TRANSLIT", sub = ""),
         !!sym(col_clean) := stringi::stri_replace_all_regex(
           !!sym(col_clean), "[^[:alnum:]']", "")
-      ) %>%
-      # Filter out empty strings
-      filter(!!sym(col_clean) != "")
+      )
 
     # Lemmatization if requested
     if (lemmatize) {
@@ -96,56 +93,16 @@ clean_paired_cols <- function(dat, wordcol1, wordcol2, lemmatize = TRUE) {
   }
 
   # Apply cleaning to both columns
-  dat_prep <- clean_column(dat_prep, wordcol1_clean, lemmatize)
-  dat_prep <- clean_column(dat_prep, wordcol2_clean, lemmatize)
-
-  # Return the cleaned data
-  return(dat_prep)
-}
-
-  # Define cleaning steps for a column (all cleaning steps now compulsory)
-  clean_column <- function(dat, colname, lemmatize) {
-    col_clean <- paste0("word_clean", substr(colname, nchar(colname), nchar(colname)))
-
-    # Apply all cleaning steps (no longer conditional)
-    dat <- dat %>%
-      # Remove non-alphabetic characters
-      mutate(!!sym(col_clean) := stringi::stri_replace_all_regex(
-        !!sym(col_clean), "[^a-zA-Z]", " ")) %>%
-      # Clean whitespace
-      mutate(!!sym(col_clean) := stringr::str_squish(
-        gsub("\\s+", " ", !!sym(col_clean)))) %>%
-      # Clean text
-      mutate(!!sym(col_clean) := stringi::stri_replace_all_regex(
-        !!sym(col_clean), "[^a-z']", "")) %>%
-      # ASCII conversion
-      mutate(
-        !!sym(col_clean) := iconv(!!sym(col_clean), to = "ASCII//TRANSLIT", sub = ""),
-        !!sym(col_clean) := stringi::stri_replace_all_regex(
-          !!sym(col_clean), "[^[:alnum:]']", "")
-      ) %>%
-      # Filter out empty strings
-      filter(!!sym(col_clean) != "")
-
-    # Lemmatization if requested
-    if (lemmatize) {
-      dat <- dat %>%
-        mutate(!!sym(col_clean) := textstem::lemmatize_strings(!!sym(col_clean)))
-    }
-
-    return(dat)
-  }
-
-  # Apply cleaning to both columns
-  dat_prep <- clean_column(dat_prep, "1", lemmatize)
-  dat_prep <- clean_column(dat_prep, "2", lemmatize)
+  dat_prep <- clean_column(dat_prep, wordcol1_clean1, lemmatize)
+  dat_prep <- clean_column(dat_prep, wordcol2_clean2, lemmatize)
 
   # Rename columns to match input column names
   dat_prep <- dat_prep %>%
     rename(
-      !!paste0(wordcol1, "_clean") := word_clean1,
-      !!paste0(wordcol2, "_clean") := word_clean2
+      !!paste0(wordcol1, "_clean") := !!sym(wordcol1_clean1),
+      !!paste0(wordcol2, "_clean") := !!sym(wordcol2_clean2)
     )
 
+  # Retain all rows, including those with NAs
   return(dat_prep)
 }
