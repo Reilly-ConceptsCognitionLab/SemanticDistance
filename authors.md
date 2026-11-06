@@ -18,13 +18,13 @@ Source:
 
 Reilly J, Myers E, Mechtenberg H, Peelle J (2026). *SemanticDistance:
 Compute Semantic Distance Between Text Constituents*. R package version
-0.1.1,
+0.1.2,
 <https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance>.
 
     @Manual{,
       title = {SemanticDistance: Compute Semantic Distance Between Text Constituents},
       author = {Jamie Reilly and Emily B. Myers and Hannah R. Mechtenberg and Jonathan E. Peelle},
       year = {2026},
-      note = {R package version 0.1.1},
+      note = {R package version 0.1.2},
       url = {https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance},
     }

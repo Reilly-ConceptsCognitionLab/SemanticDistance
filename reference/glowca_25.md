@@ -1,7 +1,7 @@
 # Glove Semantic Embeddings
 
-Word embeddings (300 hyperparameter dimensions, 59061 words). Each word
-is one row.
+Word embeddings (300 parameter dimensions, 59061 words). Each word is
+one row.
 
 ## Usage
 
@@ -19,8 +19,8 @@ glowca_25
 
 - Param_1:
 
-  hyperparameter number 1
+  parameter number 1
 
 - Param_300:
 
-  hyperparameter number 300
+  parameter number 300
