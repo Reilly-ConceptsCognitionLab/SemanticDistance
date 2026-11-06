@@ -1,3 +1,18 @@
+3# SemanticDistance 0.1.2
+
+# - 2026-11-05
+
+## Breaking changes
+
+This is a minor release involving repair of one script (paired columns distance)
+
+### Added
+-   JOSS finalized paper
+
+### Modified
+-   dist_paired_cols.R better handles column naming conventions  
+
+
 2# SemanticDistance 0.1.1
 
 # - 2025-7-21

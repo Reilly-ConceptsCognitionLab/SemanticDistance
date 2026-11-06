@@ -9,8 +9,8 @@
 A data frame with 59061 observations of 301 variables
 \describe{
   \item{word}{word characterized across embeddings}
-  \item{Param_1}{hyperparameter number 1}
-  \item{Param_300}{hyperparameter number 300}
+  \item{Param_1}{parameter number 1}
+  \item{Param_300}{parameter number 300}
   ...
 }
 }
@@ -18,6 +18,6 @@ A data frame with 59061 observations of 301 variables
 glowca_25
 }
 \description{
-Word embeddings (300 hyperparameter dimensions, 59061 words). Each word is one row.
+Word embeddings (300 parameter dimensions, 59061 words). Each word is one row.
 }
 \keyword{datasets}

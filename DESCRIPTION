@@ -1,6 +1,6 @@
 Package: SemanticDistance
 Type: Package
-Version: 0.1.1
+Version: 0.1.2
 Title: Compute Semantic Distance Between Text Constituents
 Authors@R: c(
     person("Jamie", "Reilly", 
@@ -48,7 +48,6 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
-RoxygenNote: 7.3.3
 Collate: 
     'clean_dialogue.R'
     'clean_monologue_or_list.R'
@@ -66,3 +65,4 @@ Collate:
     'wordlist_to_network.R'
     'zzz.R'
 Config/testthat/edition: 3
+Config/roxygen2/version: 8.1.0

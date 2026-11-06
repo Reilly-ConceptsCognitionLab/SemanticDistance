@@ -7,11 +7,11 @@
 dist_paired_cols(dat)
 }
 \arguments{
-\item{dat}{a dataframe prepped using clean_2columns' with word pairs arrayed in two columns}
+\item{dat}{a dataframe prepped using `clean__paired_columns` with word pairs arrayed in two columns}
 }
 \value{
 a dataframe
 }
 \description{
-Function takes dataframe cleaned using 'clean_2columns', computes two metrics of semantic distance for each word pair arrayed in Col1 vs. Col2
+Function takes dataframe cleaned using `clean_paired_columns`, computes two metrics of semantic distance for each word pair arrayed in Col1 vs. Col2
 }

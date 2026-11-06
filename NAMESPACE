@@ -18,70 +18,92 @@ export(dist_paired_cols)
 export(glowca_25)
 export(wordlist_to_network)
 importFrom(ape,as.phylo)
-importFrom(cluster,clusGap)
-importFrom(cluster,maxSE)
-importFrom(dendextend,raise.dendrogram)
-importFrom(dendextend,set)
-importFrom(dplyr,across)
-importFrom(dplyr,all_of)
-importFrom(dplyr,any_of)
-importFrom(dplyr,arrange)
-importFrom(dplyr,contains)
-importFrom(dplyr,filter)
-importFrom(dplyr,first)
-importFrom(dplyr,full_join)
-importFrom(dplyr,group_by)
-importFrom(dplyr,last)
-importFrom(dplyr,left_join)
-importFrom(dplyr,mutate)
-importFrom(dplyr,n)
-importFrom(dplyr,rename)
-importFrom(dplyr,rename_with)
-importFrom(dplyr,select)
-importFrom(dplyr,slice)
-importFrom(dplyr,summarise)
-importFrom(dplyr,summarize)
-importFrom(dplyr,ungroup)
-importFrom(dplyr,where)
+importFrom(cluster,
+  clusGap,
+  maxSE
+)
+importFrom(dendextend,
+  raise.dendrogram,
+  set
+)
+importFrom(dplyr,
+  across,
+  all_of,
+  any_of,
+  arrange,
+  contains,
+  filter,
+  first,
+  full_join,
+  group_by,
+  last,
+  left_join,
+  mutate,
+  n,
+  rename,
+  rename_with,
+  select,
+  slice,
+  summarise,
+  summarize,
+  ungroup,
+  where
+)
 importFrom(graphics,par)
 importFrom(httr,GET)
-importFrom(igraph,E)
-importFrom(igraph,delete_edges)
-importFrom(igraph,graph_from_adjacency_matrix)
-importFrom(igraph,layout_with_fr)
-importFrom(igraph,set_edge_attr)
-importFrom(igraph,set_vertex_attr)
+importFrom(igraph,
+  E,
+  delete_edges,
+  graph_from_adjacency_matrix,
+  layout_with_fr,
+  set_edge_attr,
+  set_vertex_attr
+)
 importFrom(lsa,cosine)
 importFrom(magrittr,"%>%")
-importFrom(purrr,map)
-importFrom(purrr,map2_dbl)
-importFrom(purrr,transpose)
-importFrom(rlang,":=")
-importFrom(rlang,sym)
-importFrom(stats,as.dendrogram)
-importFrom(stats,complete.cases)
-importFrom(stats,cutree)
-importFrom(stats,dist)
-importFrom(stats,hclust)
-importFrom(stats,kmeans)
-importFrom(stats,order.dendrogram)
-importFrom(stats,quantile)
-importFrom(stringi,stri_enc_isutf8)
-importFrom(stringi,stri_enc_toutf8)
-importFrom(stringi,stri_encode)
-importFrom(stringi,stri_isempty)
-importFrom(stringi,stri_replace_all_fixed)
-importFrom(stringi,stri_replace_all_regex)
+importFrom(purrr,
+  map,
+  map2_dbl,
+  transpose
+)
+importFrom(rlang,
+  ":=",
+  sym
+)
+importFrom(stats,
+  as.dendrogram,
+  complete.cases,
+  cutree,
+  dist,
+  hclust,
+  kmeans,
+  order.dendrogram,
+  quantile
+)
+importFrom(stringi,
+  stri_enc_isutf8,
+  stri_enc_toutf8,
+  stri_encode,
+  stri_isempty,
+  stri_replace_all_fixed,
+  stri_replace_all_regex
+)
 importFrom(stringr,str_squish)
 importFrom(textclean,replace_white)
 importFrom(textstem,lemmatize_strings)
-importFrom(tidyr,pivot_longer)
-importFrom(tidyr,separate_rows)
-importFrom(tidyselect,all_of)
-importFrom(tidyselect,everything)
+importFrom(tidyr,
+  pivot_longer,
+  separate_rows
+)
+importFrom(tidyselect,
+  all_of,
+  everything
+)
 importFrom(tm,removeWords)
 importFrom(tools,R_user_dir)
-importFrom(utils,download.file)
-importFrom(utils,globalVariables)
-importFrom(utils,install.packages)
+importFrom(utils,
+  download.file,
+  globalVariables,
+  install.packages
+)
 importFrom(wesanderson,wes_palette)

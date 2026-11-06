@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2026.1.19)  14 SEP 2026 10:39
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2026.1.19)  6 NOV 2026 12:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -914,17 +914,17 @@ Package hyperref Warning: Suppressing link with empty target on input line 276.
 Package hyperref Warning: Suppressing link with empty target on input line 276.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 292--307
+Underfull \hbox (badness 10000) in paragraph at lines 292--305
 
  []
 
 
-Underfull \hbox (badness 1360) in paragraph at lines 310--322
+Underfull \hbox (badness 1360) in paragraph at lines 308--320
 \TU/lmr/m/n/10 Many of the text cleaning, formatting, and pairwise distance operations within
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 310--322
+Underfull \hbox (badness 10000) in paragraph at lines 308--320
 
  []
 
@@ -938,26 +938,26 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <8> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 322.
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 320.
 [1
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 325--335
+Underfull \hbox (badness 10000) in paragraph at lines 323--333
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 338--345
+Underfull \hbox (badness 10000) in paragraph at lines 336--343
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 348--364
+Underfull \hbox (badness 10000) in paragraph at lines 346--363
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 365--371
+Underfull \hbox (badness 10000) in paragraph at lines 364--370
 
  []
 
@@ -971,22 +971,22 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 372--384
+Underfull \hbox (badness 10000) in paragraph at lines 371--383
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 385--388
+Underfull \hbox (badness 10000) in paragraph at lines 384--387
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 389--399
+Underfull \hbox (badness 10000) in paragraph at lines 388--398
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 400--403
+Underfull \hbox (badness 10000) in paragraph at lines 399--403
 
  []
 
@@ -1027,7 +1027,7 @@ Package logreq Info: Writing requests to 'paper.run.xml'.
 Here is how much of TeX's memory you used:
  34558 strings out of 470189
  712602 string characters out of 5478015
- 1583937 words of memory out of 5000000
+ 1582937 words of memory out of 5000000
  62670 multiletter control sequences out of 15000+600000
  634577 words of font info for 86 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
