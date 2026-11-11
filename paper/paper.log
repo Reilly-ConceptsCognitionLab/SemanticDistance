@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2026.1.19)  6 NOV 2026 12:24
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2026.1.19)  11 NOV 2026 16:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -914,18 +914,8 @@ Package hyperref Warning: Suppressing link with empty target on input line 276.
 Package hyperref Warning: Suppressing link with empty target on input line 276.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 292--305
-
- []
-
-
 Underfull \hbox (badness 1360) in paragraph at lines 308--320
 \TU/lmr/m/n/10 Many of the text cleaning, formatting, and pairwise distance operations within
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 308--320
-
  []
 
 File: /Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.6/aarch64-apple-darwin23/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
@@ -942,25 +932,6 @@ LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <8> not available
 [1
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 323--333
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 336--343
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 346--363
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 364--370
-
- []
-
 File: /Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.6/aarch64-apple-darwin23/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
 </Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.6/aarch64-apple-darwin23/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
 
@@ -971,23 +942,8 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 371--383
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 384--387
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 388--398
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 399--403
-
+Overfull \hbox (19.45137pt too wide) in paragraph at lines 444--449
+[][][][][] [] [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]$[][]\TU/lmr/m/n/10 . 
  []
 
 File: /Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.6/aarch64-apple-darwin23/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
@@ -1000,10 +956,6 @@ Package fancyhdr Warning: \headheight is too small (62.59596pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.95425pt}.
 
 [3]
-Overfull \hbox (19.45137pt too wide) in paragraph at lines 447--452
-[][][][][] [] [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]$[][]\TU/lmr/m/n/10 . 
- []
-
 File: /Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.6/aarch64-apple-darwin23/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png Graphic file (type bmp)
 </Users/Jamie/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.6/aarch64-apple-darwin23/rticles/0.27/1a05d2cc06f9fb360d2dc15f99293dfe/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png>
 
