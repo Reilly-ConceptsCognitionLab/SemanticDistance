@@ -14,7 +14,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/blob/0.1.2/DESCRIPTION)
 
 Reilly J, Myers E, Mechtenberg H, Peelle J (2026). *SemanticDistance:
 Compute Semantic Distance Between Text Constituents*. R package version
