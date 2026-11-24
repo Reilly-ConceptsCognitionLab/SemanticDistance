@@ -14,15 +14,15 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/blob/0.1.2/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance/blob/main/DESCRIPTION)
 
 Reilly J, Myers E, Mechtenberg H, Peelle J (2026). *SemanticDistance:
-Compute Semantic Distance Between Text Constituents*. R package version
-0.1.2,
+Compute Semantic Relatedness between Constituents of Sequential
+Continuous Text*. R package version 0.1.2,
 <https://github.com/Reilly-ConceptsCognitionLab/SemanticDistance>.
 
     @Manual{,
-      title = {SemanticDistance: Compute Semantic Distance Between Text Constituents},
+      title = {SemanticDistance: Compute Semantic Relatedness between Constituents of Sequential Continuous Text},
       author = {Jamie Reilly and Emily B. Myers and Hannah R. Mechtenberg and Jonathan E. Peelle},
       year = {2026},
       note = {R package version 0.1.2},
